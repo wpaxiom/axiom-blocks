@@ -1,0 +1,132 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/countdown-timer",
+  "version": "1.0.0",
+  "title": "Countdown Timer",
+  "category": "axiom-blocks",
+  "description": "Live countdown timer with customizable target date and styling.",
+  "keywords": ["countdown", "timer", "count down", "deadline", "urgency"],
+  "textdomain": "axiom-blocks",
+  "icon": "clock",
+  "attributes": {
+    "targetDate": {
+      "type": "string",
+      "default": ""
+    },
+    "showDays": {
+      "type": "boolean",
+      "default": true
+    },
+    "showHours": {
+      "type": "boolean",
+      "default": true
+    },
+    "showMinutes": {
+      "type": "boolean",
+      "default": true
+    },
+    "showSeconds": {
+      "type": "boolean",
+      "default": true
+    },
+    "labelDays": {
+      "type": "string",
+      "default": "Days"
+    },
+    "labelHours": {
+      "type": "string",
+      "default": "Hours"
+    },
+    "labelMinutes": {
+      "type": "string",
+      "default": "Minutes"
+    },
+    "labelSeconds": {
+      "type": "string",
+      "default": "Seconds"
+    },
+    "digitColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "labelColor": {
+      "type": "string",
+      "default": "#666666"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#f0f0f0"
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "8px"
+    },
+    "digitFontSize": {
+      "type": "string",
+      "default": "48px"
+    },
+    "labelFontSize": {
+      "type": "string",
+      "default": "14px"
+    },
+    "expiredAction": {
+      "type": "string",
+      "default": "showMessage"
+    },
+    "expiredMessage": {
+      "type": "string",
+      "default": "Time's up!"
+    },
+    "redirectUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "layout": {
+      "type": "string",
+      "default": "horizontal"
+    },
+    "alignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "gap": {
+      "type": "string",
+      "default": "20px"
+    },
+
+    "digitFontFamily":     { "type": "string", "default": "" },
+    "digitFontWeight":     { "type": "string", "default": "" },
+    "digitLineHeight":     { "type": "string", "default": "" },
+    "digitLetterSpacing":  { "type": "string", "default": "" },
+    "digitTextTransform":  { "type": "string", "default": "" },
+    "digitTextDecoration": { "type": "string", "default": "" },
+    "digitTextAlign":      { "type": "string", "default": "" },
+
+    "labelFontFamily":     { "type": "string", "default": "" },
+    "labelFontWeight":     { "type": "string", "default": "" },
+    "labelLineHeight":     { "type": "string", "default": "" },
+    "labelLetterSpacing":  { "type": "string", "default": "" },
+    "labelTextTransform":  { "type": "string", "default": "" },
+    "labelTextDecoration": { "type": "string", "default": "" },
+    "labelTextAlign":      { "type": "string", "default": "" },
+
+    "paddingTop":    { "type": "string", "default": "" },
+    "paddingRight":  { "type": "string", "default": "" },
+    "paddingBottom": { "type": "string", "default": "" },
+    "paddingLeft":   { "type": "string", "default": "" },
+    "marginTop":     { "type": "string", "default": "" },
+    "marginRight":   { "type": "string", "default": "" },
+    "marginBottom":  { "type": "string", "default": "" },
+    "marginLeft":    { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "script": "file:./assets/countdown.js",
+  "render": "file:./render.php"
+}

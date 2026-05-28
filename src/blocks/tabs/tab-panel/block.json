@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/tab-panel",
+  "version": "1.0.0",
+  "title": "Tab Panel",
+  "category": "axiom-blocks",
+  "description": "A panel inside the Tabs block. Can only be inserted inside Tabs.",
+  "keywords": ["tab", "panel"],
+  "textdomain": "axiom-blocks",
+  "icon": "media-default",
+  "parent": ["axiom-blocks/tabs"],
+  "usesContext": ["axiom-blocks/activeTab"],
+  "attributes": {
+    "tabId":    { "type": "string", "default": "" },
+    "label":    { "type": "string", "default": "Tab" },
+    "iconSlug": { "type": "string", "default": "" },
+    "iconUrl":  { "type": "string", "default": "" },
+    "iconId":   { "type": "number", "default": 0 },
+    "iconAlt":  { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "inserter": true,
+    "reusable": false
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

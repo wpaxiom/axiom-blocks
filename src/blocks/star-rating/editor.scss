@@ -1,0 +1,25 @@
+.axiom-blocks-star-rating {
+	padding: 4px 0;
+}
+
+.axiom-blocks-color-control {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+
+	label {
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+
+	input[type="color"] {
+		width: 40px;
+		height: 28px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		cursor: pointer;
+		padding: 0;
+	}
+}

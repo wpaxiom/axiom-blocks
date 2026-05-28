@@ -1,0 +1,116 @@
+/**
+ * Countdown Timer - Frontend Styles
+ */
+
+// Container
+.axiom-blocks-countdown__container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+// When the user picks Wide or Full alignment, let the units share the
+// extra space so the layout change is actually visible. Honors min-width
+// from the unit so things don't collapse below their content.
+.axiom-blocks-countdown.alignwide .axiom-blocks-countdown__unit,
+.axiom-blocks-countdown.alignfull .axiom-blocks-countdown__unit {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
+// Horizontal layout
+.axiom-blocks-countdown--horizontal .axiom-blocks-countdown__container {
+	flex-direction: row;
+	align-items: stretch;
+}
+
+.axiom-blocks-countdown--horizontal.axiom-blocks-countdown--align-left .axiom-blocks-countdown__container {
+	justify-content: flex-start;
+}
+
+.axiom-blocks-countdown--horizontal.axiom-blocks-countdown--align-center .axiom-blocks-countdown__container {
+	justify-content: center;
+}
+
+.axiom-blocks-countdown--horizontal.axiom-blocks-countdown--align-right .axiom-blocks-countdown__container {
+	justify-content: flex-end;
+}
+
+// Vertical layout
+.axiom-blocks-countdown--vertical .axiom-blocks-countdown__container {
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
+.axiom-blocks-countdown--vertical.axiom-blocks-countdown--align-left .axiom-blocks-countdown__container {
+	align-items: flex-start;
+}
+
+.axiom-blocks-countdown--vertical.axiom-blocks-countdown--align-center .axiom-blocks-countdown__container {
+	align-items: center;
+}
+
+.axiom-blocks-countdown--vertical.axiom-blocks-countdown--align-right .axiom-blocks-countdown__container {
+	align-items: flex-end;
+}
+
+// Unit
+.axiom-blocks-countdown__unit {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 80px;
+	transition: transform 0.2s ease;
+}
+
+.axiom-blocks-countdown__unit:hover {
+	transform: translateY(-2px);
+}
+
+// Digit
+.axiom-blocks-countdown__digit {
+	font-weight: 700;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+	transition: color 0.3s ease;
+}
+
+// Label
+.axiom-blocks-countdown__label {
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-top: 8px;
+	font-weight: 500;
+}
+
+// Expired state
+.axiom-blocks-countdown__expired {
+	padding: 20px;
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: #333;
+}
+
+// Responsive adjustments
+@media (max-width: 600px) {
+
+	.axiom-blocks-countdown__container {
+		gap: 10px;
+	}
+
+	.axiom-blocks-countdown__unit {
+		min-width: 60px;
+		padding: 15px;
+	}
+
+	.axiom-blocks-countdown__digit {
+		font-size: 32px !important;
+	}
+
+	.axiom-blocks-countdown__label {
+		font-size: 12px !important;
+	}
+}

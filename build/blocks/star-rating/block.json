@@ -1,0 +1,88 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/star-rating",
+  "version": "1.0.0",
+  "title": "Star Rating",
+  "category": "axiom-blocks",
+  "description": "Display a 5-star rating with optional value and review count.",
+  "keywords": ["star", "rating", "review", "testimonial"],
+  "textdomain": "axiom-blocks",
+  "icon": "star-filled",
+  "attributes": {
+    "rating": {
+      "type": "number",
+      "default": 4.5
+    },
+    "maxStars": {
+      "type": "number",
+      "default": 5
+    },
+    "starSize": {
+      "type": "string",
+      "default": "20px"
+    },
+    "filledColor": {
+      "type": "string",
+      "default": "#fbbf24"
+    },
+    "emptyColor": {
+      "type": "string",
+      "default": "#e5e7eb"
+    },
+    "precision": {
+      "type": "string",
+      "default": "half"
+    },
+    "showValue": {
+      "type": "boolean",
+      "default": false
+    },
+    "showCount": {
+      "type": "boolean",
+      "default": false
+    },
+    "reviewCount": {
+      "type": "number",
+      "default": 0
+    },
+    "countLabel": {
+      "type": "string",
+      "default": "reviews"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#4b5563"
+    },
+    "alignment": {
+      "type": "string",
+      "default": "left"
+    },
+
+    "metaFontFamily":     { "type": "string", "default": "" },
+    "metaFontWeight":     { "type": "string", "default": "" },
+    "metaFontSize":       { "type": "string", "default": "" },
+    "metaLineHeight":     { "type": "string", "default": "" },
+    "metaLetterSpacing":  { "type": "string", "default": "" },
+    "metaTextTransform":  { "type": "string", "default": "" },
+    "metaTextDecoration": { "type": "string", "default": "" },
+    "metaTextAlign":      { "type": "string", "default": "" },
+
+    "paddingTop":    { "type": "string", "default": "" },
+    "paddingRight":  { "type": "string", "default": "" },
+    "paddingBottom": { "type": "string", "default": "" },
+    "paddingLeft":   { "type": "string", "default": "" },
+    "marginTop":     { "type": "string", "default": "" },
+    "marginRight":   { "type": "string", "default": "" },
+    "marginBottom":  { "type": "string", "default": "" },
+    "marginLeft":    { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "render": "file:./render.php"
+}

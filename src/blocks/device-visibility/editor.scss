@@ -1,0 +1,42 @@
+.wp-block-axiom-blocks-device-visibility {
+	position: relative;
+	border: 1px dashed #c3c4c7;
+	border-radius: 6px;
+	padding: 16px;
+	margin: 8px 0;
+	transition: border-color 0.2s ease;
+
+	&:hover {
+		border-color: #7c3aed;
+	}
+
+	&.is-hidden-desktop {
+		border-top: 4px solid #dc3232;
+	}
+
+	&.is-hidden-tablet {
+		border-right: 4px solid #ffb900;
+	}
+
+	&.is-hidden-mobile {
+		border-bottom: 4px solid #46b450;
+	}
+
+	.axiom-blocks-visibility-label {
+		position: absolute;
+		top: -12px;
+		left: 12px;
+		background: #1e1e1e;
+		color: #fff;
+		padding: 4px 8px;
+		font-size: 11px;
+		border-radius: 2px;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		z-index: 1;
+	}
+
+	.axiom-blocks-notice {
+		margin-bottom: 16px;
+	}
+}

@@ -1,0 +1,116 @@
+/**
+ * Advanced Section — editor-only styles (inspector UI).
+ */
+
+.axiom-blocks-media-control {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 16px;
+
+	&__label {
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: #757575;
+		display: block;
+	}
+
+	&__preview {
+		width: 100%;
+		max-height: 140px;
+		object-fit: cover;
+		border-radius: 6px;
+		display: block;
+		border: 1px solid #e5e7eb;
+	}
+}
+
+.axiom-blocks-remove-overlay-btn {
+	margin: -4px 0 14px;
+}
+
+/* ── Length control unit toggle (px / vh / rem) ─────────────────────────── */
+.ab-len-units {
+	display: inline-flex;
+	margin-top: 6px;
+	border: 1px solid #e5e7eb;
+	border-radius: 4px;
+	overflow: hidden;
+
+	&__btn {
+		padding: 4px 10px;
+		margin: 0;
+		border: 0;
+		border-right: 1px solid #e5e7eb;
+		background: #fff;
+		color: #6b7280;
+		font-size: 11px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		cursor: pointer;
+		transition: background 0.12s, color 0.12s;
+
+		&:last-child {
+			border-right: 0;
+		}
+
+		&:hover {
+			color: #1e1e1e;
+		}
+
+		&.is-active {
+			background: #faf5ff;
+			color: #7c3aed;
+		}
+	}
+}
+
+/* Focal point picker preview lives inside .ab-ctrl — keep it tight. */
+.ab-ctrl .components-focal-point-picker__media {
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+/* ── Advanced Section block styles (editor preview) ─────────────────────── */
+.axiom-blocks-section {
+	display: flex;
+	flex-direction: column;
+	justify-content: var(--axiom-blocks-section-justify, center);
+	align-items: var(--axiom-blocks-section-align, center);
+	padding-top: var(--ab-padding-top, 0);
+	padding-right: var(--ab-padding-right, 0);
+	padding-bottom: var(--ab-padding-bottom, 0);
+	padding-left: var(--ab-padding-left, 0);
+	margin-top: var(--ab-margin-top, 0);
+	margin-right: var(--ab-margin-right, 0);
+	margin-bottom: var(--ab-margin-bottom, 0);
+	margin-left: var(--ab-margin-left, 0);
+}
+
+/* ── Empty-section placeholder — matches other block designs ── */
+.axiom-blocks-section__placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: inherit;
+	padding: 14px 16px;
+	border: 1px dashed #c3c4c7;
+	border-radius: 6px;
+	background: #f6f7f7;
+	text-align: center;
+	pointer-events: none;
+	position: relative;
+	z-index: 1;
+
+	p {
+		margin: 0;
+		font-size: 14px;
+		font-weight: 500;
+		letter-spacing: 0.02em;
+		color: #50575e;
+	}
+}

@@ -1,0 +1,76 @@
+/**
+ * Free Shipping Progress — shared styles (frontend + editor preview).
+ *
+ * All visual knobs come through CSS custom properties set inline by render.php
+ * (and the editor preview), so the theme/user always wins.
+ */
+
+.axiom-blocks-fsp {
+	--ab-fsp-bar-color: #7c3aed;
+	--ab-fsp-bar-bg: #f3f4f6;
+	--ab-fsp-qualified-color: #10b981;
+	--ab-fsp-bar-height: 8px;
+	--ab-fsp-radius: 999px;
+	--ab-fsp-fill-color: var(--ab-fsp-bar-color);
+
+	// No explicit `width: 100%` — a block-level div fills its parent by
+	// default, and forcing 100% would override classic-theme alignfull which
+	// sets `width: 100vw` to bleed edge-to-edge. Box-sizing is still useful
+	// so any padding the user adds via the Spacing panel stays inside.
+	box-sizing: border-box;
+
+	&.is-qualified {
+		--ab-fsp-fill-color: var(--ab-fsp-qualified-color);
+	}
+
+	&__msg {
+		font-size: 0.95em;
+		line-height: 1.4;
+		margin: 0 0 0.5rem;
+		color: inherit;
+	}
+
+	&__amount-left {
+		font-weight: 600;
+	}
+
+	&__track {
+		position: relative;
+		width: 100%;
+		height: var(--ab-fsp-bar-height);
+		background: var(--ab-fsp-bar-bg);
+		border-radius: var(--ab-fsp-radius);
+		overflow: hidden;
+	}
+
+	&__fill {
+		height: 100%;
+		width: 0;
+		background: var(--ab-fsp-fill-color);
+		border-radius: inherit;
+		transition: width 0.35s ease, background-color 0.25s ease;
+	}
+
+	&.is-align-left {
+		text-align: left;
+	}
+
+	&.is-align-center {
+		text-align: center;
+	}
+
+	&.is-align-right {
+		text-align: right;
+	}
+}
+
+// Block themes with `useRootPaddingAwareAlignments` add padding-left/right to
+// alignfull children of `.has-global-padding`. Cancel just that padding so
+// the bar fills edge-to-edge. Do NOT touch margin-left/right — those carry the
+// negative-margin trick (`calc(50% - 50vw)`) that themes use to expand the
+// block past its parent in the first place. (Same approach as shape-divider.)
+.axiom-blocks-fsp.axiom-blocks-fsp.alignfull,
+.axiom-blocks-fsp.axiom-blocks-fsp.alignwide {
+	padding-left: 0;
+	padding-right: 0;
+}

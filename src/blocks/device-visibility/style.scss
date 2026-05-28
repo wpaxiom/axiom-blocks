@@ -1,0 +1,23 @@
+// Desktop: 1025px and above
+.wp-block-axiom-blocks-device-visibility.is-hidden-desktop {
+
+	@media screen and (min-width: 1025px) {
+		display: none !important;
+	}
+}
+
+// Tablet: 768px - 1024px
+.wp-block-axiom-blocks-device-visibility.is-hidden-tablet {
+
+	@media screen and (min-width: 768px) and (max-width: 1024px) {
+		display: none !important;
+	}
+}
+
+// Mobile: below 768px
+.wp-block-axiom-blocks-device-visibility.is-hidden-mobile {
+
+	@media screen and (max-width: 767px) {
+		display: none !important;
+	}
+}

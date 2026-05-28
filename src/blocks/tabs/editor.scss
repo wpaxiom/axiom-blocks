@@ -1,0 +1,304 @@
+/**
+ * Tabs Block — editor-only styles (inspector UI).
+ *
+ * Frontend appearance is inherited from style.scss (loaded in editor too) so
+ * the preview visually matches what visitors will see.
+ */
+
+/* ── Tabs repeater ────────────────────────────────────────────────────────── */
+.ab-tab-repeater {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 4px;
+}
+
+.ab-tab-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 5px 5px 10px;
+	border: 1px solid #e5e7eb;
+	border-radius: 6px;
+	background: #fff;
+	transition: border-color 0.12s, box-shadow 0.12s, background 0.12s;
+
+	&:hover {
+		border-color: #d1d5db;
+	}
+
+	&.is-active {
+		border-color: #c4b5fd;
+		background: #faf5ff;
+	}
+
+	&:focus-within {
+		border-color: #7c3aed;
+		box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14);
+	}
+}
+
+.ab-tab-item__num {
+	font-size: 11px;
+	font-weight: 600;
+	color: #9ca3af;
+	min-width: 12px;
+	text-align: center;
+	font-variant-numeric: tabular-nums;
+	flex-shrink: 0;
+}
+
+.ab-tab-item__input {
+	flex: 1;
+	min-width: 0;
+	height: 28px !important;
+	padding: 0 8px !important;
+	border: 1px solid #e5e7eb !important;
+	border-radius: 4px !important;
+	font-size: 13px;
+	font-family: inherit;
+	color: #1e1e1e;
+	background: #fff;
+	outline: none;
+	box-shadow: none !important;
+	min-height: unset !important;
+	transition: border-color 0.12s;
+
+	&:focus {
+		border-color: #7c3aed !important;
+		box-shadow: none !important;
+	}
+
+	&::placeholder {
+		color: #b8bfc9;
+	}
+}
+
+.ab-tab-item__actions {
+	display: flex;
+	gap: 2px;
+	flex-shrink: 0;
+}
+
+.ab-tab-btn {
+	width: 26px;
+	height: 26px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #6b7280;
+	cursor: pointer;
+	padding: 0;
+	transition: background 0.12s, color 0.12s, border-color 0.12s;
+
+	svg {
+		width: 14px;
+		height: 14px;
+		display: block;
+	}
+
+	&:hover:not(:disabled) {
+		background: #f3f4f6;
+		color: #1e1e1e;
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: #7c3aed;
+		box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.18);
+	}
+
+	&:disabled {
+		opacity: 0.35;
+		cursor: not-allowed;
+	}
+
+	&--danger:hover:not(:disabled) {
+		background: #fef2f2;
+		color: #dc2626;
+	}
+
+	/* Default-open marker. Outline star → click to set active. Filled purple
+       star → already the default-open tab. */
+	&--star {
+		color: #d1d5db;
+
+		&:hover:not(:disabled) {
+			background: #faf5ff;
+			color: #7c3aed;
+		}
+
+		&.is-active {
+			color: #7c3aed;
+			cursor: default;
+
+			&:hover {
+				background: transparent;
+			}
+		}
+	}
+}
+
+.ab-tab-add {
+	width: 100%;
+	margin-top: 4px;
+}
+
+.ab-tab-row {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+/* Icon picker trigger — sits between the row number and the label input. */
+.ab-tab-icon-trigger {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #f9fafb;
+	border: 1px dashed #d1d5db;
+	border-radius: 4px;
+	color: #9ca3af;
+	cursor: pointer;
+	padding: 0;
+	transition: background 0.12s, border-color 0.12s, color 0.12s;
+
+	svg {
+		width: 14px;
+		height: 14px;
+		display: block;
+	}
+
+	img {
+		width: 16px;
+		height: 16px;
+		object-fit: contain;
+		display: block;
+	}
+
+	&:hover {
+		background: #f3f4f6;
+		border-color: #c4b5fd;
+		color: #7c3aed;
+	}
+
+	&.has-icon {
+		background: #fff;
+		border-style: solid;
+		border-color: #e5e7eb;
+		color: #4b5563;
+	}
+
+	&.is-open {
+		border-color: #7c3aed;
+		box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.18);
+	}
+}
+
+/* Popover — library grid + upload footer. */
+.ab-icon-picker-popover .components-popover__content {
+	width: 280px;
+	border-radius: 8px;
+}
+
+.ab-icon-picker {
+	padding: 10px;
+}
+
+.ab-icon-picker__header {
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #6b7280;
+	margin-bottom: 8px;
+}
+
+.ab-icon-picker__grid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 4px;
+	max-height: 220px;
+	overflow-y: auto;
+	padding-right: 2px;
+}
+
+.ab-icon-picker__item {
+	aspect-ratio: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #4b5563;
+	cursor: pointer;
+	padding: 0;
+	transition: background 0.1s, border-color 0.1s, color 0.1s;
+
+	svg {
+		width: 18px;
+		height: 18px;
+		display: block;
+	}
+
+	&:hover {
+		background: #f3f4f6;
+		color: #1e1e1e;
+	}
+
+	&.is-selected {
+		background: #f5f3ff;
+		border-color: #c4b5fd;
+		color: #7c3aed;
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: #7c3aed;
+		box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.18);
+	}
+}
+
+.ab-icon-picker__footer {
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 1px solid #e5e7eb;
+}
+
+.ab-icon-picker__upload {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.ab-icon-picker__note {
+	margin: 8px 0 0;
+	font-size: 11px;
+	line-height: 1.4;
+	color: #6b7280;
+
+	&.is-warning {
+		color: #92400e;
+	}
+}
+
+.axiom-blocks-colors-note {
+	font-size: 11px;
+	color: #6b7280;
+	margin: 0 0 12px;
+	font-style: italic;
+}
+
+/* Collapse the block-editor wrapper when the panel inside is inactive, so
+ * the editor really shows only the active tab (no phantom gaps from wrappers). */
+.wp-block-axiom-blocks-tabs .block-editor-block-list__layout > *:has(> .axiom-blocks-tab-panel.is-inactive) {
+	display: none;
+}

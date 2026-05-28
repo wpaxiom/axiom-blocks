@@ -1,0 +1,131 @@
+/**
+ * Trust Badges — frontend + editor preview styles.
+ *
+ * Driven by CSS custom properties set inline in render.php / index.js:
+ *   --ab-tb-gap, --ab-tb-icon-size, --ab-tb-icon-color, --ab-tb-card-bg,
+ *   --ab-tb-card-radius, --ab-tb-border, --ab-tb-columns
+ */
+
+.axiom-blocks-trust-badges {
+	--ab-tb-gap: 16px;
+	--ab-tb-icon-size: 48px;
+	--ab-tb-card-bg: transparent;
+	--ab-tb-card-radius: 8px;
+	--ab-tb-border: 0;
+	--ab-tb-columns: unset;
+
+	&__heading {
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 0 0 14px;
+		color: inherit;
+	}
+
+	&__list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ab-tb-gap);
+	}
+
+	&.is-layout-horizontal &__list {
+		flex-direction: row;
+	}
+
+	&.is-layout-grid &__list {
+		display: grid;
+		grid-template-columns: repeat(var(--ab-tb-columns), 1fr);
+	}
+
+	&.is-align-left   &__list {
+		justify-content: flex-start;
+	}
+
+	&.is-align-center &__list {
+		justify-content: center;
+	}
+
+	&.is-align-right  &__list {
+		justify-content: flex-end;
+	}
+
+	&__item {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		padding: 8px 12px;
+		background: var(--ab-tb-card-bg);
+		border-radius: var(--ab-tb-card-radius);
+		border: var(--ab-tb-border);
+		min-width: var(--ab-tb-icon-size);
+		transition: transform 0.12s ease, box-shadow 0.12s ease;
+
+		a {
+			display: inline-flex;
+		}
+
+		img {
+			display: block;
+			max-width: var(--ab-tb-icon-size);
+			max-height: var(--ab-tb-icon-size);
+		}
+
+		svg {
+			display: block;
+			width: var(--ab-tb-icon-size);
+			height: var(--ab-tb-icon-size);
+		}
+	}
+
+	&.has-card &__item:hover {
+		transform: translateY(-1px);
+	}
+
+	&__label {
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.02em;
+		color: inherit;
+		opacity: 0.7;
+		text-align: center;
+		line-height: 1.2;
+	}
+
+	&__empty {
+		font-size: 13px;
+		color: #9ca3af;
+		font-style: italic;
+		margin: 0;
+		padding: 24px;
+		text-align: center;
+		width: 100%;
+		border: 1px dashed #e5e7eb;
+		border-radius: 6px;
+	}
+
+	/* ── Color modes ─────────────────────────────────────────────────── */
+
+	/* Brand colors — logos show their original brand colors */
+	&.is-color-color img {
+		filter: none;
+	}
+
+	/* Monochrome — uses separate mono SVG files, no filter needed */
+	&.is-color-mono img {
+		filter: none;
+	}
+
+	&.is-color-mono .axiom-blocks-trust-badges__label {
+		opacity: 0.7;
+	}
+
+	/* ── Sizes — primarily drive label font-size; icon size driven by var. */
+	&.is-size-small  &__label {
+		font-size: 10px;
+	}
+
+	&.is-size-large  &__label {
+		font-size: 12px;
+	}
+}

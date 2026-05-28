@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/reading-progress-bar",
+  "version": "1.0.0",
+  "title": "Reading Progress Bar",
+  "category": "axiom-blocks",
+  "description": "Sticky bar that fills as the reader scrolls through the page.",
+  "keywords": ["scroll", "progress", "indicator", "reading"],
+  "textdomain": "axiom-blocks",
+  "icon": "editor-justify",
+  "attributes": {
+    "position": {
+      "type": "string",
+      "default": "top"
+    },
+    "height": {
+      "type": "string",
+      "default": "4px"
+    },
+    "color": {
+      "type": "string",
+      "default": "#7C3AED"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#e5e7eb"
+    },
+    "showTrack": {
+      "type": "boolean",
+      "default": true
+    },
+    "zIndex": {
+      "type": "number",
+      "default": 9999
+    }
+  },
+  "supports": {
+    "html": false,
+    "multiple": false,
+    "reusable": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "viewScript": "file:./assets/progress.js",
+  "render": "file:./render.php"
+}

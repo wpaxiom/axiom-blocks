@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/copy-to-clipboard",
+  "version": "1.0.0",
+  "title": "Copy to Clipboard",
+  "category": "axiom-blocks",
+  "description": "Copy text or code snippets to clipboard with one click.",
+  "keywords": ["copy", "clipboard", "code", "snippet", "button"],
+  "textdomain": "axiom-blocks",
+  "icon": "clipboard",
+  "attributes": {
+    "textToCopy": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Copy"
+    },
+    "successText": {
+      "type": "string",
+      "default": "Copied!"
+    },
+    "showIcon": {
+      "type": "boolean",
+      "default": true
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": "left"
+    },
+    "buttonStyle": {
+      "type": "string",
+      "default": "filled"
+    },
+    "buttonColor": {
+      "type": "string",
+      "default": "#7c3aed"
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "borderRadius": {
+      "type": "string",
+      "default": "4px"
+    },
+    "fontSize": {
+      "type": "string",
+      "default": "14px"
+    },
+    "copiedBgColor": {
+      "type": "string",
+      "default": "#00a32a"
+    },
+    "displayMode": {
+      "type": "string",
+      "default": "input"
+    },
+    "placeholder": {
+      "type": "string",
+      "default": "Enter text to copy..."
+    },
+    "alignment": {
+      "type": "string",
+      "default": "left"
+    },
+
+    "fontFamily":     { "type": "string", "default": "" },
+    "fontWeight":     { "type": "string", "default": "" },
+    "lineHeight":     { "type": "string", "default": "" },
+    "letterSpacing":  { "type": "string", "default": "" },
+    "textTransform":  { "type": "string", "default": "" },
+    "textDecoration": { "type": "string", "default": "" },
+    "textAlign":      { "type": "string", "default": "" },
+
+    "paddingTop":    { "type": "string", "default": "" },
+    "paddingRight":  { "type": "string", "default": "" },
+    "paddingBottom": { "type": "string", "default": "" },
+    "paddingLeft":   { "type": "string", "default": "" },
+    "marginTop":     { "type": "string", "default": "" },
+    "marginRight":   { "type": "string", "default": "" },
+    "marginBottom":  { "type": "string", "default": "" },
+    "marginLeft":    { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "viewScript": "file:./assets/copy.js",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,923 @@
+// Axiom Blocks Admin Dashboard Styles
+
+$primary:  #7c3aed;
+$text:     #1d2327;
+$muted:    #50575e;
+$border:   #dcdcde;
+$bg:       #f0f0f1;
+$card-bg:  #fff;
+$woo:      #a78bfa;
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+// ── Root shell ───────────────────────────────────────────────────────────────
+.ab-root {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 32px); // account for WP admin bar
+	font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	background: $bg;
+	color: $text;
+}
+
+// ── Header ───────────────────────────────────────────────────────────────────
+.ab-header {
+	background: $card-bg;
+	border-bottom: 1px solid $border;
+	padding: 16px 24px 0;
+	flex-shrink: 0;
+
+	&__top {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-bottom: 14px;
+	}
+
+	&__title {
+		font-size: 20px;
+		font-weight: 700;
+		color: $text;
+		letter-spacing: -0.02em;
+		line-height: 1;
+		margin: 0;
+	}
+
+	&__sub {
+		font-size: 12px;
+		color: $muted;
+		margin: 3px 0 0;
+	}
+}
+
+.ab-btn-upgrade {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 14px;
+	border-radius: 6px;
+	background: linear-gradient(135deg, $primary, #a78bfa);
+	color: #fff;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: 700;
+	flex-shrink: 0;
+	transition: opacity 0.15s;
+
+	&:hover {
+		opacity: 0.9;
+		color: #fff;
+	}
+}
+
+// ── Nav tabs ─────────────────────────────────────────────────────────────────
+.ab-nav-tabs {
+	display: flex;
+	gap: 0;
+	align-items: flex-end;
+}
+
+.ab-nav-tab {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 16px;
+	border-radius: 6px 6px 0 0;
+	border: 1px solid transparent;
+	background: transparent;
+	cursor: pointer;
+	color: $muted;
+	font-size: 13px;
+	font-weight: 400;
+	transition: all 0.12s;
+	font-family: inherit;
+
+	&.is-active {
+		background: $card-bg;
+		border-color: $border;
+		border-bottom-color: $card-bg;
+		color: $primary;
+		font-weight: 600;
+		margin-bottom: -1px;
+		position: relative;
+		z-index: 1;
+	}
+}
+
+// ── Content area ─────────────────────────────────────────────────────────────
+.ab-content {
+	flex: 1;
+	overflow-y: auto;
+	padding: 24px;
+}
+
+// ── Toast ────────────────────────────────────────────────────────────────────
+.ab-toast {
+	position: fixed;
+	top: 40px;
+	right: 20px;
+	z-index: 9999;
+	padding: 10px 16px;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: 500;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+	animation: ab-fadein 0.2s ease;
+
+	&--success {
+		background: #ecfdf5;
+		color: #065f46;
+		border: 1px solid #a7f3d0;
+	}
+
+	&--error {
+		background: #fef2f2;
+		color: #991b1b;
+		border: 1px solid #fecaca;
+	}
+}
+
+@keyframes ab-fadein {
+
+	from {
+		opacity: 0;
+		transform: translateY(-6px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+// ── Skeleton loader ───────────────────────────────────────────────────────────
+@keyframes ab-shimmer {
+
+	0% {
+		background-position: -600px 0;
+	}
+
+	100% {
+		background-position: 600px 0;
+	}
+}
+
+@keyframes ab-lb1 {
+
+	0%,
+	60%,
+	100% {
+		transform: scale(0.75);
+		opacity: 0.2;
+	}
+
+	20% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes ab-lb2 {
+
+	0%,
+	60%,
+	100% {
+		transform: scale(0.75);
+		opacity: 0.2;
+	}
+
+	33% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes ab-lb3 {
+
+	0%,
+	60%,
+	100% {
+		transform: scale(0.75);
+		opacity: 0.2;
+	}
+
+	46% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes ab-fade-text {
+
+	0%,
+	100% {
+		opacity: 0.4;
+	}
+
+	50% {
+		opacity: 1;
+	}
+}
+
+.ab-sk {
+	display: block;
+	background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+	background-size: 600px 100%;
+	animation: ab-shimmer 1.6s ease-in-out infinite;
+}
+
+.ab-loader-wrap {
+	position: relative;
+	min-height: 480px;
+}
+
+.ab-root--loading {
+
+	.ab-loader-wrap {
+		flex: 1;
+	}
+}
+
+.ab-loader-body {
+	padding: 24px;
+}
+
+.ab-loader-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+	background: rgba(240, 240, 241, 0.75);
+}
+
+.ab-loader-logo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.ab-lb1 {
+	fill: $primary;
+	transform-origin: 5.75px 12px;
+	animation: ab-lb1 1.4s ease-in-out infinite;
+}
+
+.ab-lb2 {
+	fill: $primary;
+	opacity: 0.65;
+	transform-origin: 14.25px 7px;
+	animation: ab-lb2 1.4s ease-in-out infinite;
+}
+
+.ab-lb3 {
+	fill: $primary;
+	opacity: 0.45;
+	transform-origin: 15px 17px;
+	animation: ab-lb3 1.4s ease-in-out infinite;
+}
+
+.ab-loader-name {
+	font-size: 20px;
+	font-weight: 700;
+	color: $text;
+	letter-spacing: -0.025em;
+	line-height: 1;
+}
+
+.ab-loader-label {
+	font-size: 12px;
+	color: $muted;
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	animation: ab-fade-text 1.8s ease-in-out infinite;
+}
+
+// ── Stats row ────────────────────────────────────────────────────────────────
+.ab-stats-row {
+	display: flex;
+	gap: 12px;
+	margin-bottom: 20px;
+
+	@media (max-width: 900px) {
+		flex-wrap: wrap;
+	}
+}
+
+.ab-stat-card {
+	background: $card-bg;
+	border: 1px solid $border;
+	border-radius: 8px;
+	padding: 16px 18px;
+	flex: 1;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 10px;
+	}
+
+	&__label {
+		font-size: 11px;
+		font-weight: 600;
+		color: $muted;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	&__icon {
+		width: 30px;
+		height: 30px;
+		border-radius: 7px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__value {
+		font-size: 28px;
+		font-weight: 700;
+		color: $text;
+		letter-spacing: -0.03em;
+		line-height: 1;
+	}
+
+	&__sub {
+		font-size: 11px;
+		color: $muted;
+		margin-top: 5px;
+	}
+}
+
+// ── Pro banner ────────────────────────────────────────────────────────────────
+.ab-pro-banner {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 14px 18px;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	background: linear-gradient(135deg, $primary, #a78bfa);
+	color: #fff;
+
+	&__icon {
+		width: 36px;
+		height: 36px;
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.15);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	&__body {
+		flex: 1;
+	}
+
+	&__title {
+		font-weight: 700;
+		font-size: 14px;
+	}
+
+	&__sub {
+		font-size: 12px;
+		opacity: 0.85;
+		margin-top: 2px;
+	}
+
+	&__cta {
+		background: #fff;
+		color: $primary;
+		border: none;
+		border-radius: 6px;
+		padding: 7px 14px;
+		font-weight: 700;
+		font-size: 12px;
+		cursor: pointer;
+		flex-shrink: 0;
+		font-family: inherit;
+	}
+
+	&__close {
+		background: rgba(255, 255, 255, 0.18);
+		border: none;
+		width: 24px;
+		height: 24px;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		color: #fff;
+		flex-shrink: 0;
+		font-family: inherit;
+	}
+}
+
+// ── Toolbar ───────────────────────────────────────────────────────────────────
+.ab-toolbar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 18px;
+	flex-wrap: wrap;
+}
+
+.ab-search {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+
+	&__icon {
+		position: absolute;
+		left: 9px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: $muted;
+		pointer-events: none;
+		display: flex;
+		align-items: center;
+		line-height: 1;
+	}
+
+	&__input {
+		// !important overrides WP admin's input[type="text"] padding reset
+		padding: 5px 10px 5px 31px !important;
+		border-radius: 6px !important;
+		border: 1px solid $border !important;
+		background: $card-bg;
+		color: $text;
+		font-size: 12px;
+		line-height: 1.4;
+		width: 220px;
+		outline: none !important;
+		font-family: inherit;
+		height: auto !important;
+		box-shadow: none !important;
+		min-height: unset !important;
+
+		&:focus {
+			border-color: $primary !important;
+			box-shadow: 0 0 0 2px #{$primary}22 !important;
+		}
+	}
+}
+
+.ab-cat-tabs {
+	display: flex;
+	gap: 1px;
+	background: #e0e0e1;
+	border-radius: 6px;
+	padding: 3px;
+	border: 1px solid $border;
+}
+
+.ab-cat-tab {
+	padding: 5px 12px;
+	border-radius: 4px;
+	border: none;
+	font-size: 12px;
+	font-weight: 400;
+	cursor: pointer;
+	background: transparent;
+	color: $muted;
+	transition: all 0.12s;
+	font-family: inherit;
+
+	&.is-active {
+		background: $card-bg;
+		color: $text;
+		font-weight: 600;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+	}
+
+	&__count {
+		opacity: 0.6;
+		font-size: 10px;
+		margin-left: 2px;
+	}
+}
+
+// ── Section ───────────────────────────────────────────────────────────────────
+.ab-section {
+	margin-bottom: 24px;
+}
+
+.ab-section-bar {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+
+	&__title {
+		font-size: 13px;
+		font-weight: 700;
+		color: $text;
+	}
+
+	&__count {
+		border-radius: 99px;
+		font-size: 10px;
+		font-weight: 700;
+		padding: 1px 7px;
+	}
+}
+
+.ab-btn-ghost {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 10px;
+	border-radius: 5px;
+	border: 1px solid $border;
+	background: $card-bg;
+	color: $muted;
+	font-size: 11px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: border-color 0.12s, color 0.12s;
+	font-family: inherit;
+
+	&:hover:not(:disabled) {
+		border-color: #aaa;
+		color: $text;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+	}
+
+	&--woo {
+		background: transparent;
+		border-color: #{$woo}44;
+		color: $woo;
+
+		&:hover:not(:disabled) {
+			border-color: $woo;
+		}
+	}
+
+	&--lg {
+		gap: 6px;
+		padding: 9px 16px;
+		border-radius: 6px;
+		font-size: 13px;
+		font-weight: 600;
+	}
+}
+
+// ── WooCommerce section bar ───────────────────────────────────────────────────
+.ab-woo-bar {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 14px;
+	margin-bottom: 12px;
+	background: #f5f3ff;
+	border-radius: 7px;
+	border: 1px solid #{$woo}20;
+
+	&__title {
+		font-size: 13px;
+		font-weight: 700;
+		color: $woo;
+	}
+
+	&__count {
+		background: #{$woo}18;
+		color: $woo;
+		border-radius: 99px;
+		font-size: 10px;
+		font-weight: 700;
+		padding: 1px 7px;
+	}
+}
+
+// ── Block grid ────────────────────────────────────────────────────────────────
+.ab-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+
+	@media (max-width: 1100px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: 700px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+// ── Block card ────────────────────────────────────────────────────────────────
+.ab-card {
+	background: $card-bg;
+	border: 1px solid $border;
+	border-radius: 8px;
+	padding: 14px 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	transition: box-shadow 0.15s;
+
+	&:hover {
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	&--disabled {
+		opacity: 0.55;
+	}
+
+	&__top {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	&__icon-wrap {
+		width: 32px;
+		height: 32px;
+		border-radius: 7px;
+		background: #f5f3ff;
+		color: $primary;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		transition: background 0.12s, color 0.12s;
+	}
+
+	&:hover &__icon-wrap {
+		background: #ede9fe;
+	}
+
+	&--disabled &__icon-wrap {
+		background: #f1f5f9;
+		color: #94a3b8;
+	}
+
+	&__info {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__name-row {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		flex-wrap: wrap;
+	}
+
+	&__name {
+		font-size: 13px;
+		font-weight: 600;
+		color: $text;
+		letter-spacing: -0.01em;
+		line-height: 1.3;
+	}
+
+	&__pro-badge {
+		background: #b45309;
+		color: #fff;
+		border-radius: 5px;
+		padding: 2px 7px;
+		font-size: 10px;
+		font-weight: 700;
+		display: inline-flex;
+		align-items: center;
+		gap: 3px;
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	&__desc {
+		font-size: 11px;
+		color: $muted;
+		margin: 3px 0 0;
+		line-height: 1.45;
+	}
+
+	&__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__badges {
+		display: flex;
+		gap: 5px;
+		flex-wrap: wrap;
+	}
+
+	&__docs {
+		font-size: 10px;
+		color: $muted;
+		text-decoration: none;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		gap: 3px;
+		opacity: 0.7;
+
+		&:hover {
+			opacity: 1;
+			color: $primary;
+		}
+	}
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+.ab-empty {
+	text-align: center;
+	padding: 60px 20px;
+	color: $muted;
+
+	p {
+		font-size: 14px;
+		font-weight: 500;
+		margin-top: 10px;
+	}
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+.ab-settings {
+	max-width: 660px;
+}
+
+.ab-settings-card {
+	background: $card-bg;
+	border: 1px solid $border;
+	border-radius: 8px;
+	padding: 18px 20px;
+	margin-bottom: 16px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+	&__heading {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+		font-size: 14px;
+		font-weight: 700;
+		color: $text;
+		margin-bottom: 14px;
+	}
+}
+
+.ab-license-input-row {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.ab-input {
+	flex: 1;
+	padding: 9px 12px;
+	border-radius: 6px;
+	border: 1px solid $border;
+	background: #f9fafb;
+	color: $text;
+	font-size: 13px;
+	outline: none;
+	font-family: inherit;
+
+	&:focus {
+		border-color: $primary;
+		box-shadow: 0 0 0 2px #{$primary}22;
+	}
+
+	&--mono {
+		font-family: "DM Mono", "Courier New", monospace;
+		letter-spacing: 0.04em;
+	}
+}
+
+.ab-btn-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 9px 16px;
+	border-radius: 6px;
+	border: none;
+	background: $primary;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	flex-shrink: 0;
+	font-family: inherit;
+	transition: opacity 0.15s;
+
+	&:hover {
+		opacity: 0.9;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.7;
+	}
+
+	.ab-spinner {
+		width: 12px;
+		height: 12px;
+		border-color: rgba(255, 255, 255, 0.35);
+		border-top-color: #fff;
+	}
+}
+
+.ab-license-notice {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 12px;
+	border-radius: 5px;
+	background: #fffbeb;
+	border: 1px solid #{#b45309}30;
+	font-size: 11px;
+	color: #b45309;
+	font-weight: 500;
+
+	&--active {
+		background: #ecfdf5;
+		border-color: #{#065f46}30;
+		color: #065f46;
+	}
+
+	&--error {
+		background: #fef2f2;
+		border-color: #{#b91c1c}30;
+		color: #b91c1c;
+	}
+}
+
+.ab-license-checking {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 14px 0 6px;
+	color: $muted;
+	font-size: 12px;
+	font-weight: 500;
+}
+
+.ab-spinner {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #e5e7eb;
+	border-top-color: $primary;
+	border-radius: 50%;
+	animation: ab-spin 0.6s linear infinite;
+	flex-shrink: 0;
+}
+
+@keyframes ab-spin {
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.ab-settings-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	padding: 14px 0;
+	border-bottom: 1px solid $border;
+
+	&:last-of-type {
+		border-bottom: none;
+	}
+
+	&__label {
+		font-size: 13px;
+		font-weight: 600;
+		color: $text;
+	}
+
+	&__desc {
+		font-size: 12px;
+		color: $muted;
+		margin-top: 2px;
+	}
+}
+
+.ab-settings-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding-top: 14px;
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/shape-divider",
+  "version": "1.0.0",
+  "title": "Shape Divider",
+  "category": "axiom-blocks",
+  "description": "Decorative SVG divider between sections (wave, curve, triangle, tilt, slant).",
+  "keywords": ["shape", "divider", "separator", "wave", "curve"],
+  "textdomain": "axiom-blocks",
+  "icon": "editor-ul",
+  "attributes": {
+    "shape": {
+      "type": "string",
+      "default": "wave"
+    },
+    "height": {
+      "type": "string",
+      "default": "80px"
+    },
+    "color": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#f6f7f7"
+    },
+    "flipHorizontal": {
+      "type": "boolean",
+      "default": false
+    },
+    "flipVertical": {
+      "type": "boolean",
+      "default": false
+    },
+    "paddingTop":    { "type": "string", "default": "" },
+    "paddingRight":  { "type": "string", "default": "" },
+    "paddingBottom": { "type": "string", "default": "" },
+    "paddingLeft":   { "type": "string", "default": "" },
+    "marginTop":     { "type": "string", "default": "" },
+    "marginRight":   { "type": "string", "default": "" },
+    "marginBottom":  { "type": "string", "default": "" },
+    "marginLeft":    { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "render": "file:./render.php"
+}

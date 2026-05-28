@@ -1,0 +1,1094 @@
+/**
+ * Axiom Blocks - Editor Styles
+ * Styles specific to the block editor
+ */
+
+// Import block editor styles
+@import "blocks/advanced-section/editor";
+@import "blocks/countdown-timer/editor";
+@import "blocks/copy-to-clipboard/editor";
+@import "blocks/star-rating/editor";
+@import "blocks/reading-progress-bar/editor";
+@import "blocks/shape-divider/editor";
+@import "blocks/tabs/editor";
+@import "blocks/before-after-slider/editor";
+@import "blocks/pricing-table/editor";
+@import "blocks/trust-badges/editor";
+@import "blocks/free-shipping-progress/editor";
+
+// Sidebar panel styling
+.components-panel__body {
+
+	.components-color-picker {
+		width: 100%;
+
+		.components-color-picker__saturation {
+			padding-bottom: 55%;
+		}
+	}
+}
+
+// ── Sub-accordion (BSSubAccordion) — repeater-style collapsible row ───────────
+// Used for grouping sub-sections inside a PanelBody (e.g. typography per
+// element). Palette mirrors the tab-block repeater so sidebar UI feels
+// consistent across blocks.
+.ab-sub-acc-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.ab-sub-acc {
+	border: 1px solid #e5e7eb;
+	border-radius: 6px;
+	background: #fff;
+	overflow: hidden;
+	transition: border-color 0.12s, box-shadow 0.12s, background 0.12s;
+
+	&:hover {
+		border-color: #d1d5db;
+	}
+
+	&:focus-within {
+		border-color: #7c3aed;
+		box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14);
+	}
+
+	&.is-open {
+		border-color: #c4b5fd;
+		background: #faf5ff;
+	}
+
+	&__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		width: 100%;
+		padding: 9px 10px;
+		margin: 0;
+		border: 0;
+		background: transparent;
+		font-family: inherit;
+		font-size: 13px;
+		font-weight: 500;
+		color: #1e1e1e;
+		cursor: pointer;
+		text-align: left;
+		transition: color 0.12s;
+
+		&:hover {
+			color: #7c3aed;
+		}
+
+		&:focus-visible {
+			outline: none;
+		}
+	}
+
+	&__title {
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__chev {
+		flex-shrink: 0;
+		color: #9ca3af;
+		transition: transform 0.15s ease, color 0.12s;
+	}
+
+	&.is-open &__chev {
+		transform: rotate(180deg);
+		color: #7c3aed;
+	}
+
+	&__body {
+		padding: 4px 10px 12px;
+		background: #fff;
+		border-top: 1px solid #ede9fe;
+	}
+}
+
+// ── Spacing Panel ─────────────────────────────────────────────────────────────
+.ab-sp-control {
+	margin-bottom: 14px;
+}
+
+.ab-sp-label-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 8px;
+}
+
+.ab-sp-label {
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: #757575;
+}
+
+.ab-sp-actions {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.ab-sp-reset {
+	font-size: 11px;
+	color: #757575;
+	background: none;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	padding: 2px 8px;
+	cursor: pointer;
+	font-family: inherit;
+	line-height: 1.6;
+	transition: background 0.12s, color 0.12s, opacity 0.12s;
+
+	&:hover {
+		background: #f0f0f0;
+		color: #1e1e1e;
+		border-color: #bbb;
+	}
+
+	&:disabled,
+	&[disabled] {
+		opacity: 0.4;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+}
+
+.ab-sp-link {
+	width: 26px;
+	height: 24px;
+	background: none;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: #757575;
+	transition: background 0.12s, border-color 0.12s, color 0.12s;
+	padding: 0;
+
+	&:hover {
+		background: #f0f0f0;
+		border-color: #bbb;
+		color: #1e1e1e;
+	}
+
+	&.is-linked {
+		background: #1e1e1e;
+		border-color: #1e1e1e;
+		color: #fff;
+	}
+}
+
+.ab-sp-input-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	&--head {
+		margin-bottom: 8px;
+	}
+}
+
+.ab-sp-px-wrap {
+	position: relative;
+	width: 70px;
+	flex-shrink: 0;
+
+	// Highlight when this side has an explicit value (including 0px) so the
+	// user can tell at a glance which sides they've actually applied.
+	&.is-applied .ab-sp-px-input {
+		border-color: #7c3aed !important;
+		background: #f5f1fe;
+		color: #5b21b6;
+		font-weight: 600;
+	}
+
+	&.is-applied .ab-sp-unit {
+		color: #7c3aed;
+	}
+}
+
+.ab-sp-px-input {
+	width: 100%;
+	padding: 0 26px 0 8px !important;
+	border: 1px solid #dcdde1 !important;
+	border-radius: 3px !important;
+	font-size: 13px;
+	font-family: inherit;
+	color: #1e1e1e;
+	background: #fff;
+	text-align: right;
+	outline: none;
+	box-shadow: none !important;
+	height: 32px !important;
+	min-height: unset !important;
+	line-height: 32px;
+	transition: border-color 0.12s;
+	-moz-appearance: textfield;
+
+	&:focus {
+		border-color: #007cba !important;
+		box-shadow: 0 0 0 1px #007cba !important;
+	}
+
+	&::-webkit-inner-spin-button,
+	&::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+}
+
+.ab-sp-unit {
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 9px;
+	font-weight: 700;
+	color: #bbb;
+	pointer-events: none;
+	letter-spacing: 0.04em;
+}
+
+.ab-sp-slider {
+	flex: 1;
+	-webkit-appearance: none;
+	height: 4px;
+	border-radius: 2px;
+	background: linear-gradient(to right, #007cba var(--sp-pct, 0%), #ddd     var(--sp-pct, 0%));
+	outline: none;
+	cursor: pointer;
+	border: none;
+
+	&::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: #007cba;
+		border: 2px solid #fff;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+		cursor: pointer;
+	}
+
+	&::-moz-range-thumb {
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: #007cba;
+		border: 2px solid #fff;
+		cursor: pointer;
+	}
+}
+
+.ab-sp-sides-hint {
+	font-size: 11px;
+	color: #aaa;
+	font-weight: 500;
+}
+
+.ab-sp-sides-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 6px;
+	margin-top: 0;
+}
+
+.ab-sp-side {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+
+	.ab-sp-px-wrap {
+		width: 100%;
+	}
+
+	.ab-sp-px-input {
+		text-align: left !important;
+		padding-right: 26px !important;
+	}
+}
+
+.ab-sp-side-label {
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #aaa;
+}
+
+.ab-sp-sep {
+	height: 1px;
+	background: #e0e0e0;
+	margin: 4px 0 14px;
+}
+
+// ── BSControls — Range, Select, Color ────────────────────────────────────────
+// Shared field height token: all visible field boxes render at this height.
+$ab-field-h: 32px;
+$ab-field-border: 1px solid #dcdde1;
+$ab-field-radius: 3px;
+$ab-field-focus-color: #007cba;
+
+.ab-ctrl {
+	margin-bottom: 16px;
+
+	&__label {
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: #757575;
+		margin-bottom: 6px;
+		display: block;
+	}
+
+	// ── Range ─────────────────────────────────────────────────────────────────
+
+	&__range-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	&__px-wrap {
+		position: relative;
+		width: 68px;
+		flex-shrink: 0;
+	}
+
+	&__px-input {
+		width: 100%;
+		height: $ab-field-h !important;
+		padding: 0 22px 0 8px !important;
+		border: $ab-field-border !important;
+		border-radius: $ab-field-radius !important;
+		font-size: 13px;
+		font-family: inherit;
+		color: #1e1e1e;
+		background: #fff;
+		text-align: right;
+		outline: none;
+		box-shadow: none !important;
+		min-height: unset !important;
+		transition: border-color 0.12s;
+		-moz-appearance: textfield;
+		line-height: $ab-field-h;
+
+		&:focus {
+			border-color: $ab-field-focus-color !important;
+			box-shadow: 0 0 0 1px $ab-field-focus-color !important;
+		}
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+	}
+
+	&__unit {
+		position: absolute;
+		right: 5px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 9px;
+		font-weight: 700;
+		color: #b8bfc9;
+		pointer-events: none;
+		letter-spacing: 0.04em;
+	}
+
+	&__slider {
+		flex: 1;
+		-webkit-appearance: none;
+		height: 4px;
+		border-radius: 2px;
+		background: linear-gradient(to right, #007cba var(--ab-pct, 0%), #dcdde1  var(--ab-pct, 0%));
+		outline: none;
+		cursor: pointer;
+		border: none;
+
+		&::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			background: #007cba;
+			border: 2px solid #fff;
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+			cursor: pointer;
+			transition: box-shadow 0.12s;
+		}
+
+		&::-moz-range-thumb {
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			background: #007cba;
+			border: 2px solid #fff;
+			cursor: pointer;
+		}
+	}
+
+	/* Selector compiles to `.ab-ctrl .ab-ctrl__help` (0,2,0) so it beats
+       Gutenberg's `.interface-complementary-area p:not(...) { margin-top: 0 }`. */
+	& &__help {
+		font-size: 11px;
+		color: #9ca3af;
+		margin: 5px 0 0;
+		line-height: 1.45;
+	}
+
+	// ── Select ────────────────────────────────────────────────────────────────
+	// Native <select> is opacity:0 and covers the wrapper — all browser
+	// interaction (click, keyboard) works. The visual display is a sibling
+	// div with pointer-events:none, so no appearance/arrow fight needed.
+
+	&__select-wrap {
+		position: relative;
+		height: $ab-field-h;
+		border: $ab-field-border;
+		border-radius: $ab-field-radius;
+		background: #fff;
+		transition: border-color 0.12s;
+
+		&:focus-within {
+			border-color: $ab-field-focus-color;
+			box-shadow: 0 0 0 1px $ab-field-focus-color;
+		}
+	}
+
+	&__select {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		cursor: pointer;
+		z-index: 1;
+		border: none;
+		background: transparent;
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	&__select-display {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		padding: 0 10px;
+		pointer-events: none;
+		gap: 6px;
+	}
+
+	&__select-text {
+		font-size: 13px;
+		font-family: inherit;
+		color: #1e1e1e;
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		line-height: $ab-field-h;
+	}
+
+	&__select-arrow {
+		width: 10px;
+		height: 6px;
+		color: #757575;
+		flex-shrink: 0;
+	}
+
+	// ── Text input ────────────────────────────────────────────────────────────
+
+	&__text-input {
+		width: 100%;
+		height: $ab-field-h !important;
+		padding: 0 10px !important;
+		border: $ab-field-border !important;
+		border-radius: $ab-field-radius !important;
+		font-size: 13px;
+		font-family: inherit;
+		color: #1e1e1e;
+		background: #fff;
+		outline: none;
+		box-shadow: none !important;
+		min-height: unset !important;
+		transition: border-color 0.12s;
+		-moz-appearance: textfield;
+
+		&:focus {
+			border-color: $ab-field-focus-color !important;
+			box-shadow: 0 0 0 1px $ab-field-focus-color !important;
+		}
+
+		&[type="number"]::-webkit-inner-spin-button,
+		&[type="number"]::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+	}
+
+	// ── Textarea ──────────────────────────────────────────────────────────────
+
+	&__textarea {
+		width: 100%;
+		padding: 8px 10px !important;
+		border: $ab-field-border !important;
+		border-radius: $ab-field-radius !important;
+		font-size: 13px;
+		font-family: inherit;
+		color: #1e1e1e;
+		background: #fff;
+		outline: none;
+		box-shadow: none !important;
+		resize: vertical;
+		transition: border-color 0.12s;
+		min-height: unset !important;
+
+		&:focus {
+			border-color: $ab-field-focus-color !important;
+			box-shadow: 0 0 0 1px $ab-field-focus-color !important;
+		}
+	}
+
+	// ── Color ─────────────────────────────────────────────────────────────────
+
+	&__color-wrap {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		height: $ab-field-h;
+		padding: 0 10px;
+		border: $ab-field-border;
+		border-radius: $ab-field-radius;
+		cursor: pointer;
+		background: #fff;
+		transition: border-color 0.12s;
+
+		&:hover {
+			border-color: #b8bfc9;
+		}
+	}
+
+	&__color-hex {
+		font-size: 13px;
+		font-family: "DM Mono", "Courier New", monospace;
+		color: #1e1e1e;
+		letter-spacing: 0.02em;
+		flex: 1;
+	}
+
+	&__color-swatch {
+		width: 20px;
+		height: 20px;
+		border-radius: 2px;
+		border: 1px solid rgba(0, 0, 0, 0.12);
+		display: block;
+		flex-shrink: 0;
+	}
+
+	&__color-input {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		width: 100%;
+		height: 100%;
+		cursor: pointer;
+		border: none;
+		padding: 0;
+	}
+}
+
+// ── Toggle switch (BSToggleControl) ──────────────────────────────────────────
+.ab-toggle {
+	margin: 15px 0;
+
+	&__row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	&__switch {
+		position: relative;
+		display: inline-block;
+		width: 32px;
+		height: 18px;
+		flex-shrink: 0;
+	}
+
+	&__input {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		opacity: 0;
+		cursor: pointer;
+		z-index: 2;
+
+		&:disabled {
+			cursor: not-allowed;
+		}
+	}
+
+	&__track {
+		position: absolute;
+		inset: 0;
+		background: #d1d5db;
+		border-radius: 9999px;
+		transition: background 0.16s ease, box-shadow 0.16s ease;
+	}
+
+	&__thumb {
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 14px;
+		height: 14px;
+		background: #fff;
+		border-radius: 50%;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+		transition: transform 0.16s ease;
+		pointer-events: none;
+	}
+
+	&__input:checked ~ &__track {
+		background: #7c3aed;
+	}
+
+	&__input:checked ~ &__thumb {
+		transform: translateX(14px);
+	}
+
+	&__input:focus-visible ~ &__track {
+		box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
+	}
+
+	&__input:disabled ~ &__track {
+		opacity: 0.45;
+	}
+
+	&__input:disabled ~ &__thumb {
+		opacity: 0.65;
+	}
+
+	&__label {
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: #757575;
+		font-family: inherit;
+		line-height: 1.3;
+	}
+
+	/* Selector compiles to `.ab-toggle .ab-toggle__help` (0,2,0) — needed
+       because Gutenberg's inspector sets `p:not(...) { margin-top: 0 }` at
+       0,2,0 too, and a single class would lose the cascade. */
+	& &__help {
+		font-size: 11px;
+		color: #9ca3af;
+		margin: 6px 0 0 !important;
+		line-height: 1.45;
+	}
+}
+
+// ── Shared buttons (design-system) ───────────────────────────────────────────
+// Used by sidebar actions like "Replace / Remove image", "Remove overlay", etc.
+// Variants:
+//   .ab-btn--primary   solid purple CTA
+//   .ab-btn--secondary outlined purple (paired with --danger for media controls)
+//   .ab-btn--danger    ghost red — destructive, soft-red hover
+.ab-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	height: $ab-field-h;
+	padding: 0 12px;
+	border: 1px solid transparent;
+	border-radius: $ab-field-radius;
+	font-size: 13px;
+	font-weight: 500;
+	font-family: inherit;
+	line-height: 1;
+	cursor: pointer;
+	background: transparent;
+	color: #1e1e1e;
+	transition: background 0.12s, border-color 0.12s, color 0.12s, box-shadow 0.12s;
+	text-decoration: none;
+
+	svg {
+		width: 14px;
+		height: 14px;
+		flex-shrink: 0;
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&--primary {
+		background: #7c3aed;
+		color: #fff;
+		border-color: #7c3aed;
+
+		&:hover:not(:disabled) {
+			background: #6d28d9;
+			border-color: #6d28d9;
+		}
+	}
+
+	&--secondary {
+		background: #fff;
+		color: #7c3aed;
+		border-color: #c4b5fd;
+
+		&:hover:not(:disabled) {
+			background: #faf5ff;
+			border-color: #7c3aed;
+		}
+	}
+
+	&--danger {
+		background: #fef2f2;
+		color: #dc2626;
+		border-color: #fecaca;
+
+		&:hover:not(:disabled) {
+			background: #fee2e2;
+			border-color: #dc2626;
+		}
+	}
+}
+
+.ab-btn-row {
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+// ── SpacingPanel BoxIcon size lock ────────────────────────────────────────────
+.ab-sp-box-icon {
+	width: 20px !important;
+	height: 20px !important;
+	min-width: 20px !important;
+	max-width: 20px !important;
+	flex-shrink: 0 !important;
+}
+
+// ── TypographyPanel ──────────────────────────────────────────────────────────
+// Figma-inspired layout: full-width family, paired Weight/Size, paired
+// Line-height/Letter-spacing with labels above, label-above segmented blocks.
+// Comfortable component sizing — compact in *layout*, not in component height.
+$ab-tp-purple:       #7c3aed;
+$ab-tp-purple-soft:  #f5f1fe;
+$ab-tp-purple-deep:  #5b21b6;
+$ab-tp-border:       #dcdde1;
+$ab-tp-border-hover: #b8bfc9;
+$ab-tp-text:         #1e1e1e;
+$ab-tp-muted:        #757575;
+$ab-tp-faint:        #b8bfc9;
+$ab-tp-h:            32px;
+
+.ab-tp {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	// Subtle Reset link, top-right of panel content
+	&__reset {
+		align-self: flex-end;
+		margin: -4px -2px -2px;
+		background: transparent;
+		border: 0;
+		padding: 2px 4px;
+		font-family: inherit;
+		font-size: 11px;
+		font-weight: 500;
+		color: $ab-tp-purple;
+		cursor: pointer;
+		line-height: 1.2;
+		text-decoration: none;
+		transition: color 0.12s;
+
+		&:hover {
+			color: $ab-tp-purple-deep;
+			text-decoration: underline;
+		}
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.25);
+			border-radius: 2px;
+		}
+	}
+
+	// Two-column row for paired controls (Weight/Size, Line/Spacing)
+	&__pair {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 8px;
+	}
+
+	// Vertical stack: label above its control
+	&__field {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		min-width: 0;
+	}
+
+	&__field-label {
+		font-size: 11px;
+		font-weight: 500;
+		color: $ab-tp-muted;
+		line-height: 1.2;
+		font-family: inherit;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+}
+
+// Number-with-unit pill
+.ab-tp-num {
+	position: relative;
+	display: flex;
+	align-items: center;
+	height: $ab-tp-h;
+	border: $ab-field-border;
+	border-radius: $ab-field-radius;
+	background: #fff;
+	transition: border-color 0.12s, background 0.12s;
+	min-width: 0;
+
+	&:hover {
+		border-color: $ab-tp-border-hover;
+	}
+
+	&:focus-within {
+		border-color: $ab-field-focus-color;
+		box-shadow: 0 0 0 1px $ab-field-focus-color;
+	}
+
+	&__input {
+		flex: 1;
+		width: 100%;
+		height: 100% !important;
+		padding: 0 28px 0 10px !important;
+		border: 0 !important;
+		background: transparent !important;
+		font-size: 13px;
+		font-family: inherit;
+		color: $ab-tp-text;
+		outline: none !important;
+		box-shadow: none !important;
+		min-height: unset !important;
+		line-height: $ab-tp-h;
+		-moz-appearance: textfield;
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		&::placeholder {
+			color: #b8bfc9;
+			font-weight: 400;
+		}
+	}
+
+	&__unit {
+		position: absolute;
+		right: 8px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 9px;
+		font-weight: 700;
+		color: $ab-tp-faint;
+		pointer-events: none;
+		letter-spacing: 0.06em;
+	}
+
+	&__prefix {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 26px;
+		height: 100%;
+		color: $ab-tp-muted;
+		flex-shrink: 0;
+		pointer-events: none;
+	}
+
+	&.has-prefix .ab-tp-num__input {
+		padding-left: 0 !important;
+	}
+
+	&.is-applied {
+		border-color: $ab-tp-purple;
+
+		.ab-tp-num__input {
+			color: $ab-tp-text;
+			font-weight: 500;
+		}
+
+		.ab-tp-num__prefix {
+			color: $ab-tp-purple;
+		}
+
+		.ab-tp-num__unit {
+			color: $ab-tp-purple;
+		}
+	}
+}
+
+// Native-select wrapper with chevron + applied highlight
+.ab-tp-select {
+	position: relative;
+	height: $ab-tp-h;
+	border: $ab-field-border;
+	border-radius: $ab-field-radius;
+	background: #fff;
+	transition: border-color 0.12s, background 0.12s;
+	min-width: 0;
+
+	&:hover {
+		border-color: $ab-tp-border-hover;
+	}
+
+	&:focus-within {
+		border-color: $ab-field-focus-color;
+		box-shadow: 0 0 0 1px $ab-field-focus-color;
+	}
+
+	&__el {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		padding: 0 26px 0 10px !important;
+		border: 0 !important;
+		background: transparent !important;
+		font-size: 13px;
+		line-height: $ab-tp-h !important;
+		font-family: inherit;
+		color: $ab-tp-text;
+		outline: none;
+		box-shadow: none !important;
+		min-height: unset !important;
+		cursor: pointer;
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+	}
+
+	&__arrow {
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		width: 10px;
+		height: 6px;
+		transform: translateY(-50%);
+		color: $ab-tp-muted;
+		pointer-events: none;
+	}
+
+	&.is-applied {
+		border-color: $ab-tp-purple;
+
+		.ab-tp-select__el {
+			color: $ab-tp-text;
+			font-weight: 500;
+		}
+
+		.ab-tp-select__arrow {
+			color: $ab-tp-purple;
+		}
+	}
+}
+
+// Segmented control — full-width row of equal buttons
+.ab-tp-seg {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 1fr;
+	height: $ab-tp-h;
+	border: $ab-field-border;
+	border-radius: $ab-field-radius;
+	overflow: hidden;
+	background: #fff;
+	min-width: 0;
+
+	&__btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: transparent;
+		border: 0;
+		border-left: 1px solid $ab-tp-border;
+		color: $ab-tp-muted;
+		cursor: pointer;
+		padding: 0;
+		font-size: 11px;
+		font-weight: 600;
+		line-height: 1;
+		font-family: inherit;
+		transition: background 0.12s, color 0.12s;
+		height: 100%;
+		min-width: 0;
+
+		&:first-child {
+			border-left: 0;
+		}
+
+		&:hover:not(.is-active) {
+			background: #f6f7f9;
+			color: $ab-tp-text;
+		}
+
+		&.is-active {
+			background: $ab-tp-purple;
+			color: #fff;
+			box-shadow: inset 0 0 0 1px $ab-tp-purple;
+		}
+
+		// Lock SVG size against WP admin overrides
+		.ab-tp-icon {
+			width: 14px !important;
+			height: 14px !important;
+			flex-shrink: 0 !important;
+			display: block;
+		}
+	}
+
+	&__txt {
+		font-family: "DM Sans", system-ui, sans-serif;
+		letter-spacing: 0.02em;
+	}
+}

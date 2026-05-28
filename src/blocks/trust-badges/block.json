@@ -1,0 +1,70 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "axiom-blocks/trust-badges",
+    "version": "1.0.0",
+    "title": "Trust Badges",
+    "category": "axiom-blocks",
+    "description": "Curated row of payment, security, and service trust badges with presets and custom uploads.",
+    "keywords": ["trust", "badges", "payment", "security", "checkout", "ssl", "icons"],
+    "textdomain": "axiom-blocks",
+    "icon": "shield",
+    "attributes": {
+        "headingShow":   { "type": "boolean", "default": true },
+        "headingText":   { "type": "string",  "default": "Secure Checkout Guaranteed" },
+        "headingAlign":  { "type": "string",  "default": "center" },
+
+        "preset":          { "type": "string", "default": "mixed" },
+        "selectedBadges":  { "type": "array",  "default": ["visa", "mastercard", "paypal", "ssl-secure", "money-back"] },
+        "customBadges":    { "type": "array",  "default": [] },
+
+        "layout":     { "type": "string", "default": "horizontal" },
+        "columns":    { "type": "number", "default": 4 },
+        "alignment":  { "type": "string", "default": "center" },
+        "gap":        { "type": "number", "default": 16 },
+        "badgeSize":  { "type": "string", "default": "medium" },
+
+        "colorMode":    { "type": "string",  "default": "color" },
+        "iconColor":    { "type": "string",  "default": "#1e1e1e" },
+        "showCard":     { "type": "boolean", "default": false },
+        "cardColor":    { "type": "string",  "default": "#ffffff" },
+        "cardRadius":   { "type": "number",  "default": 8 },
+        "showBorder":   { "type": "boolean", "default": false },
+        "borderColor":  { "type": "string",  "default": "#e5e7eb" },
+
+        "headingFontFamily":     { "type": "string", "default": "" },
+        "headingFontWeight":     { "type": "string", "default": "" },
+        "headingFontSize":       { "type": "string", "default": "" },
+        "headingLineHeight":     { "type": "string", "default": "" },
+        "headingLetterSpacing":  { "type": "string", "default": "" },
+        "headingTextTransform":  { "type": "string", "default": "" },
+        "headingTextDecoration": { "type": "string", "default": "" },
+        "headingTextAlign":      { "type": "string", "default": "" },
+
+        "labelFontFamily":     { "type": "string", "default": "" },
+        "labelFontWeight":     { "type": "string", "default": "" },
+        "labelFontSize":       { "type": "string", "default": "" },
+        "labelLineHeight":     { "type": "string", "default": "" },
+        "labelLetterSpacing":  { "type": "string", "default": "" },
+        "labelTextTransform":  { "type": "string", "default": "" },
+        "labelTextDecoration": { "type": "string", "default": "" },
+        "labelTextAlign":      { "type": "string", "default": "" },
+
+        "paddingTop":    { "type": "string", "default": "" },
+        "paddingRight":  { "type": "string", "default": "" },
+        "paddingBottom": { "type": "string", "default": "" },
+        "paddingLeft":   { "type": "string", "default": "" },
+        "marginTop":     { "type": "string", "default": "" },
+        "marginRight":   { "type": "string", "default": "" },
+        "marginBottom":  { "type": "string", "default": "" },
+        "marginLeft":    { "type": "string", "default": "" }
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle":  "file:./editor.scss",
+    "style":        "file:./style.scss",
+    "render":       "file:./render.php"
+}

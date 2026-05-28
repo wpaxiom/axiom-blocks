@@ -1,0 +1,131 @@
+/**
+ * Trust Badges — editor-only inspector tweaks.
+ * Frontend look comes from style.scss (loaded in editor too).
+ */
+
+/* Group title above each per-badge toggle list. */
+.ab-tb-group {
+
+	& + & {
+		margin-top: 14px;
+	}
+
+	&__title {
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: #9ca3af;
+		margin-bottom: 8px;
+		padding-bottom: 6px;
+		border-bottom: 1px solid #f3f4f6;
+	}
+}
+
+/* Custom-badge repeater — reuses the .ab-tab-item card pattern from tabs. */
+.ab-tb-customs {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 4px;
+
+	.ab-tab-item__input {
+		flex: 1;
+		min-width: 0;
+	}
+}
+
+.ab-tb-thumb {
+	width: 32px;
+	height: 32px;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #f9fafb;
+	border: 1px solid #e5e7eb;
+	border-radius: 4px;
+	padding: 0;
+	cursor: pointer;
+	overflow: hidden;
+	color: #9ca3af;
+	transition: border-color 0.12s, color 0.12s;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	svg {
+		width: 14px;
+		height: 14px;
+	}
+
+	&:hover {
+		border-color: #c4b5fd;
+		color: #7c3aed;
+	}
+}
+
+.ab-tb-add {
+	width: 100%;
+	margin-top: 4px;
+}
+
+.ab-tb-custom {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.ab-tb-link-input {
+	width: calc(100% - 30px);
+	margin-left: 30px;
+	height: 26px !important;
+	padding: 0 8px !important;
+	border: 1px solid #f3f4f6 !important;
+	border-radius: 4px !important;
+	font-size: 12px;
+	font-family: inherit;
+	color: #4b5563;
+	background: #fff;
+	box-shadow: none !important;
+	min-height: unset !important;
+	transition: border-color 0.12s;
+
+	&::placeholder {
+		color: #c4c9d2;
+	}
+
+	&:focus {
+		border-color: #c4b5fd !important;
+		outline: none;
+		box-shadow: none !important;
+	}
+}
+
+.ab-tb-hint {
+	margin: 8px 0 0;
+	font-size: 11px;
+	color: #9ca3af;
+	line-height: 1.4;
+}
+
+/* Empty-state thumbnail box used in the canvas preview when a custom badge has no image. */
+.ab-tb-empty {
+	width: var(--ab-tb-icon-size, 48px);
+	height: var(--ab-tb-icon-size, 48px);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #f9fafb;
+	border: 1px dashed #e5e7eb;
+	border-radius: 4px;
+	color: #9ca3af;
+
+	svg {
+		width: 18px;
+		height: 18px;
+	}
+}

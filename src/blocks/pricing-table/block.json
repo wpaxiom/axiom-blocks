@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "axiom-blocks/pricing-table",
+    "version": "1.0.0",
+    "title": "Pricing Table",
+    "category": "axiom-blocks",
+    "description": "Pricing plans with feature lists, CTAs, and a highlighted recommendation.",
+    "keywords": ["pricing", "plans", "subscription", "tiers", "table"],
+    "textdomain": "axiom-blocks",
+    "icon": "money-alt",
+    "attributes": {
+        "columns":           { "type": "number",  "default": 3 },
+        "gap":               { "type": "number",  "default": 24 },
+        "cardStyle":         { "type": "string",  "default": "bordered" },
+        "accentColor":       { "type": "string",  "default": "#7C3AED" },
+        "featureIconStyle":  { "type": "string",  "default": "check" },
+
+        "headingShow":   { "type": "boolean", "default": false },
+        "headingText":   { "type": "string",  "default": "Choose your plan" },
+        "headingAlign":  { "type": "string",  "default": "center" },
+
+        "headingFontFamily":     { "type": "string", "default": "" },
+        "headingFontWeight":     { "type": "string", "default": "" },
+        "headingFontSize":       { "type": "string", "default": "" },
+        "headingLineHeight":     { "type": "string", "default": "" },
+        "headingLetterSpacing":  { "type": "string", "default": "" },
+        "headingTextTransform":  { "type": "string", "default": "" },
+        "headingTextDecoration": { "type": "string", "default": "" },
+        "headingTextAlign":      { "type": "string", "default": "" },
+
+        "paddingTop":    { "type": "string", "default": "" },
+        "paddingRight":  { "type": "string", "default": "" },
+        "paddingBottom": { "type": "string", "default": "" },
+        "paddingLeft":   { "type": "string", "default": "" },
+        "marginTop":     { "type": "string", "default": "" },
+        "marginRight":   { "type": "string", "default": "" },
+        "marginBottom":  { "type": "string", "default": "" },
+        "marginLeft":    { "type": "string", "default": "" }
+    },
+    "providesContext": {
+        "axiom-blocks/featureIconStyle": "featureIconStyle"
+    },
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle":  "file:./editor.scss",
+    "style":        "file:./style.scss",
+    "render":       "file:./render.php"
+}

@@ -1,0 +1,63 @@
+.axiom-blocks-reading-progress-bar-preview {
+	padding: 14px 16px;
+	border: 1px dashed #c3c4c7;
+	border-radius: 6px;
+	background: #f6f7f7;
+
+	&__label {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 12px;
+		font-weight: 600;
+		color: #1d2327;
+		margin-bottom: 8px;
+	}
+
+	&__pos {
+		font-size: 10px;
+		font-weight: 500;
+		color: #50575e;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	&__bar {
+		width: 100%;
+		overflow: hidden;
+		border-radius: 2px;
+	}
+
+	&__fill {
+		height: 100%;
+	}
+
+	&__hint {
+		margin: 8px 0 0;
+		font-size: 11px;
+		color: #6b7280;
+		font-style: italic;
+	}
+}
+
+.axiom-blocks-color-control {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+
+	label {
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+
+	input[type="color"] {
+		width: 40px;
+		height: 28px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		cursor: pointer;
+		padding: 0;
+	}
+}

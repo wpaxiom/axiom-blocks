@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/free-shipping-progress",
+  "version": "1.0.0",
+  "title": "Free Shipping Progress",
+  "category": "axiom-blocks",
+  "description": "Cart progress bar showing how much more a customer needs to spend to qualify for free shipping. Live-updates as items are added or removed.",
+  "keywords": ["woocommerce", "shipping", "free shipping", "cart", "progress"],
+  "textdomain": "axiom-blocks",
+  "icon": "car",
+  "attributes": {
+    "thresholdMode":     { "type": "string",  "default": "auto" },
+    "customThreshold":   { "type": "number",  "default": 0 },
+
+    "messageBefore":     { "type": "string",  "default": "Add {amount_left} more for free shipping!" },
+    "messageQualified":  { "type": "string",  "default": "You've unlocked free shipping!" },
+
+    "barColor":          { "type": "string",  "default": "#7C3AED" },
+    "barBackground":     { "type": "string",  "default": "#e5e7eb" },
+    "qualifiedColor":    { "type": "string",  "default": "#10b981" },
+    "barHeight":         { "type": "number",  "default": 4 },
+    "borderRadius":      { "type": "number",  "default": 999 },
+    "textAlign":         { "type": "string",  "default": "center" },
+
+    "hideWhenQualified": { "type": "boolean", "default": false },
+    "hideWhenEmpty":     { "type": "boolean", "default": false },
+
+    "paddingTop":    { "type": "string", "default": "" },
+    "paddingRight":  { "type": "string", "default": "" },
+    "paddingBottom": { "type": "string", "default": "" },
+    "paddingLeft":   { "type": "string", "default": "" },
+    "marginTop":     { "type": "string", "default": "" },
+    "marginRight":   { "type": "string", "default": "" },
+    "marginBottom":  { "type": "string", "default": "" },
+    "marginLeft":    { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle":  "file:./editor.scss",
+  "style":        "file:./style.scss",
+  "viewScript":   "file:./assets/free-shipping-progress.js",
+  "render":       "file:./render.php"
+}

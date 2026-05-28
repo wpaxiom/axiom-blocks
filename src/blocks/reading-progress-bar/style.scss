@@ -1,0 +1,32 @@
+.axiom-blocks-reading-progress-bar {
+	position: fixed;
+	left: 0;
+	right: 0;
+	width: 100%;
+	pointer-events: none;
+
+	&--top {
+		top: 0;
+	}
+
+	&--bottom {
+		bottom: 0;
+	}
+
+	&__fill {
+		transition: width 0.08s linear;
+		will-change: width;
+	}
+}
+
+// Offset under the WP admin bar when logged in.
+.admin-bar .axiom-blocks-reading-progress-bar--top {
+	top: 32px;
+}
+
+@media screen and (max-width: 782px) {
+
+	.admin-bar .axiom-blocks-reading-progress-bar--top {
+		top: 46px;
+	}
+}

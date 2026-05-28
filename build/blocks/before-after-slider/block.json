@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/before-after-slider",
+  "version": "1.0.0",
+  "title": "Before/After Slider",
+  "category": "axiom-blocks",
+  "description": "Drag to compare two images (before/after, or any two states).",
+  "keywords": ["before", "after", "compare", "slider", "comparison"],
+  "textdomain": "axiom-blocks",
+  "icon": "leftright",
+  "attributes": {
+    "beforeImage":     { "type": "object",  "default": null },
+    "afterImage":      { "type": "object",  "default": null },
+    "beforeLabel":     { "type": "string",  "default": "Before" },
+    "afterLabel":      { "type": "string",  "default": "After" },
+    "showLabels":      { "type": "boolean", "default": false },
+    "initialPosition": { "type": "number",  "default": 50 },
+    "aspectRatio":     { "type": "string",  "default": "auto" },
+    "handleColor":     { "type": "string",  "default": "#ffffff" },
+    "lineColor":       { "type": "string",  "default": "#ffffff" },
+    "paddingTop":    { "type": "string", "default": "" },
+    "paddingRight":  { "type": "string", "default": "" },
+    "paddingBottom": { "type": "string", "default": "" },
+    "paddingLeft":   { "type": "string", "default": "" },
+    "marginTop":     { "type": "string", "default": "" },
+    "marginRight":   { "type": "string", "default": "" },
+    "marginBottom":  { "type": "string", "default": "" },
+    "marginLeft":    { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "viewScript": "file:./assets/slider.js",
+  "render": "file:./render.php"
+}

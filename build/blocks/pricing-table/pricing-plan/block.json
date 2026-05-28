@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "axiom-blocks/pricing-plan",
+    "version": "1.0.0",
+    "title": "Pricing Plan",
+    "category": "axiom-blocks",
+    "description": "A single plan card. Can only be inserted inside Pricing Table.",
+    "keywords": ["pricing", "plan", "card"],
+    "textdomain": "axiom-blocks",
+    "icon": "money-alt",
+    "parent": ["axiom-blocks/pricing-table"],
+    "usesContext": ["axiom-blocks/featureIconStyle"],
+    "attributes": {
+        "name":        { "type": "string",  "default": "Plan" },
+        "badge":       { "type": "string",  "default": "" },
+        "currency":    { "type": "string",  "default": "$" },
+        "price":       { "type": "string",  "default": "0" },
+        "period":      { "type": "string",  "default": "/month" },
+        "showCurrency":{ "type": "boolean", "default": true },
+        "showPeriod":  { "type": "boolean", "default": true },
+        "description": { "type": "string",  "default": "" },
+        "isHighlight": { "type": "boolean", "default": false },
+        "features":    {
+            "type": "array",
+            "default": [
+                { "id": "f-1", "text": "Feature one", "included": true },
+                { "id": "f-2", "text": "Feature two", "included": true }
+            ]
+        },
+        "ctaLabel":  { "type": "string",  "default": "Get started" },
+        "ctaUrl":    { "type": "string",  "default": "" },
+        "ctaNewTab": { "type": "boolean", "default": false },
+
+        "nameFontFamily":     { "type": "string", "default": "" },
+        "nameFontWeight":     { "type": "string", "default": "" },
+        "nameFontSize":       { "type": "string", "default": "" },
+        "nameLineHeight":     { "type": "string", "default": "" },
+        "nameLetterSpacing":  { "type": "string", "default": "" },
+        "nameTextTransform":  { "type": "string", "default": "" },
+        "nameTextDecoration": { "type": "string", "default": "" },
+        "nameTextAlign":      { "type": "string", "default": "" },
+
+        "priceFontFamily":     { "type": "string", "default": "" },
+        "priceFontWeight":     { "type": "string", "default": "" },
+        "priceFontSize":       { "type": "string", "default": "" },
+        "priceLineHeight":     { "type": "string", "default": "" },
+        "priceLetterSpacing":  { "type": "string", "default": "" },
+        "priceTextTransform":  { "type": "string", "default": "" },
+        "priceTextDecoration": { "type": "string", "default": "" },
+        "priceTextAlign":      { "type": "string", "default": "" },
+
+        "descFontFamily":     { "type": "string", "default": "" },
+        "descFontWeight":     { "type": "string", "default": "" },
+        "descFontSize":       { "type": "string", "default": "" },
+        "descLineHeight":     { "type": "string", "default": "" },
+        "descLetterSpacing":  { "type": "string", "default": "" },
+        "descTextTransform":  { "type": "string", "default": "" },
+        "descTextDecoration": { "type": "string", "default": "" },
+        "descTextAlign":      { "type": "string", "default": "" },
+
+        "featureFontFamily":     { "type": "string", "default": "" },
+        "featureFontWeight":     { "type": "string", "default": "" },
+        "featureFontSize":       { "type": "string", "default": "" },
+        "featureLineHeight":     { "type": "string", "default": "" },
+        "featureLetterSpacing":  { "type": "string", "default": "" },
+        "featureTextTransform":  { "type": "string", "default": "" },
+        "featureTextDecoration": { "type": "string", "default": "" },
+        "featureTextAlign":      { "type": "string", "default": "" },
+
+        "ctaFontFamily":     { "type": "string", "default": "" },
+        "ctaFontWeight":     { "type": "string", "default": "" },
+        "ctaFontSize":       { "type": "string", "default": "" },
+        "ctaLineHeight":     { "type": "string", "default": "" },
+        "ctaLetterSpacing":  { "type": "string", "default": "" },
+        "ctaTextTransform":  { "type": "string", "default": "" },
+        "ctaTextDecoration": { "type": "string", "default": "" },
+        "ctaTextAlign":      { "type": "string", "default": "" }
+    },
+    "supports": {
+        "html": false,
+        "inserter": true,
+        "reusable": false
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php"
+}

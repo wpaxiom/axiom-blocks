@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/tabs",
+  "version": "1.0.0",
+  "title": "Tabs",
+  "category": "axiom-blocks",
+  "description": "Horizontal tabs with any block content inside each panel.",
+  "keywords": ["tabs", "tab", "content", "panel"],
+  "textdomain": "axiom-blocks",
+  "icon": "index-card",
+  "attributes": {
+    "activeTab":              { "type": "string", "default": "" },
+    "tabStyle":               { "type": "string", "default": "default" },
+    "tabOrientation":         { "type": "string", "default": "horizontal" },
+    "tabAlignment":           { "type": "string", "default": "left" },
+    "fullWidthTabs":          { "type": "boolean", "default": false },
+    "activeColor":            { "type": "string", "default": "" },
+    "inactiveColor":          { "type": "string", "default": "" },
+    "backgroundColor":        { "type": "string", "default": "" },
+    "contentBackgroundColor": { "type": "string", "default": "" },
+    "contentGap":             { "type": "number", "default": 0 },
+
+    "labelFontFamily":     { "type": "string", "default": "" },
+    "labelFontWeight":     { "type": "string", "default": "" },
+    "labelFontSize":       { "type": "string", "default": "" },
+    "labelLineHeight":     { "type": "string", "default": "" },
+    "labelLetterSpacing":  { "type": "string", "default": "" },
+    "labelTextTransform":  { "type": "string", "default": "" },
+    "labelTextDecoration": { "type": "string", "default": "" },
+    "labelTextAlign":      { "type": "string", "default": "" },
+
+    "paddingTop":    { "type": "string", "default": "" },
+    "paddingRight":  { "type": "string", "default": "" },
+    "paddingBottom": { "type": "string", "default": "" },
+    "paddingLeft":   { "type": "string", "default": "" },
+    "marginTop":     { "type": "string", "default": "" },
+    "marginRight":   { "type": "string", "default": "" },
+    "marginBottom":  { "type": "string", "default": "" },
+    "marginLeft":    { "type": "string", "default": "" }
+  },
+  "providesContext": {
+    "axiom-blocks/activeTab": "activeTab"
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "viewScript": "file:./assets/tabs.js",
+  "render": "file:./render.php"
+}

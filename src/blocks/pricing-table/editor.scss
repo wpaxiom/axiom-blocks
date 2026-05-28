@@ -1,0 +1,253 @@
+/**
+ * Pricing Table — editor-only inspector + canvas tweaks.
+ * Frontend look comes from style.scss (loaded in editor too).
+ */
+
+/* ── Canvas: feature row controls (per-plan child block) ─────────────────── */
+.ab-pt-feat {
+	position: relative;
+
+	&__toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 18px;
+		height: 18px;
+		margin-top: 1px;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: inherit;
+		cursor: pointer;
+		border-radius: 4px;
+		flex-shrink: 0;
+		transition: background 0.12s;
+
+		&:hover {
+			background: rgba(124, 58, 237, 0.08);
+		}
+	}
+
+	&.is-included &__toggle {
+		color: var(--ab-pt-accent, #7c3aed);
+	}
+
+	&.is-excluded &__toggle {
+		color: #9ca3af;
+	}
+
+	&__remove {
+		opacity: 0.55;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 22px;
+		height: 22px;
+		padding: 0;
+		margin-left: auto;
+		border: 0;
+		background: transparent;
+		color: #9ca3af;
+		cursor: pointer;
+		border-radius: 4px;
+		flex-shrink: 0;
+		transition: opacity 0.12s, color 0.12s, background 0.12s;
+
+		svg {
+			width: 12px;
+			height: 12px;
+		}
+
+		&:hover,
+		&:focus-visible {
+			opacity: 1;
+			color: #b91c1c;
+			background: #fef2f2;
+			outline: 0;
+		}
+	}
+
+	&:hover &__remove {
+		opacity: 1;
+	}
+}
+
+/* ── Canvas: "Add feature" affordance ────────────────────────────────────── */
+.ab-pt-feat-add-row {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ab-pt-feat-add {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 8px;
+	margin: 0;
+	border: 1px dashed #d1d5db;
+	border-radius: 6px;
+	background: transparent;
+	color: #6b7280;
+	font-size: 12px;
+	font-weight: 500;
+	cursor: pointer;
+	font-family: inherit;
+	transition: border-color 0.12s, color 0.12s, background 0.12s;
+
+	svg {
+		width: 11px;
+		height: 11px;
+	}
+
+	&:hover {
+		border-color: var(--ab-pt-accent, #7c3aed);
+		color: var(--ab-pt-accent, #7c3aed);
+		background: rgba(124, 58, 237, 0.04);
+	}
+}
+
+/* ── Canvas: RichText placeholder + active-edit highlight ────────────────── */
+.ab-pt-plan {
+
+	.ab-pt-plan__name,
+	.ab-pt-plan__amount,
+	.ab-pt-plan__currency,
+	.ab-pt-plan__period,
+	.ab-pt-plan__desc,
+	.ab-pt-feat__text,
+	.ab-pt-plan__cta {
+
+		&[data-rich-text-placeholder]::before {
+			color: #9ca3af;
+			opacity: 1;
+		}
+
+		/* Shows which field the user is currently editing. */
+		&:focus,
+		&[contenteditable="true"]:focus {
+			outline: 2px solid var(--ab-pt-accent, #7c3aed);
+			outline-offset: 2px;
+			border-radius: 3px;
+		}
+	}
+}
+
+/* ── Canvas: CTA in editor is a span (RichText), not an <a>. Keep button look ── */
+.ab-pt-plan .ab-pt-plan__cta[contenteditable] {
+	cursor: text;
+}
+
+/* ── Canvas: inline link editor (rendered as a regular positioned div) ───── */
+.ab-pt-link-popover {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	z-index: 20;
+	margin-top: 6px;
+	padding: 8px;
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+	&__form {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	&__input {
+		flex: 1;
+		min-width: 0;
+
+		input.block-editor-url-input__input {
+			width: 100%;
+			height: 32px;
+			padding: 0 10px;
+			border: 1px solid #d1d5db;
+			border-radius: 6px;
+			font-size: 13px;
+
+			&:focus {
+				border-color: var(--ab-pt-accent, #7c3aed);
+				box-shadow: 0 0 0 1px var(--ab-pt-accent, #7c3aed);
+				outline: 0;
+			}
+		}
+
+		/* WP suggestions dropdown styling. */
+		.block-editor-url-input__suggestions {
+			border-radius: 6px;
+			box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+		}
+	}
+
+	&__submit {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 32px;
+		height: 32px;
+		padding: 0;
+		border: 1px solid var(--ab-pt-accent, #7c3aed);
+		border-radius: 6px;
+		background: var(--ab-pt-accent, #7c3aed);
+		color: #fff;
+		cursor: pointer;
+		transition: opacity 0.12s;
+
+		&:hover {
+			opacity: 0.9;
+		}
+	}
+
+	&__newtab {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: 8px;
+		font-size: 12px;
+		color: #4b5563;
+		cursor: pointer;
+		user-select: none;
+
+		input[type="checkbox"] {
+			margin: 0;
+			width: 13px;
+			height: 13px;
+			cursor: pointer;
+		}
+	}
+}
+
+/* ── Editor: ensure the InnerBlocks layout container honours the grid ───── */
+.axiom-blocks-pricing-table__grid.block-editor-block-list__layout,
+.axiom-blocks-pricing-table__grid {
+	display: grid;
+	grid-template-columns: repeat(var(--ab-pt-columns, 3), minmax(0, 1fr));
+	gap: var(--ab-pt-gap, 24px);
+	align-items: stretch;
+
+	/* Each block-list block wrapper should fill its grid cell. */
+	> .wp-block,
+	> [data-block] {
+		margin: 0;
+		max-width: none;
+	}
+
+	/* The "+ add plan" appender sits on its own row spanning all columns. */
+	> .block-list-appender {
+		grid-column: 1 / -1;
+	}
+}
+
+@media (max-width: 768px) {
+
+	.axiom-blocks-pricing-table__grid.block-editor-block-list__layout,
+	.axiom-blocks-pricing-table__grid {
+		grid-template-columns: 1fr;
+	}
+}

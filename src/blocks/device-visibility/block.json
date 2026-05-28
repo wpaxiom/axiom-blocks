@@ -1,0 +1,43 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/device-visibility",
+	"version": "1.0.0",
+	"title": "Device Visibility",
+	"category": "axiom-blocks",
+	"icon": "hidden",
+	"description": "Show or hide any block on desktop, tablet, or mobile.",
+	"keywords": ["visibility", "responsive", "mobile", "desktop", "tablet"],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"attributes": {
+		"showOnDesktop": {
+			"type": "boolean",
+			"default": true
+		},
+		"showOnTablet": {
+			"type": "boolean",
+			"default": true
+		},
+		"showOnMobile": {
+			"type": "boolean",
+			"default": true
+		},
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"textdomain": "axiom-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.scss",
+	"style": "file:./style.scss",
+	"render": "file:./render.php"
+}

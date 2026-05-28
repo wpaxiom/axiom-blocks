@@ -1,0 +1,312 @@
+/**
+ * Tabs Block — shared styles (frontend + editor).
+ *
+ * Theme-aware: colors default to `currentColor` / `transparent`.
+ * Users override via the 4 color pickers, which set CSS custom props on the root.
+ */
+
+.axiom-blocks-tabs {
+
+	/* Note: --axiom-blocks-tab-active and --axiom-blocks-tab-inactive are
+     * intentionally NOT defaulted here. Each variant supplies its own fallback
+     * via var(--axiom-blocks-tab-active, <fallback>) so the user's color picker
+     * still overrides everything when set. Defaulting here to currentColor
+     * caused pills/boxed active backgrounds to inherit page text color. */
+	--axiom-blocks-tab-bg: transparent;
+	--axiom-blocks-tab-content-bg: transparent;
+	--axiom-blocks-tab-rule: rgba(128, 128, 128, 0.2);
+
+	&__list {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		background: var(--axiom-blocks-tab-bg);
+		border-bottom: 1px solid var(--axiom-blocks-tab-rule);
+		position: relative;
+	}
+
+	&__tab {
+		appearance: none;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 0.75rem 1.25rem;
+		font: inherit;
+		color: var(--axiom-blocks-tab-inactive);
+		opacity: 0.75;
+		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+		border-bottom: 2px solid transparent;
+		margin-bottom: -1px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--axiom-blocks-tab-active);
+			outline-offset: -2px;
+		}
+
+		&.is-active {
+			color: var(--axiom-blocks-tab-active);
+			opacity: 1;
+			border-bottom-color: var(--axiom-blocks-tab-active);
+		}
+	}
+
+	&.is-full-width .axiom-blocks-tabs__tab {
+		flex: 1;
+	}
+
+	&__content {
+		background: var(--axiom-blocks-tab-content-bg);
+	}
+
+	&.axiom-blocks-tab--horizontal .axiom-blocks-tabs__content {
+		margin-top: var(--axiom-blocks-tabs-content-gap, 0);
+	}
+
+	/* — Pills — soft track + solid filled active pill — */
+	&--pills {
+		--ab-pills-track: rgba(124, 58, 237, 0.06);
+		--ab-pills-active-bg: #7c3aed;
+		--ab-pills-active-text: #fff;
+		--ab-pills-inactive: rgba(0, 0, 0, 0.55);
+		--ab-pills-hover-bg: rgba(124, 58, 237, 0.08);
+		--ab-pills-hover-text: #7c3aed;
+
+		.axiom-blocks-tabs__list {
+			border-bottom: none;
+			gap: 0.375rem;
+			padding: 0.375rem;
+			background: var(--ab-pills-track);
+			border-radius: 9999px;
+			display: inline-flex;
+			width: auto;
+		}
+
+		&.is-full-width .axiom-blocks-tabs__list {
+			width: 100%;
+			display: flex;
+		}
+
+		.axiom-blocks-tabs__tab {
+			border-bottom: none;
+			border-radius: 9999px;
+			margin: 0;
+			padding: 0.5rem 1.1rem;
+			font-weight: 500;
+			opacity: 1;
+			color: var(--ab-pills-inactive);
+
+			&:hover {
+				background: var(--ab-pills-hover-bg);
+				color: var(--ab-pills-hover-text);
+				opacity: 1;
+			}
+
+			&.is-active {
+				background: var(--axiom-blocks-tab-active, var(--ab-pills-active-bg));
+				color: var(--ab-pills-active-text);
+				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
+				opacity: 1;
+			}
+		}
+	}
+
+	/* — Underline (default rule, beefier) — */
+	&--underline {
+
+		.axiom-blocks-tabs__list {
+			border-bottom-width: 2px;
+		}
+
+		.axiom-blocks-tabs__tab {
+			border-bottom-width: 3px;
+			margin-bottom: -2px;
+		}
+	}
+
+	/* — Boxed — active tab "lifts" out of the track with a card look — */
+	&--boxed {
+		--ab-boxed-track: #f3f4f6;
+		--ab-boxed-track-rule: #e5e7eb;
+		--ab-boxed-active-bg: #fff;
+		--ab-boxed-active-text: #7c3aed;
+		--ab-boxed-inactive: rgba(0, 0, 0, 0.55);
+		--ab-boxed-content-bg: #fff;
+
+		.axiom-blocks-tabs__list {
+			border-bottom: 1px solid var(--ab-boxed-track-rule);
+			gap: 0.25rem;
+			padding: 0.375rem 0.375rem 0;
+			background: var(--ab-boxed-track);
+			border-radius: 8px 8px 0 0;
+		}
+
+		.axiom-blocks-tabs__tab {
+			border: 1px solid transparent;
+			border-bottom: none;
+			border-radius: 6px 6px 0 0;
+			margin: 0;
+			padding: 0.625rem 1.1rem;
+			font-weight: 500;
+			opacity: 1;
+			color: var(--ab-boxed-inactive);
+			position: relative;
+			top: 1px;
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.55);
+				color: var(--ab-boxed-active-text);
+				opacity: 1;
+			}
+
+			&.is-active {
+				background: var(--axiom-blocks-tab-content-bg, var(--ab-boxed-active-bg));
+				color: var(--axiom-blocks-tab-active, var(--ab-boxed-active-text));
+				border-color: var(--ab-boxed-track-rule);
+				opacity: 1;
+				font-weight: 600;
+			}
+		}
+
+		.axiom-blocks-tabs__content {
+			background: var(--axiom-blocks-tab-content-bg, var(--ab-boxed-content-bg));
+			border: 1px solid var(--ab-boxed-track-rule);
+			border-top: none;
+			border-radius: 0 0 8px 8px;
+			padding: 1.25rem;
+		}
+	}
+}
+
+/* — Tab icons — library SVG (currentColor) or uploaded image (SVG / PNG). — */
+.axiom-blocks-tabs__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 1.1em;
+	height: 1.1em;
+	line-height: 0;
+
+	svg {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+}
+
+.axiom-blocks-tabs__icon-img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+}
+
+/* — Vertical orientation — tabs left, content right — */
+.axiom-blocks-tab--vertical {
+	display: flex;
+	flex-direction: row;
+	gap: var(--axiom-blocks-tabs-content-gap, 1.5rem);
+	align-items: flex-start;
+
+	.axiom-blocks-tabs__list {
+		flex-direction: column;
+		align-items: stretch;
+		flex-shrink: 0;
+		min-width: 180px;
+		border-bottom: none;
+		border-right: 1px solid var(--axiom-blocks-tab-rule);
+	}
+
+	.axiom-blocks-tabs__tab {
+		width: 100%;
+		justify-content: flex-start;
+		text-align: left;
+		border-bottom: none;
+		border-right: 2px solid transparent;
+		margin-bottom: 0;
+		margin-right: -1px;
+
+		&.is-active {
+			border-right-color: var(--axiom-blocks-tab-active);
+		}
+	}
+
+	.axiom-blocks-tabs__content {
+		flex: 1;
+		min-width: 0;
+	}
+
+	/* Vertical + Pills — purple track on the left, pills stack vertically. */
+	&.axiom-blocks-tabs--pills {
+
+		.axiom-blocks-tabs__list {
+			background: var(--ab-pills-track);
+			border-radius: 12px;
+			border-right: none;
+			padding: 0.5rem;
+			gap: 0.25rem;
+		}
+
+		.axiom-blocks-tabs__tab {
+			border-radius: 8px;
+			border-right: none;
+			margin: 0;
+			padding: 0.5rem 0.875rem;
+		}
+	}
+
+	/* Vertical + Boxed — track wraps left side, active tab opens to the right. */
+	&.axiom-blocks-tabs--boxed {
+
+		.axiom-blocks-tabs__list {
+			background: var(--ab-boxed-track);
+			border-radius: 8px 0 0 8px;
+			border-bottom: none;
+			border-right: 1px solid var(--ab-boxed-track-rule);
+			padding: 0.5rem 0 0.5rem 0.5rem;
+			gap: 0.25rem;
+		}
+
+		.axiom-blocks-tabs__tab {
+			top: 0;
+			border-radius: 6px 0 0 6px;
+			border: 1px solid transparent;
+			border-right: none;
+			margin: 0 -1px 0 0;
+			padding: 0.625rem 0.875rem;
+
+			&.is-active {
+				border-color: var(--ab-boxed-track-rule);
+				border-right-color: var(--axiom-blocks-tab-content-bg, var(--ab-boxed-active-bg));
+			}
+		}
+
+		.axiom-blocks-tabs__content {
+			border: 1px solid var(--ab-boxed-track-rule);
+			border-radius: 0 8px 8px 0;
+			padding: 1.25rem;
+		}
+	}
+}
+
+/* Panels — only the active one renders (editor + frontend). */
+.axiom-blocks-tab-panel {
+
+	&.is-inactive {
+		display: none;
+	}
+
+	&.is-active {
+		display: block;
+	}
+}

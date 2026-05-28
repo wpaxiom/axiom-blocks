@@ -1,0 +1,220 @@
+/**
+ * Pricing Table — frontend + editor preview styles.
+ *
+ * Driven by CSS custom properties set inline in render.php / index.js:
+ *   --ab-pt-columns, --ab-pt-gap, --ab-pt-accent
+ */
+
+.axiom-blocks-pricing-table {
+	--ab-pt-columns: 3;
+	--ab-pt-gap: 24px;
+	--ab-pt-accent: #7c3aed;
+
+	&__heading {
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin: 0 0 24px;
+		color: inherit;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(var(--ab-pt-columns), minmax(0, 1fr));
+		gap: var(--ab-pt-gap);
+		align-items: stretch;
+	}
+
+	@media (max-width: 768px) {
+
+		&__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+/* ── Plan card ───────────────────────────────────────────────────────────── */
+.ab-pt-plan {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 28px 24px;
+	border-radius: 12px;
+	background: #fff;
+	color: #1e1e1e;
+	box-sizing: border-box;
+	transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+
+	&__badge {
+		position: absolute;
+		top: -12px;
+		left: 50%;
+		transform: translateX(-50%);
+		padding: 4px 12px;
+		background: var(--ab-pt-accent);
+		color: #fff;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		border-radius: 99px;
+		white-space: nowrap;
+	}
+
+	&__name {
+		margin: 0;
+		font-size: 1.25rem;
+		font-weight: 700;
+		line-height: 1.2;
+	}
+
+	&__price {
+		display: flex;
+		align-items: baseline;
+		gap: 2px;
+		margin: 4px 0 2px;
+	}
+
+	&__currency {
+		font-size: 1.25rem;
+		font-weight: 600;
+		align-self: flex-start;
+		margin-top: 6px;
+		opacity: 0.7;
+	}
+
+	&__amount {
+		font-size: 2.75rem;
+		font-weight: 800;
+		line-height: 1;
+	}
+
+	&__period {
+		font-size: 0.95rem;
+		font-weight: 500;
+		opacity: 0.65;
+		margin-left: 4px;
+	}
+
+	&__desc {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.5;
+		opacity: 0.75;
+	}
+
+	&__features {
+		list-style: none;
+		margin: 8px 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		flex: 1 1 auto;
+	}
+
+	&__cta-area {
+		position: relative;
+		margin-top: auto;
+		display: flex;
+	}
+
+	&__cta {
+		flex: 1;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 12px 20px;
+		border-radius: 8px;
+		font-size: 0.95rem;
+		font-weight: 600;
+		text-decoration: none;
+		background: #f3f4f6;
+		color: #1e1e1e;
+		border: 1px solid transparent;
+		transition: background 0.15s, color 0.15s, border-color 0.15s;
+		cursor: pointer;
+
+		&:hover {
+			background: #e5e7eb;
+			color: #1e1e1e;
+		}
+	}
+}
+
+/* ── Feature row ─────────────────────────────────────────────────────────── */
+.ab-pt-feat {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	font-size: 0.9rem;
+	line-height: 1.45;
+
+	&__icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 18px;
+		height: 18px;
+		margin-top: 1px;
+	}
+
+	&.is-included &__icon {
+		color: var(--ab-pt-accent);
+	}
+
+	&.is-excluded &__icon {
+		color: #9ca3af;
+	}
+
+	&.is-excluded &__text {
+		opacity: 0.55;
+		text-decoration: line-through;
+	}
+}
+
+/* ── Card style variants ─────────────────────────────────────────────────── */
+.axiom-blocks-pricing-table.is-card-bordered .ab-pt-plan {
+	border: 1px solid #e5e7eb;
+	background: #fff;
+}
+
+.axiom-blocks-pricing-table.is-card-filled .ab-pt-plan {
+	background: #f9fafb;
+	border: 1px solid transparent;
+}
+
+.axiom-blocks-pricing-table.is-card-minimal .ab-pt-plan {
+	background: transparent;
+	border: 0;
+	padding: 20px 12px;
+}
+
+/* ── Highlighted plan ────────────────────────────────────────────────────── */
+.ab-pt-plan.is-highlight {
+	border-color: var(--ab-pt-accent);
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+
+	.ab-pt-plan__cta {
+		background: var(--ab-pt-accent);
+		color: #fff;
+
+		&:hover {
+			background: var(--ab-pt-accent);
+			color: #fff;
+			opacity: 0.9;
+		}
+	}
+}
+
+.axiom-blocks-pricing-table.is-card-minimal .ab-pt-plan.is-highlight {
+	border: 1px solid var(--ab-pt-accent);
+	padding: 28px 24px;
+	background: #fff;
+}
+
+.axiom-blocks-pricing-table.is-card-filled .ab-pt-plan.is-highlight {
+	background: #fff;
+	border-color: var(--ab-pt-accent);
+}

@@ -1,0 +1,124 @@
+/**
+ * Advanced Section — shared styles (frontend + editor).
+ *
+ * Single-wrapper design: the block wrapper is both the background/positioning
+ * context AND the flex container for inner blocks. Overlay is a pseudo-element
+ * so WP's constrained layout system sees direct children correctly.
+ */
+
+/* Fallback alignfull / alignwide for themes that don't wire them up for
+ * custom blocks. :where() keeps specificity at 0 so themes still win. */
+:where(.axiom-blocks-section.alignfull) {
+	width: 100vw;
+	max-width: 100vw;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+}
+
+:where(.axiom-blocks-section.alignwide) {
+	max-width: min(100%, 1100px);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.axiom-blocks-section {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: var(--axiom-blocks-section-justify, center);
+	align-items: var(--axiom-blocks-section-align, center);
+	overflow: hidden;
+	box-sizing: border-box;
+	padding-top: var(--ab-padding-top, 0);
+	padding-right: var(--ab-padding-right, 0);
+	padding-bottom: var(--ab-padding-bottom, 0);
+	padding-left: var(--ab-padding-left, 0);
+	margin-top: var(--ab-margin-top, 0);
+	margin-right: var(--ab-margin-right, 0);
+	margin-bottom: var(--ab-margin-bottom, 0);
+	margin-left: var(--ab-margin-left, 0);
+
+	/* Overlay as a pseudo-element so child DOM isn't disturbed and WP's
+     * layout selectors (direct-child `>` combinators) still match inner blocks.
+     * `background` (not `background-color`) so a gradient string also works.
+     * Falls back to the legacy `--...-overlay-color` var so older posts still render. */
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: var(--axiom-blocks-section-overlay-bg, var(--axiom-blocks-section-overlay-color, transparent));
+		opacity: var(--axiom-blocks-section-overlay-opacity, 0);
+		mix-blend-mode: var(--axiom-blocks-section-overlay-blend, normal);
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	/* Lift real children above the overlay. */
+	> * {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+/* Mobile min-height override: only kicks in when the user set a separate
+ * mobile value (the JS/PHP add `has-mobile-min-h` for that). */
+@media (max-width: 767px) {
+
+	.axiom-blocks-section.has-mobile-min-h {
+		min-height: var(--axiom-blocks-section-min-h-mobile, var(--axiom-blocks-section-min-h, 400px));
+	}
+}
+
+/* ── Parallax ──────────────────────────────────────────────────────────────
+ * The image moves to a `::before` pseudo so it can be transformed without
+ * disturbing inner-block layout (WP's constrained-layout selectors target
+ * direct children — adding a real DOM child would break them). */
+.axiom-blocks-section.has-parallax {
+
+	/* The wrapper may have the bg-image inlined; the JS-driven layer takes over. */
+	background-image: none !important;
+
+	&::before {
+		content: "";
+		position: absolute;
+
+		/* Extra room top/bottom so transforms don't reveal empty edges. */
+		top: -20%;
+		right: 0;
+		bottom: -20%;
+		left: 0;
+		background-image: var(--ab-bg-image);
+		background-size: var(--ab-bg-size, cover);
+		background-position: var(--ab-bg-position, center center);
+		background-repeat: var(--ab-bg-repeat, no-repeat);
+		background-attachment: scroll;
+		transform: translate3d(0, var(--ab-parallax-y, 0), 0);
+		will-change: transform;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	/* Lift the overlay above the parallax layer. */
+	&::after {
+		z-index: 1;
+	}
+
+	/* And the inner blocks above the overlay. */
+	> * {
+		z-index: 2;
+	}
+}
+
+/**
+ * Horizontal alignment override.
+ *
+ * WP's constrained layout applies `margin-left: auto; margin-right: auto` to
+ * direct children, which overrides flex `align-items` in cross-axis. To make
+ * left / right actually work on constrained children we cancel those margins.
+ * Selector specificity (0,2,6) beats WP's (0,1,1) so no !important needed.
+ */
+.axiom-blocks-section.is-h-left > :not(.alignleft):not(.alignright):not(.alignfull):not(.alignwide),
+.axiom-blocks-section.is-h-right > :not(.alignleft):not(.alignright):not(.alignfull):not(.alignwide) {
+	margin-left: 0;
+	margin-right: 0;
+}

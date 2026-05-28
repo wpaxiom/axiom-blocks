@@ -1,0 +1,11 @@
+/**
+ * Before/After Slider — editor-only tweaks.
+ *
+ * Most visual styling is shared with the frontend via style.scss. Here we
+ * only override the affordances that don't make sense in a non-interactive
+ * preview (the editor doesn't run the drag JS).
+ */
+
+.axiom-blocks-bas__frame {
+	cursor: default;
+}

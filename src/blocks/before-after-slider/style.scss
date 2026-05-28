@@ -1,0 +1,151 @@
+/**
+ * Before/After Slider — shared styles (frontend + editor).
+ *
+ * The slider itself lives on `.axiom-blocks-bas__frame`. The outer `.axiom-blocks-bas`
+ * exists so spacing (padding/margin) applies around the frame cleanly.
+ *
+ * Positioning strategy:
+ *   - .is-aspect-auto → after image sizes the frame via natural aspect ratio
+ *   - .is-aspect-fixed → frame has explicit aspect-ratio; both images fill it
+ */
+
+.axiom-blocks-bas {
+	padding-top: var(--ab-padding-top, 0);
+	padding-right: var(--ab-padding-right, 0);
+	padding-bottom: var(--ab-padding-bottom, 0);
+	padding-left: var(--ab-padding-left, 0);
+	margin-top: var(--ab-margin-top, 0);
+	margin-right: var(--ab-margin-right, 0);
+	margin-bottom: var(--ab-margin-bottom, 0);
+	margin-left: var(--ab-margin-left, 0);
+
+	&__frame {
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+		user-select: none;
+		touch-action: none;
+		cursor: ew-resize;
+		outline: none;
+
+		&:focus-visible {
+			outline: 2px solid var(--wp--preset--color--primary, #4f46e5);
+			outline-offset: 2px;
+		}
+
+		&.is-dragging {
+			cursor: grabbing;
+		}
+	}
+
+	&__img {
+		display: block;
+		width: 100%;
+		pointer-events: none;
+	}
+
+	.is-aspect-auto {
+
+		> .axiom-blocks-bas__img--after {
+			position: relative;
+			height: auto;
+		}
+
+		> .axiom-blocks-bas__img--before {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.is-aspect-fixed > .axiom-blocks-bas__img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* Clip the top (before) image based on the slider position. */
+	&__img--before {
+		clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
+	}
+
+	&__line {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: var(--slider-pos);
+		width: 2px;
+		background: var(--line-color);
+		transform: translateX(-50%);
+		pointer-events: none;
+	}
+
+	&__handle {
+		position: absolute;
+		top: 50%;
+		left: var(--slider-pos);
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: var(--handle-color);
+		color: #333;
+		transform: translate(-50%, -50%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+		pointer-events: none;
+
+		svg {
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	&__label {
+		position: absolute;
+		top: 12px;
+		padding: 4px 10px;
+		font-size: 12px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		background: rgba(0, 0, 0, 0.6);
+		color: #fff;
+		border-radius: 3px;
+		pointer-events: none;
+		z-index: 2;
+
+		&--before {
+			left: 12px;
+		}
+
+		&--after {
+			right: 12px;
+		}
+	}
+
+	&__placeholder {
+		padding: 48px 24px;
+		background: #f6f7f7;
+		border: 1px dashed #c3c4c7;
+		border-radius: 6px;
+		text-align: center;
+		color: #6b7280;
+
+		p {
+			margin: 0;
+		}
+	}
+
+	&__hint {
+		margin: 8px 0 0;
+		font-size: 11px;
+		color: #6b7280;
+		font-style: italic;
+	}
+}

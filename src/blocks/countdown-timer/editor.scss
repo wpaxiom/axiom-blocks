@@ -1,0 +1,134 @@
+/**
+ * Countdown Timer - Editor Styles
+ */
+
+// Container
+.axiom-blocks-countdown__container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.axiom-blocks-countdown.alignwide .axiom-blocks-countdown__unit,
+.axiom-blocks-countdown.alignfull .axiom-blocks-countdown__unit {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
+// Horizontal layout
+.axiom-blocks-countdown--horizontal .axiom-blocks-countdown__container {
+	flex-direction: row;
+	align-items: stretch;
+}
+
+.axiom-blocks-countdown--horizontal.axiom-blocks-countdown--align-left .axiom-blocks-countdown__container {
+	justify-content: flex-start;
+}
+
+.axiom-blocks-countdown--horizontal.axiom-blocks-countdown--align-center .axiom-blocks-countdown__container {
+	justify-content: center;
+}
+
+.axiom-blocks-countdown--horizontal.axiom-blocks-countdown--align-right .axiom-blocks-countdown__container {
+	justify-content: flex-end;
+}
+
+// Vertical layout
+.axiom-blocks-countdown--vertical .axiom-blocks-countdown__container {
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
+.axiom-blocks-countdown--vertical.axiom-blocks-countdown--align-left .axiom-blocks-countdown__container {
+	align-items: flex-start;
+}
+
+.axiom-blocks-countdown--vertical.axiom-blocks-countdown--align-center .axiom-blocks-countdown__container {
+	align-items: center;
+}
+
+.axiom-blocks-countdown--vertical.axiom-blocks-countdown--align-right .axiom-blocks-countdown__container {
+	align-items: flex-end;
+}
+
+// Unit
+.axiom-blocks-countdown__unit {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 80px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// Digit
+.axiom-blocks-countdown__digit {
+	font-weight: 700;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+}
+
+// Label
+.axiom-blocks-countdown__label {
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-top: 8px;
+	font-weight: 500;
+}
+
+// Expired state
+.axiom-blocks-countdown__expired {
+	border: 2px dashed #ccc;
+	background: #f9f9f9;
+	color: #666;
+	padding: 20px;
+	text-align: center;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+// DateTime picker styles
+.axiom-blocks-datetime-picker {
+	display: block;
+	width: 100%;
+
+	&__trigger {
+		width: 100%;
+		justify-content: flex-start;
+		gap: 8px;
+	}
+
+	&__text {
+		flex: 1;
+		text-align: left;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+.axiom-blocks-datetime-picker__popover {
+	padding: 12px;
+}
+
+// Color control in inspector
+.axiom-blocks-color-control {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 16px;
+
+	label {
+		font-weight: 500;
+	}
+
+	input[type="color"] {
+		width: 40px;
+		height: 40px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		cursor: pointer;
+		padding: 2px;
+	}
+}
