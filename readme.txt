@@ -91,9 +91,9 @@ No. Axiom Blocks works on any WordPress site. The Trust Badges and Free Shipping
 == Screenshots ==
 
 1. Axiom Blocks block manager — enable or disable individual blocks from a clean admin interface.
-2. Advanced Section block settings — backgrounds, overlays, shape dividers, and animations.
-3. Before/After Slider block in action.
-4. Pricing Table block with feature lists and CTAs.
+2. Pricing Table block with feature lists and CTAs.
+3. Advanced Section block settings — backgrounds, overlays, shape dividers, and animations.
+4. Before/After Slider block in action.
 
 == Source Code ==
 
