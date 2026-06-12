@@ -107,6 +107,38 @@ class Blocks {
 			'description' => 'Pricing plans with feature lists and CTAs',
 			'icon'        => 'money-alt',
 		),
+		array(
+			'id'          => 'advanced-button',
+			'name'        => 'Advanced Button',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Button with icons, hover states, and sub-captions',
+			'icon'        => 'button',
+		),
+		array(
+			'id'          => 'advanced-heading',
+			'name'        => 'Advanced Heading',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Heading with highlight spans, sub-heading, and accent line',
+			'icon'        => 'heading',
+		),
+		array(
+			'id'          => 'icon',
+			'name'        => 'Icon',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Library or custom SVG icon with shape, colour, and link',
+			'icon'        => 'star-filled',
+		),
+		array(
+			'id'          => 'icon-list',
+			'name'        => 'Icon List',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'List with a custom icon on every row',
+			'icon'        => 'editor-ul',
+		),
 
 		// ── WooCommerce ──────────────────────────────────────────────────────
 		array(

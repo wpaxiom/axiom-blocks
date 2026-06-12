@@ -12,13 +12,16 @@ import { useEffect } from '@wordpress/element';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 import {
-	BSSelectControl,
-	BSColorControl,
-	BSToggleControl,
-	BSRangeControl,
-} from '../BSControls';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
-import { TypographyPanel, getTypographyStyle } from '../TypographyPanel';
+	ABSelectControl,
+	ABColorControl,
+	ABToggleControl,
+	ABRangeControl,
+} from '../../components/ABControls';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import {
+	TypographyPanel,
+	getTypographyStyle,
+} from '../../components/TypographyPanel';
 import { BlockIcon } from '../../blockIcons';
 import { UIIcon, UI_ICON_SLUGS } from '../../uiIcons';
 import {
@@ -529,13 +532,13 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Preset', 'axiom-blocks' ) }
 						value={ tabStyle }
 						options={ TAB_STYLES }
 						onChange={ ( v ) => setAttributes( { tabStyle: v } ) }
 					/>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Orientation', 'axiom-blocks' ) }
 						value={ tabOrientation || 'horizontal' }
 						options={ [
@@ -553,7 +556,7 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 						}
 					/>
 					{ ! isVertical && (
-						<BSSelectControl
+						<ABSelectControl
 							label={ __( 'Alignment', 'axiom-blocks' ) }
 							value={ tabAlignment }
 							options={ [
@@ -575,14 +578,14 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 							}
 						/>
 					) }
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Full-width tabs', 'axiom-blocks' ) }
 						checked={ fullWidthTabs }
 						onChange={ ( v ) =>
 							setAttributes( { fullWidthTabs: v } )
 						}
 					/>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Content gap', 'axiom-blocks' ) }
 						value={ contentGap }
 						min={ 0 }
@@ -605,28 +608,28 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 							'axiom-blocks'
 						) }
 					</p>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Active', 'axiom-blocks' ) }
 						color={ activeColor || '#000000' }
 						onChange={ ( c ) =>
 							setAttributes( { activeColor: c } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Inactive', 'axiom-blocks' ) }
 						color={ inactiveColor || '#666666' }
 						onChange={ ( c ) =>
 							setAttributes( { inactiveColor: c } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Tab bar', 'axiom-blocks' ) }
 						color={ backgroundColor || '#ffffff' }
 						onChange={ ( c ) =>
 							setAttributes( { backgroundColor: c } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Content', 'axiom-blocks' ) }
 						color={ contentBackgroundColor || '#ffffff' }
 						onChange={ ( c ) =>

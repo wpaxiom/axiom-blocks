@@ -41,6 +41,11 @@ class Registry {
 		self::register_before_after_slider();
 		self::register_pricing_table();
 		self::register_pricing_plan();
+		self::register_button_group();
+		self::register_advanced_button();
+		self::register_advanced_heading();
+		self::register_icon();
+		self::register_icon_list();
 		self::register_trust_badges();
 		self::register_free_shipping_progress();
 
@@ -187,6 +192,51 @@ class Registry {
 	 */
 	private static function register_pricing_plan(): void {
 		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/pricing-table/pricing-plan' );
+	}
+
+	/**
+	 * Register Button Group Block (parent of Advanced Button)
+	 *
+	 * @return void
+	 */
+	private static function register_button_group(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/button-group' );
+	}
+
+	/**
+	 * Register Advanced Button Block
+	 *
+	 * @return void
+	 */
+	private static function register_advanced_button(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/advanced-button' );
+	}
+
+	/**
+	 * Register Advanced Heading Block
+	 *
+	 * @return void
+	 */
+	private static function register_advanced_heading(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/advanced-heading' );
+	}
+
+	/**
+	 * Register Icon Block
+	 *
+	 * @return void
+	 */
+	private static function register_icon(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/icon' );
+	}
+
+	/**
+	 * Register Icon List Block
+	 *
+	 * @return void
+	 */
+	private static function register_icon_list(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/icon-list' );
 	}
 
 	/**

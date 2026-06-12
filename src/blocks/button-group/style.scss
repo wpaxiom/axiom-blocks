@@ -1,0 +1,48 @@
+/**
+ * Button Group — frontend styles.
+ */
+
+.axiom-blocks-button-group {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--ab-btng-gap, 12px);
+
+	&.is-vertical {
+		flex-direction: column;
+		align-items: flex-start;
+
+		&.is-justify-center {
+			align-items: center;
+		}
+
+		&.is-justify-right {
+			align-items: flex-end;
+		}
+	}
+
+	&:not(.is-vertical) {
+		&.is-justify-center {
+			justify-content: center;
+		}
+
+		&.is-justify-right {
+			justify-content: flex-end;
+		}
+
+		&.is-justify-space-between {
+			justify-content: space-between;
+		}
+	}
+
+	@media (max-width: 600px) {
+		&.is-stack-mobile:not(.is-vertical) {
+			flex-direction: column;
+			align-items: stretch;
+
+			.ab-adv-btn {
+				width: 100%;
+			}
+		}
+	}
+}

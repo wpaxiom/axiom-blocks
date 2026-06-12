@@ -11,11 +11,14 @@ import { useState, useRef, useEffect } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
 import { link as linkIcon, linkOff as unlinkIcon } from '@wordpress/icons';
 import {
-	BSTextControl,
-	BSToggleControl,
-	BSSubAccordion,
-} from '../../BSControls';
-import { TypographyPanel, getTypographyStyle } from '../../TypographyPanel';
+	ABTextControl,
+	ABToggleControl,
+	ABSubAccordion,
+} from '../../../components/ABControls';
+import {
+	TypographyPanel,
+	getTypographyStyle,
+} from '../../../components/TypographyPanel';
 import { BlockIcon } from '../../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -206,14 +209,14 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 					title={ __( 'Plan', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Mark as recommended', 'axiom-blocks' ) }
 						checked={ !! isHighlight }
 						onChange={ ( v ) =>
 							setAttributes( { isHighlight: v } )
 						}
 					/>
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Badge text', 'axiom-blocks' ) }
 						value={ badge }
 						onChange={ ( v ) => setAttributes( { badge: v } ) }
@@ -232,14 +235,14 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 					title={ __( 'Price display', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show currency', 'axiom-blocks' ) }
 						checked={ showCurrency !== false }
 						onChange={ ( v ) =>
 							setAttributes( { showCurrency: v } )
 						}
 					/>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show period', 'axiom-blocks' ) }
 						checked={ showPeriod !== false }
 						onChange={ ( v ) => setAttributes( { showPeriod: v } ) }
@@ -250,14 +253,14 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 					title={ __( 'Call to action', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Button URL', 'axiom-blocks' ) }
 						value={ ctaUrl }
 						onChange={ ( v ) => setAttributes( { ctaUrl: v } ) }
 						placeholder="https://"
 						type="url"
 					/>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Open in new tab', 'axiom-blocks' ) }
 						checked={ !! ctaNewTab }
 						onChange={ ( v ) => setAttributes( { ctaNewTab: v } ) }
@@ -269,7 +272,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 					initialOpen={ false }
 				>
 					<div className="ab-sub-acc-list">
-						<BSSubAccordion
+						<ABSubAccordion
 							title={ __( 'Plan name', 'axiom-blocks' ) }
 						>
 							<TypographyPanel
@@ -278,16 +281,16 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								prefix="name"
 								unwrapped
 							/>
-						</BSSubAccordion>
-						<BSSubAccordion title={ __( 'Price', 'axiom-blocks' ) }>
+						</ABSubAccordion>
+						<ABSubAccordion title={ __( 'Price', 'axiom-blocks' ) }>
 							<TypographyPanel
 								attributes={ attributes }
 								setAttributes={ setAttributes }
 								prefix="price"
 								unwrapped
 							/>
-						</BSSubAccordion>
-						<BSSubAccordion
+						</ABSubAccordion>
+						<ABSubAccordion
 							title={ __( 'Description', 'axiom-blocks' ) }
 						>
 							<TypographyPanel
@@ -296,8 +299,8 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								prefix="desc"
 								unwrapped
 							/>
-						</BSSubAccordion>
-						<BSSubAccordion
+						</ABSubAccordion>
+						<ABSubAccordion
 							title={ __( 'Features', 'axiom-blocks' ) }
 						>
 							<TypographyPanel
@@ -306,8 +309,8 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								prefix="feature"
 								unwrapped
 							/>
-						</BSSubAccordion>
-						<BSSubAccordion
+						</ABSubAccordion>
+						<ABSubAccordion
 							title={ __( 'Button', 'axiom-blocks' ) }
 						>
 							<TypographyPanel
@@ -316,7 +319,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								prefix="cta"
 								unwrapped
 							/>
-						</BSSubAccordion>
+						</ABSubAccordion>
 					</div>
 				</PanelBody>
 			</InspectorControls>

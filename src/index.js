@@ -19,6 +19,11 @@ import { TabPanel } from './blocks/tabs/tab-panel';
 import { BeforeAfterSlider } from './blocks/before-after-slider';
 import { PricingTable } from './blocks/pricing-table';
 import { PricingPlan } from './blocks/pricing-table/pricing-plan';
+import { ButtonGroup } from './blocks/button-group';
+import { AdvancedButton } from './blocks/advanced-button';
+import { AdvancedHeading } from './blocks/advanced-heading';
+import { Icon } from './blocks/icon';
+import { IconList } from './blocks/icon-list';
 import { TrustBadges } from './blocks/trust-badges';
 import { FreeShippingProgress } from './blocks/free-shipping-progress';
 
@@ -44,6 +49,11 @@ const blocks = [
 	BeforeAfterSlider,
 	PricingTable,
 	PricingPlan,
+	ButtonGroup,
+	AdvancedButton,
+	AdvancedHeading,
+	Icon,
+	IconList,
 	TrustBadges,
 	FreeShippingProgress,
 ];
@@ -132,6 +142,8 @@ export {
 	BeforeAfterSlider,
 	PricingTable,
 	PricingPlan,
+	ButtonGroup,
+	AdvancedButton,
 	TrustBadges,
 	FreeShippingProgress,
 };

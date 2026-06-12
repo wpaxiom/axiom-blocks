@@ -16,6 +16,7 @@
 namespace AxiomBlocks;
 
 use AxiomBlocks\Admin\Dashboard;
+use AxiomBlocks\Admin\Feedback;
 use AxiomBlocks\API\Routes;
 use AxiomBlocks\Blocks\Blocks;
 use AxiomBlocks\Blocks\Registry;
@@ -44,7 +45,7 @@ final class Plugin {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '1.0.1';
 
 	/**
 	 * Get instance
@@ -83,6 +84,7 @@ final class Plugin {
 		// Admin UI.
 		if ( is_admin() ) {
 			Dashboard::init();
+			Feedback::init();
 		}
 
 		// REST API (always loaded for both admin and frontend).

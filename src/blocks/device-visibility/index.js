@@ -10,8 +10,8 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { PanelBody, Notice } from '@wordpress/components';
-import { BSToggleControl } from '../BSControls';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
+import { ABToggleControl } from '../../components/ABControls';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -96,7 +96,7 @@ export const DeviceVisibility = {
 									) }
 								</Notice>
 							) }
-							<BSToggleControl
+							<ABToggleControl
 								label={ __(
 									'Show on Desktop',
 									'axiom-blocks'
@@ -110,7 +110,7 @@ export const DeviceVisibility = {
 									'axiom-blocks'
 								) }
 							/>
-							<BSToggleControl
+							<ABToggleControl
 								label={ __( 'Show on Tablet', 'axiom-blocks' ) }
 								checked={ showOnTablet }
 								onChange={ ( value ) =>
@@ -121,7 +121,7 @@ export const DeviceVisibility = {
 									'axiom-blocks'
 								) }
 							/>
-							<BSToggleControl
+							<ABToggleControl
 								label={ __( 'Show on Mobile', 'axiom-blocks' ) }
 								checked={ showOnMobile }
 								onChange={ ( value ) =>

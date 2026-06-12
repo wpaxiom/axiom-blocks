@@ -6,14 +6,14 @@ import {
 	MediaUploadCheck,
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
 import {
-	BSRangeControl,
-	BSSelectControl,
-	BSColorControl,
-	BSTextControl,
-	BSToggleControl,
-} from '../BSControls';
+	ABRangeControl,
+	ABSelectControl,
+	ABColorControl,
+	ABTextControl,
+	ABToggleControl,
+} from '../../components/ABControls';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -147,21 +147,21 @@ function BeforeAfterSliderEdit( { attributes, setAttributes } ) {
 					title={ __( 'Labels', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show labels', 'axiom-blocks' ) }
 						checked={ showLabels }
 						onChange={ ( v ) => setAttributes( { showLabels: v } ) }
 					/>
 					{ showLabels && (
 						<>
-							<BSTextControl
+							<ABTextControl
 								label={ __( 'Before label', 'axiom-blocks' ) }
 								value={ beforeLabel }
 								onChange={ ( v ) =>
 									setAttributes( { beforeLabel: v } )
 								}
 							/>
-							<BSTextControl
+							<ABTextControl
 								label={ __( 'After label', 'axiom-blocks' ) }
 								value={ afterLabel }
 								onChange={ ( v ) =>
@@ -176,7 +176,7 @@ function BeforeAfterSliderEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Initial position', 'axiom-blocks' ) }
 						value={ initialPosition }
 						onChange={ ( v ) =>
@@ -190,7 +190,7 @@ function BeforeAfterSliderEdit( { attributes, setAttributes } ) {
 							'axiom-blocks'
 						) }
 					/>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Aspect ratio', 'axiom-blocks' ) }
 						value={ aspectRatio }
 						options={ ASPECT_RATIOS }
@@ -198,14 +198,14 @@ function BeforeAfterSliderEdit( { attributes, setAttributes } ) {
 							setAttributes( { aspectRatio: v } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Handle color', 'axiom-blocks' ) }
 						color={ handleColor }
 						onChange={ ( v ) =>
 							setAttributes( { handleColor: v } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Line color', 'axiom-blocks' ) }
 						color={ lineColor }
 						onChange={ ( v ) => setAttributes( { lineColor: v } ) }

@@ -2,14 +2,17 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
-	BSRangeControl,
-	BSSelectControl,
-	BSTextControl,
-	BSColorControl,
-	BSToggleControl,
-} from '../BSControls';
-import { TypographyPanel, getTypographyStyle } from '../TypographyPanel';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
+	ABRangeControl,
+	ABSelectControl,
+	ABTextControl,
+	ABColorControl,
+	ABToggleControl,
+} from '../../components/ABControls';
+import {
+	TypographyPanel,
+	getTypographyStyle,
+} from '../../components/TypographyPanel';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -72,7 +75,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 					title={ __( 'Rating', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Precision', 'axiom-blocks' ) }
 						value={ precision }
 						options={ [
@@ -91,7 +94,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { precision: v } ) }
 					/>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Rating', 'axiom-blocks' ) }
 						value={ rating }
 						onChange={ ( v ) =>
@@ -108,7 +111,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 						}
 						unit=""
 					/>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Max Stars', 'axiom-blocks' ) }
 						value={ maxStars }
 						onChange={ ( v ) =>
@@ -125,19 +128,19 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 					title={ __( 'Labels', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show numeric value', 'axiom-blocks' ) }
 						checked={ showValue }
 						onChange={ ( v ) => setAttributes( { showValue: v } ) }
 					/>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show review count', 'axiom-blocks' ) }
 						checked={ showCount }
 						onChange={ ( v ) => setAttributes( { showCount: v } ) }
 					/>
 					{ showCount && (
 						<>
-							<BSTextControl
+							<ABTextControl
 								label={ __( 'Review count', 'axiom-blocks' ) }
 								type="number"
 								value={ String( reviewCount ?? 0 ) }
@@ -148,7 +151,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 								}
 								min={ 0 }
 							/>
-							<BSTextControl
+							<ABTextControl
 								label={ __( 'Count label', 'axiom-blocks' ) }
 								value={ countLabel }
 								onChange={ ( v ) =>
@@ -167,7 +170,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Alignment', 'axiom-blocks' ) }
 						value={ alignment }
 						options={ [
@@ -186,26 +189,26 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { alignment: v } ) }
 					/>
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Star size', 'axiom-blocks' ) }
 						value={ starSize }
 						onChange={ ( v ) => setAttributes( { starSize: v } ) }
 						help={ __( 'e.g. 20px, 1.5rem', 'axiom-blocks' ) }
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Filled color', 'axiom-blocks' ) }
 						color={ filledColor }
 						onChange={ ( c ) =>
 							setAttributes( { filledColor: c } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Empty color', 'axiom-blocks' ) }
 						color={ emptyColor }
 						onChange={ ( c ) => setAttributes( { emptyColor: c } ) }
 					/>
 					{ ( showValue || showCount ) && (
-						<BSColorControl
+						<ABColorControl
 							label={ __( 'Text color', 'axiom-blocks' ) }
 							color={ textColor }
 							onChange={ ( c ) =>

@@ -56,6 +56,11 @@ const BLOCKS = [
 			[ 'pricing-plan/render.php', 'pricing-plan/render.php' ],
 		],
 	},
+	{ id: 'button-group', files: [ 'block.json', 'render.php' ] },
+	{
+		id: 'advanced-button',
+		files: [ 'block.json', 'render.php', 'icons.php' ],
+	},
 	{
 		id: 'trust-badges',
 		files: [ 'block.json', 'render.php', 'badges.php', 'assets/' ],

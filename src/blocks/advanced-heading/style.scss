@@ -1,0 +1,82 @@
+/**
+ * Advanced Heading — frontend styles.
+ *
+ * Dynamic values (highlight, accent, link colours) arrive as CSS custom
+ * properties set inline on the wrapper by render.php (mirrored by edit). The
+ * highlight mark and accent line read those vars with sensible fallbacks.
+ */
+
+$ah-purple: #7c3aed;
+
+.ab-ah {
+
+	&__heading {
+		margin: 0;
+
+		a {
+			color: var(--ab-ah-link, inherit);
+			transition: color 0.15s ease;
+
+			&:hover,
+			&:focus {
+				color: var(--ab-ah-link-h, var(--ab-ah-link, inherit));
+			}
+		}
+	}
+
+	&__sub {
+		margin: 0.4em 0 0;
+		opacity: 0.85;
+
+		a {
+			color: var(--ab-ah-link, inherit);
+
+			&:hover,
+			&:focus {
+				color: var(--ab-ah-link-h, var(--ab-ah-link, inherit));
+			}
+		}
+	}
+
+	// Sub-heading sitting above the heading needs its gap below, not above.
+	&__heading + &__sub {
+		margin: 0.4em 0 0;
+	}
+
+	// ── Accent line ───────────────────────────────────────────────────────────
+	&__accent {
+		display: block;
+		width: var(--ab-ah-accent-w, 60px);
+		height: var(--ab-ah-accent-h, 4px);
+		margin: 0.6em 0;
+		background: var(--ab-ah-accent-color, $ah-purple);
+		border-radius: 2px;
+
+		&.is-accent-center {
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		&.is-accent-right {
+			margin-left: auto;
+			margin-right: 0;
+		}
+
+		&.is-accent-left {
+			margin-left: 0;
+			margin-right: auto;
+		}
+	}
+}
+
+// ── Highlight mark (custom RichText format) ──────────────────────────────────
+// Colours are block-level: driven by the wrapper's --ab-ah-hl-* vars so every
+// highlight in the heading shares one curated style. Class + tag are frozen.
+.ab-ah-highlight {
+	background: var(--ab-ah-hl-bg, #fef9c3);
+	color: var(--ab-ah-hl-color, inherit);
+	padding: 0.05em 0.2em;
+	border-radius: 0.15em;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+}

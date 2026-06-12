@@ -1,0 +1,15 @@
+/**
+ * Advanced Heading — editor-only styles.
+ *
+ * Visual styling is shared via style.scss (loaded in the editor canvas too).
+ * Keep editor-specific affordances here only.
+ */
+
+.ab-ah {
+
+	.ab-ah__heading,
+	.ab-ah__sub {
+		// RichText placeholders should not inherit a collapsed height.
+		min-height: 1em;
+	}
+}

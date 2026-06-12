@@ -5,7 +5,7 @@ Tags: gutenberg, blocks, editor, page-builder, woocommerce
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,7 +116,30 @@ Development happens on GitHub: https://github.com/wpaxiom/axiom-blocks. Bug repo
 * `webpack.config.js` — webpack configuration.
 * `package.json` — npm dependencies and scripts.
 
+== Privacy ==
+
+During normal use, Axiom Blocks does not collect, store, or transmit any data, and makes no external connections.
+
+The plugin includes one optional, opt-in connection to an external service:
+
+**Deactivation feedback.** When you deactivate Axiom Blocks from the Plugins screen, a short form asks why. Only if you choose a reason and click "Submit & Deactivate" is anything sent. In that case the following is transmitted to our feedback service at insights.wpaxiom.com:
+
+* the reason you selected and any comment you type;
+* the plugin, WordPress, and PHP version numbers;
+* your site's language/locale;
+* a randomly generated, anonymous installation ID (used only to avoid counting the same response twice).
+
+No personal data is sent — no name, no email address, no website URL, and none of your site's content. If you click "Skip & Deactivate" or close the form, nothing is sent at all.
+
+This service is operated by the plugin author. Privacy policy: https://wpaxiom.com/privacy/ — Terms of service: https://wpaxiom.com/terms/
+
+Developers can redirect the feedback to their own server — or disable it entirely by returning an empty string — using the `axiom_blocks_feedback_endpoint` filter.
+
 == Changelog ==
+
+= 1.0.1 =
+* New blocks: Advanced Heading, Icon, Icon List, Advanced Button, and Button Group.
+* Added an optional, opt-in deactivation feedback form. No data is collected unless you choose a reason and submit it — see the Privacy section for exactly what is sent.
 
 = 1.0.0 =
 * Initial release.
@@ -126,6 +149,9 @@ Development happens on GitHub: https://github.com/wpaxiom/axiom-blocks. Bug repo
 * Full Site Editing (FSE) support.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Adds five new blocks (Advanced Heading, Icon, Icon List, Advanced Button, Button Group) and an optional, opt-in deactivation feedback form.
 
 = 1.0.0 =
 Initial release. Install and activate to start using Axiom Blocks blocks in the WordPress editor.

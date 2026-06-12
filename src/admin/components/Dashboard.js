@@ -5,7 +5,7 @@ import { BlockCard } from './BlockCard';
 import { SettingsTab } from './SettingsTab';
 import { Loader } from './Loader';
 import {
-	BSLogo,
+	ABLogo,
 	StatCard,
 	SectionBar,
 	SearchIcon,
@@ -247,7 +247,7 @@ export function Dashboard() {
 			{ /* Plugin page header */ }
 			<div className="ab-header">
 				<div className="ab-header__top">
-					<BSLogo size={ 28 } color={ PRIMARY } />
+					<ABLogo size={ 28 } color={ PRIMARY } />
 					<div>
 						<h1 className="ab-header__title">Axiom Blocks</h1>
 						<p className="ab-header__sub">

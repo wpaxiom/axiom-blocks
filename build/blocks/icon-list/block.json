@@ -1,0 +1,167 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/icon-list",
+  "version": "1.0.0",
+  "title": "Icon List",
+  "category": "axiom-blocks",
+  "description": "A list with a custom icon on every row — for features, benefits, or checklists.",
+  "keywords": [
+    "icon",
+    "list",
+    "checklist",
+    "features"
+  ],
+  "textdomain": "axiom-blocks",
+  "icon": "editor-ul",
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "id": "item-1",
+          "icon": "check",
+          "text": "First list item",
+          "url": ""
+        },
+        {
+          "id": "item-2",
+          "icon": "check",
+          "text": "Second list item",
+          "url": ""
+        },
+        {
+          "id": "item-3",
+          "icon": "check",
+          "text": "Third list item",
+          "url": ""
+        }
+      ]
+    },
+    "layout": {
+      "type": "string",
+      "default": "vertical"
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": "left"
+    },
+    "itemsAlign": {
+      "type": "string",
+      "default": "left"
+    },
+    "iconSize": {
+      "type": "string",
+      "default": ""
+    },
+    "iconColor": {
+      "type": "string",
+      "default": ""
+    },
+    "gap": {
+      "type": "string",
+      "default": ""
+    },
+    "rowGap": {
+      "type": "string",
+      "default": ""
+    },
+    "showDivider": {
+      "type": "boolean",
+      "default": false
+    },
+    "dividerColor": {
+      "type": "string",
+      "default": ""
+    },
+    "textColor": {
+      "type": "string",
+      "default": ""
+    },
+    "linkColor": {
+      "type": "string",
+      "default": ""
+    },
+    "linkHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "fontFamily": {
+      "type": "string",
+      "default": ""
+    },
+    "fontWeight": {
+      "type": "string",
+      "default": ""
+    },
+    "fontSize": {
+      "type": "string",
+      "default": ""
+    },
+    "lineHeight": {
+      "type": "string",
+      "default": ""
+    },
+    "letterSpacing": {
+      "type": "string",
+      "default": ""
+    },
+    "textTransform": {
+      "type": "string",
+      "default": ""
+    },
+    "textDecoration": {
+      "type": "string",
+      "default": ""
+    },
+    "textAlign": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingTop": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingRight": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingBottom": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingLeft": {
+      "type": "string",
+      "default": ""
+    },
+    "marginTop": {
+      "type": "string",
+      "default": ""
+    },
+    "marginRight": {
+      "type": "string",
+      "default": ""
+    },
+    "marginBottom": {
+      "type": "string",
+      "default": ""
+    },
+    "marginLeft": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "render": "file:./render.php"
+}

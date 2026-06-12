@@ -2,14 +2,14 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
-	BSSelectControl,
-	BSColorControl,
-	BSToggleControl,
-	BSTextControl,
-	BSTextareaControl,
-	BSRangeControl,
-} from '../BSControls';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
+	ABSelectControl,
+	ABColorControl,
+	ABToggleControl,
+	ABTextControl,
+	ABTextareaControl,
+	ABRangeControl,
+} from '../../components/ABControls';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -72,7 +72,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 							)
 						) }
 					</div>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Detection mode', 'axiom-blocks' ) }
 						value={ thresholdMode }
 						options={ [
@@ -93,7 +93,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 						}
 					/>
 					{ thresholdMode === 'custom' && (
-						<BSTextControl
+						<ABTextControl
 							label={ __( 'Custom threshold', 'axiom-blocks' ) }
 							type="number"
 							value={ customThreshold }
@@ -115,7 +115,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 					title={ __( 'Messages', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSTextareaControl
+					<ABTextareaControl
 						label={ __( 'Before qualifying', 'axiom-blocks' ) }
 						value={ messageBefore }
 						onChange={ ( v ) =>
@@ -127,7 +127,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 							'axiom-blocks'
 						) }
 					/>
-					<BSTextareaControl
+					<ABTextareaControl
 						label={ __( 'After qualifying', 'axiom-blocks' ) }
 						value={ messageQualified }
 						onChange={ ( v ) =>
@@ -141,7 +141,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Text alignment', 'axiom-blocks' ) }
 						value={ textAlign }
 						options={ [
@@ -160,7 +160,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { textAlign: v } ) }
 					/>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Bar height', 'axiom-blocks' ) }
 						value={ barHeight }
 						min={ 2 }
@@ -169,7 +169,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 						unit=""
 						onChange={ ( v ) => setAttributes( { barHeight: v } ) }
 					/>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Corner radius', 'axiom-blocks' ) }
 						value={ borderRadius }
 						min={ 0 }
@@ -186,19 +186,19 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 					title={ __( 'Colors', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Progress fill', 'axiom-blocks' ) }
 						color={ barColor }
 						onChange={ ( c ) => setAttributes( { barColor: c } ) }
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Track', 'axiom-blocks' ) }
 						color={ barBackground }
 						onChange={ ( c ) =>
 							setAttributes( { barBackground: c } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Qualified fill', 'axiom-blocks' ) }
 						color={ qualifiedColor }
 						onChange={ ( c ) =>
@@ -211,7 +211,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 					title={ __( 'Visibility', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __(
 							'Hide when cart is empty',
 							'axiom-blocks'
@@ -221,7 +221,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 							setAttributes( { hideWhenEmpty: v } )
 						}
 					/>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __(
 							'Hide once free shipping is unlocked',
 							'axiom-blocks'

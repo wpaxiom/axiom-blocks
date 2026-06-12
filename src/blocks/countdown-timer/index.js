@@ -8,14 +8,17 @@ import { PanelBody, DateTimePicker, Dropdown } from '@wordpress/components';
 import { useState, useEffect } from '@wordpress/element';
 import { dateI18n, getSettings } from '@wordpress/date';
 import {
-	BSSelectControl,
-	BSTextControl,
-	BSColorControl,
-	BSToggleControl,
-	BSSubAccordion,
-} from '../BSControls';
-import { TypographyPanel, getTypographyStyle } from '../TypographyPanel';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
+	ABSelectControl,
+	ABTextControl,
+	ABColorControl,
+	ABToggleControl,
+	ABSubAccordion,
+} from '../../components/ABControls';
+import {
+	TypographyPanel,
+	getTypographyStyle,
+} from '../../components/TypographyPanel';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -269,28 +272,28 @@ export const CountdownTimer = {
 							title={ __( 'Display Units', 'axiom-blocks' ) }
 							initialOpen={ false }
 						>
-							<BSToggleControl
+							<ABToggleControl
 								label={ __( 'Show Days', 'axiom-blocks' ) }
 								checked={ showDays }
 								onChange={ ( v ) =>
 									setAttributes( { showDays: v } )
 								}
 							/>
-							<BSToggleControl
+							<ABToggleControl
 								label={ __( 'Show Hours', 'axiom-blocks' ) }
 								checked={ showHours }
 								onChange={ ( v ) =>
 									setAttributes( { showHours: v } )
 								}
 							/>
-							<BSToggleControl
+							<ABToggleControl
 								label={ __( 'Show Minutes', 'axiom-blocks' ) }
 								checked={ showMinutes }
 								onChange={ ( v ) =>
 									setAttributes( { showMinutes: v } )
 								}
 							/>
-							<BSToggleControl
+							<ABToggleControl
 								label={ __( 'Show Seconds', 'axiom-blocks' ) }
 								checked={ showSeconds }
 								onChange={ ( v ) =>
@@ -304,7 +307,7 @@ export const CountdownTimer = {
 							initialOpen={ false }
 						>
 							{ showDays && (
-								<BSTextControl
+								<ABTextControl
 									label={ __( 'Days Label', 'axiom-blocks' ) }
 									value={ labelDays }
 									onChange={ ( v ) =>
@@ -313,7 +316,7 @@ export const CountdownTimer = {
 								/>
 							) }
 							{ showHours && (
-								<BSTextControl
+								<ABTextControl
 									label={ __(
 										'Hours Label',
 										'axiom-blocks'
@@ -325,7 +328,7 @@ export const CountdownTimer = {
 								/>
 							) }
 							{ showMinutes && (
-								<BSTextControl
+								<ABTextControl
 									label={ __(
 										'Minutes Label',
 										'axiom-blocks'
@@ -337,7 +340,7 @@ export const CountdownTimer = {
 								/>
 							) }
 							{ showSeconds && (
-								<BSTextControl
+								<ABTextControl
 									label={ __(
 										'Seconds Label',
 										'axiom-blocks'
@@ -354,7 +357,7 @@ export const CountdownTimer = {
 							title={ __( 'Layout', 'axiom-blocks' ) }
 							initialOpen={ false }
 						>
-							<BSSelectControl
+							<ABSelectControl
 								label={ __( 'Layout', 'axiom-blocks' ) }
 								value={ layout }
 								options={ [
@@ -374,7 +377,7 @@ export const CountdownTimer = {
 									setAttributes( { layout: v } )
 								}
 							/>
-							<BSSelectControl
+							<ABSelectControl
 								label={ __( 'Alignment', 'axiom-blocks' ) }
 								value={ alignment }
 								options={ [
@@ -395,7 +398,7 @@ export const CountdownTimer = {
 									setAttributes( { alignment: v } )
 								}
 							/>
-							<BSTextControl
+							<ABTextControl
 								label={ __( 'Border Radius', 'axiom-blocks' ) }
 								value={ borderRadius }
 								onChange={ ( v ) =>
@@ -406,7 +409,7 @@ export const CountdownTimer = {
 									'axiom-blocks'
 								) }
 							/>
-							<BSTextControl
+							<ABTextControl
 								label={ __(
 									'Gap Between Units',
 									'axiom-blocks'
@@ -426,21 +429,21 @@ export const CountdownTimer = {
 							title={ __( 'Colors', 'axiom-blocks' ) }
 							initialOpen={ false }
 						>
-							<BSColorControl
+							<ABColorControl
 								label={ __( 'Digit Color', 'axiom-blocks' ) }
 								color={ digitColor }
 								onChange={ ( c ) =>
 									setAttributes( { digitColor: c } )
 								}
 							/>
-							<BSColorControl
+							<ABColorControl
 								label={ __( 'Label Color', 'axiom-blocks' ) }
 								color={ labelColor }
 								onChange={ ( c ) =>
 									setAttributes( { labelColor: c } )
 								}
 							/>
-							<BSColorControl
+							<ABColorControl
 								label={ __(
 									'Background Color',
 									'axiom-blocks'
@@ -457,7 +460,7 @@ export const CountdownTimer = {
 							initialOpen={ false }
 						>
 							<div className="ab-sub-acc-list">
-								<BSSubAccordion
+								<ABSubAccordion
 									title={ __( 'Digit', 'axiom-blocks' ) }
 								>
 									<TypographyPanel
@@ -466,8 +469,8 @@ export const CountdownTimer = {
 										prefix="digit"
 										unwrapped
 									/>
-								</BSSubAccordion>
-								<BSSubAccordion
+								</ABSubAccordion>
+								<ABSubAccordion
 									title={ __( 'Label', 'axiom-blocks' ) }
 								>
 									<TypographyPanel
@@ -476,7 +479,7 @@ export const CountdownTimer = {
 										prefix="label"
 										unwrapped
 									/>
-								</BSSubAccordion>
+								</ABSubAccordion>
 							</div>
 						</PanelBody>
 
@@ -484,7 +487,7 @@ export const CountdownTimer = {
 							title={ __( 'Expired State', 'axiom-blocks' ) }
 							initialOpen={ false }
 						>
-							<BSSelectControl
+							<ABSelectControl
 								label={ __(
 									'When Timer Expires',
 									'axiom-blocks'
@@ -518,7 +521,7 @@ export const CountdownTimer = {
 								}
 							/>
 							{ expiredAction === 'showMessage' && (
-								<BSTextControl
+								<ABTextControl
 									label={ __(
 										'Expired Message',
 										'axiom-blocks'
@@ -530,7 +533,7 @@ export const CountdownTimer = {
 								/>
 							) }
 							{ expiredAction === 'redirect' && (
-								<BSTextControl
+								<ABTextControl
 									label={ __(
 										'Redirect URL',
 										'axiom-blocks'

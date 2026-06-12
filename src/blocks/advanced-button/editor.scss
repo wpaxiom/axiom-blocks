@@ -1,0 +1,27 @@
+/**
+ * Advanced Button — editor-only styles.
+ */
+
+.editor-styles-wrapper {
+	// Keep the label editable when "Icon only" is on — fade instead of hiding.
+	.ab-adv-btn.is-icon-only .ab-adv-btn__content {
+		position: static;
+		width: auto;
+		height: auto;
+		margin: 0;
+		overflow: visible;
+		clip: auto;
+		opacity: 0.45;
+	}
+
+	// RichText placeholder should inherit the button color, not editor gray.
+	.ab-adv-btn [data-rich-text-placeholder]::after {
+		color: inherit;
+		opacity: 0.6;
+	}
+
+	.ab-adv-btn__text,
+	.ab-adv-btn__sub {
+		min-width: 1ch;
+	}
+}

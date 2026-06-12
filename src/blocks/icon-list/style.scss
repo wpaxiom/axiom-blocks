@@ -1,0 +1,108 @@
+/**
+ * Icon List — frontend styles.
+ *
+ * Dynamic values arrive as CSS custom properties set inline on the <ul> by
+ * render.php (mirrored by edit). Transitions live here (safecss strips inline).
+ */
+
+.ab-icon-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.ab-icon-list--vertical {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ab-il-row-gap, 12px);
+
+	&.ab-icon-list--align-center {
+		align-items: center;
+	}
+
+	&.ab-icon-list--align-right {
+		align-items: flex-end;
+	}
+}
+
+.ab-icon-list--horizontal {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--ab-il-row-gap, 12px);
+	column-gap: calc(var(--ab-il-row-gap, 12px) + 10px);
+
+	&.ab-icon-list--align-center {
+		justify-content: center;
+	}
+
+	&.ab-icon-list--align-right {
+		justify-content: flex-end;
+	}
+}
+
+.ab-icon-list__item {
+	display: flex;
+	align-items: center;
+	gap: var(--ab-il-gap, 10px);
+	margin: 0;
+}
+
+.ab-icon-list__link {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--ab-il-gap, 10px);
+	color: var(--ab-il-link, inherit);
+	text-decoration: none;
+	transition: color 0.15s ease;
+
+	&:hover,
+	&:focus {
+		color: var(--ab-il-link-h, var(--ab-il-link, inherit));
+	}
+}
+
+// Icon on the right — reverse whichever element holds the icon + text.
+.ab-icon-list--icon-right {
+
+	.ab-icon-list__item,
+	.ab-icon-list__link {
+		flex-direction: row-reverse;
+	}
+}
+
+.ab-icon-list__icon {
+	display: inline-flex;
+	flex-shrink: 0;
+	line-height: 0;
+	color: var(--ab-il-icon-color, currentColor);
+
+	svg {
+		display: block;
+		width: var(--ab-il-icon-size, 20px);
+		height: var(--ab-il-icon-size, 20px);
+	}
+}
+
+.ab-icon-list__text {
+	min-width: 0;
+
+	a {
+		color: var(--ab-il-link, inherit);
+		transition: color 0.15s ease;
+
+		&:hover,
+		&:focus {
+			color: var(--ab-il-link-h, var(--ab-il-link, inherit));
+		}
+	}
+}
+
+// Divider between rows (vertical lists only).
+.ab-icon-list--vertical.has-divider {
+
+	.ab-icon-list__item:not(:last-child) {
+		padding-bottom: var(--ab-il-row-gap, 12px);
+		border-bottom: 1px solid var(--ab-il-divider, rgba(0, 0, 0, 0.1));
+	}
+}

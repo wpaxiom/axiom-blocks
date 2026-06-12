@@ -7,15 +7,18 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
-	BSTextControl,
-	BSSelectControl,
-	BSColorControl,
-	BSToggleControl,
-	BSRangeControl,
-	BSSubAccordion,
-} from '../BSControls';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
-import { TypographyPanel, getTypographyStyle } from '../TypographyPanel';
+	ABTextControl,
+	ABSelectControl,
+	ABColorControl,
+	ABToggleControl,
+	ABRangeControl,
+	ABSubAccordion,
+} from '../../components/ABControls';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import {
+	TypographyPanel,
+	getTypographyStyle,
+} from '../../components/TypographyPanel';
 import { BlockIcon } from '../../blockIcons';
 import { BADGE_GROUPS, BADGE_INDEX, BADGE_PRESETS, BadgeSvg } from './badges';
 import {
@@ -23,7 +26,7 @@ import {
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
 
-/* ── Inline icons (1.6px stroke, matches BSControls language) ───────────── */
+/* ── Inline icons (1.6px stroke, matches ABControls language) ───────────── */
 const STROKE = {
 	fill: 'none',
 	stroke: 'currentColor',
@@ -195,7 +198,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 					title={ __( 'Content', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show heading', 'axiom-blocks' ) }
 						checked={ headingShow }
 						onChange={ ( v ) =>
@@ -204,14 +207,14 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 					/>
 					{ headingShow && (
 						<>
-							<BSTextControl
+							<ABTextControl
 								label={ __( 'Heading text', 'axiom-blocks' ) }
 								value={ headingText }
 								onChange={ ( v ) =>
 									setAttributes( { headingText: v } )
 								}
 							/>
-							<BSSelectControl
+							<ABSelectControl
 								label={ __(
 									'Heading alignment',
 									'axiom-blocks'
@@ -244,7 +247,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 					title={ __( 'Badges', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Preset', 'axiom-blocks' ) }
 						value={ preset }
 						options={ [
@@ -284,7 +287,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 								{ group.label }
 							</div>
 							{ group.badges.map( ( b ) => (
-								<BSToggleControl
+								<ABToggleControl
 									key={ b.id }
 									label={ b.label }
 									checked={ selectedBadges.includes( b.id ) }
@@ -407,7 +410,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 					title={ __( 'Layout', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Layout', 'axiom-blocks' ) }
 						value={ layout }
 						options={ [
@@ -423,7 +426,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 						onChange={ ( v ) => setAttributes( { layout: v } ) }
 					/>
 					{ layout === 'grid' && (
-						<BSRangeControl
+						<ABRangeControl
 							label={ __( 'Columns', 'axiom-blocks' ) }
 							value={ columns }
 							onChange={ ( v ) =>
@@ -440,7 +443,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 							unit=""
 						/>
 					) }
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Alignment', 'axiom-blocks' ) }
 						value={ alignment }
 						options={ [
@@ -459,7 +462,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { alignment: v } ) }
 					/>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Gap', 'axiom-blocks' ) }
 						value={ gap }
 						onChange={ ( v ) => setAttributes( { gap: v ?? 0 } ) }
@@ -468,7 +471,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 						step={ 1 }
 						unit="px"
 					/>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Badge size', 'axiom-blocks' ) }
 						value={ badgeSize }
 						options={ [
@@ -494,7 +497,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Color mode', 'axiom-blocks' ) }
 						value={ colorMode }
 						options={ [
@@ -510,7 +513,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 						onChange={ ( v ) => setAttributes( { colorMode: v } ) }
 					/>
 					{ colorMode === 'mono' && (
-						<BSColorControl
+						<ABColorControl
 							label={ __( 'Icon color', 'axiom-blocks' ) }
 							color={ iconColor }
 							onChange={ ( v ) =>
@@ -518,21 +521,21 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 							}
 						/>
 					) }
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show card background', 'axiom-blocks' ) }
 						checked={ showCard }
 						onChange={ ( v ) => setAttributes( { showCard: v } ) }
 					/>
 					{ showCard && (
 						<>
-							<BSColorControl
+							<ABColorControl
 								label={ __( 'Card color', 'axiom-blocks' ) }
 								color={ cardColor }
 								onChange={ ( v ) =>
 									setAttributes( { cardColor: v } )
 								}
 							/>
-							<BSRangeControl
+							<ABRangeControl
 								label={ __( 'Card radius', 'axiom-blocks' ) }
 								value={ cardRadius }
 								onChange={ ( v ) =>
@@ -545,13 +548,13 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 							/>
 						</>
 					) }
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show border', 'axiom-blocks' ) }
 						checked={ showBorder }
 						onChange={ ( v ) => setAttributes( { showBorder: v } ) }
 					/>
 					{ showBorder && (
-						<BSColorControl
+						<ABColorControl
 							label={ __( 'Border color', 'axiom-blocks' ) }
 							color={ borderColor }
 							onChange={ ( v ) =>
@@ -567,7 +570,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 					initialOpen={ false }
 				>
 					<div className="ab-sub-acc-list">
-						<BSSubAccordion
+						<ABSubAccordion
 							title={ __( 'Heading', 'axiom-blocks' ) }
 						>
 							<TypographyPanel
@@ -576,8 +579,8 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 								prefix="heading"
 								unwrapped
 							/>
-						</BSSubAccordion>
-						<BSSubAccordion
+						</ABSubAccordion>
+						<ABSubAccordion
 							title={ __( 'Badge label', 'axiom-blocks' ) }
 						>
 							<TypographyPanel
@@ -586,7 +589,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 								prefix="label"
 								unwrapped
 							/>
-						</BSSubAccordion>
+						</ABSubAccordion>
 					</div>
 				</PanelBody>
 

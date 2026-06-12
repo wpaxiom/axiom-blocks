@@ -11,12 +11,12 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, FocalPointPicker } from '@wordpress/components';
 import {
-	BSRangeControl,
-	BSSelectControl,
-	BSColorControl,
-	BSToggleControl,
-} from '../BSControls';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
+	ABRangeControl,
+	ABSelectControl,
+	ABColorControl,
+	ABToggleControl,
+} from '../../components/ABControls';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -163,7 +163,7 @@ function LengthControl( { label, value, onChange, help, min = 0 } ) {
 	return (
 		<div className="ab-ctrl">
 			{ label && <div className="ab-ctrl__label">{ label }</div> }
-			<BSRangeControl
+			<ABRangeControl
 				value={ num }
 				onChange={ setNum }
 				min={ min }
@@ -326,7 +326,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 					title={ __( 'Background', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Type', 'axiom-blocks' ) }
 						value={ backgroundType }
 						options={ BACKGROUND_TYPES }
@@ -336,7 +336,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 					/>
 
 					{ backgroundType === 'color' && (
-						<BSColorControl
+						<ABColorControl
 							label={ __( 'Color', 'axiom-blocks' ) }
 							color={ backgroundColor || '#ffffff' }
 							onChange={ ( c ) =>
@@ -347,7 +347,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 
 					{ backgroundType === 'gradient' && (
 						<>
-							<BSSelectControl
+							<ABSelectControl
 								label={ __( 'Gradient type', 'axiom-blocks' ) }
 								value={ gradientType }
 								options={ [
@@ -365,7 +365,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 								}
 							/>
 							{ gradientType === 'linear' && (
-								<BSRangeControl
+								<ABRangeControl
 									label={ __( 'Angle', 'axiom-blocks' ) }
 									value={ gradientAngle }
 									onChange={ ( v ) =>
@@ -379,14 +379,14 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 									unit="°"
 								/>
 							) }
-							<BSColorControl
+							<ABColorControl
 								label={ __( 'From', 'axiom-blocks' ) }
 								color={ gradientFromColor }
 								onChange={ ( c ) =>
 									setAttributes( { gradientFromColor: c } )
 								}
 							/>
-							<BSRangeControl
+							<ABRangeControl
 								label={ __( 'From stop', 'axiom-blocks' ) }
 								value={ gradientFromStop ?? 0 }
 								onChange={ ( v ) =>
@@ -399,7 +399,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 								step={ 1 }
 								unit="%"
 							/>
-							<BSToggleControl
+							<ABToggleControl
 								label={ __( 'Use mid color', 'axiom-blocks' ) }
 								checked={ !! gradientUseMidStop }
 								onChange={ ( v ) =>
@@ -408,7 +408,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							/>
 							{ gradientUseMidStop && (
 								<>
-									<BSColorControl
+									<ABColorControl
 										label={ __( 'Mid', 'axiom-blocks' ) }
 										color={ gradientMidColor }
 										onChange={ ( c ) =>
@@ -417,7 +417,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 											} )
 										}
 									/>
-									<BSRangeControl
+									<ABRangeControl
 										label={ __(
 											'Mid stop',
 											'axiom-blocks'
@@ -435,14 +435,14 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 									/>
 								</>
 							) }
-							<BSColorControl
+							<ABColorControl
 								label={ __( 'To', 'axiom-blocks' ) }
 								color={ gradientToColor }
 								onChange={ ( c ) =>
 									setAttributes( { gradientToColor: c } )
 								}
 							/>
-							<BSRangeControl
+							<ABRangeControl
 								label={ __( 'To stop', 'axiom-blocks' ) }
 								value={ gradientToStop ?? 100 }
 								onChange={ ( v ) =>
@@ -521,7 +521,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							</MediaUploadCheck>
 							{ backgroundImage && (
 								<>
-									<BSSelectControl
+									<ABSelectControl
 										label={ __( 'Size', 'axiom-blocks' ) }
 										value={ backgroundSize }
 										options={ [
@@ -575,7 +575,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 											}
 											__nextHasNoMarginBottom
 										/>
-										<BSSelectControl
+										<ABSelectControl
 											label={ __(
 												'Or use a preset',
 												'axiom-blocks'
@@ -607,7 +607,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 											}
 										/>
 									</div>
-									<BSSelectControl
+									<ABSelectControl
 										label={ __( 'Repeat', 'axiom-blocks' ) }
 										value={ backgroundRepeat }
 										options={ [
@@ -647,7 +647,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 										}
 									/>
 									{ ! enableParallax && (
-										<BSSelectControl
+										<ABSelectControl
 											label={ __(
 												'Attachment',
 												'axiom-blocks'
@@ -676,7 +676,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 											}
 										/>
 									) }
-									<BSToggleControl
+									<ABToggleControl
 										label={ __(
 											'Parallax',
 											'axiom-blocks'
@@ -693,7 +693,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 										) }
 									/>
 									{ enableParallax && (
-										<BSRangeControl
+										<ABRangeControl
 											label={ __(
 												'Parallax speed',
 												'axiom-blocks'
@@ -723,7 +723,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 					title={ __( 'Overlay', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Type', 'axiom-blocks' ) }
 						value={ overlayType }
 						options={ [
@@ -742,7 +742,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 					/>
 
 					{ overlayType === 'color' && (
-						<BSColorControl
+						<ABColorControl
 							label={ __( 'Color', 'axiom-blocks' ) }
 							color={ overlayColor || '#000000' }
 							onChange={ ( c ) =>
@@ -753,7 +753,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 
 					{ overlayType === 'gradient' && (
 						<>
-							<BSSelectControl
+							<ABSelectControl
 								label={ __( 'Gradient type', 'axiom-blocks' ) }
 								value={ overlayGradientType }
 								options={ [
@@ -771,7 +771,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 								}
 							/>
 							{ overlayGradientType === 'linear' && (
-								<BSRangeControl
+								<ABRangeControl
 									label={ __( 'Angle', 'axiom-blocks' ) }
 									value={ overlayGradientAngle }
 									onChange={ ( v ) =>
@@ -785,7 +785,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 									unit="°"
 								/>
 							) }
-							<BSColorControl
+							<ABColorControl
 								label={ __( 'From', 'axiom-blocks' ) }
 								color={ overlayGradientFromColor }
 								onChange={ ( c ) =>
@@ -794,7 +794,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 									} )
 								}
 							/>
-							<BSColorControl
+							<ABColorControl
 								label={ __( 'To', 'axiom-blocks' ) }
 								color={ overlayGradientToColor }
 								onChange={ ( c ) =>
@@ -823,7 +823,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							{ __( 'Remove overlay', 'axiom-blocks' ) }
 						</button>
 					) }
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Opacity', 'axiom-blocks' ) }
 						value={ overlayOpacity }
 						onChange={ ( v ) =>
@@ -834,7 +834,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 						step={ 1 }
 						unit="%"
 					/>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Blend mode', 'axiom-blocks' ) }
 						value={ overlayBlendMode }
 						options={ BLEND_MODES }
@@ -848,7 +848,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 					title={ __( 'Border', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Style', 'axiom-blocks' ) }
 						value={ borderStyle }
 						options={ [
@@ -879,7 +879,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 					/>
 					{ borderStyle && borderStyle !== 'none' && (
 						<>
-							<BSRangeControl
+							<ABRangeControl
 								label={ __( 'Width', 'axiom-blocks' ) }
 								value={ borderWidth }
 								onChange={ ( v ) =>
@@ -890,7 +890,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 								step={ 1 }
 								unit="px"
 							/>
-							<BSColorControl
+							<ABColorControl
 								label={ __( 'Color', 'axiom-blocks' ) }
 								color={ borderColor || '#000000' }
 								onChange={ ( c ) =>
@@ -899,7 +899,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							/>
 						</>
 					) }
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Border radius', 'axiom-blocks' ) }
 						value={ borderRadius }
 						onChange={ ( v ) =>
@@ -932,7 +932,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							'axiom-blocks'
 						) }
 					/>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Vertical', 'axiom-blocks' ) }
 						value={ verticalAlign }
 						options={ [
@@ -953,7 +953,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							setAttributes( { verticalAlign: v } )
 						}
 					/>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Horizontal', 'axiom-blocks' ) }
 						value={ horizontalAlign }
 						options={ [

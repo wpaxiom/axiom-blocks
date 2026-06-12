@@ -1,13 +1,14 @@
 /**
- * BSControls — Reusable styled sidebar controls for Axiom Blocks blocks.
+ * ABControls — Reusable styled sidebar controls for Axiom Blocks blocks.
  * Matches the Axiom Blocks Design System: WP-blue interactive, DM Sans font.
  */
 
+import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
 
 /* ── Range slider + number input ─────────────────────────────────────────── */
-export function BSRangeControl( {
+export function ABRangeControl( {
 	label,
 	value,
 	onChange,
@@ -59,7 +60,7 @@ export function BSRangeControl( {
 }
 
 /* ── Styled dropdown ─────────────────────────────────────────────────────── */
-export function BSSelectControl( { label, value, onChange, options } ) {
+export function ABSelectControl( { label, value, onChange, options } ) {
 	const selectedLabel =
 		options.find( ( o ) => o.value === value )?.label ?? '';
 	return (
@@ -104,13 +105,36 @@ export function BSSelectControl( { label, value, onChange, options } ) {
 }
 
 /* ── Color swatch + native color picker ──────────────────────────────────── */
-export function BSColorControl( { label, color, onChange } ) {
-	const id = useInstanceId( BSColorControl, 'ab-color' );
+export function ABColorControl( {
+	label,
+	color,
+	onChange,
+	enableReset = true,
+} ) {
+	const id = useInstanceId( ABColorControl, 'ab-color' );
+	const showReset = enableReset && !! color;
 	return (
 		<div className="ab-ctrl">
-			{ label && <div className="ab-ctrl__label">{ label }</div> }
+			{ ( label || showReset ) && (
+				<div className="ab-ctrl__label-row">
+					{ label && (
+						<span className="ab-ctrl__label">{ label }</span>
+					) }
+					{ showReset && (
+						<button
+							type="button"
+							className="ab-ctrl__reset"
+							onClick={ () => onChange( '' ) }
+						>
+							{ __( 'Reset', 'axiom-blocks' ) }
+						</button>
+					) }
+				</div>
+			) }
 			<label htmlFor={ id } className="ab-ctrl__color-wrap">
-				<span className="ab-ctrl__color-hex">{ color || '—' }</span>
+				<span className="ab-ctrl__color-hex">
+					{ color || __( 'Default', 'axiom-blocks' ) }
+				</span>
 				<span
 					className="ab-ctrl__color-swatch"
 					style={ { background: color } }
@@ -128,7 +152,7 @@ export function BSColorControl( { label, color, onChange } ) {
 }
 
 /* ── Single-line text input ──────────────────────────────────────────────── */
-export function BSTextControl( {
+export function ABTextControl( {
 	label,
 	value,
 	onChange,
@@ -156,14 +180,14 @@ export function BSTextControl( {
 }
 
 /* ── Toggle switch ───────────────────────────────────────────────────────── */
-export function BSToggleControl( {
+export function ABToggleControl( {
 	label,
 	checked,
 	onChange,
 	help,
 	disabled = false,
 } ) {
-	const id = useInstanceId( BSToggleControl, 'ab-toggle' );
+	const id = useInstanceId( ABToggleControl, 'ab-toggle' );
 	return (
 		<div className="ab-toggle">
 			<label htmlFor={ id } className="ab-toggle__row">
@@ -187,7 +211,7 @@ export function BSToggleControl( {
 }
 
 /* ── Multi-line textarea ─────────────────────────────────────────────────── */
-export function BSTextareaControl( {
+export function ABTextareaControl( {
 	label,
 	value,
 	onChange,
@@ -217,7 +241,7 @@ export function BSTextareaControl( {
 
    Group multiple in a parent `<div className="ab-sub-acc-list">…</div>` so
    the gap-based spacing kicks in. */
-export function BSSubAccordion( { title, children, defaultOpen = false } ) {
+export function ABSubAccordion( { title, children, defaultOpen = false } ) {
 	const [ isOpen, setIsOpen ] = useState( defaultOpen );
 	return (
 		<div className={ `ab-sub-acc${ isOpen ? ' is-open' : '' }` }>

@@ -3,13 +3,16 @@ import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import {
-	BSSelectControl,
-	BSTextControl,
-	BSColorControl,
-	BSToggleControl,
-} from '../BSControls';
-import { TypographyPanel, getTypographyStyle } from '../TypographyPanel';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
+	ABSelectControl,
+	ABTextControl,
+	ABColorControl,
+	ABToggleControl,
+} from '../../components/ABControls';
+import {
+	TypographyPanel,
+	getTypographyStyle,
+} from '../../components/TypographyPanel';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -134,7 +137,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 					title={ __( 'Content', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Display Mode', 'axiom-blocks' ) }
 						value={ displayMode }
 						options={ [
@@ -151,7 +154,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 							setAttributes( { displayMode: v } )
 						}
 					/>
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Text to Copy', 'axiom-blocks' ) }
 						value={ textToCopy }
 						onChange={ ( v ) => setAttributes( { textToCopy: v } ) }
@@ -161,7 +164,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 						) }
 					/>
 					{ displayMode === 'input' && (
-						<BSTextControl
+						<ABTextControl
 							label={ __( 'Placeholder', 'axiom-blocks' ) }
 							value={ placeholder }
 							onChange={ ( v ) =>
@@ -169,12 +172,12 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 							}
 						/>
 					) }
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Button Label', 'axiom-blocks' ) }
 						value={ buttonText }
 						onChange={ ( v ) => setAttributes( { buttonText: v } ) }
 					/>
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Copied Label', 'axiom-blocks' ) }
 						value={ successText }
 						onChange={ ( v ) =>
@@ -187,13 +190,13 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 					title={ __( 'Icon', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show Icon', 'axiom-blocks' ) }
 						checked={ showIcon }
 						onChange={ ( v ) => setAttributes( { showIcon: v } ) }
 					/>
 					{ showIcon && (
-						<BSSelectControl
+						<ABSelectControl
 							label={ __( 'Icon Position', 'axiom-blocks' ) }
 							value={ iconPosition }
 							options={ [
@@ -217,7 +220,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Alignment', 'axiom-blocks' ) }
 						value={ alignment }
 						options={ [
@@ -236,7 +239,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { alignment: v } ) }
 					/>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Button Style', 'axiom-blocks' ) }
 						value={ buttonStyle }
 						options={ [
@@ -253,28 +256,28 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 							setAttributes( { buttonStyle: v } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Button Color', 'axiom-blocks' ) }
 						color={ buttonColor }
 						onChange={ ( c ) =>
 							setAttributes( { buttonColor: c } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Text Color', 'axiom-blocks' ) }
 						color={ buttonTextColor }
 						onChange={ ( c ) =>
 							setAttributes( { buttonTextColor: c } )
 						}
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Success Color', 'axiom-blocks' ) }
 						color={ copiedBgColor }
 						onChange={ ( c ) =>
 							setAttributes( { copiedBgColor: c } )
 						}
 					/>
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Border Radius', 'axiom-blocks' ) }
 						value={ borderRadius }
 						onChange={ ( v ) =>

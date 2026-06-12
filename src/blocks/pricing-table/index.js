@@ -7,14 +7,17 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
-	BSTextControl,
-	BSSelectControl,
-	BSColorControl,
-	BSToggleControl,
-	BSRangeControl,
-} from '../BSControls';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
-import { TypographyPanel, getTypographyStyle } from '../TypographyPanel';
+	ABTextControl,
+	ABSelectControl,
+	ABColorControl,
+	ABToggleControl,
+	ABRangeControl,
+} from '../../components/ABControls';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import {
+	TypographyPanel,
+	getTypographyStyle,
+} from '../../components/TypographyPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -188,7 +191,7 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 					title={ __( 'Layout', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Columns', 'axiom-blocks' ) }
 						value={ columns }
 						onChange={ ( v ) =>
@@ -201,7 +204,7 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 						step={ 1 }
 						unit=""
 					/>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Gap', 'axiom-blocks' ) }
 						value={ gap }
 						onChange={ ( v ) => setAttributes( { gap: v ?? 0 } ) }
@@ -217,7 +220,7 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 					title={ __( 'Heading', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show heading', 'axiom-blocks' ) }
 						checked={ headingShow }
 						onChange={ ( v ) =>
@@ -226,14 +229,14 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 					/>
 					{ headingShow && (
 						<>
-							<BSTextControl
+							<ABTextControl
 								label={ __( 'Heading text', 'axiom-blocks' ) }
 								value={ headingText }
 								onChange={ ( v ) =>
 									setAttributes( { headingText: v } )
 								}
 							/>
-							<BSSelectControl
+							<ABSelectControl
 								label={ __(
 									'Heading alignment',
 									'axiom-blocks'
@@ -279,7 +282,7 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 					title={ __( 'Cards', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Card style', 'axiom-blocks' ) }
 						value={ cardStyle }
 						options={ [
@@ -298,7 +301,7 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { cardStyle: v } ) }
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Accent color', 'axiom-blocks' ) }
 						color={ accentColor }
 						onChange={ ( v ) =>
@@ -312,7 +315,7 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 					title={ __( 'Features', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Feature icon style', 'axiom-blocks' ) }
 						value={ featureIconStyle }
 						options={ [

@@ -2,12 +2,12 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
-	BSSelectControl,
-	BSTextControl,
-	BSRangeControl,
-	BSColorControl,
-	BSToggleControl,
-} from '../BSControls';
+	ABSelectControl,
+	ABTextControl,
+	ABRangeControl,
+	ABColorControl,
+	ABToggleControl,
+} from '../../components/ABControls';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -32,7 +32,7 @@ function ReadingProgressBarEdit( { attributes, setAttributes } ) {
 					title={ __( 'Position', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Position', 'axiom-blocks' ) }
 						value={ position }
 						options={ [
@@ -50,7 +50,7 @@ function ReadingProgressBarEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { position: v } ) }
 					/>
-					<BSRangeControl
+					<ABRangeControl
 						label={ __( 'Z-index', 'axiom-blocks' ) }
 						value={ zIndex }
 						onChange={ ( v ) =>
@@ -71,24 +71,24 @@ function ReadingProgressBarEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Height', 'axiom-blocks' ) }
 						value={ height }
 						onChange={ ( v ) => setAttributes( { height: v } ) }
 						help={ __( 'e.g. 4px, 0.5rem', 'axiom-blocks' ) }
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Fill color', 'axiom-blocks' ) }
 						color={ color }
 						onChange={ ( c ) => setAttributes( { color: c } ) }
 					/>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Show track background', 'axiom-blocks' ) }
 						checked={ showTrack }
 						onChange={ ( v ) => setAttributes( { showTrack: v } ) }
 					/>
 					{ showTrack && (
-						<BSColorControl
+						<ABColorControl
 							label={ __( 'Track color', 'axiom-blocks' ) }
 							color={ backgroundColor }
 							onChange={ ( c ) =>

@@ -1,0 +1,73 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/advanced-heading",
+	"version": "1.0.0",
+	"title": "Advanced Heading",
+	"category": "axiom-blocks",
+	"description": "Heading with highlight spans, an optional sub-heading, and an accent line.",
+	"keywords": ["heading", "title", "subheading", "highlight"],
+	"textdomain": "axiom-blocks",
+	"icon": "heading",
+	"attributes": {
+		"headingText": { "type": "string", "default": "Advanced heading" },
+		"tagName":     { "type": "string", "default": "h2" },
+
+		"subEnabled":  { "type": "boolean", "default": false },
+		"subText":     { "type": "string",  "default": "" },
+		"subTag":      { "type": "string",  "default": "p" },
+		"subPosition": { "type": "string",  "default": "below" },
+
+		"highlightColor": { "type": "string", "default": "" },
+		"highlightBg":    { "type": "string", "default": "" },
+
+		"accentEnabled":   { "type": "boolean", "default": false },
+		"accentPosition":  { "type": "string",  "default": "below" },
+		"accentAlign":     { "type": "string",  "default": "left" },
+		"accentWidth":     { "type": "string",  "default": "" },
+		"accentThickness": { "type": "string",  "default": "" },
+		"accentColor":     { "type": "string",  "default": "" },
+
+		"headingColor":  { "type": "string", "default": "" },
+		"subColor":      { "type": "string", "default": "" },
+		"linkColor":     { "type": "string", "default": "" },
+		"linkHoverColor":{ "type": "string", "default": "" },
+
+		"headingFontFamily":     { "type": "string", "default": "" },
+		"headingFontWeight":     { "type": "string", "default": "" },
+		"headingFontSize":       { "type": "string", "default": "" },
+		"headingLineHeight":     { "type": "string", "default": "" },
+		"headingLetterSpacing":  { "type": "string", "default": "" },
+		"headingTextTransform":  { "type": "string", "default": "" },
+		"headingTextDecoration": { "type": "string", "default": "" },
+		"headingTextAlign":      { "type": "string", "default": "" },
+
+		"subFontFamily":     { "type": "string", "default": "" },
+		"subFontWeight":     { "type": "string", "default": "" },
+		"subFontSize":       { "type": "string", "default": "" },
+		"subLineHeight":     { "type": "string", "default": "" },
+		"subLetterSpacing":  { "type": "string", "default": "" },
+		"subTextTransform":  { "type": "string", "default": "" },
+		"subTextDecoration": { "type": "string", "default": "" },
+		"subTextAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./editor.scss",
+	"style":        "file:./style.scss",
+	"render":       "file:./render.php"
+}

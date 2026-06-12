@@ -499,6 +499,47 @@ export const BLOCK_ICONS = {
 			<circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
 		</>
 	),
+	'business-hours': (
+		<>
+			<circle cx="12" cy="12" r="9" />
+			<path d="M12 7.5v4.7l3.2 1.9" />
+		</>
+	),
+	'advanced-button': (
+		<>
+			<rect x="2" y="7.5" width="20" height="9" rx="4.5" />
+			<path d="M8 12h7" />
+			<path d="m12.5 9.5 2.5 2.5-2.5 2.5" />
+		</>
+	),
+	'button-group': (
+		<>
+			<rect x="2" y="9" width="9" height="6" rx="3" />
+			<rect x="13" y="9" width="9" height="6" rx="3" opacity=".55" />
+		</>
+	),
+	'advanced-heading': (
+		<>
+			<path d="M6 12h12" />
+			<path d="M6 20V4" />
+			<path d="M18 20V4" />
+		</>
+	),
+	icon: (
+		<>
+			<path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z" />
+		</>
+	),
+	'icon-list': (
+		<>
+			<path d="M9 6h11" />
+			<path d="M9 12h11" />
+			<path d="M9 18h11" />
+			<path d="m3.5 5 1 1 1.5-2" />
+			<path d="m3.5 11 1 1 1.5-2" />
+			<path d="m3.5 17 1 1 1.5-2" />
+		</>
+	),
 };
 
 const DEFAULT_ICON = (

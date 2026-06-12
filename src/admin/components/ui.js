@@ -171,7 +171,7 @@ export const PowerIcon = ( { size = 16, strokeWidth = 2, ...rest } ) => (
 );
 
 /* ── Axiom Blocks Logo — "Blocky B" ────────────────────────────────────────── */
-export const BSLogo = ( { size = 24, color = '#7C3AED' } ) => (
+export const ABLogo = ( { size = 24, color = '#7C3AED' } ) => (
 	<svg width={ size } height={ size } viewBox="0 0 24 24" fill="none">
 		<rect x="3" y="3" width="5.5" height="18" rx="1.8" fill={ color } />
 		<rect

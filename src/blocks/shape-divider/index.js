@@ -2,12 +2,12 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
-	BSSelectControl,
-	BSTextControl,
-	BSColorControl,
-	BSToggleControl,
-} from '../BSControls';
-import { SpacingPanel, getSpacingStyle } from '../SpacingPanel';
+	ABSelectControl,
+	ABTextControl,
+	ABColorControl,
+	ABToggleControl,
+} from '../../components/ABControls';
+import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -56,7 +56,7 @@ function ShapeDividerEdit( { attributes, setAttributes } ) {
 					title={ __( 'Shape', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<BSSelectControl
+					<ABSelectControl
 						label={ __( 'Shape style', 'axiom-blocks' ) }
 						value={ shape }
 						options={ [
@@ -83,20 +83,20 @@ function ShapeDividerEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { shape: v } ) }
 					/>
-					<BSTextControl
+					<ABTextControl
 						label={ __( 'Height', 'axiom-blocks' ) }
 						value={ height }
 						onChange={ ( v ) => setAttributes( { height: v } ) }
 						help={ __( 'e.g. 80px, 6rem, 120px', 'axiom-blocks' ) }
 					/>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Flip horizontal', 'axiom-blocks' ) }
 						checked={ flipHorizontal }
 						onChange={ ( v ) =>
 							setAttributes( { flipHorizontal: v } )
 						}
 					/>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Flip vertical', 'axiom-blocks' ) }
 						checked={ flipVertical }
 						onChange={ ( v ) =>
@@ -109,12 +109,12 @@ function ShapeDividerEdit( { attributes, setAttributes } ) {
 					title={ __( 'Color', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Shape color', 'axiom-blocks' ) }
 						color={ color }
 						onChange={ ( c ) => setAttributes( { color: c } ) }
 					/>
-					<BSColorControl
+					<ABColorControl
 						label={ __( 'Background', 'axiom-blocks' ) }
 						color={
 							backgroundColor === 'transparent'
@@ -125,7 +125,7 @@ function ShapeDividerEdit( { attributes, setAttributes } ) {
 							setAttributes( { backgroundColor: c } )
 						}
 					/>
-					<BSToggleControl
+					<ABToggleControl
 						label={ __( 'Transparent background', 'axiom-blocks' ) }
 						checked={ backgroundColor === 'transparent' }
 						onChange={ ( v ) =>

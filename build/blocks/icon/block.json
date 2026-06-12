@@ -1,0 +1,148 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "axiom-blocks/icon",
+  "version": "1.0.0",
+  "title": "Icon",
+  "category": "axiom-blocks",
+  "description": "Pick an icon from the library or paste your own SVG, then style its size, colour, shape, and link.",
+  "keywords": [
+    "icon",
+    "svg",
+    "shape",
+    "symbol"
+  ],
+  "textdomain": "axiom-blocks",
+  "icon": "star-filled",
+  "attributes": {
+    "iconType": {
+      "type": "string",
+      "default": "library"
+    },
+    "iconSlug": {
+      "type": "string",
+      "default": "star"
+    },
+    "customSvg": {
+      "type": "string",
+      "default": ""
+    },
+    "iconLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "iconSize": {
+      "type": "string",
+      "default": ""
+    },
+    "iconColor": {
+      "type": "string",
+      "default": ""
+    },
+    "iconHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "rotation": {
+      "type": "number",
+      "default": 0
+    },
+    "iconAlign": {
+      "type": "string",
+      "default": "center"
+    },
+    "shape": {
+      "type": "string",
+      "default": "none"
+    },
+    "bgColor": {
+      "type": "string",
+      "default": ""
+    },
+    "bgHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "shapePadding": {
+      "type": "string",
+      "default": ""
+    },
+    "shapeRadius": {
+      "type": "string",
+      "default": ""
+    },
+    "borderColor": {
+      "type": "string",
+      "default": ""
+    },
+    "borderWidth": {
+      "type": "string",
+      "default": ""
+    },
+    "borderStyle": {
+      "type": "string",
+      "default": "solid"
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "opensInNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "relNoFollow": {
+      "type": "boolean",
+      "default": false
+    },
+    "relSponsored": {
+      "type": "boolean",
+      "default": false
+    },
+    "paddingTop": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingRight": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingBottom": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingLeft": {
+      "type": "string",
+      "default": ""
+    },
+    "marginTop": {
+      "type": "string",
+      "default": ""
+    },
+    "marginRight": {
+      "type": "string",
+      "default": ""
+    },
+    "marginBottom": {
+      "type": "string",
+      "default": ""
+    },
+    "marginLeft": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.scss",
+  "style": "file:./style.scss",
+  "render": "file:./render.php"
+}

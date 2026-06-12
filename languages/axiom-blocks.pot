@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.0\n"
+"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/axiom-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-28T18:22:46+00:00\n"
+"POT-Creation-Date: 2026-06-12T04:30:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axiom-blocks\n"
@@ -45,7 +45,7 @@ msgstr ""
 
 #: inc/Admin/Dashboard.php:46
 #: inc/Admin/Dashboard.php:47
-#: inc/Plugin.php:111
+#: inc/Plugin.php:113
 #: src/admin/components/Header.js:17
 msgid "Axiom Blocks"
 msgstr ""
@@ -55,11 +55,76 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
+#: inc/Admin/Feedback.php:56
+msgid "It’s a temporary deactivation"
+msgstr ""
+
+#: inc/Admin/Feedback.php:60
+msgid "I found a better plugin"
+msgstr ""
+
+#: inc/Admin/Feedback.php:61
+msgid "Which plugin, if you don’t mind sharing?"
+msgstr ""
+
+#: inc/Admin/Feedback.php:65
+msgid "The plugin didn’t work"
+msgstr ""
+
+#: inc/Admin/Feedback.php:66
+msgid "What went wrong?"
+msgstr ""
+
+#: inc/Admin/Feedback.php:70
+msgid "It’s too complicated to set up"
+msgstr ""
+
+#: inc/Admin/Feedback.php:74
+msgid "I’m missing a feature I need"
+msgstr ""
+
+#: inc/Admin/Feedback.php:75
+msgid "Which feature?"
+msgstr ""
+
+#: inc/Admin/Feedback.php:79
+msgid "Other"
+msgstr ""
+
+#: inc/Admin/Feedback.php:80
+msgid "Please tell us more"
+msgstr ""
+
+#: inc/Admin/Feedback.php:123
+msgid "Quick question before you go"
+msgstr ""
+
+#: inc/Admin/Feedback.php:124
+msgid "If you have a moment, what’s making you deactivate Axiom Blocks? Your answer is optional and helps us improve."
+msgstr ""
+
+#: inc/Admin/Feedback.php:125
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: inc/Admin/Feedback.php:126
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: inc/Admin/Feedback.php:127
+msgid "Cancel"
+msgstr ""
+
+#: inc/Admin/Feedback.php:128
+msgid "Only the option you choose and anything you type is sent — never your content, email, or site address."
+msgstr ""
+
 #: src/blocks/before-after-slider/render.php:82
 msgid "Before / after image comparison"
 msgstr ""
 
 #: src/blocks/copy-to-clipboard/render.php:19
+#: src/components/iconLibrary.js:1148
 msgid "Copy"
 msgstr ""
 
@@ -106,7 +171,7 @@ msgid "Rating: %1$s out of %2$s"
 msgstr ""
 
 #: src/blocks/tabs/render.php:110
-#: src/blocks/tabs/index.js:284
+#: src/blocks/tabs/index.js:287
 msgid "Tab"
 msgstr ""
 
@@ -149,19 +214,21 @@ msgstr ""
 #: src/admin/components/Dashboard.js:199
 #: src/admin/components/Dashboard.js:402
 #: src/blocks/advanced-section/index.js:916
-#: src/blocks/countdown-timer/index.js:354
-#: src/blocks/countdown-timer/index.js:358
-#: src/blocks/pricing-table/index.js:188
-#: src/blocks/trust-badges/index.js:407
-#: src/blocks/trust-badges/index.js:411
+#: src/blocks/button-group/index.js:70
+#: src/blocks/countdown-timer/index.js:357
+#: src/blocks/countdown-timer/index.js:361
+#: src/blocks/icon-list/index.js:168
+#: src/blocks/pricing-table/index.js:191
+#: src/blocks/trust-badges/index.js:410
+#: src/blocks/trust-badges/index.js:414
 msgid "Layout"
 msgstr ""
 
 #: src/admin/components/Dashboard.js:204
 #: src/admin/components/Dashboard.js:427
-#: src/blocks/copy-to-clipboard/index.js:134
-#: src/blocks/tabs/index.js:630
-#: src/blocks/trust-badges/index.js:195
+#: src/blocks/copy-to-clipboard/index.js:137
+#: src/blocks/tabs/index.js:633
+#: src/blocks/trust-badges/index.js:198
 msgid "Content"
 msgstr ""
 
@@ -175,6 +242,7 @@ msgid "Block Manager"
 msgstr ""
 
 #: src/admin/components/Dashboard.js:231
+#: src/components/iconLibrary.js:1040
 msgid "Settings"
 msgstr ""
 
@@ -210,7 +278,7 @@ msgid "Requires Pro plugin"
 msgstr ""
 
 #: src/admin/components/Dashboard.js:349
-#: src/blocks/pricing-table/index.js:65
+#: src/blocks/pricing-table/index.js:68
 msgid "Pro"
 msgstr ""
 
@@ -354,13 +422,540 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:177
-msgid "Unit"
+#: src/blocks/advanced-button/icons.js:115
+#: src/blocks/advanced-button/index.js:134
+#: src/blocks/advanced-button/index.js:398
+#: src/blocks/advanced-section/index.js:856
+#: src/blocks/icon/index.js:232
+msgid "None"
 msgstr ""
 
+#: src/blocks/advanced-button/icons.js:116
+#: src/components/iconLibrary.js:878
+msgid "Arrow right"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:117
+#: src/components/iconLibrary.js:902
+msgid "Arrow up-right"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:118
+#: src/components/iconLibrary.js:908
+msgid "Chevron right"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:119
+#: src/components/iconLibrary.js:938
+msgid "External link"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:120
+#: src/blocks/advanced-button/index.js:258
+#: src/components/iconLibrary.js:1100
+msgid "Download"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:121
+#: src/components/iconLibrary.js:1208
+msgid "Cart"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:122
+#: src/components/iconLibrary.js:1322
+msgid "Send"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:123
+#: src/components/iconLibrary.js:1304
+msgid "Mail"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:124
+#: src/components/iconLibrary.js:1316
+msgid "Phone"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:125
+#: src/components/iconLibrary.js:986
+msgid "Plus"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:126
+#: src/components/iconLibrary.js:962
+msgid "Check"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:127
+#: src/components/iconLibrary.js:1490
+msgid "Star"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:128
+#: src/components/iconLibrary.js:1484
+msgid "Heart"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:129
+#: src/components/iconLibrary.js:1388
+msgid "Play"
+msgstr ""
+
+#: src/blocks/advanced-button/icons.js:130
+#: src/components/iconLibrary.js:1130
+msgid "Zap"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:132
+msgid "Keep normal"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:135
+#: src/blocks/advanced-button/index.js:173
+msgid "Small"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:136
+#: src/blocks/advanced-button/index.js:177
+#: src/components/TypographyPanel.js:64
+msgid "Medium"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:137
+#: src/blocks/advanced-button/index.js:181
+msgid "Large"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:144
+#: src/blocks/pricing-table/pricing-plan/index.js:314
+msgid "Button"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:148
+#: src/blocks/advanced-button/index.js:465
+#: src/blocks/advanced-section/index.js:852
+#: src/blocks/before-after-slider/index.js:176
+#: src/blocks/copy-to-clipboard/index.js:220
+#: src/blocks/free-shipping-progress/index.js:141
+#: src/blocks/icon/index.js:167
+#: src/blocks/reading-progress-bar/index.js:71
+#: src/blocks/star-rating/index.js:170
+#: src/blocks/tabs/index.js:532
+#: src/blocks/trust-badges/index.js:497
+msgid "Style"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:152
+msgid "Fill"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:156
+#: src/blocks/copy-to-clipboard/index.js:251
+msgid "Outline"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:160
+msgid "Text only"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:169
+#: src/blocks/advanced-section/index.js:525
+#: src/blocks/icon-list/index.js:225
+#: src/blocks/icon/index.js:171
+msgid "Size"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:188
+msgid "Sub-caption"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:193
+msgid "Adds a smaller second text line inside the button."
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:201
+#: src/blocks/advanced-button/index.js:209
+#: src/blocks/advanced-heading/index.js:330
+#: src/blocks/icon-list/index.js:296
+#: src/blocks/icon/index.js:363
+#: src/components/iconLibrary.js:1364
+msgid "Link"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:205
+msgid "Behaves as"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:213
+msgid "Submit button (forms)"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:225
+#: src/blocks/icon/index.js:367
+msgid "URL"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:234
+#: src/blocks/icon/index.js:376
+#: src/blocks/pricing-table/pricing-plan/index.js:264
+#: src/blocks/pricing-table/pricing-plan/index.js:541
+msgid "Open in new tab"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:244
+#: src/blocks/icon/index.js:386
+msgid "No-follow"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:251
+#: src/blocks/icon/index.js:393
+msgid "Sponsored"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:263
+msgid "Prompts the browser to download the linked file."
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:273
+#: src/blocks/advanced-button/index.js:277
+#: src/blocks/copy-to-clipboard/index.js:190
+#: src/blocks/icon-list/index.js:221
+#: src/blocks/icon/index.js:115
+#: src/blocks/icon/index.js:421
+msgid "Icon"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:285
+#: src/blocks/advanced-heading/index.js:231
+#: src/blocks/reading-progress-bar/index.js:32
+#: src/blocks/reading-progress-bar/index.js:36
+msgid "Position"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:289
+#: src/blocks/advanced-heading/index.js:258
+#: src/blocks/advanced-section/index.js:961
+#: src/blocks/button-group/index.js:95
+#: src/blocks/copy-to-clipboard/index.js:204
+#: src/blocks/copy-to-clipboard/index.js:228
+#: src/blocks/countdown-timer/index.js:385
+#: src/blocks/free-shipping-progress/index.js:149
+#: src/blocks/icon-list/index.js:187
+#: src/blocks/icon-list/index.js:204
+#: src/blocks/icon/index.js:195
+#: src/blocks/pricing-table/index.js:251
+#: src/blocks/star-rating/index.js:178
+#: src/blocks/tabs/index.js:564
+#: src/blocks/trust-badges/index.js:225
+#: src/blocks/trust-badges/index.js:451
+#: src/components/TypographyPanel.js:526
+msgid "Left"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:293
+#: src/blocks/advanced-heading/index.js:266
+#: src/blocks/advanced-section/index.js:969
+#: src/blocks/button-group/index.js:103
+#: src/blocks/copy-to-clipboard/index.js:208
+#: src/blocks/copy-to-clipboard/index.js:236
+#: src/blocks/countdown-timer/index.js:393
+#: src/blocks/free-shipping-progress/index.js:157
+#: src/blocks/icon-list/index.js:191
+#: src/blocks/icon-list/index.js:212
+#: src/blocks/icon/index.js:203
+#: src/blocks/pricing-table/index.js:259
+#: src/blocks/star-rating/index.js:186
+#: src/blocks/tabs/index.js:572
+#: src/blocks/trust-badges/index.js:233
+#: src/blocks/trust-badges/index.js:459
+#: src/components/TypographyPanel.js:536
+msgid "Right"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:302
+msgid "Icon size"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:313
+#: src/blocks/button-group/index.js:114
+#: src/blocks/pricing-table/index.js:208
+#: src/blocks/trust-badges/index.js:466
+msgid "Gap"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:324
+msgid "Icon only"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:329
+msgid "Hides the label visually; it is kept for screen readers."
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:339
+msgid "Colors & hover"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:344
+msgid "Normal"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:348
+#: src/blocks/advanced-button/index.js:371
+#: src/blocks/icon-list/index.js:291
+msgid "Text"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:355
+#: src/blocks/advanced-button/index.js:378
 #: src/blocks/advanced-section/index.js:326
+#: src/blocks/icon/index.js:253
 #: src/blocks/shape-divider/index.js:118
 msgid "Background"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:362
+#: src/blocks/advanced-button/index.js:385
+#: src/blocks/advanced-button/index.js:447
+#: src/blocks/advanced-section/index.js:848
+msgid "Border"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:369
+msgid "Hover"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:394
+msgid "Hover effect"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:402
+msgid "Grow"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:406
+msgid "Shrink"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:410
+msgid "Float"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:414
+msgid "Sink"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:418
+msgid "Pulse"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:422
+msgid "Shine"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:431
+msgid "Shadow"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:437
+msgid "Hover shadow"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:451
+#: src/blocks/advanced-heading/index.js:275
+#: src/blocks/advanced-section/index.js:883
+msgid "Width"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:469
+#: src/blocks/advanced-section/index.js:860
+#: src/blocks/icon/index.js:331
+msgid "Solid"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:473
+#: src/blocks/advanced-section/index.js:864
+#: src/blocks/icon/index.js:338
+msgid "Dashed"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:477
+#: src/blocks/advanced-section/index.js:868
+#: src/blocks/icon/index.js:345
+msgid "Dotted"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:487
+msgid "Radius"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:520
+msgid "Button label…"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:531
+msgid "Sub-caption…"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:547
+msgid "Advanced Button"
+msgstr ""
+
+#: src/blocks/advanced-button/index.js:548
+msgid "Button with icons, hover states, sub-captions, and style presets."
+msgstr ""
+
+#: src/blocks/advanced-heading/format.js:40
+#: src/blocks/advanced-heading/format.js:50
+#: src/blocks/advanced-heading/index.js:192
+msgid "Highlight"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:39
+msgid "Paragraph"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:40
+msgid "Div"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:120
+msgid "Sub-heading…"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:130
+#: src/blocks/advanced-heading/index.js:314
+#: src/blocks/advanced-heading/index.js:349
+#: src/blocks/pricing-table/index.js:220
+#: src/blocks/trust-badges/index.js:574
+msgid "Heading"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:134
+msgid "HTML tag"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:140
+#: src/blocks/advanced-heading/index.js:322
+#: src/blocks/advanced-heading/index.js:361
+msgid "Sub-heading"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:143
+msgid "Adds a second line above or below the heading."
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:151
+msgid "Sub-heading tag"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:162
+msgid "Sub-heading position"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:169
+#: src/blocks/advanced-heading/index.js:235
+msgid "Above heading"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:176
+#: src/blocks/advanced-heading/index.js:242
+msgid "Below heading"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:196
+msgid "Select text in the heading and click the Highlight button in the toolbar. These colours style every highlight."
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:202
+msgid "Highlight text"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:209
+msgid "Highlight background"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:218
+msgid "Accent line"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:222
+msgid "Show accent line"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:254
+#: src/blocks/button-group/index.js:91
+#: src/blocks/copy-to-clipboard/index.js:224
+#: src/blocks/countdown-timer/index.js:381
+#: src/blocks/icon-list/index.js:200
+#: src/blocks/icon/index.js:191
+#: src/blocks/star-rating/index.js:174
+#: src/blocks/tabs/index.js:560
+#: src/blocks/trust-badges/index.js:447
+#: src/components/TypographyPanel.js:513
+#: src/components/TypographyPanel.js:517
+msgid "Alignment"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:262
+#: src/blocks/advanced-section/index.js:944
+#: src/blocks/advanced-section/index.js:965
+#: src/blocks/button-group/index.js:99
+#: src/blocks/copy-to-clipboard/index.js:232
+#: src/blocks/countdown-timer/index.js:389
+#: src/blocks/free-shipping-progress/index.js:153
+#: src/blocks/icon-list/index.js:208
+#: src/blocks/icon/index.js:199
+#: src/blocks/pricing-table/index.js:255
+#: src/blocks/star-rating/index.js:182
+#: src/blocks/tabs/index.js:568
+#: src/blocks/trust-badges/index.js:229
+#: src/blocks/trust-badges/index.js:455
+#: src/components/TypographyPanel.js:531
+msgid "Center"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:286
+msgid "Thickness"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:299
+#: src/blocks/icon-list/index.js:236
+#: src/blocks/icon/index.js:210
+msgid "Colour"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:310
+#: src/blocks/icon-list/index.js:287
+msgid "Colours"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:335
+#: src/blocks/icon-list/index.js:301
+msgid "Link hover"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:344
+#: src/blocks/countdown-timer/index.js:459
+#: src/blocks/pricing-table/pricing-plan/index.js:271
+#: src/blocks/trust-badges/index.js:569
+#: src/components/TypographyPanel.js:417
+msgid "Typography"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:388
+msgid "Heading…"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:407
+msgid "Advanced Heading"
+msgstr ""
+
+#: src/blocks/advanced-heading/index.js:408
+msgid "Heading with highlight spans, an optional sub-heading, and an accent line."
+msgstr ""
+
+#: src/blocks/advanced-section/index.js:177
+msgid "Unit"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:330
@@ -438,12 +1033,8 @@ msgstr ""
 
 #: src/blocks/advanced-section/index.js:511
 #: src/blocks/before-after-slider/index.js:72
-#: src/blocks/tabs/index.js:193
+#: src/blocks/tabs/index.js:196
 msgid "Remove"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:525
-msgid "Size"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:529
@@ -455,7 +1046,7 @@ msgid "Contain"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:543
-#: src/blocks/TypographyPanel.js:494
+#: src/components/TypographyPanel.js:494
 msgid "Auto"
 msgstr ""
 
@@ -489,6 +1080,7 @@ msgid "Repeat Y"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:651
+#: src/components/iconLibrary.js:1190
 msgid "Attachment"
 msgstr ""
 
@@ -532,43 +1124,8 @@ msgstr ""
 msgid "Blend mode"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:848
-msgid "Border"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:852
-#: src/blocks/before-after-slider/index.js:176
-#: src/blocks/copy-to-clipboard/index.js:217
-#: src/blocks/free-shipping-progress/index.js:141
-#: src/blocks/reading-progress-bar/index.js:71
-#: src/blocks/star-rating/index.js:167
-#: src/blocks/tabs/index.js:529
-#: src/blocks/trust-badges/index.js:494
-msgid "Style"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:856
-msgid "None"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:860
-msgid "Solid"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:864
-msgid "Dashed"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:868
-msgid "Dotted"
-msgstr ""
-
 #: src/blocks/advanced-section/index.js:872
 msgid "Double"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:883
-msgid "Width"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:903
@@ -588,8 +1145,10 @@ msgid "Optional override below 768px."
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:936
-#: src/blocks/countdown-timer/index.js:369
-#: src/blocks/tabs/index.js:547
+#: src/blocks/button-group/index.js:82
+#: src/blocks/countdown-timer/index.js:372
+#: src/blocks/icon-list/index.js:172
+#: src/blocks/tabs/index.js:550
 msgid "Vertical"
 msgstr ""
 
@@ -597,56 +1156,16 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:944
-#: src/blocks/advanced-section/index.js:965
-#: src/blocks/copy-to-clipboard/index.js:229
-#: src/blocks/countdown-timer/index.js:386
-#: src/blocks/free-shipping-progress/index.js:153
-#: src/blocks/pricing-table/index.js:252
-#: src/blocks/star-rating/index.js:179
-#: src/blocks/tabs/index.js:565
-#: src/blocks/trust-badges/index.js:226
-#: src/blocks/trust-badges/index.js:452
-#: src/blocks/TypographyPanel.js:531
-msgid "Center"
-msgstr ""
-
 #: src/blocks/advanced-section/index.js:948
 msgid "Bottom"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:957
-#: src/blocks/countdown-timer/index.js:362
-#: src/blocks/tabs/index.js:543
+#: src/blocks/button-group/index.js:78
+#: src/blocks/countdown-timer/index.js:365
+#: src/blocks/icon-list/index.js:176
+#: src/blocks/tabs/index.js:546
 msgid "Horizontal"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:961
-#: src/blocks/copy-to-clipboard/index.js:201
-#: src/blocks/copy-to-clipboard/index.js:225
-#: src/blocks/countdown-timer/index.js:382
-#: src/blocks/free-shipping-progress/index.js:149
-#: src/blocks/pricing-table/index.js:248
-#: src/blocks/star-rating/index.js:175
-#: src/blocks/tabs/index.js:561
-#: src/blocks/trust-badges/index.js:222
-#: src/blocks/trust-badges/index.js:448
-#: src/blocks/TypographyPanel.js:526
-msgid "Left"
-msgstr ""
-
-#: src/blocks/advanced-section/index.js:969
-#: src/blocks/copy-to-clipboard/index.js:205
-#: src/blocks/copy-to-clipboard/index.js:233
-#: src/blocks/countdown-timer/index.js:390
-#: src/blocks/free-shipping-progress/index.js:157
-#: src/blocks/pricing-table/index.js:256
-#: src/blocks/star-rating/index.js:183
-#: src/blocks/tabs/index.js:569
-#: src/blocks/trust-badges/index.js:230
-#: src/blocks/trust-badges/index.js:456
-#: src/blocks/TypographyPanel.js:536
-msgid "Right"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:989
@@ -674,8 +1193,8 @@ msgid "After"
 msgstr ""
 
 #: src/blocks/before-after-slider/index.js:147
-#: src/blocks/countdown-timer/index.js:303
-#: src/blocks/star-rating/index.js:125
+#: src/blocks/countdown-timer/index.js:306
+#: src/blocks/star-rating/index.js:128
 msgid "Labels"
 msgstr ""
 
@@ -723,261 +1242,266 @@ msgstr ""
 msgid "Drag to compare two images."
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:138
+#: src/blocks/button-group/index.js:24
+#: src/blocks/pricing-table/index.js:62
+msgid "Get started"
+msgstr ""
+
+#: src/blocks/button-group/index.js:31
+msgid "Learn more"
+msgstr ""
+
+#: src/blocks/button-group/index.js:74
+#: src/blocks/tabs/index.js:542
+msgid "Orientation"
+msgstr ""
+
+#: src/blocks/button-group/index.js:107
+msgid "Space between"
+msgstr ""
+
+#: src/blocks/button-group/index.js:124
+msgid "Stack on mobile"
+msgstr ""
+
+#: src/blocks/button-group/index.js:142
+msgid "Button Group"
+msgstr ""
+
+#: src/blocks/button-group/index.js:143
+msgid "Arrange Advanced Buttons in a row or stack with alignment and gap controls."
+msgstr ""
+
+#: src/blocks/copy-to-clipboard/index.js:141
 msgid "Display Mode"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:142
+#: src/blocks/copy-to-clipboard/index.js:145
 msgid "Button Only"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:146
+#: src/blocks/copy-to-clipboard/index.js:149
 msgid "Input + Button"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:155
+#: src/blocks/copy-to-clipboard/index.js:158
 msgid "Text to Copy"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:158
+#: src/blocks/copy-to-clipboard/index.js:161
 msgid "Enter text or code to copy…"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:165
+#: src/blocks/copy-to-clipboard/index.js:168
 msgid "Placeholder"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:173
+#: src/blocks/copy-to-clipboard/index.js:176
 msgid "Button Label"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:178
+#: src/blocks/copy-to-clipboard/index.js:181
 msgid "Copied Label"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:187
-msgid "Icon"
-msgstr ""
-
-#: src/blocks/copy-to-clipboard/index.js:191
+#: src/blocks/copy-to-clipboard/index.js:194
 msgid "Show Icon"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:197
+#: src/blocks/copy-to-clipboard/index.js:200
 msgid "Icon Position"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:221
-#: src/blocks/countdown-timer/index.js:378
-#: src/blocks/star-rating/index.js:171
-#: src/blocks/tabs/index.js:557
-#: src/blocks/trust-badges/index.js:444
-#: src/blocks/TypographyPanel.js:513
-#: src/blocks/TypographyPanel.js:517
-msgid "Alignment"
-msgstr ""
-
-#: src/blocks/copy-to-clipboard/index.js:240
+#: src/blocks/copy-to-clipboard/index.js:243
 msgid "Button Style"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:244
-#: src/blocks/pricing-table/index.js:291
+#: src/blocks/copy-to-clipboard/index.js:247
+#: src/blocks/pricing-table/index.js:294
 msgid "Filled"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:248
-msgid "Outline"
-msgstr ""
-
-#: src/blocks/copy-to-clipboard/index.js:257
+#: src/blocks/copy-to-clipboard/index.js:260
 msgid "Button Color"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:264
+#: src/blocks/copy-to-clipboard/index.js:267
 msgid "Text Color"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:271
+#: src/blocks/copy-to-clipboard/index.js:274
 msgid "Success Color"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:278
-#: src/blocks/countdown-timer/index.js:399
+#: src/blocks/copy-to-clipboard/index.js:281
+#: src/blocks/countdown-timer/index.js:402
 msgid "Border Radius"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:283
+#: src/blocks/copy-to-clipboard/index.js:286
 msgid "e.g. 4px, 50%"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:290
+#: src/blocks/copy-to-clipboard/index.js:293
 msgid "Button typography"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:301
-#: src/blocks/copy-to-clipboard/index.js:344
+#: src/blocks/copy-to-clipboard/index.js:304
+#: src/blocks/copy-to-clipboard/index.js:347
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:304
+#: src/blocks/copy-to-clipboard/index.js:307
 msgid "input + button"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:305
+#: src/blocks/copy-to-clipboard/index.js:308
 msgid "button"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:331
+#: src/blocks/copy-to-clipboard/index.js:334
 msgid "Click the button to copy the text to your clipboard."
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:345
+#: src/blocks/copy-to-clipboard/index.js:348
 msgid "Copy text or code snippets to clipboard with one click."
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:61
+#: src/blocks/countdown-timer/index.js:64
 msgid "Countdown Timer"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:62
+#: src/blocks/countdown-timer/index.js:65
 msgid "Live countdown timer with customizable styling."
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:69
+#: src/blocks/countdown-timer/index.js:72
 msgid "countdown"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:70
+#: src/blocks/countdown-timer/index.js:73
 msgid "timer"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:71
+#: src/blocks/countdown-timer/index.js:74
 msgid "deadline"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:200
+#: src/blocks/countdown-timer/index.js:203
 msgid "Target Date"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:205
+#: src/blocks/countdown-timer/index.js:208
 msgid "Date & Time"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:244
+#: src/blocks/countdown-timer/index.js:247
 msgid "Select date"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:269
+#: src/blocks/countdown-timer/index.js:272
 msgid "Display Units"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:273
+#: src/blocks/countdown-timer/index.js:276
 msgid "Show Days"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:280
+#: src/blocks/countdown-timer/index.js:283
 msgid "Show Hours"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:287
+#: src/blocks/countdown-timer/index.js:290
 msgid "Show Minutes"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:294
+#: src/blocks/countdown-timer/index.js:297
 msgid "Show Seconds"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:308
+#: src/blocks/countdown-timer/index.js:311
 msgid "Days Label"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:317
+#: src/blocks/countdown-timer/index.js:320
 msgid "Hours Label"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:329
+#: src/blocks/countdown-timer/index.js:332
 msgid "Minutes Label"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:341
+#: src/blocks/countdown-timer/index.js:344
 msgid "Seconds Label"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:404
+#: src/blocks/countdown-timer/index.js:407
 msgid "Example: 8px, 50%, etc."
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:410
+#: src/blocks/countdown-timer/index.js:413
 msgid "Gap Between Units"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:418
+#: src/blocks/countdown-timer/index.js:421
 msgid "Example: 20px, 1rem, etc."
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:426
+#: src/blocks/countdown-timer/index.js:429
 #: src/blocks/free-shipping-progress/index.js:186
-#: src/blocks/tabs/index.js:599
+#: src/blocks/tabs/index.js:602
 msgid "Colors"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:430
+#: src/blocks/countdown-timer/index.js:433
 msgid "Digit Color"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:437
+#: src/blocks/countdown-timer/index.js:440
 msgid "Label Color"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:444
+#: src/blocks/countdown-timer/index.js:447
 msgid "Background Color"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:456
-#: src/blocks/pricing-table/pricing-plan/index.js:268
-#: src/blocks/trust-badges/index.js:566
-#: src/blocks/TypographyPanel.js:417
-msgid "Typography"
-msgstr ""
-
-#: src/blocks/countdown-timer/index.js:461
+#: src/blocks/countdown-timer/index.js:464
 msgid "Digit"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:471
+#: src/blocks/countdown-timer/index.js:474
 msgid "Label"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:484
+#: src/blocks/countdown-timer/index.js:487
 msgid "Expired State"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:488
+#: src/blocks/countdown-timer/index.js:491
 msgid "When Timer Expires"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:495
+#: src/blocks/countdown-timer/index.js:498
 msgid "Show Message"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:502
+#: src/blocks/countdown-timer/index.js:505
 msgid "Hide Block"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:509
+#: src/blocks/countdown-timer/index.js:512
 msgid "Redirect to URL"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:522
+#: src/blocks/countdown-timer/index.js:525
 msgid "Expired Message"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:534
+#: src/blocks/countdown-timer/index.js:537
 msgid "Redirect URL"
 msgstr ""
 
-#: src/blocks/countdown-timer/index.js:558
+#: src/blocks/countdown-timer/index.js:561
 msgid "(Timer expired)"
 msgstr ""
 
@@ -1130,6 +1654,7 @@ msgid "Bar height"
 msgstr ""
 
 #: src/blocks/free-shipping-progress/index.js:173
+#: src/blocks/icon/index.js:282
 msgid "Corner radius"
 msgstr ""
 
@@ -1170,297 +1695,426 @@ msgstr ""
 msgid "Cart progress bar showing how much more a customer needs to spend to qualify for free shipping."
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:29
-msgid "Starter"
+#: src/blocks/icon-list/index.js:164
+#: src/components/iconLibrary.js:1010
+msgid "List"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:183
+msgid "Icon position"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:241
+msgid "Icon gap"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:254
+msgid "Spacing & divider"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:258
+msgid "Space between items"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:269
+msgid "Divider between items"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:277
+msgid "Divider colour"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:333
+#: src/blocks/tabs/index.js:113
+msgid "Choose icon"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:360
+msgid "List item…"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:386
+msgid "Set link"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:397
+msgid "Link URL"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:418
+msgid "Move item up"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:430
+msgid "Move item down"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:442
+msgid "Remove item"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:459
+msgid "Add item"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:470
+msgid "Icon List"
+msgstr ""
+
+#: src/blocks/icon-list/index.js:471
+msgid "A list with a custom icon on every row — for features, benefits, or checklists."
+msgstr ""
+
+#: src/blocks/icon/index.js:102
+msgid "Paste SVG"
+msgstr ""
+
+#: src/blocks/icon/index.js:119
+msgid "Source"
+msgstr ""
+
+#: src/blocks/icon/index.js:123
+#: src/blocks/tabs/index.js:130
+msgid "Icon library"
+msgstr ""
+
+#: src/blocks/icon/index.js:127
+msgid "Custom SVG"
+msgstr ""
+
+#: src/blocks/icon/index.js:142
+msgid "SVG markup"
+msgstr ""
+
+#: src/blocks/icon/index.js:149
+msgid "Paste an <svg>. Use currentColor for fills/strokes so the colour controls apply."
+msgstr ""
+
+#: src/blocks/icon/index.js:156
+msgid "Accessible label"
+msgstr ""
+
+#: src/blocks/icon/index.js:159
+msgid "Describes the icon for screen readers. Leave empty for a purely decorative icon."
+msgstr ""
+
+#: src/blocks/icon/index.js:182
+msgid "Rotation"
+msgstr ""
+
+#: src/blocks/icon/index.js:215
+msgid "Hover colour"
+msgstr ""
+
+#: src/blocks/icon/index.js:224
+msgid "Shape & background"
+msgstr ""
+
+#: src/blocks/icon/index.js:228
+#: src/blocks/shape-divider/index.js:56
+msgid "Shape"
+msgstr ""
+
+#: src/blocks/icon/index.js:236
+msgid "Circle"
+msgstr ""
+
+#: src/blocks/icon/index.js:240
+msgid "Square"
+msgstr ""
+
+#: src/blocks/icon/index.js:244
+msgid "Rounded"
+msgstr ""
+
+#: src/blocks/icon/index.js:260
+msgid "Hover background"
+msgstr ""
+
+#: src/blocks/icon/index.js:270
+#: src/components/StylesPanel.js:70
+msgid "Padding"
+msgstr ""
+
+#: src/blocks/icon/index.js:299
+msgid "Border width"
+msgstr ""
+
+#: src/blocks/icon/index.js:314
+msgid "Border colour"
+msgstr ""
+
+#: src/blocks/icon/index.js:324
+msgid "Border style"
+msgstr ""
+
+#: src/blocks/icon/index.js:422
+msgid "Pick an icon from the library or paste your own SVG, then style its size, colour, shape, and link."
 msgstr ""
 
 #: src/blocks/pricing-table/index.js:32
-#: src/blocks/pricing-table/index.js:69
-#: src/blocks/pricing-table/index.js:103
-#: src/blocks/pricing-table/pricing-plan/index.js:362
+msgid "Starter"
+msgstr ""
+
+#: src/blocks/pricing-table/index.js:35
+#: src/blocks/pricing-table/index.js:72
+#: src/blocks/pricing-table/index.js:106
+#: src/blocks/pricing-table/pricing-plan/index.js:365
 msgid "/month"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:33
+#: src/blocks/pricing-table/index.js:36
 msgid "For individuals just getting started."
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:40
+#: src/blocks/pricing-table/index.js:43
 msgid "Up to 5 projects"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:45
+#: src/blocks/pricing-table/index.js:48
 msgid "Community support"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:50
-#: src/blocks/pricing-table/index.js:80
+#: src/blocks/pricing-table/index.js:53
+#: src/blocks/pricing-table/index.js:83
 msgid "Priority support"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:55
-#: src/blocks/pricing-table/index.js:85
+#: src/blocks/pricing-table/index.js:58
+#: src/blocks/pricing-table/index.js:88
 msgid "Advanced analytics"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:59
-msgid "Get started"
-msgstr ""
-
-#: src/blocks/pricing-table/index.js:66
+#: src/blocks/pricing-table/index.js:69
 msgid "Most Popular"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:70
+#: src/blocks/pricing-table/index.js:73
 msgid "Everything you need to grow."
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:75
+#: src/blocks/pricing-table/index.js:78
 msgid "Unlimited projects"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:90
-#: src/blocks/pricing-table/index.js:121
+#: src/blocks/pricing-table/index.js:93
+#: src/blocks/pricing-table/index.js:124
 msgid "Custom integrations"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:94
+#: src/blocks/pricing-table/index.js:97
 msgid "Start free trial"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:100
+#: src/blocks/pricing-table/index.js:103
 msgid "Business"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:104
+#: src/blocks/pricing-table/index.js:107
 msgid "For teams that need more power."
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:111
+#: src/blocks/pricing-table/index.js:114
 msgid "Unlimited everything"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:116
+#: src/blocks/pricing-table/index.js:119
 msgid "Dedicated support"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:126
+#: src/blocks/pricing-table/index.js:129
 msgid "SSO & advanced security"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:130
+#: src/blocks/pricing-table/index.js:133
 msgid "Contact sales"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:192
-#: src/blocks/trust-badges/index.js:427
+#: src/blocks/pricing-table/index.js:195
+#: src/blocks/trust-badges/index.js:430
 msgid "Columns"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:205
-#: src/blocks/trust-badges/index.js:463
-msgid "Gap"
-msgstr ""
-
-#: src/blocks/pricing-table/index.js:217
-#: src/blocks/trust-badges/index.js:571
-msgid "Heading"
-msgstr ""
-
-#: src/blocks/pricing-table/index.js:221
-#: src/blocks/trust-badges/index.js:199
+#: src/blocks/pricing-table/index.js:224
+#: src/blocks/trust-badges/index.js:202
 msgid "Show heading"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:230
-#: src/blocks/trust-badges/index.js:208
+#: src/blocks/pricing-table/index.js:233
+#: src/blocks/trust-badges/index.js:211
 msgid "Heading text"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:237
-#: src/blocks/trust-badges/index.js:215
+#: src/blocks/pricing-table/index.js:240
+#: src/blocks/trust-badges/index.js:218
 msgid "Heading alignment"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:273
+#: src/blocks/pricing-table/index.js:276
 msgid "Heading typography"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:279
+#: src/blocks/pricing-table/index.js:282
 msgid "Cards"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:283
+#: src/blocks/pricing-table/index.js:286
 msgid "Card style"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:287
+#: src/blocks/pricing-table/index.js:290
 msgid "Bordered"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:295
+#: src/blocks/pricing-table/index.js:298
 msgid "Minimal"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:302
+#: src/blocks/pricing-table/index.js:305
 msgid "Accent color"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:312
-#: src/blocks/pricing-table/pricing-plan/index.js:301
+#: src/blocks/pricing-table/index.js:315
+#: src/blocks/pricing-table/pricing-plan/index.js:304
 msgid "Features"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:316
+#: src/blocks/pricing-table/index.js:319
 msgid "Feature icon style"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:320
+#: src/blocks/pricing-table/index.js:323
 msgid "Check / cross"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:324
+#: src/blocks/pricing-table/index.js:327
 msgid "Dot"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:358
+#: src/blocks/pricing-table/index.js:361
 msgid "Pricing Table"
 msgstr ""
 
-#: src/blocks/pricing-table/index.js:359
+#: src/blocks/pricing-table/index.js:362
 msgid "Pricing plans with feature lists, CTAs, and a highlighted recommendation."
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:154
+#: src/blocks/pricing-table/pricing-plan/index.js:157
 msgid "New feature"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:183
+#: src/blocks/pricing-table/pricing-plan/index.js:186
 msgid "Edit button link"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:191
+#: src/blocks/pricing-table/pricing-plan/index.js:194
 msgid "Remove button link"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:206
+#: src/blocks/pricing-table/pricing-plan/index.js:209
 msgid "Plan"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:210
+#: src/blocks/pricing-table/pricing-plan/index.js:213
 msgid "Mark as recommended"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:217
+#: src/blocks/pricing-table/pricing-plan/index.js:220
 msgid "Badge text"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:220
+#: src/blocks/pricing-table/pricing-plan/index.js:223
 msgid "e.g. Most Popular"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:224
+#: src/blocks/pricing-table/pricing-plan/index.js:227
 msgid "Leave empty to hide the badge."
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:232
+#: src/blocks/pricing-table/pricing-plan/index.js:235
 msgid "Price display"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:236
+#: src/blocks/pricing-table/pricing-plan/index.js:239
 msgid "Show currency"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:243
+#: src/blocks/pricing-table/pricing-plan/index.js:246
 msgid "Show period"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:250
+#: src/blocks/pricing-table/pricing-plan/index.js:253
 msgid "Call to action"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:254
+#: src/blocks/pricing-table/pricing-plan/index.js:257
 msgid "Button URL"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:261
-#: src/blocks/pricing-table/pricing-plan/index.js:538
-msgid "Open in new tab"
-msgstr ""
-
-#: src/blocks/pricing-table/pricing-plan/index.js:273
-#: src/blocks/pricing-table/pricing-plan/index.js:331
+#: src/blocks/pricing-table/pricing-plan/index.js:276
+#: src/blocks/pricing-table/pricing-plan/index.js:334
 msgid "Plan name"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:282
+#: src/blocks/pricing-table/pricing-plan/index.js:285
 msgid "Price"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:291
+#: src/blocks/pricing-table/pricing-plan/index.js:294
 msgid "Description"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:311
-msgid "Button"
-msgstr ""
-
-#: src/blocks/pricing-table/pricing-plan/index.js:372
+#: src/blocks/pricing-table/pricing-plan/index.js:375
 msgid "Plan tagline (optional)"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:397
+#: src/blocks/pricing-table/pricing-plan/index.js:400
 msgid "Mark as not included"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:401
+#: src/blocks/pricing-table/pricing-plan/index.js:404
 msgid "Mark as included"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:408
+#: src/blocks/pricing-table/pricing-plan/index.js:411
 msgid "Included — click to exclude"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:412
+#: src/blocks/pricing-table/pricing-plan/index.js:415
 msgid "Excluded — click to include"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:427
+#: src/blocks/pricing-table/pricing-plan/index.js:430
 msgid "Feature description"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:441
+#: src/blocks/pricing-table/pricing-plan/index.js:444
 msgid "Remove feature"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:457
+#: src/blocks/pricing-table/pricing-plan/index.js:460
 msgid "Add feature"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:468
+#: src/blocks/pricing-table/pricing-plan/index.js:471
 msgid "Button label"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:493
+#: src/blocks/pricing-table/pricing-plan/index.js:496
 msgid "Paste URL or search"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:503
-#: src/blocks/pricing-table/pricing-plan/index.js:507
+#: src/blocks/pricing-table/pricing-plan/index.js:506
+#: src/blocks/pricing-table/pricing-plan/index.js:510
 msgid "Apply link"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:552
+#: src/blocks/pricing-table/pricing-plan/index.js:555
 msgid "Pricing Plan"
 msgstr ""
 
-#: src/blocks/pricing-table/pricing-plan/index.js:553
+#: src/blocks/pricing-table/pricing-plan/index.js:556
 msgid "A single plan card inside Pricing Table."
-msgstr ""
-
-#: src/blocks/reading-progress-bar/index.js:32
-#: src/blocks/reading-progress-bar/index.js:36
-msgid "Position"
 msgstr ""
 
 #: src/blocks/reading-progress-bar/index.js:40
@@ -1521,10 +2175,6 @@ msgstr ""
 msgid "Sticky bar that fills as the reader scrolls through the page."
 msgstr ""
 
-#: src/blocks/shape-divider/index.js:56
-msgid "Shape"
-msgstr ""
-
 #: src/blocks/shape-divider/index.js:60
 msgid "Shape style"
 msgstr ""
@@ -1577,213 +2227,179 @@ msgstr ""
 msgid "Decorative SVG divider between sections."
 msgstr ""
 
-#: src/blocks/SpacingPanel.js:192
-#: src/blocks/TypographyPanel.js:456
-msgid "Reset"
-msgstr ""
-
-#: src/blocks/SpacingPanel.js:202
-msgid "Unlink sides"
-msgstr ""
-
-#: src/blocks/SpacingPanel.js:203
-msgid "Link all sides"
-msgstr ""
-
-#: src/blocks/SpacingPanel.js:249
-msgid "Per side"
-msgstr ""
-
-#: src/blocks/SpacingPanel.js:291
-#: src/components/StylesPanel.js:66
-msgid "Spacing"
-msgstr ""
-
-#: src/blocks/star-rating/index.js:72
-#: src/blocks/star-rating/index.js:95
-#: src/blocks/star-rating/index.js:238
+#: src/blocks/star-rating/index.js:75
+#: src/blocks/star-rating/index.js:98
+#: src/blocks/star-rating/index.js:241
 msgid "Rating"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:76
+#: src/blocks/star-rating/index.js:79
 msgid "Precision"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:80
+#: src/blocks/star-rating/index.js:83
 msgid "Full stars only"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:84
+#: src/blocks/star-rating/index.js:87
 msgid "Half stars"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:88
+#: src/blocks/star-rating/index.js:91
 msgid "Any fraction"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:112
+#: src/blocks/star-rating/index.js:115
 msgid "Max Stars"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:129
+#: src/blocks/star-rating/index.js:132
 msgid "Show numeric value"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:134
+#: src/blocks/star-rating/index.js:137
 msgid "Show review count"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:141
+#: src/blocks/star-rating/index.js:144
 msgid "Review count"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:152
+#: src/blocks/star-rating/index.js:155
 msgid "Count label"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:157
+#: src/blocks/star-rating/index.js:160
 msgid "e.g. \"reviews\", \"ratings\""
 msgstr ""
 
-#: src/blocks/star-rating/index.js:190
+#: src/blocks/star-rating/index.js:193
 msgid "Star size"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:193
+#: src/blocks/star-rating/index.js:196
 msgid "e.g. 20px, 1.5rem"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:196
+#: src/blocks/star-rating/index.js:199
 msgid "Filled color"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:203
+#: src/blocks/star-rating/index.js:206
 msgid "Empty color"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:209
+#: src/blocks/star-rating/index.js:212
 msgid "Text color"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:223
+#: src/blocks/star-rating/index.js:226
 msgid "Meta typography"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:296
+#: src/blocks/star-rating/index.js:299
 msgid "Star Rating"
 msgstr ""
 
-#: src/blocks/star-rating/index.js:297
+#: src/blocks/star-rating/index.js:300
 msgid "Display a 5-star rating with optional value and review count."
 msgstr ""
 
-#: src/blocks/tabs/index.js:110
-msgid "Choose icon"
-msgstr ""
-
-#: src/blocks/tabs/index.js:127
-msgid "Icon library"
-msgstr ""
-
-#: src/blocks/tabs/index.js:176
+#: src/blocks/tabs/index.js:179
 msgid "Upload custom icon"
 msgstr ""
 
-#: src/blocks/tabs/index.js:199
+#: src/blocks/tabs/index.js:202
 msgid "PNG, JPG, GIF, WebP & SVG supported."
 msgstr ""
 
-#: src/blocks/tabs/index.js:206
+#: src/blocks/tabs/index.js:209
 msgid "PNG, JPG, GIF & WebP supported. To upload SVG, install a plugin like Safe SVG."
 msgstr ""
 
-#: src/blocks/tabs/index.js:348
-#: src/blocks/tabs/index.js:721
+#: src/blocks/tabs/index.js:351
+#: src/blocks/tabs/index.js:724
 msgid "Tabs"
 msgstr ""
 
-#: src/blocks/tabs/index.js:397
+#: src/blocks/tabs/index.js:400
 msgid "Tab label"
 msgstr ""
 
-#: src/blocks/tabs/index.js:419
+#: src/blocks/tabs/index.js:422
 msgid "Default-open tab"
 msgstr ""
 
-#: src/blocks/tabs/index.js:423
+#: src/blocks/tabs/index.js:426
 msgid "Make this the default-open tab"
 msgstr ""
 
-#: src/blocks/tabs/index.js:430
+#: src/blocks/tabs/index.js:433
 msgid "This tab opens by default on the frontend."
 msgstr ""
 
-#: src/blocks/tabs/index.js:434
+#: src/blocks/tabs/index.js:437
 msgid "Make this the default-open tab."
 msgstr ""
 
-#: src/blocks/tabs/index.js:469
+#: src/blocks/tabs/index.js:472
 msgid "Move up"
 msgstr ""
 
-#: src/blocks/tabs/index.js:488
+#: src/blocks/tabs/index.js:491
 msgid "Move down"
 msgstr ""
 
-#: src/blocks/tabs/index.js:505
+#: src/blocks/tabs/index.js:508
 msgid "Remove tab"
 msgstr ""
 
-#: src/blocks/tabs/index.js:523
+#: src/blocks/tabs/index.js:526
 msgid "Add tab"
 msgstr ""
 
-#: src/blocks/tabs/index.js:533
-#: src/blocks/trust-badges/index.js:248
+#: src/blocks/tabs/index.js:536
+#: src/blocks/trust-badges/index.js:251
 msgid "Preset"
 msgstr ""
 
-#: src/blocks/tabs/index.js:539
-msgid "Orientation"
-msgstr ""
-
-#: src/blocks/tabs/index.js:579
+#: src/blocks/tabs/index.js:582
 msgid "Full-width tabs"
 msgstr ""
 
-#: src/blocks/tabs/index.js:586
+#: src/blocks/tabs/index.js:589
 msgid "Content gap"
 msgstr ""
 
-#: src/blocks/tabs/index.js:603
+#: src/blocks/tabs/index.js:606
 msgid "Leave empty to inherit theme colors."
 msgstr ""
 
-#: src/blocks/tabs/index.js:609
+#: src/blocks/tabs/index.js:612
 msgid "Active"
 msgstr ""
 
-#: src/blocks/tabs/index.js:616
+#: src/blocks/tabs/index.js:619
 msgid "Inactive"
 msgstr ""
 
-#: src/blocks/tabs/index.js:623
+#: src/blocks/tabs/index.js:626
 msgid "Tab bar"
 msgstr ""
 
-#: src/blocks/tabs/index.js:642
+#: src/blocks/tabs/index.js:645
 msgid "Tab label typography"
 msgstr ""
 
-#: src/blocks/tabs/index.js:690
+#: src/blocks/tabs/index.js:693
 msgid "(untitled)"
 msgstr ""
 
-#: src/blocks/tabs/index.js:705
+#: src/blocks/tabs/index.js:708
 msgid "Tab 1"
 msgstr ""
 
-#: src/blocks/tabs/index.js:722
+#: src/blocks/tabs/index.js:725
 msgid "Horizontal tabs with any block content inside each panel."
 msgstr ""
 
@@ -1799,223 +2415,153 @@ msgstr ""
 msgid "A panel inside the Tabs block."
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:244
+#: src/blocks/trust-badges/index.js:247
 msgid "Badges"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:252
+#: src/blocks/trust-badges/index.js:255
 msgid "Mixed (recommended)"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:259
+#: src/blocks/trust-badges/index.js:262
 msgid "Payment only"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:263
+#: src/blocks/trust-badges/index.js:266
 msgid "Security only"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:267
+#: src/blocks/trust-badges/index.js:270
 msgid "Service only"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:271
+#: src/blocks/trust-badges/index.js:274
 msgid "All built-in"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:275
+#: src/blocks/trust-badges/index.js:278
 msgid "Custom selection"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:300
+#: src/blocks/trust-badges/index.js:303
 msgid "Custom badges"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:325
+#: src/blocks/trust-badges/index.js:328
 msgid "Choose image"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:351
+#: src/blocks/trust-badges/index.js:354
 msgid "Label / alt"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:360
+#: src/blocks/trust-badges/index.js:363
 msgid "Remove badge"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:377
+#: src/blocks/trust-badges/index.js:380
 msgid "Optional link URL"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:391
+#: src/blocks/trust-badges/index.js:394
 msgid "Add custom badge"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:396
+#: src/blocks/trust-badges/index.js:399
 msgid "Tip: optional links and alt text are saved per badge."
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:415
+#: src/blocks/trust-badges/index.js:418
 msgid "Horizontal row"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:419
+#: src/blocks/trust-badges/index.js:422
+#: src/components/iconLibrary.js:1016
 msgid "Grid"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:472
+#: src/blocks/trust-badges/index.js:475
 msgid "Badge size"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:476
+#: src/blocks/trust-badges/index.js:479
 msgid "Small (32px)"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:480
+#: src/blocks/trust-badges/index.js:483
 msgid "Medium (48px)"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:484
+#: src/blocks/trust-badges/index.js:487
 msgid "Large (64px)"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:498
+#: src/blocks/trust-badges/index.js:501
 msgid "Color mode"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:502
+#: src/blocks/trust-badges/index.js:505
 msgid "Brand colors"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:506
+#: src/blocks/trust-badges/index.js:509
 msgid "Monochrome"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:514
+#: src/blocks/trust-badges/index.js:517
 msgid "Icon color"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:522
+#: src/blocks/trust-badges/index.js:525
 msgid "Show card background"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:529
+#: src/blocks/trust-badges/index.js:532
 msgid "Card color"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:536
+#: src/blocks/trust-badges/index.js:539
 msgid "Card radius"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:549
+#: src/blocks/trust-badges/index.js:552
 msgid "Show border"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:555
+#: src/blocks/trust-badges/index.js:558
 msgid "Border color"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:581
+#: src/blocks/trust-badges/index.js:584
 msgid "Badge label"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:620
+#: src/blocks/trust-badges/index.js:623
 msgid "Select at least one badge from the inspector."
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:635
+#: src/blocks/trust-badges/index.js:638
 msgid "Trust Badges"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:636
+#: src/blocks/trust-badges/index.js:639
 msgid "Payment, security, and service trust badges with presets."
 msgstr ""
 
-#: src/blocks/TypographyPanel.js:60
-msgid "Thin"
+#: src/components/ABControls.js:129
+#: src/components/SpacingPanel.js:192
+#: src/components/TypographyPanel.js:456
+msgid "Reset"
 msgstr ""
 
-#: src/blocks/TypographyPanel.js:61
-msgid "Extra Light"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:62
-msgid "Light"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:63
-msgid "Regular"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:64
-msgid "Medium"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:65
-msgid "Semi Bold"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:66
-msgid "Bold"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:67
-msgid "Extra Bold"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:68
-msgid "Black"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:74
-#: src/blocks/TypographyPanel.js:143
-#: src/blocks/TypographyPanel.js:421
-#: src/blocks/TypographyPanel.js:521
-#: src/blocks/TypographyPanel.js:557
-#: src/blocks/TypographyPanel.js:588
+#: src/components/ABControls.js:136
+#: src/components/TypographyPanel.js:74
+#: src/components/TypographyPanel.js:143
+#: src/components/TypographyPanel.js:421
+#: src/components/TypographyPanel.js:521
+#: src/components/TypographyPanel.js:557
+#: src/components/TypographyPanel.js:588
 msgid "Default"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:487
-msgid "Line height"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:498
-msgid "Letter spacing"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:541
-msgid "Justify"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:549
-#: src/blocks/TypographyPanel.js:553
-msgid "Transform"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:562
-msgid "Uppercase"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:567
-msgid "Lowercase"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:572
-msgid "Capitalize"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:580
-#: src/blocks/TypographyPanel.js:584
-msgid "Decoration"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:593
-msgid "Underline"
-msgstr ""
-
-#: src/blocks/TypographyPanel.js:598
-msgid "Strikethrough"
 msgstr ""
 
 #: src/components/DisabledBlockMessage.js:32
@@ -2034,12 +2580,632 @@ msgstr ""
 msgid " to use this block."
 msgstr ""
 
-#: src/components/StylesPanel.js:70
-msgid "Padding"
+#: src/components/iconLibrary.js:884
+msgid "Arrow left"
+msgstr ""
+
+#: src/components/iconLibrary.js:890
+msgid "Arrow up"
+msgstr ""
+
+#: src/components/iconLibrary.js:896
+msgid "Arrow down"
+msgstr ""
+
+#: src/components/iconLibrary.js:914
+msgid "Chevron left"
+msgstr ""
+
+#: src/components/iconLibrary.js:920
+msgid "Chevron up"
+msgstr ""
+
+#: src/components/iconLibrary.js:926
+msgid "Chevron down"
+msgstr ""
+
+#: src/components/iconLibrary.js:932
+msgid "Chevrons right"
+msgstr ""
+
+#: src/components/iconLibrary.js:944
+msgid "Move"
+msgstr ""
+
+#: src/components/iconLibrary.js:950
+msgid "Refresh"
+msgstr ""
+
+#: src/components/iconLibrary.js:956
+msgid "More"
+msgstr ""
+
+#: src/components/iconLibrary.js:968
+msgid "Check circle"
+msgstr ""
+
+#: src/components/iconLibrary.js:974
+msgid "Close"
+msgstr ""
+
+#: src/components/iconLibrary.js:980
+msgid "Close circle"
+msgstr ""
+
+#: src/components/iconLibrary.js:992
+msgid "Minus"
+msgstr ""
+
+#: src/components/iconLibrary.js:998
+msgid "Plus circle"
+msgstr ""
+
+#: src/components/iconLibrary.js:1004
+msgid "Menu"
+msgstr ""
+
+#: src/components/iconLibrary.js:1022
+msgid "Search"
+msgstr ""
+
+#: src/components/iconLibrary.js:1028
+msgid "Filter"
+msgstr ""
+
+#: src/components/iconLibrary.js:1034
+msgid "Sliders"
+msgstr ""
+
+#: src/components/iconLibrary.js:1046
+msgid "Info"
+msgstr ""
+
+#: src/components/iconLibrary.js:1052
+msgid "Help"
+msgstr ""
+
+#: src/components/iconLibrary.js:1058
+msgid "Alert"
+msgstr ""
+
+#: src/components/iconLibrary.js:1064
+msgid "Ban"
+msgstr ""
+
+#: src/components/iconLibrary.js:1070
+msgid "Eye"
+msgstr ""
+
+#: src/components/iconLibrary.js:1076
+msgid "Eye off"
+msgstr ""
+
+#: src/components/iconLibrary.js:1082
+msgid "Lock"
+msgstr ""
+
+#: src/components/iconLibrary.js:1088
+msgid "Shield"
+msgstr ""
+
+#: src/components/iconLibrary.js:1094
+msgid "Bookmark"
+msgstr ""
+
+#: src/components/iconLibrary.js:1106
+msgid "Upload"
+msgstr ""
+
+#: src/components/iconLibrary.js:1112
+msgid "Power"
+msgstr ""
+
+#: src/components/iconLibrary.js:1118
+msgid "Log in"
+msgstr ""
+
+#: src/components/iconLibrary.js:1124
+msgid "Log out"
+msgstr ""
+
+#: src/components/iconLibrary.js:1136
+msgid "Edit"
+msgstr ""
+
+#: src/components/iconLibrary.js:1142
+msgid "Delete"
+msgstr ""
+
+#: src/components/iconLibrary.js:1154
+msgid "Clipboard"
+msgstr ""
+
+#: src/components/iconLibrary.js:1160
+msgid "Cut"
+msgstr ""
+
+#: src/components/iconLibrary.js:1166
+msgid "File"
+msgstr ""
+
+#: src/components/iconLibrary.js:1172
+msgid "Document"
+msgstr ""
+
+#: src/components/iconLibrary.js:1178
+msgid "Folder"
+msgstr ""
+
+#: src/components/iconLibrary.js:1184
+msgid "Folder open"
+msgstr ""
+
+#: src/components/iconLibrary.js:1196
+msgid "Print"
+msgstr ""
+
+#: src/components/iconLibrary.js:1202
+msgid "Archive"
+msgstr ""
+
+#: src/components/iconLibrary.js:1214
+msgid "Shopping bag"
+msgstr ""
+
+#: src/components/iconLibrary.js:1220
+msgid "Store"
+msgstr ""
+
+#: src/components/iconLibrary.js:1226
+msgid "Tag"
+msgstr ""
+
+#: src/components/iconLibrary.js:1232
+msgid "Gift"
+msgstr ""
+
+#: src/components/iconLibrary.js:1238
+msgid "Credit card"
+msgstr ""
+
+#: src/components/iconLibrary.js:1244
+msgid "Wallet"
+msgstr ""
+
+#: src/components/iconLibrary.js:1250
+msgid "Banknote"
+msgstr ""
+
+#: src/components/iconLibrary.js:1256
+msgid "Dollar"
+msgstr ""
+
+#: src/components/iconLibrary.js:1262
+msgid "Percent"
+msgstr ""
+
+#: src/components/iconLibrary.js:1268
+msgid "Receipt"
+msgstr ""
+
+#: src/components/iconLibrary.js:1274
+msgid "Package"
+msgstr ""
+
+#: src/components/iconLibrary.js:1280
+msgid "Truck"
+msgstr ""
+
+#: src/components/iconLibrary.js:1286
+msgid "Ticket"
+msgstr ""
+
+#: src/components/iconLibrary.js:1292
+msgid "Award"
+msgstr ""
+
+#: src/components/iconLibrary.js:1298
+msgid "Trending up"
+msgstr ""
+
+#: src/components/iconLibrary.js:1310
+msgid "At sign"
+msgstr ""
+
+#: src/components/iconLibrary.js:1328
+msgid "Message"
+msgstr ""
+
+#: src/components/iconLibrary.js:1334
+msgid "Comment"
+msgstr ""
+
+#: src/components/iconLibrary.js:1340
+msgid "Inbox"
+msgstr ""
+
+#: src/components/iconLibrary.js:1346
+msgid "Bell"
+msgstr ""
+
+#: src/components/iconLibrary.js:1352
+msgid "Megaphone"
+msgstr ""
+
+#: src/components/iconLibrary.js:1358
+msgid "Globe"
+msgstr ""
+
+#: src/components/iconLibrary.js:1370
+msgid "Share"
+msgstr ""
+
+#: src/components/iconLibrary.js:1376
+msgid "RSS"
+msgstr ""
+
+#: src/components/iconLibrary.js:1382
+msgid "Wi-Fi"
+msgstr ""
+
+#: src/components/iconLibrary.js:1394
+msgid "Pause"
+msgstr ""
+
+#: src/components/iconLibrary.js:1400
+msgid "Skip forward"
+msgstr ""
+
+#: src/components/iconLibrary.js:1406
+msgid "Skip back"
+msgstr ""
+
+#: src/components/iconLibrary.js:1412
+msgid "Image"
+msgstr ""
+
+#: src/components/iconLibrary.js:1418
+msgid "Video"
+msgstr ""
+
+#: src/components/iconLibrary.js:1424
+msgid "Film"
+msgstr ""
+
+#: src/components/iconLibrary.js:1430
+msgid "Music"
+msgstr ""
+
+#: src/components/iconLibrary.js:1436
+msgid "Headphones"
+msgstr ""
+
+#: src/components/iconLibrary.js:1442
+msgid "Microphone"
+msgstr ""
+
+#: src/components/iconLibrary.js:1448
+msgid "Volume"
+msgstr ""
+
+#: src/components/iconLibrary.js:1454
+msgid "Camera"
+msgstr ""
+
+#: src/components/iconLibrary.js:1460
+msgid "User"
+msgstr ""
+
+#: src/components/iconLibrary.js:1466
+msgid "Users"
+msgstr ""
+
+#: src/components/iconLibrary.js:1472
+msgid "Add user"
+msgstr ""
+
+#: src/components/iconLibrary.js:1478
+msgid "Smile"
+msgstr ""
+
+#: src/components/iconLibrary.js:1496
+msgid "Thumbs up"
+msgstr ""
+
+#: src/components/iconLibrary.js:1502
+msgid "Thumbs down"
+msgstr ""
+
+#: src/components/iconLibrary.js:1508
+msgid "Trophy"
+msgstr ""
+
+#: src/components/iconLibrary.js:1514
+msgid "Flag"
+msgstr ""
+
+#: src/components/iconLibrary.js:1520
+msgid "Home"
+msgstr ""
+
+#: src/components/iconLibrary.js:1526
+msgid "Calendar"
+msgstr ""
+
+#: src/components/iconLibrary.js:1532
+msgid "Clock"
+msgstr ""
+
+#: src/components/iconLibrary.js:1538
+msgid "Map pin"
+msgstr ""
+
+#: src/components/iconLibrary.js:1544
+msgid "Map"
+msgstr ""
+
+#: src/components/iconLibrary.js:1550
+msgid "Navigation"
+msgstr ""
+
+#: src/components/iconLibrary.js:1556
+msgid "Compass"
+msgstr ""
+
+#: src/components/iconLibrary.js:1562
+msgid "Target"
+msgstr ""
+
+#: src/components/iconLibrary.js:1568
+msgid "Rocket"
+msgstr ""
+
+#: src/components/iconLibrary.js:1574
+msgid "Sparkles"
+msgstr ""
+
+#: src/components/iconLibrary.js:1580
+msgid "Hash"
+msgstr ""
+
+#: src/components/iconLibrary.js:1586
+msgid "Key"
+msgstr ""
+
+#: src/components/iconLibrary.js:1592
+msgid "Idea"
+msgstr ""
+
+#: src/components/iconLibrary.js:1598
+msgid "Palette"
+msgstr ""
+
+#: src/components/iconLibrary.js:1604
+msgid "Coffee"
+msgstr ""
+
+#: src/components/iconLibrary.js:1610
+msgid "Monitor"
+msgstr ""
+
+#: src/components/iconLibrary.js:1616
+msgid "Smartphone"
+msgstr ""
+
+#: src/components/iconLibrary.js:1622
+msgid "Laptop"
+msgstr ""
+
+#: src/components/iconLibrary.js:1628
+msgid "Server"
+msgstr ""
+
+#: src/components/iconLibrary.js:1634
+msgid "Database"
+msgstr ""
+
+#: src/components/iconLibrary.js:1640
+msgid "Battery"
+msgstr ""
+
+#: src/components/iconLibrary.js:1646
+msgid "Sun"
+msgstr ""
+
+#: src/components/iconLibrary.js:1652
+msgid "Moon"
+msgstr ""
+
+#: src/components/iconLibrary.js:1658
+msgid "Sunrise"
+msgstr ""
+
+#: src/components/iconLibrary.js:1664
+msgid "Cloud"
+msgstr ""
+
+#: src/components/iconLibrary.js:1670
+msgid "Droplet"
+msgstr ""
+
+#: src/components/iconLibrary.js:1676
+msgid "Flame"
+msgstr ""
+
+#: src/components/iconLibrary.js:1682
+msgid "Leaf"
+msgstr ""
+
+#: src/components/iconLibrary.js:1688
+msgid "Wind"
+msgstr ""
+
+#: src/components/IconPicker.js:31
+msgid "Search icons…"
+msgstr ""
+
+#: src/components/IconPicker.js:53
+msgid "No icons found."
+msgstr ""
+
+#: src/components/SpacingPanel.js:202
+msgid "Unlink sides"
+msgstr ""
+
+#: src/components/SpacingPanel.js:203
+msgid "Link all sides"
+msgstr ""
+
+#: src/components/SpacingPanel.js:249
+msgid "Per side"
+msgstr ""
+
+#: src/components/SpacingPanel.js:291
+#: src/components/StylesPanel.js:66
+msgid "Spacing"
 msgstr ""
 
 #: src/components/StylesPanel.js:82
 msgid "Margin"
+msgstr ""
+
+#: src/components/TypographyPanel.js:60
+msgid "Thin"
+msgstr ""
+
+#: src/components/TypographyPanel.js:61
+msgid "Extra Light"
+msgstr ""
+
+#: src/components/TypographyPanel.js:62
+msgid "Light"
+msgstr ""
+
+#: src/components/TypographyPanel.js:63
+msgid "Regular"
+msgstr ""
+
+#: src/components/TypographyPanel.js:65
+msgid "Semi Bold"
+msgstr ""
+
+#: src/components/TypographyPanel.js:66
+msgid "Bold"
+msgstr ""
+
+#: src/components/TypographyPanel.js:67
+msgid "Extra Bold"
+msgstr ""
+
+#: src/components/TypographyPanel.js:68
+msgid "Black"
+msgstr ""
+
+#: src/components/TypographyPanel.js:487
+msgid "Line height"
+msgstr ""
+
+#: src/components/TypographyPanel.js:498
+msgid "Letter spacing"
+msgstr ""
+
+#: src/components/TypographyPanel.js:541
+msgid "Justify"
+msgstr ""
+
+#: src/components/TypographyPanel.js:549
+#: src/components/TypographyPanel.js:553
+msgid "Transform"
+msgstr ""
+
+#: src/components/TypographyPanel.js:562
+msgid "Uppercase"
+msgstr ""
+
+#: src/components/TypographyPanel.js:567
+msgid "Lowercase"
+msgstr ""
+
+#: src/components/TypographyPanel.js:572
+msgid "Capitalize"
+msgstr ""
+
+#: src/components/TypographyPanel.js:580
+#: src/components/TypographyPanel.js:584
+msgid "Decoration"
+msgstr ""
+
+#: src/components/TypographyPanel.js:593
+msgid "Underline"
+msgstr ""
+
+#: src/components/TypographyPanel.js:598
+msgid "Strikethrough"
+msgstr ""
+
+#: src/blocks/advanced-button/block.json
+msgctxt "block title"
+msgid "Advanced Button"
+msgstr ""
+
+#: src/blocks/advanced-button/block.json
+msgctxt "block description"
+msgid "Button with icons, hover states, sub-captions, and style presets."
+msgstr ""
+
+#: src/blocks/advanced-button/block.json
+#: src/blocks/button-group/block.json
+#: src/blocks/copy-to-clipboard/block.json
+msgctxt "block keyword"
+msgid "button"
+msgstr ""
+
+#: src/blocks/advanced-button/block.json
+#: src/blocks/button-group/block.json
+msgctxt "block keyword"
+msgid "cta"
+msgstr ""
+
+#: src/blocks/advanced-button/block.json
+msgctxt "block keyword"
+msgid "link"
+msgstr ""
+
+#: src/blocks/advanced-button/block.json
+#: src/blocks/icon-list/block.json
+#: src/blocks/icon/block.json
+msgctxt "block keyword"
+msgid "icon"
+msgstr ""
+
+#: src/blocks/advanced-heading/block.json
+msgctxt "block title"
+msgid "Advanced Heading"
+msgstr ""
+
+#: src/blocks/advanced-heading/block.json
+msgctxt "block description"
+msgid "Heading with highlight spans, an optional sub-heading, and an accent line."
+msgstr ""
+
+#: src/blocks/advanced-heading/block.json
+msgctxt "block keyword"
+msgid "heading"
+msgstr ""
+
+#: src/blocks/advanced-heading/block.json
+msgctxt "block keyword"
+msgid "title"
+msgstr ""
+
+#: src/blocks/advanced-heading/block.json
+msgctxt "block keyword"
+msgid "subheading"
+msgstr ""
+
+#: src/blocks/advanced-heading/block.json
+msgctxt "block keyword"
+msgid "highlight"
 msgstr ""
 
 #: src/blocks/advanced-section/block.json
@@ -2112,6 +3278,26 @@ msgctxt "block keyword"
 msgid "comparison"
 msgstr ""
 
+#: src/blocks/button-group/block.json
+msgctxt "block title"
+msgid "Button Group"
+msgstr ""
+
+#: src/blocks/button-group/block.json
+msgctxt "block description"
+msgid "Arrange Advanced Buttons in a row or stack with alignment and gap controls."
+msgstr ""
+
+#: src/blocks/button-group/block.json
+msgctxt "block keyword"
+msgid "buttons"
+msgstr ""
+
+#: src/blocks/button-group/block.json
+msgctxt "block keyword"
+msgid "group"
+msgstr ""
+
 #: src/blocks/copy-to-clipboard/block.json
 msgctxt "block title"
 msgid "Copy to Clipboard"
@@ -2140,11 +3326,6 @@ msgstr ""
 #: src/blocks/copy-to-clipboard/block.json
 msgctxt "block keyword"
 msgid "snippet"
-msgstr ""
-
-#: src/blocks/copy-to-clipboard/block.json
-msgctxt "block keyword"
-msgid "button"
 msgstr ""
 
 #: src/blocks/countdown-timer/block.json
@@ -2253,6 +3434,57 @@ msgctxt "block keyword"
 msgid "progress"
 msgstr ""
 
+#: src/blocks/icon-list/block.json
+msgctxt "block title"
+msgid "Icon List"
+msgstr ""
+
+#: src/blocks/icon-list/block.json
+msgctxt "block description"
+msgid "A list with a custom icon on every row — for features, benefits, or checklists."
+msgstr ""
+
+#: src/blocks/icon-list/block.json
+msgctxt "block keyword"
+msgid "list"
+msgstr ""
+
+#: src/blocks/icon-list/block.json
+msgctxt "block keyword"
+msgid "checklist"
+msgstr ""
+
+#: src/blocks/icon-list/block.json
+msgctxt "block keyword"
+msgid "features"
+msgstr ""
+
+#: src/blocks/icon/block.json
+msgctxt "block title"
+msgid "Icon"
+msgstr ""
+
+#: src/blocks/icon/block.json
+msgctxt "block description"
+msgid "Pick an icon from the library or paste your own SVG, then style its size, colour, shape, and link."
+msgstr ""
+
+#: src/blocks/icon/block.json
+msgctxt "block keyword"
+msgid "svg"
+msgstr ""
+
+#: src/blocks/icon/block.json
+#: src/blocks/shape-divider/block.json
+msgctxt "block keyword"
+msgid "shape"
+msgstr ""
+
+#: src/blocks/icon/block.json
+msgctxt "block keyword"
+msgid "symbol"
+msgstr ""
+
 #: src/blocks/pricing-table/block.json
 msgctxt "block title"
 msgid "Pricing Table"
@@ -2342,11 +3574,6 @@ msgstr ""
 #: src/blocks/shape-divider/block.json
 msgctxt "block description"
 msgid "Decorative SVG divider between sections (wave, curve, triangle, tilt, slant)."
-msgstr ""
-
-#: src/blocks/shape-divider/block.json
-msgctxt "block keyword"
-msgid "shape"
 msgstr ""
 
 #: src/blocks/shape-divider/block.json

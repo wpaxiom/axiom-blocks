@@ -1,0 +1,87 @@
+/**
+ * Icon — frontend styles.
+ *
+ * Dynamic values arrive as CSS custom properties set inline on the wrapper by
+ * render.php (mirrored by edit). Hover colours read the same vars so a single
+ * declaration covers both states; transitions live here (safecss strips inline).
+ */
+
+.ab-icon {
+	display: flex;
+
+	// Native block alignment (None / Wide / Full). The block toolbar applies
+	// .alignwide / .alignfull; the flex wrapper opts into full width so the
+	// icon can position (via --align-*) within the wider area.
+	&.alignwide,
+	&.alignfull {
+		width: 100%;
+	}
+
+	&--align-left {
+		justify-content: flex-start;
+	}
+
+	&--align-center {
+		justify-content: center;
+	}
+
+	&--align-right {
+		justify-content: flex-end;
+	}
+
+	&__box {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 0;
+		color: var(--ab-icon-color, currentColor);
+		text-decoration: none;
+		transition:
+			color 0.15s ease,
+			background-color 0.15s ease,
+			border-color 0.15s ease;
+
+		&:hover {
+			color: var(--ab-icon-color-h, var(--ab-icon-color, currentColor));
+		}
+	}
+
+	// ── Shape containers ──────────────────────────────────────────────────────
+	&--circle,
+	&--square,
+	&--rounded {
+		padding: var(--ab-icon-pad, 16px);
+		background: var(--ab-icon-bg, transparent);
+		border:
+			var(--ab-icon-bw, 0) var(--ab-icon-bs, solid)
+			var(--ab-icon-bc, transparent);
+
+		&:hover {
+			background: var(--ab-icon-bg-h, var(--ab-icon-bg, transparent));
+		}
+	}
+
+	&--circle {
+		border-radius: 50%;
+	}
+
+	&--square {
+		border-radius: 0;
+	}
+
+	&--rounded {
+		border-radius: var(--ab-icon-radius, 12px);
+	}
+
+	// ── Glyph ─────────────────────────────────────────────────────────────────
+	&__glyph {
+		display: inline-flex;
+
+		svg {
+			display: block;
+			width: var(--ab-icon-size, 48px);
+			height: var(--ab-icon-size, 48px);
+			transform: rotate(var(--ab-icon-rotate, 0deg));
+		}
+	}
+}
