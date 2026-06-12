@@ -26,6 +26,10 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 
 = Content Blocks =
 
+* **Advanced Heading** — Heading with inline highlight spans, an optional sub-heading, an accent line, and full typography control.
+* **Advanced Button** — Button with leading or trailing icons, an optional sub-caption, style and size presets, and hover states.
+* **Icon** — A single icon from the built-in library or your own SVG, with size, colour, shape background, and link controls.
+* **Icon List** — A list with a custom icon on every row — for features, benefits, and checklists.
 * **Tabs** — Horizontal tabs container that accepts any blocks inside.
 * **Countdown Timer** — Live countdown to a target date or time.
 * **Copy to Clipboard** — Button that copies text or code snippets to the visitor's clipboard.
@@ -138,7 +142,7 @@ Developers can redirect the feedback to their own server — or disable it entir
 == Changelog ==
 
 = 1.0.1 =
-* New blocks: Advanced Heading, Icon, Icon List, Advanced Button, and Button Group.
+* New blocks: Advanced Heading, Advanced Button, Icon, and Icon List.
 * Added an optional, opt-in deactivation feedback form. No data is collected unless you choose a reason and submit it — see the Privacy section for exactly what is sent.
 
 = 1.0.0 =
@@ -151,7 +155,7 @@ Developers can redirect the feedback to their own server — or disable it entir
 == Upgrade Notice ==
 
 = 1.0.1 =
-Adds five new blocks (Advanced Heading, Icon, Icon List, Advanced Button, Button Group) and an optional, opt-in deactivation feedback form.
+Adds four new blocks (Advanced Heading, Advanced Button, Icon, and Icon List) and an optional, opt-in deactivation feedback form.
 
 = 1.0.0 =
 Initial release. Install and activate to start using Axiom Blocks blocks in the WordPress editor.
