@@ -1,0 +1,425 @@
+/**
+ * Testimonials — frontend + editor styles.
+ *
+ * Shared visual settings live as --ab-tst-* custom properties on the
+ * .ab-testimonials wrapper and cascade to each .ab-testimonial card. Static
+ * layout lives here; the carousel/marquee chrome is built by the viewScript and
+ * styled below under .is-ready.
+ */
+
+.ab-testimonials {
+	display: grid;
+	grid-template-columns: repeat(var(--ab-tst-cols, 3), minmax(0, 1fr));
+	gap: var(--ab-tst-gap, 24px);
+
+	&.is-stack-mobile {
+
+		@media (max-width: 782px) {
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+.ab-testimonial {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	min-width: 0;
+	box-sizing: border-box;
+	padding: var(--ab-tst-card-pt, 28px) var(--ab-tst-card-pr, 28px)
+		var(--ab-tst-card-pb, 28px) var(--ab-tst-card-pl, 28px);
+	background: var(--ab-tst-card-bg, #fff);
+	border: var(--ab-tst-card-bw, 1px) solid var(--ab-tst-card-bc, #e7e7ea);
+	border-radius: var(--ab-tst-card-radius, 12px);
+}
+
+.has-shadow .ab-testimonial {
+	box-shadow: 0 6px 24px rgba(17, 17, 26, 0.06), 0 2px 8px rgba(17, 17, 26, 0.04);
+}
+
+/* Whole-card link (stretched, sits above content but below interactive bits) */
+.ab-testimonial__link {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	border-radius: inherit;
+}
+
+.ab-testimonial__quote-icon {
+	display: inline-flex;
+	color: var(--ab-tst-quote-icon, #c4b5fd);
+
+	svg {
+		width: 34px;
+		height: 34px;
+	}
+}
+
+.no-quote-icon .ab-testimonial__quote-icon {
+	display: none;
+}
+
+/* ── Rating (empty + filled overlay → half-star precision) ────────────────── */
+.ab-testimonial__rating {
+	position: relative;
+	display: inline-flex;
+	width: max-content;
+	max-width: 100%;
+}
+
+.ab-testimonial__stars {
+	display: inline-flex;
+	white-space: nowrap;
+
+	svg {
+		width: 18px;
+		height: 18px;
+		flex: 0 0 auto;
+	}
+}
+
+.ab-testimonial__stars--empty {
+	color: #e5e7eb;
+}
+
+.ab-testimonial__stars--filled {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	color: var(--ab-tst-rating, #fbbf24);
+}
+
+.no-rating .ab-testimonial__rating {
+	display: none;
+}
+
+/* ── Quote ────────────────────────────────────────────────────────────────── */
+.ab-testimonial__quote {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	quotes: none;
+	font-family: var(--ab-tst-quote-ff);
+	font-weight: var(--ab-tst-quote-fw, 400);
+	font-size: var(--ab-tst-quote-fs, 1.0625rem);
+	line-height: var(--ab-tst-quote-lh, 1.6);
+	letter-spacing: var(--ab-tst-quote-ls);
+	text-transform: var(--ab-tst-quote-tt);
+	text-decoration: var(--ab-tst-quote-td);
+	color: var(--ab-tst-quote-color, #374151);
+}
+
+.has-readmore .ab-testimonial__quote {
+	display: -webkit-box;
+	-webkit-line-clamp: var(--ab-tst-clamp, 4);
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.has-readmore .ab-testimonial__quote.is-expanded {
+	display: block;
+	-webkit-line-clamp: none;
+	overflow: visible;
+}
+
+.ab-testimonial__readmore {
+	position: relative;
+	z-index: 2;
+	align-self: flex-start;
+	margin-top: 6px;
+	padding: 0;
+	background: none;
+	border: 0;
+	color: #7c3aed;
+	font: inherit;
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+/* ── Person ───────────────────────────────────────────────────────────────── */
+.ab-testimonial__person {
+	display: flex;
+	gap: 12px;
+	margin-top: auto;
+}
+
+.ab-testimonial__avatar {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	width: var(--ab-tst-avatar-size, 48px);
+	height: var(--ab-tst-avatar-size, 48px);
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+}
+
+.ab-testimonial__initials {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	font-weight: 600;
+	font-size: calc(var(--ab-tst-avatar-size, 48px) * 0.4);
+	line-height: 1;
+}
+
+.ab-testimonials--shape-circle .ab-testimonial__avatar,
+.ab-testimonials--shape-circle .ab-testimonial__avatar img,
+.ab-testimonials--shape-circle .ab-testimonial__initials {
+	border-radius: 50%;
+}
+
+.ab-testimonials--shape-rounded .ab-testimonial__avatar,
+.ab-testimonials--shape-rounded .ab-testimonial__avatar img,
+.ab-testimonials--shape-rounded .ab-testimonial__initials {
+	border-radius: 10px;
+}
+
+.ab-testimonial__identity {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+	justify-content: center;
+}
+
+.ab-testimonial__name {
+	font-family: var(--ab-tst-name-ff);
+	font-weight: var(--ab-tst-name-fw, 600);
+	font-size: var(--ab-tst-name-fs, 1rem);
+	line-height: var(--ab-tst-name-lh, 1.3);
+	letter-spacing: var(--ab-tst-name-ls);
+	text-transform: var(--ab-tst-name-tt);
+	text-decoration: var(--ab-tst-name-td);
+	color: var(--ab-tst-name-color, #111827);
+}
+
+.ab-testimonial__author-line {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 6px;
+	font-family: var(--ab-tst-role-ff);
+	font-weight: var(--ab-tst-role-fw, 400);
+	font-size: var(--ab-tst-role-fs, 0.875rem);
+	line-height: var(--ab-tst-role-lh, 1.4);
+	letter-spacing: var(--ab-tst-role-ls);
+	color: var(--ab-tst-role-color, #6b7280);
+}
+
+.ab-testimonial__company {
+	font-family: var(--ab-tst-comp-ff);
+	font-weight: var(--ab-tst-comp-fw, 600);
+	font-size: var(--ab-tst-comp-fs);
+	letter-spacing: var(--ab-tst-comp-ls);
+	color: var(--ab-tst-comp-color, inherit);
+
+	&::before {
+		content: "·";
+		margin-right: 6px;
+		color: #9ca3af;
+	}
+}
+
+/* ── Source / verified badge + date ───────────────────────────────────────── */
+.ab-testimonial__source {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px 10px;
+	margin-top: 4px;
+	font-size: 0.78rem;
+	color: #6b7280;
+}
+
+.ab-testimonial__verified {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	font-weight: 600;
+	color: #16a34a;
+
+	svg {
+		width: 14px;
+		height: 14px;
+	}
+}
+
+.ab-testimonial__via {
+	font-weight: 500;
+}
+
+.ab-testimonial__date {
+	color: #9ca3af;
+}
+
+/* ── Avatar position (top = centered card, left = row) ────────────────────── */
+.ab-testimonials--avatar-top .ab-testimonial {
+	text-align: center;
+	align-items: center;
+}
+
+.ab-testimonials--avatar-top .ab-testimonial__person {
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.ab-testimonials--avatar-top .ab-testimonial__author-line,
+.ab-testimonials--avatar-top .ab-testimonial__source {
+	justify-content: center;
+}
+
+.ab-testimonials--avatar-left .ab-testimonial__person {
+	flex-direction: row;
+	align-items: center;
+}
+
+/* ── Carousel (built by viewScript; .is-ready) ────────────────────────────── */
+.ab-testimonials.is-ready {
+	display: block;
+	position: relative;
+	overflow: visible;
+}
+
+/* Side gutters so the arrows sit beside the cards, not on top of them. */
+.ab-testimonials--carousel.is-ready {
+	padding-left: 52px;
+	padding-right: 52px;
+}
+
+@media (max-width: 600px) {
+
+	.ab-testimonials--carousel.is-ready {
+		padding-left: 40px;
+		padding-right: 40px;
+	}
+}
+
+/* Only the viewport clips the moving track. */
+.ab-testimonials__viewport {
+	overflow: hidden;
+}
+
+.ab-testimonials__track {
+	display: flex;
+	gap: var(--ab-tst-gap, 24px);
+	will-change: transform;
+}
+
+.ab-testimonials.is-ready .ab-testimonial {
+	flex: 0 0 auto;
+}
+
+.ab-testimonials__arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 3;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #e5e7eb;
+	border-radius: 50%;
+	background: #fff;
+	color: #374151;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+	&:hover {
+		background: #7c3aed;
+		border-color: #7c3aed;
+		color: #fff;
+	}
+
+	&:disabled {
+		opacity: 0.4;
+		cursor: default;
+	}
+
+	svg {
+		width: 18px;
+		height: 18px;
+	}
+}
+
+.ab-testimonials__arrow--prev {
+	left: 4px;
+}
+
+.ab-testimonials__arrow--next {
+	right: 4px;
+}
+
+.ab-testimonials__dots {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 18px;
+}
+
+.ab-testimonials__dot {
+	width: 9px;
+	height: 9px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: #d1d5db;
+	cursor: pointer;
+	transition: background 0.15s, transform 0.15s;
+
+	&.is-active {
+		background: #7c3aed;
+		transform: scale(1.25);
+	}
+}
+
+/* ── Marquee (built by viewScript; .is-ready) ─────────────────────────────── */
+.ab-testimonials--marquee.is-ready .ab-testimonials__track {
+	width: max-content;
+	animation: ab-tst-marquee calc(var(--ab-tst-marquee-time, 30) * 1s) linear infinite;
+}
+
+.ab-testimonials--marquee.is-ready.is-reverse .ab-testimonials__track {
+	animation-direction: reverse;
+}
+
+.ab-testimonials--marquee.is-ready.is-paused .ab-testimonials__track {
+	animation-play-state: paused;
+}
+
+@keyframes ab-tst-marquee {
+
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.ab-testimonials--marquee.is-ready .ab-testimonials__track {
+		animation: none;
+	}
+}

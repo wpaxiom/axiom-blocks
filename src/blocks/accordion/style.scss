@@ -1,0 +1,144 @@
+/**
+ * Accordion — shared styles (editor + frontend).
+ * Dynamic values arrive as CSS custom properties from render.php / the editor;
+ * static rules (transitions, layout) live here so safecss_filter_attr can't
+ * strip them.
+ */
+.ab-accordion {
+	border: var(--ab-acc-cont-bw, 0) solid var(--ab-acc-cont-bc, transparent);
+	border-radius: var(--ab-acc-cont-radius, 0);
+}
+
+.ab-accordion__item {
+	overflow: hidden;
+	background: var(--ab-acc-body-bg, #fff);
+	border: var(--ab-acc-border-width, 1px) solid var(--ab-acc-border-color, #e3e3e6);
+	border-radius: var(--ab-acc-radius, 8px);
+	margin-bottom: var(--ab-acc-gap, 8px);
+}
+
+.ab-accordion__item:last-child {
+	margin-bottom: 0;
+}
+
+.ab-accordion__header {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0;
+	padding: var(--ab-acc-header-pt, 16px) var(--ab-acc-header-pr, 20px)
+		var(--ab-acc-header-pb, 16px) var(--ab-acc-header-pl, 20px);
+	background: var(--ab-acc-header-bg, #f6f7f8);
+	color: var(--ab-acc-header-color, inherit);
+	cursor: pointer;
+	list-style: none;
+	user-select: none;
+	transition: background 0.2s ease, color 0.2s ease;
+
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&::marker {
+		content: "";
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid currentcolor;
+		outline-offset: -2px;
+	}
+}
+
+.ab-accordion__item[open] > .ab-accordion__header,
+.ab-accordion__item.is-editor > .ab-accordion__header {
+	background: var(--ab-acc-active-header-bg, var(--ab-acc-header-bg, #f6f7f8));
+	color: var(--ab-acc-active-header-color, var(--ab-acc-header-color, inherit));
+}
+
+.ab-accordion__title {
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+	font-family: var(--ab-acc-title-ff);
+	font-weight: var(--ab-acc-title-fw, 600);
+	font-size: var(--ab-acc-title-fs);
+	line-height: var(--ab-acc-title-lh);
+	letter-spacing: var(--ab-acc-title-ls);
+	text-transform: var(--ab-acc-title-tt);
+	text-decoration: var(--ab-acc-title-td);
+	text-align: var(--ab-acc-title-ta);
+}
+
+.ab-accordion__icon {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--ab-acc-icon-size, 20px);
+	height: var(--ab-acc-icon-size, 20px);
+	color: var(--ab-acc-icon-color, currentcolor);
+	transition: transform 0.25s ease;
+
+	svg {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.ab-accordion--icon-left .ab-accordion__icon {
+	order: -1;
+}
+
+.ab-accordion--rotate .ab-accordion__item[open] > .ab-accordion__header .ab-accordion__icon {
+	transform: rotate(180deg);
+}
+
+.ab-accordion__body {
+	overflow: hidden;
+}
+
+.ab-accordion__body-inner {
+	box-sizing: border-box;
+	padding: var(--ab-acc-body-pt, 16px) var(--ab-acc-body-pr, 16px)
+		var(--ab-acc-body-pb, 16px) var(--ab-acc-body-pl, 16px);
+	background: var(--ab-acc-body-bg, #fff);
+	color: var(--ab-acc-body-color, inherit);
+
+	> :first-child {
+		margin-top: 0;
+	}
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+}
+
+.ab-accordion__toggle-all {
+	display: block;
+	width: max-content;
+	margin: 0 0 12px auto;
+	padding: 7px 14px;
+	background: none;
+	border: 1px solid var(--ab-acc-border-color, #e3e3e6);
+	border-radius: 6px;
+	color: #7c3aed;
+	font: inherit;
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease;
+
+	&:hover {
+		background: #faf5ff;
+		border-color: #c4b5fd;
+	}
+
+	&:focus-visible {
+		outline: 2px solid #7c3aed;
+		outline-offset: 2px;
+	}
+}

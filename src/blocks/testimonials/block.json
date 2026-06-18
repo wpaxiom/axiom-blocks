@@ -1,0 +1,121 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/testimonials",
+	"version": "1.0.0",
+	"title": "Testimonials",
+	"category": "axiom-blocks",
+	"description": "Social-proof testimonials in a grid, carousel, or continuous marquee — avatars, star ratings, quote icon, verified source badges, and opt-in review schema.",
+	"keywords": ["testimonial", "review", "quote", "carousel", "rating"],
+	"textdomain": "axiom-blocks",
+	"icon": "format-quote",
+	"attributes": {
+		"layout":        { "type": "string",  "default": "grid" },
+		"columns":       { "type": "number",  "default": 3 },
+		"gap":           { "type": "string",  "default": "" },
+		"stackOnMobile": { "type": "boolean", "default": true },
+
+		"autoplay":      { "type": "boolean", "default": false },
+		"autoplaySpeed": { "type": "number",  "default": 4000 },
+		"loop":          { "type": "boolean", "default": true },
+		"pauseOnHover":  { "type": "boolean", "default": true },
+		"showArrows":    { "type": "boolean", "default": true },
+		"showDots":      { "type": "boolean", "default": true },
+		"slideSpeed":    { "type": "number",  "default": 500 },
+
+		"marqueeSpeed":        { "type": "number",  "default": 30 },
+		"marqueeReverse":      { "type": "boolean", "default": false },
+		"marqueePauseOnHover": { "type": "boolean", "default": true },
+
+		"cardBg":          { "type": "string",  "default": "" },
+		"cardBorderColor": { "type": "string",  "default": "" },
+		"cardBorderWidth": { "type": "string",  "default": "" },
+		"cardRadius":      { "type": "string",  "default": "" },
+		"cardShadow":      { "type": "boolean", "default": true },
+
+		"cardPaddingTop":    { "type": "string", "default": "" },
+		"cardPaddingRight":  { "type": "string", "default": "" },
+		"cardPaddingBottom": { "type": "string", "default": "" },
+		"cardPaddingLeft":   { "type": "string", "default": "" },
+
+		"avatarPosition": { "type": "string", "default": "top" },
+		"avatarSize":     { "type": "string", "default": "" },
+		"avatarShape":    { "type": "string", "default": "circle" },
+
+		"showRating":  { "type": "boolean", "default": true },
+		"ratingColor": { "type": "string",  "default": "" },
+
+		"showQuoteIcon":  { "type": "boolean", "default": true },
+		"quoteIconColor": { "type": "string",  "default": "" },
+
+		"readMore":      { "type": "boolean", "default": false },
+		"readMoreLines": { "type": "number",  "default": 4 },
+
+		"reviewSchema": { "type": "boolean", "default": false },
+		"itemName":     { "type": "string",  "default": "" },
+
+		"nameColor":    { "type": "string", "default": "" },
+		"roleColor":    { "type": "string", "default": "" },
+		"companyColor": { "type": "string", "default": "" },
+		"quoteColor":   { "type": "string", "default": "" },
+
+		"nameFontFamily":     { "type": "string", "default": "" },
+		"nameFontWeight":     { "type": "string", "default": "" },
+		"nameFontSize":       { "type": "string", "default": "" },
+		"nameLineHeight":     { "type": "string", "default": "" },
+		"nameLetterSpacing":  { "type": "string", "default": "" },
+		"nameTextTransform":  { "type": "string", "default": "" },
+		"nameTextDecoration": { "type": "string", "default": "" },
+		"nameTextAlign":      { "type": "string", "default": "" },
+
+		"roleFontFamily":     { "type": "string", "default": "" },
+		"roleFontWeight":     { "type": "string", "default": "" },
+		"roleFontSize":       { "type": "string", "default": "" },
+		"roleLineHeight":     { "type": "string", "default": "" },
+		"roleLetterSpacing":  { "type": "string", "default": "" },
+		"roleTextTransform":  { "type": "string", "default": "" },
+		"roleTextDecoration": { "type": "string", "default": "" },
+		"roleTextAlign":      { "type": "string", "default": "" },
+
+		"companyFontFamily":     { "type": "string", "default": "" },
+		"companyFontWeight":     { "type": "string", "default": "" },
+		"companyFontSize":       { "type": "string", "default": "" },
+		"companyLineHeight":     { "type": "string", "default": "" },
+		"companyLetterSpacing":  { "type": "string", "default": "" },
+		"companyTextTransform":  { "type": "string", "default": "" },
+		"companyTextDecoration": { "type": "string", "default": "" },
+		"companyTextAlign":      { "type": "string", "default": "" },
+
+		"quoteFontFamily":     { "type": "string", "default": "" },
+		"quoteFontWeight":     { "type": "string", "default": "" },
+		"quoteFontSize":       { "type": "string", "default": "" },
+		"quoteLineHeight":     { "type": "string", "default": "" },
+		"quoteLetterSpacing":  { "type": "string", "default": "" },
+		"quoteTextTransform":  { "type": "string", "default": "" },
+		"quoteTextDecoration": { "type": "string", "default": "" },
+		"quoteTextAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"providesContext": {
+		"axiom-blocks/testimonialsAvatarShape": "avatarShape"
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./editor.scss",
+	"style":        "file:./style.scss",
+	"viewScript":   "file:./assets/testimonials.js",
+	"render":       "file:./render.php"
+}

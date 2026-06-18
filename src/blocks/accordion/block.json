@@ -1,0 +1,91 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/accordion",
+	"version": "1.0.0",
+	"title": "Accordion",
+	"category": "axiom-blocks",
+	"description": "Collapsible panels for FAQs and disclosures — styled headers, icons, single-open control, and smooth animation on top of native details/summary.",
+	"keywords": ["accordion", "faq", "toggle", "collapse", "details"],
+	"textdomain": "axiom-blocks",
+	"icon": "list-view",
+	"attributes": {
+		"closeOthers":   { "type": "boolean", "default": true },
+		"firstItemOpen": { "type": "boolean", "default": true },
+		"headingLevel":  { "type": "string",  "default": "h3" },
+		"faqSchema":     { "type": "boolean", "default": false },
+
+		"transitionDuration": { "type": "number",  "default": 300 },
+		"showExpandAll":      { "type": "boolean", "default": false },
+		"deepLink":           { "type": "boolean", "default": false },
+		"collapseOnMobile":   { "type": "boolean", "default": false },
+
+		"showIcon":     { "type": "boolean", "default": true },
+		"iconSlug":     { "type": "string",  "default": "chevron-down" },
+		"iconPosition": { "type": "string",  "default": "right" },
+		"rotateIcon":   { "type": "boolean", "default": true },
+		"iconColor":    { "type": "string",  "default": "" },
+		"iconSize":     { "type": "string",  "default": "" },
+
+		"headerBg":           { "type": "string", "default": "" },
+		"headerColor":        { "type": "string", "default": "" },
+		"activeHeaderBg":     { "type": "string", "default": "" },
+		"activeHeaderColor":  { "type": "string", "default": "" },
+		"headerPaddingTop":    { "type": "string", "default": "" },
+		"headerPaddingRight":  { "type": "string", "default": "" },
+		"headerPaddingBottom": { "type": "string", "default": "" },
+		"headerPaddingLeft":   { "type": "string", "default": "" },
+
+		"bodyBg":    { "type": "string", "default": "" },
+		"bodyColor": { "type": "string", "default": "" },
+
+		"bodyPaddingTop":    { "type": "string", "default": "" },
+		"bodyPaddingRight":  { "type": "string", "default": "" },
+		"bodyPaddingBottom": { "type": "string", "default": "" },
+		"bodyPaddingLeft":   { "type": "string", "default": "" },
+
+		"borderColor":  { "type": "string", "default": "" },
+		"borderWidth":  { "type": "string", "default": "" },
+		"borderRadius": { "type": "string", "default": "" },
+		"itemGap":      { "type": "string", "default": "" },
+
+		"containerBorderColor":  { "type": "string", "default": "" },
+		"containerBorderWidth":  { "type": "string", "default": "" },
+		"containerBorderRadius": { "type": "string", "default": "" },
+
+		"headerFontFamily":     { "type": "string", "default": "" },
+		"headerFontWeight":     { "type": "string", "default": "" },
+		"headerFontSize":       { "type": "string", "default": "" },
+		"headerLineHeight":     { "type": "string", "default": "" },
+		"headerLetterSpacing":  { "type": "string", "default": "" },
+		"headerTextTransform":  { "type": "string", "default": "" },
+		"headerTextDecoration": { "type": "string", "default": "" },
+		"headerTextAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"providesContext": {
+		"axiom-blocks/accordionShowIcon":     "showIcon",
+		"axiom-blocks/accordionIconSlug":     "iconSlug",
+		"axiom-blocks/accordionIconPosition": "iconPosition",
+		"axiom-blocks/accordionHeadingLevel": "headingLevel"
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./editor.scss",
+	"style":        "file:./style.scss",
+	"viewScript":   "file:./assets/accordion.js",
+	"render":       "file:./render.php"
+}

@@ -24,6 +24,13 @@ import { AdvancedButton } from './blocks/advanced-button';
 import { AdvancedHeading } from './blocks/advanced-heading';
 import { Icon } from './blocks/icon';
 import { IconList } from './blocks/icon-list';
+import { Accordion } from './blocks/accordion';
+import { AccordionItem } from './blocks/accordion/accordion-item';
+import { Notice } from './blocks/notice';
+import { CounterGroup } from './blocks/counter-group';
+import { Counter } from './blocks/counter-group/counter';
+import { Testimonials } from './blocks/testimonials';
+import { Testimonial } from './blocks/testimonials/testimonial';
 import { TrustBadges } from './blocks/trust-badges';
 import { FreeShippingProgress } from './blocks/free-shipping-progress';
 
@@ -54,6 +61,13 @@ const blocks = [
 	AdvancedHeading,
 	Icon,
 	IconList,
+	Accordion,
+	AccordionItem,
+	Notice,
+	CounterGroup,
+	Counter,
+	Testimonials,
+	Testimonial,
 	TrustBadges,
 	FreeShippingProgress,
 ];

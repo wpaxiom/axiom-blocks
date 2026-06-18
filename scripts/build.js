@@ -74,6 +74,31 @@ const BLOCKS = [
 			'assets/free-shipping-progress.js',
 		],
 	},
+	{
+		id: 'accordion',
+		files: [ 'block.json', 'render.php', 'assets/accordion.js' ],
+		extras: [ [ 'accordion-item/block.json', 'accordion-item/block.json' ] ],
+	},
+	{
+		id: 'notice',
+		files: [ 'block.json', 'render.php', 'assets/notice.js' ],
+	},
+	{
+		id: 'counter-group',
+		files: [ 'block.json', 'render.php', 'assets/counter.js' ],
+		extras: [
+			[ 'counter/block.json', 'counter/block.json' ],
+			[ 'counter/render.php', 'counter/render.php' ],
+		],
+	},
+	{
+		id: 'testimonials',
+		files: [ 'block.json', 'render.php', 'assets/testimonials.js' ],
+		extras: [
+			[ 'testimonial/block.json', 'testimonial/block.json' ],
+			[ 'testimonial/render.php', 'testimonial/render.php' ],
+		],
+	},
 ];
 
 /** Non-block files copied to build/. */

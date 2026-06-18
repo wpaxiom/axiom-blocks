@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/accordion-item",
+	"version": "1.0.0",
+	"title": "Accordion Item",
+	"category": "axiom-blocks",
+	"description": "A single collapsible panel inside the Accordion block.",
+	"textdomain": "axiom-blocks",
+	"icon": "list-view",
+	"parent": ["axiom-blocks/accordion"],
+	"attributes": {
+		"title": { "type": "string", "default": "" }
+	},
+	"usesContext": [
+		"axiom-blocks/accordionShowIcon",
+		"axiom-blocks/accordionIconSlug",
+		"axiom-blocks/accordionIconPosition",
+		"axiom-blocks/accordionHeadingLevel"
+	],
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true
+	},
+	"editorScript": "file:./index.js"
+}

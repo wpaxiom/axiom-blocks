@@ -1,0 +1,109 @@
+/**
+ * Notice / Alert — shared styles (editor + frontend).
+ * Per-type presets set the colour custom properties; render.php / the editor
+ * override them inline when the user picks custom colours. Static rules live
+ * here so safecss_filter_attr can't strip them.
+ */
+.ab-notice {
+	--ab-notice-bg: #eff6ff;
+	--ab-notice-color: #1e3a5f;
+	--ab-notice-accent: #3b82f6;
+	--ab-notice-icon: var(--ab-notice-accent);
+	--ab-notice-icon-size: 22px;
+	--ab-notice-radius: 8px;
+
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 16px;
+	background: var(--ab-notice-bg);
+	color: var(--ab-notice-color);
+	border: 1px solid color-mix(in srgb, var(--ab-notice-accent) 35%, transparent);
+	border-left: 4px solid var(--ab-notice-accent);
+	border-radius: var(--ab-notice-radius);
+}
+
+.ab-notice--success {
+	--ab-notice-bg: #ecfdf5;
+	--ab-notice-color: #14532d;
+	--ab-notice-accent: #10b981;
+}
+
+.ab-notice--warning {
+	--ab-notice-bg: #fffbeb;
+	--ab-notice-color: #713f12;
+	--ab-notice-accent: #f59e0b;
+}
+
+.ab-notice--error {
+	--ab-notice-bg: #fef2f2;
+	--ab-notice-color: #7f1d1d;
+	--ab-notice-accent: #ef4444;
+}
+
+.ab-notice__icon {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--ab-notice-icon-size);
+	height: var(--ab-notice-icon-size);
+	margin-top: 1px;
+	color: var(--ab-notice-icon);
+
+	svg {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.ab-notice__content {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ab-notice__title {
+	font-weight: 600;
+}
+
+.ab-notice__title:not(:empty) + .ab-notice__message {
+	margin-top: 2px;
+}
+
+.ab-notice__message a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.ab-notice__dismiss {
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	margin: -2px -2px 0 4px;
+	padding: 0;
+	color: inherit;
+	background: transparent;
+	border: 0;
+	border-radius: 4px;
+	cursor: pointer;
+	opacity: 0.65;
+	transition: opacity 0.2s ease, background 0.2s ease;
+
+	svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	&:hover {
+		opacity: 1;
+		background: color-mix(in srgb, var(--ab-notice-accent) 18%, transparent);
+	}
+}
+
+.ab-notice.is-dismissing {
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}

@@ -1,0 +1,43 @@
+/**
+ * Testimonials — editor-only affordances.
+ * Card visuals come from style.scss (loaded in the editor too). Carousel and
+ * marquee layouts preview as a static grid in the canvas (the viewScript only
+ * runs on the front end).
+ */
+
+.ab-testimonials {
+
+	// Keep inline RichText fields from collapsing when empty.
+	.ab-testimonial__name,
+	.ab-testimonial__role,
+	.ab-testimonial__company {
+		min-width: 1ch;
+	}
+
+	.ab-testimonial__name[data-rich-text-placeholder]::after,
+	.ab-testimonial__role[data-rich-text-placeholder]::after,
+	.ab-testimonial__company[data-rich-text-placeholder]::after {
+		opacity: 0.5;
+	}
+
+	// The stretched card link must not swallow clicks while editing.
+	.ab-testimonial__link {
+		display: none;
+	}
+}
+
+/* Inspector: uploaded avatar preview */
+.ab-tst-avatar-preview {
+	display: block;
+	width: 64px;
+	height: 64px;
+	margin-bottom: 10px;
+	border-radius: 8px;
+	object-fit: cover;
+	border: 1px solid #e0e0e0;
+}
+
+/* Inspector: space the avatar buttons from the Alt text field / hint below */
+.ab-tst-avatar-buttons {
+	margin-bottom: 16px;
+}

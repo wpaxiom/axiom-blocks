@@ -46,6 +46,13 @@ class Registry {
 		self::register_advanced_heading();
 		self::register_icon();
 		self::register_icon_list();
+		self::register_accordion();
+		self::register_accordion_item();
+		self::register_notice();
+		self::register_counter_group();
+		self::register_counter();
+		self::register_testimonials();
+		self::register_testimonial();
 		self::register_trust_badges();
 		self::register_free_shipping_progress();
 
@@ -237,6 +244,69 @@ class Registry {
 	 */
 	private static function register_icon_list(): void {
 		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/icon-list' );
+	}
+
+	/**
+	 * Register Accordion Block
+	 *
+	 * @return void
+	 */
+	private static function register_accordion(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/accordion' );
+	}
+
+	/**
+	 * Register Accordion Item Block (child of Accordion)
+	 *
+	 * @return void
+	 */
+	private static function register_accordion_item(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/accordion/accordion-item' );
+	}
+
+	/**
+	 * Register Notice / Alert Block
+	 *
+	 * @return void
+	 */
+	private static function register_notice(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/notice' );
+	}
+
+	/**
+	 * Register Counter Block (parent group)
+	 *
+	 * @return void
+	 */
+	private static function register_counter_group(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/counter-group' );
+	}
+
+	/**
+	 * Register Counter Item Block (child of Counter)
+	 *
+	 * @return void
+	 */
+	private static function register_counter(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/counter-group/counter' );
+	}
+
+	/**
+	 * Register Testimonials Block (parent group)
+	 *
+	 * @return void
+	 */
+	private static function register_testimonials(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/testimonials' );
+	}
+
+	/**
+	 * Register Testimonial Item Block (child of Testimonials)
+	 *
+	 * @return void
+	 */
+	private static function register_testimonial(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/testimonials/testimonial' );
 	}
 
 	/**

@@ -17,6 +17,10 @@
 @import "blocks/advanced-heading/editor";
 @import "blocks/icon/editor";
 @import "blocks/icon-list/editor";
+@import "blocks/accordion/editor";
+@import "blocks/notice/editor";
+@import "blocks/counter-group/editor";
+@import "blocks/testimonials/editor";
 @import "blocks/trust-badges/editor";
 @import "blocks/free-shipping-progress/editor";
 
@@ -452,7 +456,7 @@ $ab-field-focus-color: #007cba;
 	& &__help {
 		font-size: 11px;
 		color: #9ca3af;
-		margin: 5px 0 0;
+		margin: 6px 0 0 !important;
 		line-height: 1.45;
 	}
 
@@ -751,6 +755,16 @@ $ab-field-focus-color: #007cba;
 		margin: 6px 0 0 !important;
 		line-height: 1.45;
 	}
+}
+
+// ── Wayfinding note (shared) ──────────────────────────────────────────────────
+// A help paragraph set off from the controls above it with a hairline divider.
+// Use on a wrapper around an `.ab-ctrl__help` to point users to related settings
+// (e.g. a child block pointing styling to its parent).
+.ab-block-note {
+	margin-top: 16px;
+	padding-top: 14px;
+	border-top: 1px solid #f0f0f0;
 }
 
 // ── Shared buttons (design-system) ───────────────────────────────────────────

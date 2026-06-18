@@ -83,7 +83,7 @@ const BoxIcon = ( { type } ) => (
 		strokeLinecap="round"
 		strokeLinejoin="round"
 	>
-		{ type === 'padding' ? (
+		{ /padding/i.test( type ) ? (
 			<>
 				<rect
 					x="3"
@@ -143,7 +143,7 @@ const UnlinkSvg = () => (
 );
 
 /* ── Single axis control (Padding or Margin) ────────────────────────────── */
-function SpacingControl( { label, type, attrs, onChange } ) {
+export function SpacingControl( { label, type, attrs, onChange } ) {
 	const attrKeys = SIDES.map(
 		( s ) => `${ type }${ s.key[ 0 ].toUpperCase() }${ s.key.slice( 1 ) }`
 	);

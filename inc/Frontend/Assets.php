@@ -71,6 +71,15 @@ class Assets {
 			|| has_block( 'axiom-blocks/shape-divider' )
 			|| has_block( 'axiom-blocks/tabs' )
 			|| has_block( 'axiom-blocks/before-after-slider' )
+			|| has_block( 'axiom-blocks/pricing-table' )
+			|| has_block( 'axiom-blocks/button-group' )
+			|| has_block( 'axiom-blocks/advanced-heading' )
+			|| has_block( 'axiom-blocks/icon' )
+			|| has_block( 'axiom-blocks/icon-list' )
+			|| has_block( 'axiom-blocks/accordion' )
+			|| has_block( 'axiom-blocks/notice' )
+			|| has_block( 'axiom-blocks/counter-group' )
+			|| has_block( 'axiom-blocks/testimonials' )
 			|| has_block( 'axiom-blocks/trust-badges' )
 			|| has_block( 'axiom-blocks/free-shipping-progress' );
 	}

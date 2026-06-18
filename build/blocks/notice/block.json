@@ -1,0 +1,67 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/notice",
+	"version": "1.0.0",
+	"title": "Notice / Alert",
+	"category": "axiom-blocks",
+	"description": "Highlight an info, success, warning, or error message — coloured presets, an icon, optional title, and a dismiss button.",
+	"keywords": ["notice", "alert", "message", "warning", "banner"],
+	"textdomain": "axiom-blocks",
+	"icon": "warning",
+	"attributes": {
+		"noticeType":  { "type": "string",  "default": "info" },
+		"title":       { "type": "string",  "default": "" },
+		"message":     { "type": "string",  "default": "" },
+
+		"showIcon":  { "type": "boolean", "default": true },
+		"iconSlug":  { "type": "string",  "default": "" },
+		"iconSize":  { "type": "string",  "default": "" },
+		"iconColor": { "type": "string",  "default": "" },
+
+		"dismissible": { "type": "boolean", "default": false },
+
+		"bgColor":      { "type": "string", "default": "" },
+		"textColor":    { "type": "string", "default": "" },
+		"accentColor":  { "type": "string", "default": "" },
+		"borderRadius": { "type": "string", "default": "" },
+
+		"titleFontFamily":     { "type": "string", "default": "" },
+		"titleFontWeight":     { "type": "string", "default": "" },
+		"titleFontSize":       { "type": "string", "default": "" },
+		"titleLineHeight":     { "type": "string", "default": "" },
+		"titleLetterSpacing":  { "type": "string", "default": "" },
+		"titleTextTransform":  { "type": "string", "default": "" },
+		"titleTextDecoration": { "type": "string", "default": "" },
+		"titleTextAlign":      { "type": "string", "default": "" },
+
+		"contentFontFamily":     { "type": "string", "default": "" },
+		"contentFontWeight":     { "type": "string", "default": "" },
+		"contentFontSize":       { "type": "string", "default": "" },
+		"contentLineHeight":     { "type": "string", "default": "" },
+		"contentLetterSpacing":  { "type": "string", "default": "" },
+		"contentTextTransform":  { "type": "string", "default": "" },
+		"contentTextDecoration": { "type": "string", "default": "" },
+		"contentTextAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./editor.scss",
+	"style":        "file:./style.scss",
+	"viewScript":   "file:./assets/notice.js",
+	"render":       "file:./render.php"
+}

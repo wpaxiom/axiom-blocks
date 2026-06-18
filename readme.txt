@@ -5,7 +5,7 @@ Tags: gutenberg, blocks, editor, page-builder, woocommerce
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,28 +19,32 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 
 = Layout Blocks =
 
-* **Advanced Section** — Full-width container with background images, gradients, video backgrounds, overlays with blend modes, shape dividers, and entrance animations.
-* **Device Visibility** — Wrapper block to show or hide content based on device type (mobile, tablet, desktop).
-* **Shape Divider** — Add beautiful shape dividers to the top or bottom of sections with 5 shapes: wave, curve, triangle, tilt, and slant.
-* **Reading Progress Bar** — Sticky scroll progress indicator for long-form content.
+* **Advanced Section** - Full-width container with background images, gradients, video backgrounds, overlays with blend modes, shape dividers, and entrance animations.
+* **Device Visibility** - Wrapper block to show or hide content based on device type (mobile, tablet, desktop).
+* **Shape Divider** - Add beautiful shape dividers to the top or bottom of sections with 5 shapes: wave, curve, triangle, tilt, and slant.
+* **Reading Progress Bar** - Sticky scroll progress indicator for long-form content.
 
 = Content Blocks =
 
-* **Advanced Heading** — Heading with inline highlight spans, an optional sub-heading, an accent line, and full typography control.
-* **Advanced Button** — Button with leading or trailing icons, an optional sub-caption, style and size presets, and hover states.
-* **Icon** — A single icon from the built-in library or your own SVG, with size, colour, shape background, and link controls.
-* **Icon List** — A list with a custom icon on every row — for features, benefits, and checklists.
-* **Tabs** — Horizontal tabs container that accepts any blocks inside.
-* **Countdown Timer** — Live countdown to a target date or time.
-* **Copy to Clipboard** — Button that copies text or code snippets to the visitor's clipboard.
-* **Star Rating** — 5-star display block perfect for reviews and testimonials.
-* **Before/After Slider** — Drag-to-compare slider for two images.
-* **Pricing Table** — Clean pricing plans with feature lists and call-to-action buttons.
+* **Advanced Heading** - Heading with inline highlight spans, an optional sub-heading, an accent line, and full typography control.
+* **Advanced Button** - Button with leading or trailing icons, an optional sub-caption, style and size presets, and hover states.
+* **Icon** - A single icon from the built-in library or your own SVG, with size, colour, shape background, and link controls.
+* **Icon List** - A list with a custom icon on every row - for features, benefits, and checklists.
+* **Accordion** - Collapsible panels for FAQs and disclosures, with single-open mode, first-panel-open, icon position/rotation, and automatic FAQ schema (JSON-LD).
+* **Notice / Alert** - Dismissible info, success, warning, or error messages with presets, icons, and custom colours.
+* **Counter** - Animated count-up statistics with icons, labels, custom separators, per-stat cards, and hover states.
+* **Testimonials** - Grid, carousel, or marquee testimonials with author details, avatars, and star ratings.
+* **Tabs** - Horizontal tabs container that accepts any blocks inside.
+* **Countdown Timer** - Live countdown to a target date or time.
+* **Copy to Clipboard** - Button that copies text or code snippets to the visitor's clipboard.
+* **Star Rating** - 5-star display block perfect for reviews and testimonials.
+* **Before/After Slider** - Drag-to-compare slider for two images.
+* **Pricing Table** - Clean pricing plans with feature lists and call-to-action buttons.
 
 = WooCommerce Blocks =
 
-* **Trust Badges** — Payment, security, and service trust badges with curated presets and custom badge support.
-* **Free Shipping Progress** — Cart progress bar showing how much more a customer needs to spend to qualify for free shipping.
+* **Trust Badges** - Payment, security, and service trust badges with curated presets and custom badge support.
+* **Free Shipping Progress** - Cart progress bar showing how much more a customer needs to spend to qualify for free shipping.
 
 = Features =
 
@@ -48,7 +52,7 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 * Responsive controls for all layout blocks
 * Clean, semantic markup with no extra wrapper bloat
 * Fully compatible with Full Site Editing (FSE) and block themes
-* Optimized performance — only loads assets for active blocks
+* Optimized performance - only loads assets for active blocks
 * WooCommerce blocks are hidden automatically when WooCommerce is not active
 
 == Installation ==
@@ -90,13 +94,13 @@ No. Axiom Blocks is designed to work natively with the WordPress block editor (G
 
 = Do I need WooCommerce installed? =
 
-No. Axiom Blocks works on any WordPress site. The Trust Badges and Free Shipping Progress blocks are only shown in the block inserter when WooCommerce is active — you can also turn the integration off from **Axiom Blocks → Settings**.
+No. Axiom Blocks works on any WordPress site. The Trust Badges and Free Shipping Progress blocks are only shown in the block inserter when WooCommerce is active - you can also turn the integration off from **Axiom Blocks → Settings**.
 
 == Screenshots ==
 
-1. Axiom Blocks block manager — enable or disable individual blocks from a clean admin interface.
+1. Axiom Blocks block manager - enable or disable individual blocks from a clean admin interface.
 2. Pricing Table block with feature lists and CTAs.
-3. Advanced Section block settings — backgrounds, overlays, shape dividers, and animations.
+3. Advanced Section block settings - backgrounds, overlays, shape dividers, and animations.
 4. Before/After Slider block in action.
 
 == Source Code ==
@@ -113,12 +117,12 @@ Development happens on GitHub: https://github.com/wpaxiom/axiom-blocks. Bug repo
 
 = File layout =
 
-* `src/` — JavaScript and SCSS source for all blocks and the admin dashboard.
-* `inc/` — PHP source.
-* `build/` — generated, do not edit by hand.
-* `scripts/build.js` — entry point for `npm run build`.
-* `webpack.config.js` — webpack configuration.
-* `package.json` — npm dependencies and scripts.
+* `src/` - JavaScript and SCSS source for all blocks and the admin dashboard.
+* `inc/` - PHP source.
+* `build/` - generated, do not edit by hand.
+* `scripts/build.js` - entry point for `npm run build`.
+* `webpack.config.js` - webpack configuration.
+* `package.json` - npm dependencies and scripts.
 
 == Privacy ==
 
@@ -133,26 +137,34 @@ The plugin includes one optional, opt-in connection to an external service:
 * your site's language/locale;
 * a randomly generated, anonymous installation ID (used only to avoid counting the same response twice).
 
-No personal data is sent — no name, no email address, no website URL, and none of your site's content. If you click "Skip & Deactivate" or close the form, nothing is sent at all.
+No personal data is sent - no name, no email address, no website URL, and none of your site's content. If you click "Skip & Deactivate" or close the form, nothing is sent at all.
 
-This service is operated by the plugin author. Privacy policy: https://wpaxiom.com/privacy/ — Terms of service: https://wpaxiom.com/terms/
+This service is operated by the plugin author. Privacy policy: https://wpaxiom.com/privacy/ - Terms of service: https://wpaxiom.com/terms/
 
-Developers can redirect the feedback to their own server — or disable it entirely by returning an empty string — using the `axiom_blocks_feedback_endpoint` filter.
+Developers can redirect the feedback to their own server - or disable it entirely by returning an empty string - using the `axiom_blocks_feedback_endpoint` filter.
 
 == Changelog ==
 
+= 1.0.2 =
+* New blocks: Accordion, Notice / Alert, Counter, and Testimonials.
+* Accordion outputs FAQ schema (JSON-LD) for rich results, with single-open and first-panel-open options.
+* Counter adds custom decimal/thousands separators, per-stat cards, hover colours, and label positioning.
+
 = 1.0.1 =
 * New blocks: Advanced Heading, Advanced Button, Icon, and Icon List.
-* Added an optional, opt-in deactivation feedback form. No data is collected unless you choose a reason and submit it — see the Privacy section for exactly what is sent.
+* Added an optional, opt-in deactivation feedback form. No data is collected unless you choose a reason and submit it - see the Privacy section for exactly what is sent.
 
 = 1.0.0 =
 * Initial release.
 * Added 12 free blocks: Advanced Section, Device Visibility, Shape Divider, Reading Progress Bar, Tabs, Countdown Timer, Copy to Clipboard, Star Rating, Before/After Slider, Pricing Table, Trust Badges, and Free Shipping Progress.
 * Added block manager to enable/disable individual blocks.
-* WooCommerce integration toggle — Trust Badges and Free Shipping Progress only load when WooCommerce is active.
+* WooCommerce integration toggle - Trust Badges and Free Shipping Progress only load when WooCommerce is active.
 * Full Site Editing (FSE) support.
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Adds four new blocks: Accordion (with FAQ schema), Notice / Alert, Counter, and Testimonials.
 
 = 1.0.1 =
 Adds four new blocks (Advanced Heading, Advanced Button, Icon, and Icon List) and an optional, opt-in deactivation feedback form.

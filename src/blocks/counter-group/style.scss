@@ -1,0 +1,212 @@
+/**
+ * Counter — frontend + editor styles.
+ *
+ * Shared visual settings (number/label typography + colour, icon size/colour,
+ * layout) live as CSS custom properties on the .ab-counter-group wrapper and
+ * cascade down to each .ab-counter child. Static layout lives here; dynamic
+ * values arrive as the --ab-counter-* properties.
+ */
+
+.ab-counter-group {
+	display: grid;
+	grid-template-columns: repeat(var(--ab-counter-cols, 3), minmax(0, 1fr));
+	gap: var(--ab-counter-gap, 24px);
+	align-items: stretch;
+
+	&.is-stack-mobile {
+
+		@media (max-width: 600px) {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	// Vertical rules between adjacent stats.
+	&.has-divider .ab-counter:not(:last-child) {
+		border-right: 1px solid var(--ab-counter-divider, #e5e7eb);
+	}
+
+	&.has-divider.is-stack-mobile .ab-counter:not(:last-child) {
+
+		@media (max-width: 600px) {
+			border-right: 0;
+			border-bottom: 1px solid var(--ab-counter-divider, #e5e7eb);
+			padding-bottom: 16px;
+		}
+	}
+}
+
+.ab-counter {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	text-align: center;
+	gap: 8px;
+	min-width: 0;
+	background: var(--ab-counter-card-bg, transparent);
+	border: var(--ab-counter-card-bd-width, 0) solid var(--ab-counter-card-bd-color, transparent);
+	border-radius: var(--ab-counter-card-radius, 0);
+	padding:
+		var(--ab-counter-card-pt, 0)
+		var(--ab-counter-card-pr, 0)
+		var(--ab-counter-card-pb, 0)
+		var(--ab-counter-card-pl, 0);
+
+	&__icon {
+		order: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--ab-counter-icon-color, #7c3aed);
+		transition: color 0.2s ease;
+
+		svg {
+			width: var(--ab-counter-icon-size, 32px);
+			height: var(--ab-counter-icon-size, 32px);
+		}
+	}
+
+	&__number {
+		order: 2;
+		font-family: var(--ab-counter-num-ff);
+		font-weight: var(--ab-counter-num-fw, 700);
+		font-size: var(--ab-counter-num-fs, 2.5rem);
+		line-height: var(--ab-counter-num-lh, 1.1);
+		letter-spacing: var(--ab-counter-num-ls);
+		text-transform: var(--ab-counter-num-tt);
+		text-decoration: var(--ab-counter-num-td);
+		color: var(--ab-counter-num-color, inherit);
+		transition: color 0.2s ease;
+	}
+
+	&__label {
+		order: 3;
+		margin: 0;
+		font-family: var(--ab-counter-label-ff);
+		font-weight: var(--ab-counter-label-fw, 500);
+		font-size: var(--ab-counter-label-fs, 1rem);
+		line-height: var(--ab-counter-label-lh, 1.4);
+		letter-spacing: var(--ab-counter-label-ls);
+		text-transform: var(--ab-counter-label-tt);
+		text-decoration: var(--ab-counter-label-td);
+		color: var(--ab-counter-label-color, inherit);
+		transition: color 0.2s ease;
+	}
+
+	&:hover &__number {
+		color: var(--ab-counter-num-hover, var(--ab-counter-num-color, inherit));
+	}
+
+	&:hover &__label {
+		color: var(--ab-counter-label-hover, var(--ab-counter-label-color, inherit));
+	}
+
+	&:hover &__icon {
+		color: var(--ab-counter-icon-hover, var(--ab-counter-icon-color, #7c3aed));
+	}
+}
+
+// Per-stat card shadow presets.
+.ab-counter-group--shadow-sm .ab-counter {
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ab-counter-group--shadow-md .ab-counter {
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.ab-counter-group--shadow-lg .ab-counter {
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+// Label above the number (icon stays on top).
+.ab-counter-group--label-above {
+
+	.ab-counter__number {
+		order: 3;
+	}
+
+	.ab-counter__label {
+		order: 2;
+	}
+}
+
+// Icon to the left of a stacked number + label.
+.ab-counter-group--icon-left .ab-counter {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-areas:
+		"icon number"
+		"icon label";
+	align-items: center;
+	column-gap: 14px;
+	row-gap: 2px;
+	text-align: left;
+
+	.ab-counter__icon {
+		grid-area: icon;
+	}
+
+	.ab-counter__number {
+		grid-area: number;
+	}
+
+	.ab-counter__label {
+		grid-area: label;
+	}
+}
+
+.ab-counter-group--icon-left.ab-counter-group--label-above .ab-counter {
+	grid-template-areas:
+		"icon label"
+		"icon number";
+}
+
+// Label beside the number (horizontal). Icon, when present, sits on top.
+.ab-counter-group--label-left .ab-counter,
+.ab-counter-group--label-right .ab-counter {
+	display: grid;
+	grid-template-columns: auto auto;
+	align-items: baseline;
+	justify-content: center;
+	column-gap: 8px;
+	row-gap: 6px;
+	text-align: left;
+
+	.ab-counter__icon {
+		grid-area: icon;
+		justify-self: center;
+		align-self: center;
+	}
+
+	.ab-counter__number {
+		grid-area: number;
+	}
+
+	.ab-counter__label {
+		grid-area: label;
+	}
+}
+
+.ab-counter-group--label-right .ab-counter {
+	grid-template-areas:
+		"icon icon"
+		"number label";
+}
+
+.ab-counter-group--label-left .ab-counter {
+	grid-template-areas:
+		"icon icon"
+		"label number";
+}
+
+// Combined with a left icon: everything lines up in a single row.
+.ab-counter-group--icon-left.ab-counter-group--label-right .ab-counter {
+	grid-template-columns: auto auto auto;
+	grid-template-areas: "icon number label";
+}
+
+.ab-counter-group--icon-left.ab-counter-group--label-left .ab-counter {
+	grid-template-columns: auto auto auto;
+	grid-template-areas: "icon label number";
+}

@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/counter",
+	"version": "1.0.0",
+	"title": "Counter Item",
+	"category": "axiom-blocks",
+	"description": "A single animated statistic inside the Counter block.",
+	"textdomain": "axiom-blocks",
+	"icon": "chart-line",
+	"parent": ["axiom-blocks/counter-group"],
+	"attributes": {
+		"startValue": { "type": "string", "default": "0" },
+		"endValue":   { "type": "string", "default": "100" },
+		"decimals":   { "type": "string", "default": "0" },
+		"prefix":     { "type": "string", "default": "" },
+		"suffix":     { "type": "string", "default": "" },
+		"label":      { "type": "string", "default": "" },
+		"iconSlug":   { "type": "string", "default": "" }
+	},
+	"usesContext": [
+		"axiom-blocks/counterSeparator",
+		"axiom-blocks/counterThousandsSep",
+		"axiom-blocks/counterDecimalSep"
+	],
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render":       "file:./render.php"
+}

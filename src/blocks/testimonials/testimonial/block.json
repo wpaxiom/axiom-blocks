@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/testimonial",
+	"version": "1.0.0",
+	"title": "Testimonial Item",
+	"category": "axiom-blocks",
+	"description": "A single testimonial inside the Testimonials block.",
+	"textdomain": "axiom-blocks",
+	"icon": "format-quote",
+	"parent": ["axiom-blocks/testimonials"],
+	"attributes": {
+		"quote":     { "type": "string", "default": "" },
+		"name":      { "type": "string", "default": "" },
+		"role":      { "type": "string", "default": "" },
+		"company":   { "type": "string", "default": "" },
+
+		"avatarUrl": { "type": "string", "default": "" },
+		"avatarId":  { "type": "number", "default": 0 },
+		"avatarAlt": { "type": "string", "default": "" },
+
+		"rating":     { "type": "number", "default": 5 },
+		"reviewDate": { "type": "string", "default": "" },
+
+		"sourcePlatform": { "type": "string",  "default": "none" },
+		"sourceLabel":    { "type": "string",  "default": "" },
+		"verified":       { "type": "boolean", "default": false },
+
+		"linkUrl":    { "type": "string",  "default": "" },
+		"linkNewTab": { "type": "boolean", "default": false }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render":       "file:./render.php"
+}

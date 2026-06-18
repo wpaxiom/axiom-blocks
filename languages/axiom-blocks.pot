@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.1\n"
+"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/axiom-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-12T10:54:15+00:00\n"
+"POT-Creation-Date: 2026-06-18T11:57:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axiom-blocks\n"
@@ -119,6 +119,14 @@ msgstr ""
 msgid "Only the option you choose and anything you type is sent — never your content, email, or site address."
 msgstr ""
 
+#: src/blocks/accordion/render.php:125
+msgid "Expand all"
+msgstr ""
+
+#: src/blocks/accordion/render.php:125
+msgid "Collapse all"
+msgstr ""
+
 #: src/blocks/before-after-slider/render.php:82
 msgid "Before / after image comparison"
 msgstr ""
@@ -160,6 +168,10 @@ msgstr ""
 msgid "Time's up!"
 msgstr ""
 
+#: src/blocks/notice/render.php:113
+msgid "Dismiss this notice"
+msgstr ""
+
 #: src/blocks/reading-progress-bar/render.php:45
 msgid "Reading progress"
 msgstr ""
@@ -175,6 +187,22 @@ msgstr ""
 msgid "Tab"
 msgstr ""
 
+#. translators: %s: rating value out of 5
+#: src/blocks/testimonials/testimonial/render.php:47
+#, php-format
+msgid "Rated %s out of 5"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/render.php:141
+msgid "Verified"
+msgstr ""
+
+#. translators: %s: review source platform name (e.g. Google)
+#: src/blocks/testimonials/testimonial/render.php:147
+#, php-format
+msgid "via %s"
+msgstr ""
+
 #: src/admin/components/BlockCard.js:22
 msgid "GO PRO"
 msgstr ""
@@ -183,128 +211,135 @@ msgstr ""
 msgid "Docs"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:63
+#: src/admin/components/Dashboard.js:64
 msgid "Failed to load blocks."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:113
+#: src/admin/components/Dashboard.js:114
 msgid "Block enabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:114
+#: src/admin/components/Dashboard.js:115
 msgid "Block disabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:123
+#: src/admin/components/Dashboard.js:124
 msgid "Failed to update block."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:149
+#: src/admin/components/Dashboard.js:150
 msgid "All blocks enabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:150
+#: src/admin/components/Dashboard.js:151
 msgid "All blocks disabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:194
+#: src/admin/components/Dashboard.js:195
 msgid "All Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:199
-#: src/admin/components/Dashboard.js:402
+#: src/admin/components/Dashboard.js:200
+#: src/admin/components/Dashboard.js:412
 #: src/blocks/advanced-section/index.js:916
 #: src/blocks/button-group/index.js:70
 #: src/blocks/countdown-timer/index.js:357
 #: src/blocks/countdown-timer/index.js:361
+#: src/blocks/counter-group/index.js:188
 #: src/blocks/icon-list/index.js:168
 #: src/blocks/pricing-table/index.js:191
+#: src/blocks/testimonials/index.js:206
+#: src/blocks/testimonials/index.js:210
 #: src/blocks/trust-badges/index.js:410
 #: src/blocks/trust-badges/index.js:414
 msgid "Layout"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:204
-#: src/admin/components/Dashboard.js:427
+#: src/admin/components/Dashboard.js:205
+#: src/admin/components/Dashboard.js:437
 #: src/blocks/copy-to-clipboard/index.js:137
 #: src/blocks/tabs/index.js:633
 #: src/blocks/trust-badges/index.js:198
 msgid "Content"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:211
-#: src/admin/components/Dashboard.js:343
+#: src/admin/components/Dashboard.js:212
+#: src/admin/components/Dashboard.js:353
 msgid "WooCommerce"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:226
+#: src/admin/components/Dashboard.js:227
 msgid "Block Manager"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:231
+#: src/admin/components/Dashboard.js:232
 #: src/components/iconLibrary.js:1040
 msgid "Settings"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:254
+#: src/admin/components/Dashboard.js:255
 msgid "Free and Pro Gutenberg blocks for WordPress"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:304
+#: src/admin/components/Dashboard.js:269
+msgid "Read Docs"
+msgstr ""
+
+#: src/admin/components/Dashboard.js:314
 msgid "Total Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:306
-#: src/admin/components/Dashboard.js:332
+#: src/admin/components/Dashboard.js:316
+#: src/admin/components/Dashboard.js:342
 msgid "active"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:315
+#: src/admin/components/Dashboard.js:325
 #: src/admin/components/Stats.js:12
 msgid "Free Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:317
+#: src/admin/components/Dashboard.js:327
 msgid "Always available"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:323
+#: src/admin/components/Dashboard.js:333
 #: src/admin/components/Stats.js:17
 msgid "Pro Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:333
+#: src/admin/components/Dashboard.js:343
 msgid "Requires Pro plugin"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:349
+#: src/admin/components/Dashboard.js:359
 #: src/blocks/pricing-table/index.js:68
 msgid "Pro"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:350
+#: src/admin/components/Dashboard.js:360
 msgid "Integration disabled"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:370
+#: src/admin/components/Dashboard.js:380
 msgid "Search blocks…"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:459
+#: src/admin/components/Dashboard.js:469
 msgid "WooCommerce Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:473
+#: src/admin/components/Dashboard.js:483
 #: src/admin/components/ui.js:312
 msgid "Enable all"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:480
+#: src/admin/components/Dashboard.js:490
 #: src/admin/components/ui.js:315
 msgid "Disable all"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:505
+#: src/admin/components/Dashboard.js:515
 msgid "No blocks found."
 msgstr ""
 
@@ -422,11 +457,291 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
+#: src/blocks/accordion/accordion-item/index.js:32
+msgid "Add content to this panel…"
+msgstr ""
+
+#: src/blocks/accordion/accordion-item/index.js:58
+msgid "Accordion title…"
+msgstr ""
+
+#: src/blocks/accordion/accordion-item/index.js:73
+msgid "Accordion Item"
+msgstr ""
+
+#: src/blocks/accordion/accordion-item/index.js:74
+msgid "A single collapsible panel inside the Accordion block."
+msgstr ""
+
+#: src/blocks/accordion/index.js:173
+msgid "Behaviour"
+msgstr ""
+
+#: src/blocks/accordion/index.js:177
+msgid "Close others when opening"
+msgstr ""
+
+#: src/blocks/accordion/index.js:181
+msgid "Only one panel open at a time."
+msgstr ""
+
+#: src/blocks/accordion/index.js:191
+msgid "Open first item by default"
+msgstr ""
+
+#: src/blocks/accordion/index.js:201
+msgid "Heading level"
+msgstr ""
+
+#: src/blocks/accordion/index.js:202
+msgid "HTML tag for each item title (for accessibility and document outline)."
+msgstr ""
+
+#: src/blocks/accordion/index.js:219
+msgid "Output FAQ schema"
+msgstr ""
+
+#: src/blocks/accordion/index.js:220
+msgid "Add schema.org FAQPage structured data (item titles = questions, panel content = answers). Use only for genuine question-and-answer content."
+msgstr ""
+
+#: src/blocks/accordion/index.js:228
+msgid "Animation speed"
+msgstr ""
+
+#: src/blocks/accordion/index.js:229
+msgid "0 = instant (no animation)."
+msgstr ""
+
+#: src/blocks/accordion/index.js:238
+msgid "Expand / collapse all button"
+msgstr ""
+
+#: src/blocks/accordion/index.js:243
+msgid "Deep-link to items (URL anchor)"
+msgstr ""
+
+#: src/blocks/accordion/index.js:244
+msgid "Open and scroll to the item whose HTML Anchor (set per item in the Advanced panel) matches the page URL, e.g. #shipping. The URL updates as items open. This is not a clickable link on the item."
+msgstr ""
+
+#: src/blocks/accordion/index.js:249
+msgid "Collapse on mobile"
+msgstr ""
+
+#: src/blocks/accordion/index.js:250
+msgid "Start every panel closed on small screens."
+msgstr ""
+
+#: src/blocks/accordion/index.js:257
+#: src/blocks/accordion/index.js:269
+#: src/blocks/advanced-button/index.js:273
+#: src/blocks/advanced-button/index.js:277
+#: src/blocks/copy-to-clipboard/index.js:190
+#: src/blocks/counter-group/counter/index.js:92
+#: src/blocks/counter-group/counter/index.js:97
+#: src/blocks/counter-group/index.js:333
+#: src/blocks/icon-list/index.js:221
+#: src/blocks/icon/index.js:115
+#: src/blocks/icon/index.js:421
+#: src/blocks/notice/index.js:132
+#: src/blocks/notice/index.js:144
+msgid "Icon"
+msgstr ""
+
+#: src/blocks/accordion/index.js:261
+#: src/blocks/notice/index.js:136
+msgid "Show icon"
+msgstr ""
+
+#: src/blocks/accordion/index.js:282
+#: src/blocks/counter-group/counter/index.js:108
+#: src/blocks/icon-list/index.js:333
+#: src/blocks/notice/index.js:157
+#: src/blocks/tabs/index.js:113
+msgid "Choose icon"
+msgstr ""
+
+#: src/blocks/accordion/index.js:306
+#: src/blocks/icon-list/index.js:183
+msgid "Icon position"
+msgstr ""
+
+#: src/blocks/accordion/index.js:310
+#: src/blocks/advanced-button/index.js:289
+#: src/blocks/advanced-heading/index.js:258
+#: src/blocks/advanced-section/index.js:961
+#: src/blocks/button-group/index.js:95
+#: src/blocks/copy-to-clipboard/index.js:204
+#: src/blocks/copy-to-clipboard/index.js:228
+#: src/blocks/countdown-timer/index.js:385
+#: src/blocks/counter-group/index.js:345
+#: src/blocks/free-shipping-progress/index.js:149
+#: src/blocks/icon-list/index.js:187
+#: src/blocks/icon-list/index.js:204
+#: src/blocks/icon/index.js:195
+#: src/blocks/pricing-table/index.js:251
+#: src/blocks/star-rating/index.js:178
+#: src/blocks/tabs/index.js:564
+#: src/blocks/testimonials/index.js:436
+#: src/blocks/trust-badges/index.js:225
+#: src/blocks/trust-badges/index.js:451
+#: src/components/TypographyPanel.js:526
+msgid "Left"
+msgstr ""
+
+#: src/blocks/accordion/index.js:314
+#: src/blocks/advanced-button/index.js:293
+#: src/blocks/advanced-heading/index.js:266
+#: src/blocks/advanced-section/index.js:969
+#: src/blocks/button-group/index.js:103
+#: src/blocks/copy-to-clipboard/index.js:208
+#: src/blocks/copy-to-clipboard/index.js:236
+#: src/blocks/countdown-timer/index.js:393
+#: src/blocks/free-shipping-progress/index.js:157
+#: src/blocks/icon-list/index.js:191
+#: src/blocks/icon-list/index.js:212
+#: src/blocks/icon/index.js:203
+#: src/blocks/pricing-table/index.js:259
+#: src/blocks/star-rating/index.js:186
+#: src/blocks/tabs/index.js:572
+#: src/blocks/trust-badges/index.js:233
+#: src/blocks/trust-badges/index.js:459
+#: src/components/TypographyPanel.js:536
+msgid "Right"
+msgstr ""
+
+#: src/blocks/accordion/index.js:323
+msgid "Rotate icon when open"
+msgstr ""
+
+#: src/blocks/accordion/index.js:333
+#: src/blocks/advanced-button/index.js:302
+#: src/blocks/notice/index.js:193
+msgid "Icon size"
+msgstr ""
+
+#: src/blocks/accordion/index.js:344
+#: src/blocks/notice/index.js:204
+msgid "Icon colour"
+msgstr ""
+
+#: src/blocks/accordion/index.js:355
+msgid "Header"
+msgstr ""
+
+#: src/blocks/accordion/index.js:359
+#: src/blocks/accordion/index.js:397
+#: src/blocks/advanced-button/index.js:355
+#: src/blocks/advanced-button/index.js:378
+#: src/blocks/advanced-section/index.js:326
+#: src/blocks/counter-group/index.js:444
+#: src/blocks/icon/index.js:253
+#: src/blocks/notice/index.js:219
+#: src/blocks/shape-divider/index.js:118
+#: src/blocks/testimonials/index.js:375
+msgid "Background"
+msgstr ""
+
+#: src/blocks/accordion/index.js:364
+#: src/blocks/accordion/index.js:402
+#: src/blocks/advanced-button/index.js:348
+#: src/blocks/advanced-button/index.js:371
+#: src/blocks/icon-list/index.js:291
+#: src/blocks/notice/index.js:224
+msgid "Text"
+msgstr ""
+
+#: src/blocks/accordion/index.js:371
+msgid "Active background"
+msgstr ""
+
+#: src/blocks/accordion/index.js:378
+msgid "Active text"
+msgstr ""
+
+#: src/blocks/accordion/index.js:385
+#: src/blocks/accordion/index.js:407
+#: src/blocks/icon/index.js:270
+#: src/blocks/testimonials/index.js:416
+#: src/components/StylesPanel.js:70
+msgid "Padding"
+msgstr ""
+
+#: src/blocks/accordion/index.js:393
+msgid "Body"
+msgstr ""
+
+#: src/blocks/accordion/index.js:415
+#: src/blocks/advanced-button/index.js:362
+#: src/blocks/advanced-button/index.js:385
+#: src/blocks/advanced-button/index.js:447
+#: src/blocks/advanced-section/index.js:848
+#: src/blocks/testimonials/index.js:380
+msgid "Border"
+msgstr ""
+
+#: src/blocks/accordion/index.js:420
+msgid "Items"
+msgstr ""
+
+#: src/blocks/accordion/index.js:423
+#: src/blocks/accordion/index.js:474
+#: src/blocks/advanced-heading/index.js:299
+#: src/blocks/counter-group/index.js:365
+#: src/blocks/counter-group/index.js:383
+#: src/blocks/counter-group/index.js:426
+#: src/blocks/icon-list/index.js:236
+#: src/blocks/icon/index.js:210
+#: src/blocks/testimonials/index.js:513
+msgid "Colour"
+msgstr ""
+
+#: src/blocks/accordion/index.js:430
+#: src/blocks/accordion/index.js:483
+#: src/blocks/advanced-button/index.js:451
+#: src/blocks/advanced-heading/index.js:275
+#: src/blocks/advanced-section/index.js:883
+msgid "Width"
+msgstr ""
+
+#: src/blocks/accordion/index.js:443
+#: src/blocks/accordion/index.js:496
+#: src/blocks/free-shipping-progress/index.js:173
+#: src/blocks/icon/index.js:282
+#: src/blocks/notice/index.js:236
+#: src/blocks/testimonials/index.js:398
+msgid "Corner radius"
+msgstr ""
+
+#: src/blocks/accordion/index.js:456
+msgid "Gap between items"
+msgstr ""
+
+#: src/blocks/accordion/index.js:471
+msgid "Container"
+msgstr ""
+
+#: src/blocks/accordion/index.js:516
+msgid "Header typography"
+msgstr ""
+
+#: src/blocks/accordion/index.js:533
+msgid "Accordion"
+msgstr ""
+
+#: src/blocks/accordion/index.js:534
+msgid "Collapsible panels for FAQs and disclosures, built on native details/summary."
+msgstr ""
+
 #: src/blocks/advanced-button/icons.js:115
 #: src/blocks/advanced-button/index.js:134
 #: src/blocks/advanced-button/index.js:398
 #: src/blocks/advanced-section/index.js:856
+#: src/blocks/counter-group/counter/index.js:117
+#: src/blocks/counter-group/index.js:484
 #: src/blocks/icon/index.js:232
+#: src/blocks/testimonials/testimonial/index.js:174
 msgid "None"
 msgstr ""
 
@@ -512,17 +827,20 @@ msgstr ""
 
 #: src/blocks/advanced-button/index.js:135
 #: src/blocks/advanced-button/index.js:173
+#: src/blocks/counter-group/index.js:488
 msgid "Small"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:136
 #: src/blocks/advanced-button/index.js:177
+#: src/blocks/counter-group/index.js:492
 #: src/components/TypographyPanel.js:64
 msgid "Medium"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:137
 #: src/blocks/advanced-button/index.js:181
+#: src/blocks/counter-group/index.js:496
 msgid "Large"
 msgstr ""
 
@@ -560,8 +878,10 @@ msgstr ""
 
 #: src/blocks/advanced-button/index.js:169
 #: src/blocks/advanced-section/index.js:525
+#: src/blocks/counter-group/index.js:354
 #: src/blocks/icon-list/index.js:225
 #: src/blocks/icon/index.js:171
+#: src/blocks/testimonials/index.js:466
 msgid "Size"
 msgstr ""
 
@@ -578,6 +898,7 @@ msgstr ""
 #: src/blocks/advanced-heading/index.js:330
 #: src/blocks/icon-list/index.js:296
 #: src/blocks/icon/index.js:363
+#: src/blocks/testimonials/testimonial/index.js:215
 #: src/components/iconLibrary.js:1364
 msgid "Link"
 msgstr ""
@@ -599,6 +920,7 @@ msgstr ""
 #: src/blocks/icon/index.js:376
 #: src/blocks/pricing-table/pricing-plan/index.js:264
 #: src/blocks/pricing-table/pricing-plan/index.js:541
+#: src/blocks/testimonials/testimonial/index.js:227
 msgid "Open in new tab"
 msgstr ""
 
@@ -616,69 +938,21 @@ msgstr ""
 msgid "Prompts the browser to download the linked file."
 msgstr ""
 
-#: src/blocks/advanced-button/index.js:273
-#: src/blocks/advanced-button/index.js:277
-#: src/blocks/copy-to-clipboard/index.js:190
-#: src/blocks/icon-list/index.js:221
-#: src/blocks/icon/index.js:115
-#: src/blocks/icon/index.js:421
-msgid "Icon"
-msgstr ""
-
 #: src/blocks/advanced-button/index.js:285
 #: src/blocks/advanced-heading/index.js:231
+#: src/blocks/counter-group/index.js:337
+#: src/blocks/counter-group/index.js:401
 #: src/blocks/reading-progress-bar/index.js:32
 #: src/blocks/reading-progress-bar/index.js:36
+#: src/blocks/testimonials/index.js:428
 msgid "Position"
-msgstr ""
-
-#: src/blocks/advanced-button/index.js:289
-#: src/blocks/advanced-heading/index.js:258
-#: src/blocks/advanced-section/index.js:961
-#: src/blocks/button-group/index.js:95
-#: src/blocks/copy-to-clipboard/index.js:204
-#: src/blocks/copy-to-clipboard/index.js:228
-#: src/blocks/countdown-timer/index.js:385
-#: src/blocks/free-shipping-progress/index.js:149
-#: src/blocks/icon-list/index.js:187
-#: src/blocks/icon-list/index.js:204
-#: src/blocks/icon/index.js:195
-#: src/blocks/pricing-table/index.js:251
-#: src/blocks/star-rating/index.js:178
-#: src/blocks/tabs/index.js:564
-#: src/blocks/trust-badges/index.js:225
-#: src/blocks/trust-badges/index.js:451
-#: src/components/TypographyPanel.js:526
-msgid "Left"
-msgstr ""
-
-#: src/blocks/advanced-button/index.js:293
-#: src/blocks/advanced-heading/index.js:266
-#: src/blocks/advanced-section/index.js:969
-#: src/blocks/button-group/index.js:103
-#: src/blocks/copy-to-clipboard/index.js:208
-#: src/blocks/copy-to-clipboard/index.js:236
-#: src/blocks/countdown-timer/index.js:393
-#: src/blocks/free-shipping-progress/index.js:157
-#: src/blocks/icon-list/index.js:191
-#: src/blocks/icon-list/index.js:212
-#: src/blocks/icon/index.js:203
-#: src/blocks/pricing-table/index.js:259
-#: src/blocks/star-rating/index.js:186
-#: src/blocks/tabs/index.js:572
-#: src/blocks/trust-badges/index.js:233
-#: src/blocks/trust-badges/index.js:459
-#: src/components/TypographyPanel.js:536
-msgid "Right"
-msgstr ""
-
-#: src/blocks/advanced-button/index.js:302
-msgid "Icon size"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:313
 #: src/blocks/button-group/index.js:114
+#: src/blocks/counter-group/index.js:203
 #: src/blocks/pricing-table/index.js:208
+#: src/blocks/testimonials/index.js:244
 #: src/blocks/trust-badges/index.js:466
 msgid "Gap"
 msgstr ""
@@ -697,27 +971,6 @@ msgstr ""
 
 #: src/blocks/advanced-button/index.js:344
 msgid "Normal"
-msgstr ""
-
-#: src/blocks/advanced-button/index.js:348
-#: src/blocks/advanced-button/index.js:371
-#: src/blocks/icon-list/index.js:291
-msgid "Text"
-msgstr ""
-
-#: src/blocks/advanced-button/index.js:355
-#: src/blocks/advanced-button/index.js:378
-#: src/blocks/advanced-section/index.js:326
-#: src/blocks/icon/index.js:253
-#: src/blocks/shape-divider/index.js:118
-msgid "Background"
-msgstr ""
-
-#: src/blocks/advanced-button/index.js:362
-#: src/blocks/advanced-button/index.js:385
-#: src/blocks/advanced-button/index.js:447
-#: src/blocks/advanced-section/index.js:848
-msgid "Border"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:369
@@ -753,17 +1006,12 @@ msgid "Shine"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:431
+#: src/blocks/counter-group/index.js:480
 msgid "Shadow"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:437
 msgid "Hover shadow"
-msgstr ""
-
-#: src/blocks/advanced-button/index.js:451
-#: src/blocks/advanced-heading/index.js:275
-#: src/blocks/advanced-section/index.js:883
-msgid "Width"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:469
@@ -918,14 +1166,9 @@ msgstr ""
 msgid "Thickness"
 msgstr ""
 
-#: src/blocks/advanced-heading/index.js:299
-#: src/blocks/icon-list/index.js:236
-#: src/blocks/icon/index.js:210
-msgid "Colour"
-msgstr ""
-
 #: src/blocks/advanced-heading/index.js:310
 #: src/blocks/icon-list/index.js:287
+#: src/blocks/notice/index.js:215
 msgid "Colours"
 msgstr ""
 
@@ -936,7 +1179,10 @@ msgstr ""
 
 #: src/blocks/advanced-heading/index.js:344
 #: src/blocks/countdown-timer/index.js:459
+#: src/blocks/counter-group/index.js:511
+#: src/blocks/notice/index.js:249
 #: src/blocks/pricing-table/pricing-plan/index.js:271
+#: src/blocks/testimonials/index.js:612
 #: src/blocks/trust-badges/index.js:569
 #: src/components/TypographyPanel.js:417
 msgid "Typography"
@@ -960,6 +1206,7 @@ msgstr ""
 
 #: src/blocks/advanced-section/index.js:330
 #: src/blocks/advanced-section/index.js:727
+#: src/blocks/notice/index.js:90
 msgid "Type"
 msgstr ""
 
@@ -978,6 +1225,7 @@ msgstr ""
 
 #: src/blocks/advanced-section/index.js:355
 #: src/blocks/advanced-section/index.js:761
+#: src/blocks/counter-group/index.js:262
 msgid "Linear"
 msgstr ""
 
@@ -1023,17 +1271,20 @@ msgstr ""
 
 #: src/blocks/advanced-section/index.js:491
 #: src/blocks/before-after-slider/index.js:63
+#: src/blocks/testimonials/testimonial/index.js:119
 msgid "Replace"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:495
 #: src/blocks/before-after-slider/index.js:64
+#: src/blocks/testimonials/testimonial/index.js:120
 msgid "Select image"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:511
 #: src/blocks/before-after-slider/index.js:72
 #: src/blocks/tabs/index.js:196
+#: src/blocks/testimonials/testimonial/index.js:137
 msgid "Remove"
 msgstr ""
 
@@ -1129,6 +1380,7 @@ msgid "Double"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:903
+#: src/blocks/counter-group/index.js:469
 msgid "Border radius"
 msgstr ""
 
@@ -1153,6 +1405,8 @@ msgid "Vertical"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:940
+#: src/blocks/counter-group/index.js:341
+#: src/blocks/testimonials/index.js:432
 msgid "Top"
 msgstr ""
 
@@ -1261,6 +1515,8 @@ msgid "Space between"
 msgstr ""
 
 #: src/blocks/button-group/index.js:124
+#: src/blocks/counter-group/index.js:212
+#: src/blocks/testimonials/index.js:254
 msgid "Stack on mobile"
 msgstr ""
 
@@ -1470,6 +1726,8 @@ msgid "Digit"
 msgstr ""
 
 #: src/blocks/countdown-timer/index.js:474
+#: src/blocks/counter-group/index.js:397
+#: src/blocks/counter-group/index.js:525
 msgid "Label"
 msgstr ""
 
@@ -1503,6 +1761,185 @@ msgstr ""
 
 #: src/blocks/countdown-timer/index.js:561
 msgid "(Timer expired)"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:49
+msgid "Value"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:53
+msgid "Start value"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:61
+msgid "End value"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:67
+msgid "Decimal places"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:78
+msgid "Prefix"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:84
+msgid "Suffix"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:143
+msgid "Remove icon"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:149
+msgid "Icon size and colour, number/label styling, layout and animation are set on the parent Counter block."
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:176
+msgid "Add a label…"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:187
+msgid "Counter Item"
+msgstr ""
+
+#: src/blocks/counter-group/counter/index.js:188
+msgid "A single animated statistic inside the Counter block."
+msgstr ""
+
+#: src/blocks/counter-group/index.js:192
+#: src/blocks/pricing-table/index.js:195
+#: src/blocks/testimonials/index.js:232
+#: src/blocks/trust-badges/index.js:430
+msgid "Columns"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:219
+msgid "Dividers between stats"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:225
+#: src/blocks/icon-list/index.js:277
+msgid "Divider colour"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:235
+msgid "Animation"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:239
+msgid "Duration"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:250
+msgid "Easing"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:254
+msgid "Ease out"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:258
+msgid "Ease"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:266
+msgid "Ease in-out"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:273
+msgid "Thousands separator"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:274
+msgid "Group digits, e.g. 1,250."
+msgstr ""
+
+#: src/blocks/counter-group/index.js:285
+msgid "Group separator"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:289
+msgid "Comma (1,250)"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:293
+msgid "Period (1.250)"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:297
+msgid "Space (1 250)"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:301
+msgid "Apostrophe (1’250)"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:314
+msgid "Decimal separator"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:318
+msgid "Period (1.5)"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:322
+msgid "Comma (1,5)"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:370
+#: src/blocks/counter-group/index.js:388
+#: src/blocks/counter-group/index.js:431
+#: src/blocks/icon/index.js:215
+msgid "Hover colour"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:379
+#: src/blocks/counter-group/index.js:516
+msgid "Number"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:405
+msgid "Below number"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:409
+msgid "Above number"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:413
+msgid "Left of number"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:417
+msgid "Right of number"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:440
+msgid "Box"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:451
+#: src/blocks/icon/index.js:314
+msgid "Border colour"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:458
+#: src/blocks/icon/index.js:299
+#: src/blocks/testimonials/index.js:387
+msgid "Border width"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:503
+msgid "PADDING"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:550
+msgid "Counter"
+msgstr ""
+
+#: src/blocks/counter-group/index.js:551
+msgid "Animated count-up statistics with optional icons and labels."
 msgstr ""
 
 #: src/blocks/device-visibility/index.js:29
@@ -1653,11 +2090,6 @@ msgstr ""
 msgid "Bar height"
 msgstr ""
 
-#: src/blocks/free-shipping-progress/index.js:173
-#: src/blocks/icon/index.js:282
-msgid "Corner radius"
-msgstr ""
-
 #: src/blocks/free-shipping-progress/index.js:190
 msgid "Progress fill"
 msgstr ""
@@ -1700,10 +2132,6 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: src/blocks/icon-list/index.js:183
-msgid "Icon position"
-msgstr ""
-
 #: src/blocks/icon-list/index.js:241
 msgid "Icon gap"
 msgstr ""
@@ -1720,15 +2148,6 @@ msgstr ""
 msgid "Divider between items"
 msgstr ""
 
-#: src/blocks/icon-list/index.js:277
-msgid "Divider colour"
-msgstr ""
-
-#: src/blocks/icon-list/index.js:333
-#: src/blocks/tabs/index.js:113
-msgid "Choose icon"
-msgstr ""
-
 #: src/blocks/icon-list/index.js:360
 msgid "List item…"
 msgstr ""
@@ -1738,6 +2157,7 @@ msgid "Set link"
 msgstr ""
 
 #: src/blocks/icon-list/index.js:397
+#: src/blocks/testimonials/testimonial/index.js:219
 msgid "Link URL"
 msgstr ""
 
@@ -1802,46 +2222,33 @@ msgstr ""
 msgid "Rotation"
 msgstr ""
 
-#: src/blocks/icon/index.js:215
-msgid "Hover colour"
-msgstr ""
-
 #: src/blocks/icon/index.js:224
 msgid "Shape & background"
 msgstr ""
 
 #: src/blocks/icon/index.js:228
 #: src/blocks/shape-divider/index.js:56
+#: src/blocks/testimonials/index.js:445
 msgid "Shape"
 msgstr ""
 
 #: src/blocks/icon/index.js:236
+#: src/blocks/testimonials/index.js:449
 msgid "Circle"
 msgstr ""
 
 #: src/blocks/icon/index.js:240
+#: src/blocks/testimonials/index.js:457
 msgid "Square"
 msgstr ""
 
 #: src/blocks/icon/index.js:244
+#: src/blocks/testimonials/index.js:453
 msgid "Rounded"
 msgstr ""
 
 #: src/blocks/icon/index.js:260
 msgid "Hover background"
-msgstr ""
-
-#: src/blocks/icon/index.js:270
-#: src/components/StylesPanel.js:70
-msgid "Padding"
-msgstr ""
-
-#: src/blocks/icon/index.js:299
-msgid "Border width"
-msgstr ""
-
-#: src/blocks/icon/index.js:314
-msgid "Border colour"
 msgstr ""
 
 #: src/blocks/icon/index.js:324
@@ -1850,6 +2257,68 @@ msgstr ""
 
 #: src/blocks/icon/index.js:422
 msgid "Pick an icon from the library or paste your own SVG, then style its size, colour, shape, and link."
+msgstr ""
+
+#: src/blocks/notice/index.js:94
+msgid "Notice type"
+msgstr ""
+
+#: src/blocks/notice/index.js:98
+#: src/components/iconLibrary.js:1046
+msgid "Info"
+msgstr ""
+
+#: src/blocks/notice/index.js:102
+msgid "Success"
+msgstr ""
+
+#: src/blocks/notice/index.js:106
+msgid "Warning"
+msgstr ""
+
+#: src/blocks/notice/index.js:110
+msgid "Error"
+msgstr ""
+
+#: src/blocks/notice/index.js:119
+msgid "Dismissible"
+msgstr ""
+
+#: src/blocks/notice/index.js:120
+msgid "Show a close button on the front end."
+msgstr ""
+
+#: src/blocks/notice/index.js:182
+msgid "Use default icon for type"
+msgstr ""
+
+#: src/blocks/notice/index.js:229
+msgid "Accent / border"
+msgstr ""
+
+#: src/blocks/notice/index.js:253
+msgid "Title"
+msgstr ""
+
+#: src/blocks/notice/index.js:262
+#: src/components/iconLibrary.js:1328
+msgid "Message"
+msgstr ""
+
+#: src/blocks/notice/index.js:292
+msgid "Notice title…"
+msgstr ""
+
+#: src/blocks/notice/index.js:301
+msgid "Add your message…"
+msgstr ""
+
+#: src/blocks/notice/index.js:330
+msgid "Notice / Alert"
+msgstr ""
+
+#: src/blocks/notice/index.js:331
+msgid "Highlight an info, success, warning, or error message with an icon and optional dismiss button."
 msgstr ""
 
 #: src/blocks/pricing-table/index.js:32
@@ -1928,11 +2397,6 @@ msgstr ""
 
 #: src/blocks/pricing-table/index.js:133
 msgid "Contact sales"
-msgstr ""
-
-#: src/blocks/pricing-table/index.js:195
-#: src/blocks/trust-badges/index.js:430
-msgid "Columns"
 msgstr ""
 
 #: src/blocks/pricing-table/index.js:224
@@ -2230,6 +2694,8 @@ msgstr ""
 #: src/blocks/star-rating/index.js:75
 #: src/blocks/star-rating/index.js:98
 #: src/blocks/star-rating/index.js:241
+#: src/blocks/testimonials/index.js:479
+#: src/blocks/testimonials/testimonial/index.js:69
 msgid "Rating"
 msgstr ""
 
@@ -2415,6 +2881,224 @@ msgstr ""
 msgid "A panel inside the Tabs block."
 msgstr ""
 
+#: src/blocks/testimonials/index.js:65
+#: src/blocks/testimonials/index.js:588
+#: src/blocks/testimonials/testimonial/index.js:301
+msgid "Name"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:66
+#: src/blocks/testimonials/index.js:593
+#: src/blocks/testimonials/testimonial/index.js:312
+msgid "Role"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:67
+#: src/blocks/testimonials/index.js:598
+#: src/blocks/testimonials/testimonial/index.js:322
+msgid "Company"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:68
+#: src/blocks/testimonials/index.js:605
+msgid "Quote"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:214
+#: src/blocks/trust-badges/index.js:422
+#: src/components/iconLibrary.js:1016
+msgid "Grid"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:218
+#: src/blocks/testimonials/index.js:265
+msgid "Carousel"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:222
+#: src/blocks/testimonials/index.js:335
+msgid "Marquee"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:231
+msgid "Cards in view"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:269
+msgid "Autoplay"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:277
+msgid "Autoplay delay"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:294
+msgid "Transition speed"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:305
+msgid "Loop"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:310
+#: src/blocks/testimonials/index.js:361
+msgid "Pause on hover"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:317
+msgid "Show arrows"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:324
+msgid "Show dots"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:339
+msgid "Scroll duration"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:340
+msgid "Seconds for one full loop. Lower = faster."
+msgstr ""
+
+#: src/blocks/testimonials/index.js:354
+msgid "Reverse direction"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:371
+msgid "Card"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:409
+msgid "Drop shadow"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:424
+#: src/blocks/testimonials/testimonial/index.js:86
+msgid "Avatar"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:483
+msgid "Show rating"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:491
+msgid "Star colour"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:501
+msgid "Quote icon"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:505
+msgid "Show quote icon"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:523
+msgid "Read more"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:527
+msgid "Clamp long quotes"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:528
+msgid "Truncate quotes past a line limit with a Read more toggle."
+msgstr ""
+
+#: src/blocks/testimonials/index.js:537
+msgid "Lines"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:551
+msgid "Review schema"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:555
+msgid "Output review schema"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:556
+msgid "Add schema.org Review + AggregateRating structured data. Use only for genuine customer reviews."
+msgstr ""
+
+#: src/blocks/testimonials/index.js:567
+msgid "Product / service name"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:571
+msgid "What is being reviewed. Leave blank to use the site name."
+msgstr ""
+
+#: src/blocks/testimonials/index.js:584
+msgid "Text colours"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:643
+msgid "Testimonials"
+msgstr ""
+
+#: src/blocks/testimonials/index.js:644
+msgid "Social-proof testimonials in a grid, carousel, or marquee with ratings, avatars, and review schema."
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:73
+msgid "Stars"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:90
+#: src/components/iconLibrary.js:1412
+msgid "Image"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:147
+msgid "No image? A coloured monogram from the name is shown automatically."
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:156
+msgid "Alt text"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:166
+msgid "Source & date"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:170
+msgid "Source platform"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:182
+msgid "Custom…"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:192
+msgid "Source label"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:200
+msgid "Verified badge"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:205
+msgid "Review date"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:236
+msgid "Layout, card style, avatar, colours and typography are set on the parent Testimonials block."
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:272
+msgid "Write the testimonial…"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:336
+msgid "Testimonial Item"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/index.js:337
+msgid "A single testimonial inside the Testimonials block."
+msgstr ""
+
 #: src/blocks/trust-badges/index.js:247
 msgid "Badges"
 msgstr ""
@@ -2473,11 +3157,6 @@ msgstr ""
 
 #: src/blocks/trust-badges/index.js:418
 msgid "Horizontal row"
-msgstr ""
-
-#: src/blocks/trust-badges/index.js:422
-#: src/components/iconLibrary.js:1016
-msgid "Grid"
 msgstr ""
 
 #: src/blocks/trust-badges/index.js:475
@@ -2656,10 +3335,6 @@ msgstr ""
 msgid "Sliders"
 msgstr ""
 
-#: src/components/iconLibrary.js:1046
-msgid "Info"
-msgstr ""
-
 #: src/components/iconLibrary.js:1052
 msgid "Help"
 msgstr ""
@@ -2812,10 +3487,6 @@ msgstr ""
 msgid "At sign"
 msgstr ""
 
-#: src/components/iconLibrary.js:1328
-msgid "Message"
-msgstr ""
-
 #: src/components/iconLibrary.js:1334
 msgid "Comment"
 msgstr ""
@@ -2858,10 +3529,6 @@ msgstr ""
 
 #: src/components/iconLibrary.js:1406
 msgid "Skip back"
-msgstr ""
-
-#: src/components/iconLibrary.js:1412
-msgid "Image"
 msgstr ""
 
 #: src/components/iconLibrary.js:1418
@@ -3143,6 +3810,51 @@ msgstr ""
 msgid "Strikethrough"
 msgstr ""
 
+#: src/blocks/accordion/accordion-item/block.json
+msgctxt "block title"
+msgid "Accordion Item"
+msgstr ""
+
+#: src/blocks/accordion/accordion-item/block.json
+msgctxt "block description"
+msgid "A single collapsible panel inside the Accordion block."
+msgstr ""
+
+#: src/blocks/accordion/block.json
+msgctxt "block title"
+msgid "Accordion"
+msgstr ""
+
+#: src/blocks/accordion/block.json
+msgctxt "block description"
+msgid "Collapsible panels for FAQs and disclosures — styled headers, icons, single-open control, and smooth animation on top of native details/summary."
+msgstr ""
+
+#: src/blocks/accordion/block.json
+msgctxt "block keyword"
+msgid "accordion"
+msgstr ""
+
+#: src/blocks/accordion/block.json
+msgctxt "block keyword"
+msgid "faq"
+msgstr ""
+
+#: src/blocks/accordion/block.json
+msgctxt "block keyword"
+msgid "toggle"
+msgstr ""
+
+#: src/blocks/accordion/block.json
+msgctxt "block keyword"
+msgid "collapse"
+msgstr ""
+
+#: src/blocks/accordion/block.json
+msgctxt "block keyword"
+msgid "details"
+msgstr ""
+
 #: src/blocks/advanced-button/block.json
 msgctxt "block title"
 msgid "Advanced Button"
@@ -3363,6 +4075,51 @@ msgctxt "block keyword"
 msgid "urgency"
 msgstr ""
 
+#: src/blocks/counter-group/block.json
+msgctxt "block title"
+msgid "Counter"
+msgstr ""
+
+#: src/blocks/counter-group/block.json
+msgctxt "block description"
+msgid "Animated count-up statistics — number, optional icon and label, that count up when scrolled into view. Add as many stats as you need in a responsive row."
+msgstr ""
+
+#: src/blocks/counter-group/block.json
+msgctxt "block keyword"
+msgid "counter"
+msgstr ""
+
+#: src/blocks/counter-group/block.json
+msgctxt "block keyword"
+msgid "count up"
+msgstr ""
+
+#: src/blocks/counter-group/block.json
+msgctxt "block keyword"
+msgid "stats"
+msgstr ""
+
+#: src/blocks/counter-group/block.json
+msgctxt "block keyword"
+msgid "number"
+msgstr ""
+
+#: src/blocks/counter-group/block.json
+msgctxt "block keyword"
+msgid "statistics"
+msgstr ""
+
+#: src/blocks/counter-group/counter/block.json
+msgctxt "block title"
+msgid "Counter Item"
+msgstr ""
+
+#: src/blocks/counter-group/counter/block.json
+msgctxt "block description"
+msgid "A single animated statistic inside the Counter block."
+msgstr ""
+
 #: src/blocks/device-visibility/block.json
 msgctxt "block title"
 msgid "Device Visibility"
@@ -3483,6 +4240,41 @@ msgstr ""
 #: src/blocks/icon/block.json
 msgctxt "block keyword"
 msgid "symbol"
+msgstr ""
+
+#: src/blocks/notice/block.json
+msgctxt "block title"
+msgid "Notice / Alert"
+msgstr ""
+
+#: src/blocks/notice/block.json
+msgctxt "block description"
+msgid "Highlight an info, success, warning, or error message — coloured presets, an icon, optional title, and a dismiss button."
+msgstr ""
+
+#: src/blocks/notice/block.json
+msgctxt "block keyword"
+msgid "notice"
+msgstr ""
+
+#: src/blocks/notice/block.json
+msgctxt "block keyword"
+msgid "alert"
+msgstr ""
+
+#: src/blocks/notice/block.json
+msgctxt "block keyword"
+msgid "message"
+msgstr ""
+
+#: src/blocks/notice/block.json
+msgctxt "block keyword"
+msgid "warning"
+msgstr ""
+
+#: src/blocks/notice/block.json
+msgctxt "block keyword"
+msgid "banner"
 msgstr ""
 
 #: src/blocks/pricing-table/block.json
@@ -3612,16 +4404,19 @@ msgid "star"
 msgstr ""
 
 #: src/blocks/star-rating/block.json
+#: src/blocks/testimonials/block.json
 msgctxt "block keyword"
 msgid "rating"
 msgstr ""
 
 #: src/blocks/star-rating/block.json
+#: src/blocks/testimonials/block.json
 msgctxt "block keyword"
 msgid "review"
 msgstr ""
 
 #: src/blocks/star-rating/block.json
+#: src/blocks/testimonials/block.json
 msgctxt "block keyword"
 msgid "testimonial"
 msgstr ""
@@ -3666,6 +4461,36 @@ msgstr ""
 #: src/blocks/tabs/tab-panel/block.json
 msgctxt "block description"
 msgid "A panel inside the Tabs block. Can only be inserted inside Tabs."
+msgstr ""
+
+#: src/blocks/testimonials/block.json
+msgctxt "block title"
+msgid "Testimonials"
+msgstr ""
+
+#: src/blocks/testimonials/block.json
+msgctxt "block description"
+msgid "Social-proof testimonials in a grid, carousel, or continuous marquee — avatars, star ratings, quote icon, verified source badges, and opt-in review schema."
+msgstr ""
+
+#: src/blocks/testimonials/block.json
+msgctxt "block keyword"
+msgid "quote"
+msgstr ""
+
+#: src/blocks/testimonials/block.json
+msgctxt "block keyword"
+msgid "carousel"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/block.json
+msgctxt "block title"
+msgid "Testimonial Item"
+msgstr ""
+
+#: src/blocks/testimonials/testimonial/block.json
+msgctxt "block description"
+msgid "A single testimonial inside the Testimonials block."
 msgstr ""
 
 #: src/blocks/trust-badges/block.json

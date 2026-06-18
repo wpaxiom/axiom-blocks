@@ -139,6 +139,38 @@ class Blocks {
 			'description' => 'List with a custom icon on every row',
 			'icon'        => 'editor-ul',
 		),
+		array(
+			'id'          => 'accordion',
+			'name'        => 'Accordion',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Collapsible panels for FAQs and disclosures',
+			'icon'        => 'list-view',
+		),
+		array(
+			'id'          => 'notice',
+			'name'        => 'Notice / Alert',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Dismissible info, success, warning, or error message',
+			'icon'        => 'warning',
+		),
+		array(
+			'id'          => 'counter-group',
+			'name'        => 'Counter',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Animated count-up statistics with icons and labels',
+			'icon'        => 'chart-bar',
+		),
+		array(
+			'id'          => 'testimonials',
+			'name'        => 'Testimonials',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Grid, carousel, or marquee testimonials with ratings',
+			'icon'        => 'format-quote',
+		),
 
 		// ── WooCommerce ──────────────────────────────────────────────────────
 		array(

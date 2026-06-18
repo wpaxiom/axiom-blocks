@@ -16,6 +16,7 @@ import {
 	GearIcon,
 	CloseIcon,
 	PowerIcon,
+	DocIcon,
 } from './ui';
 
 const PRIMARY = '#7C3AED';
@@ -258,6 +259,15 @@ export function Dashboard() {
 						</p>
 					</div>
 					<div style={ { flex: 1 } } />
+					<a
+						href="https://www.wpaxiom.com/docs/axiom-blocks"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="ab-btn-docs"
+					>
+						<DocIcon size={ 12 } />
+						{ __( 'Read Docs', 'axiom-blocks' ) }
+					</a>
 				</div>
 
 				{ /* Horizontal nav tabs */ }

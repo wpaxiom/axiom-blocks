@@ -75,6 +75,26 @@ $woo:      #a78bfa;
 	}
 }
 
+.ab-btn-docs {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 14px;
+	border-radius: 6px;
+	background: linear-gradient(135deg, $primary, #a78bfa);
+	color: #fff;
+	text-decoration: none;
+	font-size: 12px;
+	font-weight: 700;
+	flex-shrink: 0;
+	transition: opacity 0.15s;
+
+	&:hover {
+		opacity: 0.9;
+		color: #fff;
+	}
+}
+
 // ── Nav tabs ─────────────────────────────────────────────────────────────────
 .ab-nav-tabs {
 	display: flex;
