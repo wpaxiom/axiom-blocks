@@ -5,7 +5,7 @@ Tags: gutenberg, blocks, editor, page-builder, woocommerce
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,7 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 * **Notice / Alert** - Dismissible info, success, warning, or error messages with presets, icons, and custom colours.
 * **Counter** - Animated count-up statistics with icons, labels, custom separators, per-stat cards, and hover states.
 * **Testimonials** - Grid, carousel, or marquee testimonials with author details, avatars, and star ratings.
+* **Info Box** - A styled box that holds an icon, heading, text, and button as editable blocks, with predefined styles and a single control for the spacing between items.
 * **Tabs** - Horizontal tabs container that accepts any blocks inside.
 * **Countdown Timer** - Live countdown to a target date or time.
 * **Copy to Clipboard** - Button that copies text or code snippets to the visitor's clipboard.
@@ -145,6 +146,9 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Changelog ==
 
+= 1.0.3 =
+* New block: Info Box - a styled box that holds an Icon, Advanced Heading, text, and Advanced Button as editable blocks, with predefined Default/Bordered/Card/Accent styles and a single gap control for the spacing between items, plus stack or row direction, alignment, background, border, corner radius, and shadow.
+
 = 1.0.2 =
 * New blocks: Accordion, Notice / Alert, Counter, and Testimonials.
 * Accordion outputs FAQ schema (JSON-LD) for rich results, with single-open and first-panel-open options.
@@ -162,6 +166,9 @@ Developers can redirect the feedback to their own server - or disable it entirel
 * Full Site Editing (FSE) support.
 
 == Upgrade Notice ==
+
+= 1.0.3 =
+Adds the Info Box block - a styled box holding an icon, heading, text, and button as blocks, with full control of the spacing between them.
 
 = 1.0.2 =
 Adds four new blocks: Accordion (with FAQ schema), Notice / Alert, Counter, and Testimonials.

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.2\n"
+"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/axiom-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-18T11:57:07+00:00\n"
+"POT-Creation-Date: 2026-06-19T16:29:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axiom-blocks\n"
@@ -247,6 +247,7 @@ msgstr ""
 #: src/blocks/countdown-timer/index.js:361
 #: src/blocks/counter-group/index.js:188
 #: src/blocks/icon-list/index.js:168
+#: src/blocks/info-box/index.js:131
 #: src/blocks/pricing-table/index.js:191
 #: src/blocks/testimonials/index.js:206
 #: src/blocks/testimonials/index.js:210
@@ -580,6 +581,7 @@ msgstr ""
 #: src/blocks/icon-list/index.js:187
 #: src/blocks/icon-list/index.js:204
 #: src/blocks/icon/index.js:195
+#: src/blocks/info-box/index.js:169
 #: src/blocks/pricing-table/index.js:251
 #: src/blocks/star-rating/index.js:178
 #: src/blocks/tabs/index.js:564
@@ -602,6 +604,7 @@ msgstr ""
 #: src/blocks/icon-list/index.js:191
 #: src/blocks/icon-list/index.js:212
 #: src/blocks/icon/index.js:203
+#: src/blocks/info-box/index.js:177
 #: src/blocks/pricing-table/index.js:259
 #: src/blocks/star-rating/index.js:186
 #: src/blocks/tabs/index.js:572
@@ -637,6 +640,7 @@ msgstr ""
 #: src/blocks/advanced-section/index.js:326
 #: src/blocks/counter-group/index.js:444
 #: src/blocks/icon/index.js:253
+#: src/blocks/info-box/index.js:192
 #: src/blocks/notice/index.js:219
 #: src/blocks/shape-divider/index.js:118
 #: src/blocks/testimonials/index.js:375
@@ -709,12 +713,14 @@ msgstr ""
 #: src/blocks/accordion/index.js:496
 #: src/blocks/free-shipping-progress/index.js:173
 #: src/blocks/icon/index.js:282
+#: src/blocks/info-box/index.js:215
 #: src/blocks/notice/index.js:236
 #: src/blocks/testimonials/index.js:398
 msgid "Corner radius"
 msgstr ""
 
 #: src/blocks/accordion/index.js:456
+#: src/blocks/info-box/index.js:150
 msgid "Gap between items"
 msgstr ""
 
@@ -741,6 +747,7 @@ msgstr ""
 #: src/blocks/counter-group/counter/index.js:117
 #: src/blocks/counter-group/index.js:484
 #: src/blocks/icon/index.js:232
+#: src/blocks/info-box/index.js:230
 #: src/blocks/testimonials/testimonial/index.js:174
 msgid "None"
 msgstr ""
@@ -828,12 +835,14 @@ msgstr ""
 #: src/blocks/advanced-button/index.js:135
 #: src/blocks/advanced-button/index.js:173
 #: src/blocks/counter-group/index.js:488
+#: src/blocks/info-box/index.js:234
 msgid "Small"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:136
 #: src/blocks/advanced-button/index.js:177
 #: src/blocks/counter-group/index.js:492
+#: src/blocks/info-box/index.js:238
 #: src/components/TypographyPanel.js:64
 msgid "Medium"
 msgstr ""
@@ -841,6 +850,7 @@ msgstr ""
 #: src/blocks/advanced-button/index.js:137
 #: src/blocks/advanced-button/index.js:181
 #: src/blocks/counter-group/index.js:496
+#: src/blocks/info-box/index.js:242
 msgid "Large"
 msgstr ""
 
@@ -1007,6 +1017,7 @@ msgstr ""
 
 #: src/blocks/advanced-button/index.js:431
 #: src/blocks/counter-group/index.js:480
+#: src/blocks/info-box/index.js:226
 msgid "Shadow"
 msgstr ""
 
@@ -1136,6 +1147,7 @@ msgstr ""
 #: src/blocks/countdown-timer/index.js:381
 #: src/blocks/icon-list/index.js:200
 #: src/blocks/icon/index.js:191
+#: src/blocks/info-box/index.js:165
 #: src/blocks/star-rating/index.js:174
 #: src/blocks/tabs/index.js:560
 #: src/blocks/trust-badges/index.js:447
@@ -1153,6 +1165,7 @@ msgstr ""
 #: src/blocks/free-shipping-progress/index.js:153
 #: src/blocks/icon-list/index.js:208
 #: src/blocks/icon/index.js:199
+#: src/blocks/info-box/index.js:173
 #: src/blocks/pricing-table/index.js:255
 #: src/blocks/star-rating/index.js:182
 #: src/blocks/tabs/index.js:568
@@ -1502,6 +1515,8 @@ msgid "Get started"
 msgstr ""
 
 #: src/blocks/button-group/index.js:31
+#: src/blocks/info-box/index.js:38
+#: src/blocks/info-box/index.js:77
 msgid "Learn more"
 msgstr ""
 
@@ -1916,16 +1931,19 @@ msgid "Right of number"
 msgstr ""
 
 #: src/blocks/counter-group/index.js:440
+#: src/blocks/info-box/index.js:188
 msgid "Box"
 msgstr ""
 
 #: src/blocks/counter-group/index.js:451
 #: src/blocks/icon/index.js:314
+#: src/blocks/info-box/index.js:197
 msgid "Border colour"
 msgstr ""
 
 #: src/blocks/counter-group/index.js:458
 #: src/blocks/icon/index.js:299
+#: src/blocks/info-box/index.js:204
 #: src/blocks/testimonials/index.js:387
 msgid "Border width"
 msgstr ""
@@ -2259,6 +2277,71 @@ msgstr ""
 msgid "Pick an icon from the library or paste your own SVG, then style its size, colour, shape, and link."
 msgstr ""
 
+#: src/blocks/info-box/index.js:30
+msgid "Feature title"
+msgstr ""
+
+#: src/blocks/info-box/index.js:34
+msgid "Describe this feature…"
+msgstr ""
+
+#: src/blocks/info-box/index.js:46
+#: src/components/ABControls.js:136
+#: src/components/TypographyPanel.js:74
+#: src/components/TypographyPanel.js:143
+#: src/components/TypographyPanel.js:421
+#: src/components/TypographyPanel.js:521
+#: src/components/TypographyPanel.js:557
+#: src/components/TypographyPanel.js:588
+msgid "Default"
+msgstr ""
+
+#: src/blocks/info-box/index.js:49
+#: src/blocks/pricing-table/index.js:290
+msgid "Bordered"
+msgstr ""
+
+#: src/blocks/info-box/index.js:50
+#: src/blocks/testimonials/index.js:371
+msgid "Card"
+msgstr ""
+
+#: src/blocks/info-box/index.js:51
+msgid "Accent"
+msgstr ""
+
+#: src/blocks/info-box/index.js:62
+msgid "Fast & reliable"
+msgstr ""
+
+#: src/blocks/info-box/index.js:69
+msgid "Everything you need, nothing you don’t."
+msgstr ""
+
+#: src/blocks/info-box/index.js:135
+msgid "Direction"
+msgstr ""
+
+#: src/blocks/info-box/index.js:139
+msgid "Stack (vertical)"
+msgstr ""
+
+#: src/blocks/info-box/index.js:143
+msgid "Row (horizontal)"
+msgstr ""
+
+#: src/blocks/info-box/index.js:159
+msgid "Space between the icon, heading, text, and button."
+msgstr ""
+
+#: src/blocks/info-box/index.js:266
+msgid "Info Box"
+msgstr ""
+
+#: src/blocks/info-box/index.js:267
+msgid "A styled box holding an icon, heading, text, and button as editable blocks — with full control over spacing between them."
+msgstr ""
+
 #: src/blocks/notice/index.js:94
 msgid "Notice type"
 msgstr ""
@@ -2424,10 +2507,6 @@ msgstr ""
 
 #: src/blocks/pricing-table/index.js:286
 msgid "Card style"
-msgstr ""
-
-#: src/blocks/pricing-table/index.js:290
-msgid "Bordered"
 msgstr ""
 
 #: src/blocks/pricing-table/index.js:298
@@ -2965,10 +3044,6 @@ msgstr ""
 msgid "Reverse direction"
 msgstr ""
 
-#: src/blocks/testimonials/index.js:371
-msgid "Card"
-msgstr ""
-
 #: src/blocks/testimonials/index.js:409
 msgid "Drop shadow"
 msgstr ""
@@ -3231,16 +3306,6 @@ msgstr ""
 #: src/components/SpacingPanel.js:192
 #: src/components/TypographyPanel.js:456
 msgid "Reset"
-msgstr ""
-
-#: src/components/ABControls.js:136
-#: src/components/TypographyPanel.js:74
-#: src/components/TypographyPanel.js:143
-#: src/components/TypographyPanel.js:421
-#: src/components/TypographyPanel.js:521
-#: src/components/TypographyPanel.js:557
-#: src/components/TypographyPanel.js:588
-msgid "Default"
 msgstr ""
 
 #: src/components/DisabledBlockMessage.js:32
@@ -4242,6 +4307,42 @@ msgctxt "block keyword"
 msgid "symbol"
 msgstr ""
 
+#: src/blocks/info-box/block.json
+msgctxt "block title"
+msgid "Info Box"
+msgstr ""
+
+#: src/blocks/info-box/block.json
+msgctxt "block description"
+msgid "A styled box that holds any blocks — an icon, heading, text, and button — with full control over the spacing between them."
+msgstr ""
+
+#: src/blocks/info-box/block.json
+msgctxt "block keyword"
+msgid "info box"
+msgstr ""
+
+#: src/blocks/info-box/block.json
+msgctxt "block keyword"
+msgid "feature"
+msgstr ""
+
+#: src/blocks/info-box/block.json
+msgctxt "block keyword"
+msgid "icon box"
+msgstr ""
+
+#: src/blocks/info-box/block.json
+#: src/blocks/pricing-table/pricing-plan/block.json
+msgctxt "block keyword"
+msgid "card"
+msgstr ""
+
+#: src/blocks/info-box/block.json
+msgctxt "block keyword"
+msgid "service"
+msgstr ""
+
 #: src/blocks/notice/block.json
 msgctxt "block title"
 msgid "Notice / Alert"
@@ -4326,11 +4427,6 @@ msgstr ""
 #: src/blocks/pricing-table/pricing-plan/block.json
 msgctxt "block keyword"
 msgid "plan"
-msgstr ""
-
-#: src/blocks/pricing-table/pricing-plan/block.json
-msgctxt "block keyword"
-msgid "card"
 msgstr ""
 
 #: src/blocks/reading-progress-bar/block.json

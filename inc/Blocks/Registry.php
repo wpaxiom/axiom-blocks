@@ -53,6 +53,7 @@ class Registry {
 		self::register_counter();
 		self::register_testimonials();
 		self::register_testimonial();
+		self::register_info_box();
 		self::register_trust_badges();
 		self::register_free_shipping_progress();
 
@@ -307,6 +308,15 @@ class Registry {
 	 */
 	private static function register_testimonial(): void {
 		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/testimonials/testimonial' );
+	}
+
+	/**
+	 * Register Info Box Block
+	 *
+	 * @return void
+	 */
+	private static function register_info_box(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/info-box' );
 	}
 
 	/**

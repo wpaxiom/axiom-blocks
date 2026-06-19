@@ -1,0 +1,20 @@
+/**
+ * Info Box — editor-only styles.
+ * Shared visual styling (flex container, gap, box) lives in style.scss, which is
+ * loaded in the editor too. Inner blocks render through the block-list layout, so
+ * keep the gap authoritative there as well.
+ */
+.ab-ibox {
+	.block-editor-block-list__layout {
+		display: flex;
+		flex-direction: inherit;
+		align-items: inherit;
+		gap: inherit;
+		width: 100%;
+	}
+
+	&.ab-ibox--column .block-editor-block-list__layout > * {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}

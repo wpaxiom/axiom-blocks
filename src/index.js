@@ -31,6 +31,7 @@ import { CounterGroup } from './blocks/counter-group';
 import { Counter } from './blocks/counter-group/counter';
 import { Testimonials } from './blocks/testimonials';
 import { Testimonial } from './blocks/testimonials/testimonial';
+import { InfoBox } from './blocks/info-box';
 import { TrustBadges } from './blocks/trust-badges';
 import { FreeShippingProgress } from './blocks/free-shipping-progress';
 
@@ -68,6 +69,7 @@ const blocks = [
 	Counter,
 	Testimonials,
 	Testimonial,
+	InfoBox,
 	TrustBadges,
 	FreeShippingProgress,
 ];

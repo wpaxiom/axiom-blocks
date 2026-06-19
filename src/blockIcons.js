@@ -591,6 +591,15 @@ export const BLOCK_ICONS = {
 			<path d="M8 14a2 2 0 0 0 2-2V8H8" />
 		</>
 	),
+	'info-box': (
+		<>
+			<rect x="3" y="4" width="18" height="16" rx="2" />
+			<circle cx="8" cy="9" r="1.5" />
+			<path d="M13 8.5h5" />
+			<path d="M13 11.5h5" />
+			<path d="M6 15h12" />
+		</>
+	),
 };
 
 const DEFAULT_ICON = (

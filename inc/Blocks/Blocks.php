@@ -171,6 +171,14 @@ class Blocks {
 			'description' => 'Grid, carousel, or marquee testimonials with ratings',
 			'icon'        => 'format-quote',
 		),
+		array(
+			'id'          => 'info-box',
+			'name'        => 'Info Box',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Styled box for an icon, heading, text, and button as blocks',
+			'icon'        => 'info',
+		),
 
 		// ── WooCommerce ──────────────────────────────────────────────────────
 		array(

@@ -1,0 +1,100 @@
+/**
+ * Info Box — shared styles (editor + frontend).
+ * A styled flex container around inner blocks. The gap between items is a single
+ * authoritative value (--ab-ibox-gap); we zero the direct children's outer
+ * margins so block defaults don't fight it. Dynamic values arrive as CSS custom
+ * properties from render.php / the editor.
+ */
+.ab-ibox {
+	--ab-ibox-gap: 16px;
+	--ab-ibox-bg: transparent;
+	--ab-ibox-bc: transparent;
+	--ab-ibox-bw: 0px;
+	--ab-ibox-radius: 12px;
+
+	display: flex;
+	flex-direction: column;
+	gap: var(--ab-ibox-gap);
+	padding: 24px;
+	background: var(--ab-ibox-bg);
+	border: var(--ab-ibox-bw) solid var(--ab-ibox-bc);
+	border-radius: var(--ab-ibox-radius);
+}
+
+/* The gap owns the spacing — drop default block margins on direct children. */
+.ab-ibox > * {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+/* ── Direction ──────────────────────────────────────────────────────────── */
+.ab-ibox--column {
+	flex-direction: column;
+}
+
+.ab-ibox--row {
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+/* ── Alignment (stack/column) ───────────────────────────────────────────── */
+.ab-ibox--column.ab-ibox--align-left {
+	align-items: flex-start;
+	text-align: left;
+}
+
+.ab-ibox--column.ab-ibox--align-center {
+	align-items: center;
+	text-align: center;
+}
+
+.ab-ibox--column.ab-ibox--align-right {
+	align-items: flex-end;
+	text-align: right;
+}
+
+/* ── Alignment (row) — cross-axis vertical placement ────────────────────── */
+.ab-ibox--row.ab-ibox--align-left {
+	align-items: flex-start;
+}
+
+.ab-ibox--row.ab-ibox--align-center {
+	align-items: center;
+}
+
+.ab-ibox--row.ab-ibox--align-right {
+	align-items: flex-end;
+}
+
+/* ── Predefined block styles (Styles panel) ─────────────────────────────── */
+/* These set the CSS custom properties, so anything the user picks in the Box
+ * panel (inline vars) still overrides the preset. */
+.ab-ibox.is-style-bordered {
+	--ab-ibox-bc: #e5e7eb;
+	--ab-ibox-bw: 1px;
+}
+
+.ab-ibox.is-style-card {
+	--ab-ibox-bg: #ffffff;
+	--ab-ibox-radius: 16px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+}
+
+.ab-ibox.is-style-accent {
+	--ab-ibox-bg: #faf5ff;
+	--ab-ibox-radius: 12px;
+	border-left: 4px solid #7c3aed;
+}
+
+/* ── Shadow presets ─────────────────────────────────────────────────────── */
+.ab-ibox.has-shadow-sm {
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.ab-ibox.has-shadow-md {
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+}
+
+.ab-ibox.has-shadow-lg {
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+}

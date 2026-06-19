@@ -99,6 +99,7 @@ const BLOCKS = [
 			[ 'testimonial/render.php', 'testimonial/render.php' ],
 		],
 	},
+	{ id: 'info-box', files: [ 'block.json', 'render.php' ] },
 ];
 
 /** Non-block files copied to build/. */
