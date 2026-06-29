@@ -16,14 +16,22 @@ import {
 } from '../../components/ABControls';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { useDeviceType, resolveResponsive, resolveResponsiveAttrs } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
+import {
+	responsiveAlignValue,
+	ALIGN_FLEX_MAP,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../components/deprecations';
+import metadata from './block.json';
 
 /**
  * Calculate time remaining
@@ -163,9 +171,11 @@ export const CountdownTimer = {
 				return () => clearInterval( interval );
 			}, [ targetDate ] );
 
+			const device = useDeviceType();
+			const resolved = resolveResponsiveAttrs( attributes, [ 'alignment' ], device );
 			const blockProps = useBlockProps( {
-				className: `axiom-blocks-countdown axiom-blocks-countdown--${ layout } axiom-blocks-countdown--align-${ alignment }`,
-				style: getSpacingStyle( attributes ),
+				className: `axiom-blocks-countdown axiom-blocks-countdown--${ layout } axiom-blocks-countdown--align-${ resolved.alignment }`,
+				style: useSpacingStyle( attributes ),
 			} );
 
 			const unitStyle = {
@@ -179,18 +189,34 @@ export const CountdownTimer = {
 				fontWeight: 'bold',
 				lineHeight: '1',
 				fontSize: digitFontSize,
-				...getTypographyStyle( attributes, 'digit' ),
+				...useTypographyStyle( attributes, 'digit' ),
 				color: digitColor,
 			};
 			const labelStyle = {
 				textTransform: 'uppercase',
 				letterSpacing: '1px',
 				fontSize: labelFontSize,
-				...getTypographyStyle( attributes, 'label' ),
+				...useTypographyStyle( attributes, 'label' ),
 				color: labelColor,
 				marginTop: '8px',
 			};
-			const containerStyle = { display: 'flex', flexWrap: 'wrap', gap };
+			const containerStyle = {
+				display: 'flex',
+				flexWrap: 'wrap',
+				gap: resolveResponsive( attributes, 'gap', device ),
+				justifyContent: responsiveAlignValue(
+					attributes,
+					'alignment',
+					device,
+					ALIGN_FLEX_MAP
+				),
+				alignItems: responsiveAlignValue(
+					attributes,
+					'alignment',
+					device,
+					ALIGN_FLEX_MAP
+				),
+			};
 			const containerDirectionStyle =
 				layout === 'vertical' ? { flexDirection: 'column' } : {};
 
@@ -377,27 +403,46 @@ export const CountdownTimer = {
 									setAttributes( { layout: v } )
 								}
 							/>
-							<ABSelectControl
-								label={ __( 'Alignment', 'axiom-blocks' ) }
-								value={ alignment }
-								options={ [
-									{
-										label: __( 'Left', 'axiom-blocks' ),
-										value: 'left',
-									},
-									{
-										label: __( 'Center', 'axiom-blocks' ),
-										value: 'center',
-									},
-									{
-										label: __( 'Right', 'axiom-blocks' ),
-										value: 'right',
-									},
-								] }
-								onChange={ ( v ) =>
-									setAttributes( { alignment: v } )
-								}
-							/>
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="alignment"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABSelectControl
+										label={ __( 'Alignment', 'axiom-blocks' ) }
+										value={
+											value !== '' && value != null
+												? value
+												: inherited ?? 'center'
+										}
+										options={ [
+											{
+												label: __(
+													'Left',
+													'axiom-blocks'
+												),
+												value: 'left',
+											},
+											{
+												label: __(
+													'Center',
+													'axiom-blocks'
+												),
+												value: 'center',
+											},
+											{
+												label: __(
+													'Right',
+													'axiom-blocks'
+												),
+												value: 'right',
+											},
+										] }
+										onChange={ setValue }
+									/>
+								) }
+							</ABResponsive>
 							<ABTextControl
 								label={ __( 'Border Radius', 'axiom-blocks' ) }
 								value={ borderRadius }
@@ -409,20 +454,26 @@ export const CountdownTimer = {
 									'axiom-blocks'
 								) }
 							/>
-							<ABTextControl
-								label={ __(
-									'Gap Between Units',
-									'axiom-blocks'
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="gap"
+							>
+								{ ( { value, setValue } ) => (
+									<ABTextControl
+										label={ __(
+											'Gap Between Units',
+											'axiom-blocks'
+										) }
+										value={ value }
+										onChange={ ( v ) => setValue( v ) }
+										help={ __(
+											'Example: 20px, 1rem, etc.',
+											'axiom-blocks'
+										) }
+									/>
 								) }
-								value={ gap }
-								onChange={ ( v ) =>
-									setAttributes( { gap: v } )
-								}
-								help={ __(
-									'Example: 20px, 1rem, etc.',
-									'axiom-blocks'
-								) }
-							/>
+							</ABResponsive>
 						</PanelBody>
 
 						<PanelBody
@@ -432,6 +483,7 @@ export const CountdownTimer = {
 							<ABColorControl
 								label={ __( 'Digit Color', 'axiom-blocks' ) }
 								color={ digitColor }
+								defaultColor="#333333"
 								onChange={ ( c ) =>
 									setAttributes( { digitColor: c } )
 								}
@@ -439,6 +491,7 @@ export const CountdownTimer = {
 							<ABColorControl
 								label={ __( 'Label Color', 'axiom-blocks' ) }
 								color={ labelColor }
+								defaultColor="#666666"
 								onChange={ ( c ) =>
 									setAttributes( { labelColor: c } )
 								}
@@ -449,6 +502,7 @@ export const CountdownTimer = {
 									'axiom-blocks'
 								) }
 								color={ backgroundColor }
+								defaultColor="#f0f0f0"
 								onChange={ ( c ) =>
 									setAttributes( { backgroundColor: c } )
 								}
@@ -468,6 +522,7 @@ export const CountdownTimer = {
 										setAttributes={ setAttributes }
 										prefix="digit"
 										unwrapped
+										responsive
 									/>
 								</ABSubAccordion>
 								<ABSubAccordion
@@ -478,6 +533,7 @@ export const CountdownTimer = {
 										setAttributes={ setAttributes }
 										prefix="label"
 										unwrapped
+										responsive
 									/>
 								</ABSubAccordion>
 							</div>
@@ -668,8 +724,28 @@ export const CountdownTimer = {
 			);
 		},
 
-		save: function SaveComponent() {
-			return null;
+		save: function SaveComponent( { attributes } ) {
+			const {
+				showDays, showHours, showMinutes, showSeconds,
+				labelDays, labelHours, labelMinutes, labelSeconds,
+			} = attributes;
+			const blockProps = useBlockProps.save( { className: 'axiom-blocks-countdown' } );
+			return (
+				<div { ...blockProps }>
+					<div className="axiom-blocks-countdown__container" style={ { display: 'flex', gap: '20px', flexWrap: 'wrap' } }>
+						{ showDays && <div className="axiom-blocks-countdown__unit"><span className="axiom-blocks-countdown__digit">00</span> <span className="axiom-blocks-countdown__label">{ labelDays }</span></div> }
+						{ showHours && <div className="axiom-blocks-countdown__unit"><span className="axiom-blocks-countdown__digit">00</span> <span className="axiom-blocks-countdown__label">{ labelHours }</span></div> }
+						{ showMinutes && <div className="axiom-blocks-countdown__unit"><span className="axiom-blocks-countdown__digit">00</span> <span className="axiom-blocks-countdown__label">{ labelMinutes }</span></div> }
+						{ showSeconds && <div className="axiom-blocks-countdown__unit"><span className="axiom-blocks-countdown__digit">00</span> <span className="axiom-blocks-countdown__label">{ labelSeconds }</span></div> }
+					</div>
+				</div>
+			);
 		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

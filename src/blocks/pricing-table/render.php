@@ -62,7 +62,7 @@ $axiom_blocks_style_attr         = safecss_filter_attr( implode( ';', $axiom_blo
 
 $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 
-$axiom_blocks_heading_style = Typography::inline_style( $axiom_blocks_a, 'heading' );
+$axiom_blocks_heading_style = safecss_filter_attr( Typography::inline_style( $axiom_blocks_a, 'heading' ) );
 // Legacy fallback: if no `headingTextAlign` is set, use the older `headingAlign`.
 if ( false === stripos( $axiom_blocks_heading_style, 'text-align' ) ) {
 	$axiom_blocks_sep            = ( '' !== $axiom_blocks_heading_style ) ? '; ' : '';

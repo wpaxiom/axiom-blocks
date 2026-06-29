@@ -10,14 +10,19 @@ import {
 } from '../../components/ABControls';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
+import { useDeviceType, resolveResponsiveAttrs } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import { responsiveAlignValue } from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../components/deprecations';
+import metadata from './block.json';
 
 const CopyIcon = () => (
 	<svg
@@ -69,9 +74,14 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 
 	const [ copied, setCopied ] = useState( false );
 
+	const device = useDeviceType();
+	const resolved = resolveResponsiveAttrs( attributes, [ 'alignment' ], device );
 	const blockProps = useBlockProps( {
-		className: `axiom-blocks-copy-to-clipboard axiom-blocks-copy-to-clipboard--align-${ alignment }`,
-		style: getSpacingStyle( attributes ),
+		className: `axiom-blocks-copy-to-clipboard axiom-blocks-copy-to-clipboard--align-${ resolved.alignment }`,
+		style: {
+			...useSpacingStyle( attributes ),
+			textAlign: responsiveAlignValue( attributes, 'alignment', device ),
+		},
 	} );
 
 	const btnBg = copied
@@ -96,7 +106,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 		fontFamily: 'inherit',
 		fontWeight: '500',
 		fontSize,
-		...getTypographyStyle( attributes ),
+		...useTypographyStyle( attributes ),
 		backgroundColor: btnBg,
 		color: btnColor,
 		border: btnBorder,
@@ -220,25 +230,37 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<ABSelectControl
-						label={ __( 'Alignment', 'axiom-blocks' ) }
-						value={ alignment }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { alignment: v } ) }
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="alignment"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABSelectControl
+								label={ __( 'Alignment', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 'left'
+								}
+								options={ [
+									{
+										label: __( 'Left', 'axiom-blocks' ),
+										value: 'left',
+									},
+									{
+										label: __( 'Center', 'axiom-blocks' ),
+										value: 'center',
+									},
+									{
+										label: __( 'Right', 'axiom-blocks' ),
+										value: 'right',
+									},
+								] }
+								onChange={ setValue }
+							/>
+						) }
+					</ABResponsive>
 					<ABSelectControl
 						label={ __( 'Button Style', 'axiom-blocks' ) }
 						value={ buttonStyle }
@@ -259,6 +281,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Button Color', 'axiom-blocks' ) }
 						color={ buttonColor }
+						defaultColor="#7c3aed"
 						onChange={ ( c ) =>
 							setAttributes( { buttonColor: c } )
 						}
@@ -266,6 +289,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Text Color', 'axiom-blocks' ) }
 						color={ buttonTextColor }
+						defaultColor="#ffffff"
 						onChange={ ( c ) =>
 							setAttributes( { buttonTextColor: c } )
 						}
@@ -273,6 +297,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Success Color', 'axiom-blocks' ) }
 						color={ copiedBgColor }
+						defaultColor="#00a32a"
 						onChange={ ( c ) =>
 							setAttributes( { copiedBgColor: c } )
 						}
@@ -291,6 +316,7 @@ function CopyToClipboardEdit( { attributes, setAttributes } ) {
 					attributes={ attributes }
 					setAttributes={ setAttributes }
 					title={ __( 'Button typography', 'axiom-blocks' ) }
+					responsive
 				/>
 
 				<SpacingPanel
@@ -351,6 +377,27 @@ export const CopyToClipboard = {
 		),
 		icon: <BlockIcon slug="copy-to-clipboard" />,
 		edit: CopyToClipboardEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const { textToCopy, buttonText, displayMode, placeholder } = attributes;
+			const blockProps = useBlockProps.save( { className: 'axiom-blocks-copy-to-clipboard' } );
+			return (
+				<div { ...blockProps }>
+					{ displayMode === 'input' ? (
+						<div className="axiom-blocks-copy-to-clipboard__input-row">
+							<span className="axiom-blocks-copy-to-clipboard__input">{ textToCopy || placeholder }</span>
+							<span className="axiom-blocks-copy-to-clipboard__button">{ buttonText }</span>
+						</div>
+					) : (
+						<span className="axiom-blocks-copy-to-clipboard__button">{ buttonText }</span>
+					) }
+				</div>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

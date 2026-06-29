@@ -60,15 +60,6 @@
 	}
 }
 
-/* Mobile min-height override: only kicks in when the user set a separate
- * mobile value (the JS/PHP add `has-mobile-min-h` for that). */
-@media (max-width: 767px) {
-
-	.axiom-blocks-section.has-mobile-min-h {
-		min-height: var(--axiom-blocks-section-min-h-mobile, var(--axiom-blocks-section-min-h, 400px));
-	}
-}
-
 /* ── Parallax ──────────────────────────────────────────────────────────────
  * The image moves to a `::before` pseudo so it can be transformed without
  * disturbing inner-block layout (WP's constrained-layout selectors target

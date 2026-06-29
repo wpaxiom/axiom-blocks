@@ -14,17 +14,27 @@ import {
 	ABRangeControl,
 	ABSubAccordion,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
+import { useDeviceType, resolveResponsiveAttrs } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveGridColumns,
+	responsiveVarValue,
+	responsiveAlignValue,
+	ALIGN_FLEX_MAP,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import { BADGE_GROUPS, BADGE_INDEX, BADGE_PRESETS, BadgeSvg } from './badges';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../components/deprecations';
+import metadata from './block.json';
 
 /* ── Inline icons (1.6px stroke, matches ABControls language) ───────────── */
 const STROKE = {
@@ -127,11 +137,13 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 	};
 
 	/* ── Block wrapper ──────────────────────────────────────────────────── */
+	const device = useDeviceType();
+	const resolved = resolveResponsiveAttrs( attributes, [ 'columns', 'alignment' ], device );
 	const blockProps = useBlockProps( {
 		className: [
 			'axiom-blocks-trust-badges',
 			`is-layout-${ layout }`,
-			`is-align-${ alignment }`,
+			`is-align-${ resolved.alignment }`,
 			`is-size-${ badgeSize }`,
 			`is-color-${ colorMode }`,
 			showCard ? 'has-card' : '',
@@ -140,19 +152,19 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 			.filter( Boolean )
 			.join( ' ' ),
 		style: {
-			'--ab-tb-gap': `${ gap }px`,
+			'--ab-tb-gap': responsiveVarValue( attributes, 'gap', device, 'px' ),
 			'--ab-tb-card-bg': showCard ? cardColor : 'transparent',
 			'--ab-tb-card-radius': `${ cardRadius }px`,
 			'--ab-tb-border': showBorder ? `1px solid ${ borderColor }` : '0',
-			'--ab-tb-columns': layout === 'grid' ? columns : 'unset',
+			'--ab-tb-columns': layout === 'grid' ? resolved.columns : 'unset',
 			'--ab-tb-icon-size': `${ px }px`,
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
 		},
 	} );
 
 	/* ── Typography styles ──────────────────────────────────────────────── */
-	const headingTypoStyle = getTypographyStyle( attributes, 'heading' );
-	const labelTypoStyle = getTypographyStyle( attributes, 'label' );
+	const headingTypoStyle = useTypographyStyle( attributes, 'heading' );
+	const labelTypoStyle = useTypographyStyle( attributes, 'label' );
 
 	/* ── Preview list = selected built-ins + customs ────────────────────── */
 	const renderBadge = ( badge, key ) => {
@@ -214,30 +226,49 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 									setAttributes( { headingText: v } )
 								}
 							/>
-							<ABSelectControl
-								label={ __(
-									'Heading alignment',
-									'axiom-blocks'
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="headingAlign"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABSelectControl
+										label={ __(
+											'Heading alignment',
+											'axiom-blocks'
+										) }
+										value={
+											value !== '' && value != null
+												? value
+												: inherited ?? 'center'
+										}
+										options={ [
+											{
+												label: __(
+													'Left',
+													'axiom-blocks'
+												),
+												value: 'left',
+											},
+											{
+												label: __(
+													'Center',
+													'axiom-blocks'
+												),
+												value: 'center',
+											},
+											{
+												label: __(
+													'Right',
+													'axiom-blocks'
+												),
+												value: 'right',
+											},
+										] }
+										onChange={ setValue }
+									/>
 								) }
-								value={ headingAlign }
-								options={ [
-									{
-										label: __( 'Left', 'axiom-blocks' ),
-										value: 'left',
-									},
-									{
-										label: __( 'Center', 'axiom-blocks' ),
-										value: 'center',
-									},
-									{
-										label: __( 'Right', 'axiom-blocks' ),
-										value: 'right',
-									},
-								] }
-								onChange={ ( v ) =>
-									setAttributes( { headingAlign: v } )
-								}
-							/>
+							</ABResponsive>
 						</>
 					) }
 				</PanelBody>
@@ -426,51 +457,84 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 						onChange={ ( v ) => setAttributes( { layout: v } ) }
 					/>
 					{ layout === 'grid' && (
-						<ABRangeControl
-							label={ __( 'Columns', 'axiom-blocks' ) }
-							value={ columns }
-							onChange={ ( v ) =>
-								setAttributes( {
-									columns: Math.max(
-										2,
-										Math.min( 6, v || 2 )
-									),
-								} )
-							}
-							min={ 2 }
-							max={ 6 }
-							step={ 1 }
-							unit=""
-						/>
+						<ABResponsive
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+							attrKey="columns"
+						>
+							{ ( { value, setValue, inherited } ) => (
+								<ABRangeControl
+									label={ __( 'Columns', 'axiom-blocks' ) }
+									value={
+										value !== '' && value != null
+											? value
+											: inherited ?? 4
+									}
+									onChange={ ( v ) =>
+										setValue(
+											Math.max( 2, Math.min( 6, v || 2 ) )
+										)
+									}
+									min={ 2 }
+									max={ 6 }
+									step={ 1 }
+									unit=""
+								/>
+							) }
+						</ABResponsive>
 					) }
-					<ABSelectControl
-						label={ __( 'Alignment', 'axiom-blocks' ) }
-						value={ alignment }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { alignment: v } ) }
-					/>
-					<ABRangeControl
-						label={ __( 'Gap', 'axiom-blocks' ) }
-						value={ gap }
-						onChange={ ( v ) => setAttributes( { gap: v ?? 0 } ) }
-						min={ 0 }
-						max={ 64 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="alignment"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABSelectControl
+								label={ __( 'Alignment', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 'center'
+								}
+								options={ [
+									{
+										label: __( 'Left', 'axiom-blocks' ),
+										value: 'left',
+									},
+									{
+										label: __( 'Center', 'axiom-blocks' ),
+										value: 'center',
+									},
+									{
+										label: __( 'Right', 'axiom-blocks' ),
+										value: 'right',
+									},
+								] }
+								onChange={ setValue }
+							/>
+						) }
+					</ABResponsive>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="gap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Gap', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 0
+								}
+								onChange={ ( v ) => setValue( v ?? 0 ) }
+								min={ 0 }
+								max={ 64 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					<ABSelectControl
 						label={ __( 'Badge size', 'axiom-blocks' ) }
 						value={ badgeSize }
@@ -516,6 +580,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 						<ABColorControl
 							label={ __( 'Icon color', 'axiom-blocks' ) }
 							color={ iconColor }
+							defaultColor="#1e1e1e"
 							onChange={ ( v ) =>
 								setAttributes( { iconColor: v } )
 							}
@@ -531,6 +596,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 							<ABColorControl
 								label={ __( 'Card color', 'axiom-blocks' ) }
 								color={ cardColor }
+								defaultColor="#ffffff"
 								onChange={ ( v ) =>
 									setAttributes( { cardColor: v } )
 								}
@@ -557,6 +623,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 						<ABColorControl
 							label={ __( 'Border color', 'axiom-blocks' ) }
 							color={ borderColor }
+							defaultColor="#e5e7eb"
 							onChange={ ( v ) =>
 								setAttributes( { borderColor: v } )
 							}
@@ -578,6 +645,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 								setAttributes={ setAttributes }
 								prefix="heading"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 						<ABSubAccordion
@@ -588,6 +656,7 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 								setAttributes={ setAttributes }
 								prefix="label"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 					</div>
@@ -604,14 +673,34 @@ function TrustBadgesEdit( { attributes, setAttributes } ) {
 					<div
 						className="axiom-blocks-trust-badges__heading"
 						style={ {
-							textAlign: headingAlign,
+							textAlign:
+								responsiveAlignValue(
+									attributes,
+									'headingAlign',
+									device
+								) ?? headingAlign,
 							...headingTypoStyle,
 						} }
 					>
 						{ headingText }
 					</div>
 				) }
-				<div className="axiom-blocks-trust-badges__list">
+				<div
+					className="axiom-blocks-trust-badges__list"
+					style={ {
+						gridTemplateColumns: responsiveGridColumns(
+							attributes,
+							'columns',
+							device
+						),
+						justifyContent: responsiveAlignValue(
+							attributes,
+							'alignment',
+							device,
+							ALIGN_FLEX_MAP
+						),
+					} }
+				>
 					{ selectedBadges.map( ( id ) =>
 						BADGE_INDEX[ id ] ? renderBadge( { id }, id ) : null
 					) }
@@ -642,6 +731,42 @@ export const TrustBadges = {
 		),
 		icon: <BlockIcon slug="trust-badges" />,
 		edit: TrustBadgesEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const { headingShow, headingText, selectedBadges, customBadges, badgeSize, colorMode } = attributes;
+			const blockProps = useBlockProps.save( { className: 'axiom-blocks-trust-badges' } );
+			const ids = Array.isArray( selectedBadges ) ? selectedBadges : [];
+			const customs = Array.isArray( customBadges ) ? customBadges : [];
+			const px = { small: 32, medium: 48, large: 64 }[ badgeSize ] || 48;
+			return (
+				<div { ...blockProps }>
+					{ headingShow && headingText && (
+						<div className="axiom-blocks-trust-badges__heading">{ headingText }</div>
+					) }
+					<div className="axiom-blocks-trust-badges__list">
+						{ ids.map( ( id ) => {
+							const badge = BADGE_INDEX[ id ];
+							return badge ? (
+								<div key={ id } className="axiom-blocks-trust-badges__item">
+									<BadgeSvg id={ id } size={ px } colorMode={ colorMode } />
+									<span className="axiom-blocks-trust-badges__label">{ badge.label }</span>
+								</div>
+							) : null;
+						} ) }
+						{ customs.map( ( b ) => (
+							<div key={ b.id } className="axiom-blocks-trust-badges__item">
+								{ b.url && <img src={ b.url } alt={ b.alt || '' } style={ { maxWidth: '100%', height: 'auto' } } /> }
+								{ b.alt && <span className="axiom-blocks-trust-badges__label">{ b.alt }</span> }
+							</div>
+						) ) }
+					</div>
+				</div>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

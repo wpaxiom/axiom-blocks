@@ -17,11 +17,17 @@ import {
 	ABToggleControl,
 	ABRangeControl,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
+import { useDeviceType, resolveResponsive, resolveResponsiveAttrs } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveAlignValue,
+	ALIGN_FLEX_MAP,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import { UIIcon, UI_ICON_SLUGS } from '../../uiIcons';
 import {
@@ -257,13 +263,15 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 		}
 	}, [ panels, activeTab, setAttributes ] );
 
+	const device = useDeviceType();
+	const resolved = resolveResponsiveAttrs( attributes, [ 'tabAlignment' ], device );
 	const blockProps = useBlockProps( {
 		className: [
 			'axiom-blocks-tabs',
 			`axiom-blocks-tabs--${ tabStyle }`,
 			`axiom-blocks-tab--${ tabOrientation || 'horizontal' }`,
 			tabOrientation !== 'vertical'
-				? `axiom-blocks-tab--align-${ tabAlignment }`
+				? `axiom-blocks-tab--align-${ resolved.tabAlignment }`
 				: '',
 			fullWidthTabs ? 'is-full-width' : '',
 		]
@@ -275,10 +283,18 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 			'--axiom-blocks-tab-bg': backgroundColor || undefined,
 			'--axiom-blocks-tab-content-bg':
 				contentBackgroundColor || undefined,
-			'--axiom-blocks-tabs-content-gap': contentGap
-				? `${ contentGap }px`
+			'--axiom-blocks-tabs-content-gap': resolveResponsive(
+				attributes,
+				'contentGap',
+				device
+			)
+				? `${ resolveResponsive(
+						attributes,
+						'contentGap',
+						device
+				  ) }px`
 				: undefined,
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
 		},
 	} );
 
@@ -338,11 +354,17 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 	const isVertical = tabOrientation === 'vertical';
 	const justifyContent = isVertical
 		? undefined
-		: { left: 'flex-start', center: 'center', right: 'flex-end' }[
+		: responsiveAlignValue(
+				attributes,
+				'tabAlignment',
+				device,
+				ALIGN_FLEX_MAP
+		  ) ??
+		  ( { left: 'flex-start', center: 'center', right: 'flex-end' }[
 				tabAlignment
-		  ] || 'flex-start';
+		  ] || 'flex-start' );
 
-	const labelTypoStyle = getTypographyStyle( attributes, 'label' );
+	const labelTypoStyle = useTypographyStyle( attributes, 'label' );
 
 	return (
 		<>
@@ -556,27 +578,40 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 						}
 					/>
 					{ ! isVertical && (
-						<ABSelectControl
-							label={ __( 'Alignment', 'axiom-blocks' ) }
-							value={ tabAlignment }
-							options={ [
-								{
-									label: __( 'Left', 'axiom-blocks' ),
-									value: 'left',
-								},
-								{
-									label: __( 'Center', 'axiom-blocks' ),
-									value: 'center',
-								},
-								{
-									label: __( 'Right', 'axiom-blocks' ),
-									value: 'right',
-								},
-							] }
-							onChange={ ( v ) =>
-								setAttributes( { tabAlignment: v } )
-							}
-						/>
+						<ABResponsive
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+							attrKey="tabAlignment"
+						>
+							{ ( { value, setValue, inherited } ) => (
+								<ABSelectControl
+									label={ __( 'Alignment', 'axiom-blocks' ) }
+									value={
+										value !== '' && value != null
+											? value
+											: inherited ?? 'left'
+									}
+									options={ [
+										{
+											label: __( 'Left', 'axiom-blocks' ),
+											value: 'left',
+										},
+										{
+											label: __(
+												'Center',
+												'axiom-blocks'
+											),
+											value: 'center',
+										},
+										{
+											label: __( 'Right', 'axiom-blocks' ),
+											value: 'right',
+										},
+									] }
+									onChange={ setValue }
+								/>
+							) }
+						</ABResponsive>
 					) }
 					<ABToggleControl
 						label={ __( 'Full-width tabs', 'axiom-blocks' ) }
@@ -585,17 +620,27 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 							setAttributes( { fullWidthTabs: v } )
 						}
 					/>
-					<ABRangeControl
-						label={ __( 'Content gap', 'axiom-blocks' ) }
-						value={ contentGap }
-						min={ 0 }
-						max={ 80 }
-						step={ 1 }
-						unit="px"
-						onChange={ ( v ) =>
-							setAttributes( { contentGap: v ?? 0 } )
-						}
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="contentGap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Content gap', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 0
+								}
+								min={ 0 }
+								max={ 80 }
+								step={ 1 }
+								unit="px"
+								onChange={ ( v ) => setValue( v ?? 0 ) }
+							/>
+						) }
+					</ABResponsive>
 				</PanelBody>
 
 				<PanelBody
@@ -643,6 +688,7 @@ function TabsEdit( { attributes, setAttributes, clientId } ) {
 					setAttributes={ setAttributes }
 					prefix="label"
 					title={ __( 'Tab label typography', 'axiom-blocks' ) }
+					responsive
 				/>
 
 				<SpacingPanel

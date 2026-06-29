@@ -5,6 +5,10 @@
 
 // Import WordPress dependencies
 import { registerBlockType, updateCategory } from '@wordpress/blocks';
+import { addFilter } from '@wordpress/hooks';
+import { SPACING_ATTRS } from './components/SpacingPanel';
+import { responsiveTypographyAttrs } from './components/typographyTargets';
+import { responsivePropsAttrs } from './components/responsiveProps';
 
 // Import blocks
 import { AdvancedSection } from './blocks/advanced-section';
@@ -38,6 +42,81 @@ import { FreeShippingProgress } from './blocks/free-shipping-progress';
 // Import styles
 import './style.scss';
 import './editor.scss';
+
+/**
+ * Inject responsive spacing attributes (*Tablet / *Mobile) into every Axiom block
+ * that has spacing, client-side — mirrors the PHP register_block_type_args filter
+ * so the editor can edit and save per-device values. Idempotent.
+ */
+addFilter(
+	'blocks.registerBlockType',
+	'axiom-blocks/responsive-spacing-attrs',
+	( blockSettings, name ) => {
+		if ( ! name || name.indexOf( 'axiom-blocks/' ) !== 0 ) {
+			return blockSettings;
+		}
+		const attrs = blockSettings.attributes;
+		if ( ! attrs || ! attrs.paddingTop ) {
+			return blockSettings;
+		}
+		const extra = {};
+		Object.keys( SPACING_ATTRS ).forEach( ( base ) => {
+			[ 'Tablet', 'Mobile' ].forEach( ( device ) => {
+				const key = base + device;
+				if ( ! attrs[ key ] ) {
+					extra[ key ] = { type: 'string', default: '' };
+				}
+			} );
+		} );
+		if ( ! Object.keys( extra ).length ) {
+			return blockSettings;
+		}
+		return {
+			...blockSettings,
+			attributes: { ...attrs, ...extra },
+		};
+	}
+);
+
+/**
+ * Inject responsive typography attributes (*Tablet / *Mobile) for each typography
+ * group a registered block exposes — mirrors the PHP register_block_type_args
+ * filter so the editor can edit and save per-device values. Idempotent.
+ */
+addFilter(
+	'blocks.registerBlockType',
+	'axiom-blocks/responsive-typography-attrs',
+	( blockSettings, name ) => {
+		const extra = responsiveTypographyAttrs( name, blockSettings.attributes );
+		if ( ! Object.keys( extra ).length ) {
+			return blockSettings;
+		}
+		return {
+			...blockSettings,
+			attributes: { ...blockSettings.attributes, ...extra },
+		};
+	}
+);
+
+/**
+ * Inject responsive per-block prop attributes (*Tablet / *Mobile) for single
+ * controls (columns, …) — mirrors the PHP register_block_type_args filter so the
+ * editor can edit and save per-device values. Idempotent.
+ */
+addFilter(
+	'blocks.registerBlockType',
+	'axiom-blocks/responsive-props-attrs',
+	( blockSettings, name ) => {
+		const extra = responsivePropsAttrs( name, blockSettings.attributes );
+		if ( ! Object.keys( extra ).length ) {
+			return blockSettings;
+		}
+		return {
+			...blockSettings,
+			attributes: { ...blockSettings.attributes, ...extra },
+		};
+	}
+);
 
 // Get enabled blocks from settings
 const settings = window.axiomBlocksSettings || {};

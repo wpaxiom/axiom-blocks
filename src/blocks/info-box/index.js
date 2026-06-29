@@ -11,7 +11,14 @@ import {
 	ABColorControl,
 	ABRangeControl,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
+import { useDeviceType, resolveResponsiveAttrs } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveVarValue,
+	responsiveAlignValue,
+	ALIGN_FLEX_MAP,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -106,16 +113,30 @@ function InfoBoxEdit( { attributes, setAttributes } ) {
 		borderRadius,
 	} = attributes;
 
+	const device = useDeviceType();
+	const resolved = resolveResponsiveAttrs( attributes, [ 'contentAlign' ], device );
 	const blockProps = useBlockProps( {
 		className: [
 			'ab-ibox',
 			`ab-ibox--${ direction }`,
-			`ab-ibox--align-${ contentAlign }`,
+			`ab-ibox--align-${ resolved.contentAlign }`,
 			`has-shadow-${ boxShadow }`,
 		].join( ' ' ),
 		style: {
 			...getInfoBoxVars( attributes ),
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
+			'--ab-ibox-gap': responsiveVarValue( attributes, 'gap', device ),
+			alignItems: responsiveAlignValue(
+				attributes,
+				'contentAlign',
+				device,
+				ALIGN_FLEX_MAP
+			),
+			textAlign: responsiveAlignValue(
+				attributes,
+				'contentAlign',
+				device
+			),
 		},
 	} );
 
@@ -146,42 +167,66 @@ function InfoBoxEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { direction: v } ) }
 					/>
-					<ABRangeControl
-						label={ __( 'Gap between items', 'axiom-blocks' ) }
-						value={ fromPx( gap, 16 ) }
-						onChange={ ( v ) =>
-							setAttributes( { gap: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 80 }
-						step={ 1 }
-						unit="px"
-						help={ __(
-							'Space between the icon, heading, text, and button.',
-							'axiom-blocks'
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="gap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __(
+									'Gap between items',
+									'axiom-blocks'
+								) }
+								value={ fromPx(
+									value !== '' && value != null
+										? value
+										: inherited,
+									16
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 0 }
+								max={ 80 }
+								step={ 1 }
+								unit="px"
+								help={ __(
+									'Space between the icon, heading, text, and button.',
+									'axiom-blocks'
+								) }
+							/>
 						) }
-					/>
-					<ABSelectControl
-						label={ __( 'Alignment', 'axiom-blocks' ) }
-						value={ contentAlign }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { contentAlign: v } )
-						}
-					/>
+					</ABResponsive>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="contentAlign"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABSelectControl
+								label={ __( 'Alignment', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 'center'
+								}
+								options={ [
+									{
+										label: __( 'Left', 'axiom-blocks' ),
+										value: 'left',
+									},
+									{
+										label: __( 'Center', 'axiom-blocks' ),
+										value: 'center',
+									},
+									{
+										label: __( 'Right', 'axiom-blocks' ),
+										value: 'right',
+									},
+								] }
+								onChange={ setValue }
+							/>
+						) }
+					</ABResponsive>
 				</PanelBody>
 
 				<PanelBody

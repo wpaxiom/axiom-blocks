@@ -9,8 +9,18 @@
 $advbtn-purple: #7c3aed;
 $advbtn-purple-dark: #6d28d9;
 
+// Plain block-level wrapper — same shape as Advanced Heading's `.ab-ah`, so the
+// constrained layout (editor AND frontend) places the block in the content column,
+// lined up with paragraphs. The inline button sits at the start; native align
+// (Wide / Full) is theme-sized on this wrapper. (display:flex here broke the
+// editor's content-width constraint — keep it a normal block.)
+.ab-adv-btn-wrap {
+	display: block;
+}
+
 .ab-adv-btn {
 	display: inline-flex;
+	vertical-align: top;
 	align-items: center;
 	justify-content: center;
 	gap: 0.5em;
@@ -83,15 +93,6 @@ $advbtn-purple-dark: #6d28d9;
 			text-decoration: underline;
 			text-underline-offset: 3px;
 		}
-	}
-
-	// ── Width: native block alignment (None / Wide / Full), like core blocks ──
-	// The block toolbar applies .alignwide / .alignfull; an inline-flex button
-	// must opt into block flow to actually span the available width.
-	&.alignwide,
-	&.alignfull {
-		display: flex;
-		width: 100%;
 	}
 
 	// ── Content ─────────────────────────────────────────────────────────────

@@ -10,14 +10,27 @@ import {
 } from '../../components/ABControls';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
+import { useDeviceType, resolveResponsive, resolveResponsiveAttrs } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveAlignValue,
+	ALIGN_FLEX_MAP,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../components/deprecations';
+import metadata from './block.json';
+
+/* Star size stores a px string ('' = inherit). */
+const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
+const fromPx = ( v, fallback ) =>
+	v === '' || v == null ? fallback : parseInt( v, 10 ) || fallback;
 
 const StarSVG = ( { size, color } ) => (
 	<svg
@@ -46,7 +59,6 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 	const {
 		rating,
 		maxStars,
-		starSize,
 		filledColor,
 		emptyColor,
 		precision,
@@ -58,10 +70,26 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 		alignment,
 	} = attributes;
 
+	const device = useDeviceType();
+	const resolved = resolveResponsiveAttrs( attributes, [ 'alignment' ], device );
+	// Active device's star size (cascade) for the canvas preview.
+	const resolvedStarSize =
+		resolveResponsive( attributes, 'starSize', device ) || '20px';
 	const blockProps = useBlockProps( {
-		className: `axiom-blocks-star-rating axiom-blocks-star-rating--align-${ alignment }`,
-		style: getSpacingStyle( attributes ),
+		className: `axiom-blocks-star-rating axiom-blocks-star-rating--align-${ resolved.alignment }`,
+		style: {
+			...useSpacingStyle( attributes ),
+			justifyContent: responsiveAlignValue(
+				attributes,
+				'alignment',
+				device,
+				ALIGN_FLEX_MAP
+			),
+		},
 	} );
+
+	// Hook must run unconditionally; used below only when meta is shown.
+	const metaTypoStyle = useTypographyStyle( attributes, 'meta' );
 
 	const normalized = clampRating( rating, maxStars, precision );
 	const fillPercent = ( normalized / maxStars ) * 100;
@@ -170,34 +198,61 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<ABSelectControl
-						label={ __( 'Alignment', 'axiom-blocks' ) }
-						value={ alignment }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { alignment: v } ) }
-					/>
-					<ABTextControl
-						label={ __( 'Star size', 'axiom-blocks' ) }
-						value={ starSize }
-						onChange={ ( v ) => setAttributes( { starSize: v } ) }
-						help={ __( 'e.g. 20px, 1.5rem', 'axiom-blocks' ) }
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="alignment"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABSelectControl
+								label={ __( 'Alignment', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 'left'
+								}
+								options={ [
+									{
+										label: __( 'Left', 'axiom-blocks' ),
+										value: 'left',
+									},
+									{
+										label: __( 'Center', 'axiom-blocks' ),
+										value: 'center',
+									},
+									{
+										label: __( 'Right', 'axiom-blocks' ),
+										value: 'right',
+									},
+								] }
+								onChange={ setValue }
+							/>
+						) }
+					</ABResponsive>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="starSize"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Star size', 'axiom-blocks' ) }
+								value={ fromPx(
+									value === '' ? inherited : value,
+									20
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 10 }
+								max={ 80 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					<ABColorControl
 						label={ __( 'Filled color', 'axiom-blocks' ) }
 						color={ filledColor }
+						defaultColor="#fbbf24"
 						onChange={ ( c ) =>
 							setAttributes( { filledColor: c } )
 						}
@@ -205,12 +260,14 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Empty color', 'axiom-blocks' ) }
 						color={ emptyColor }
+						defaultColor="#e5e7eb"
 						onChange={ ( c ) => setAttributes( { emptyColor: c } ) }
 					/>
 					{ ( showValue || showCount ) && (
 						<ABColorControl
 							label={ __( 'Text color', 'axiom-blocks' ) }
 							color={ textColor }
+							defaultColor="#4b5563"
 							onChange={ ( c ) =>
 								setAttributes( { textColor: c } )
 							}
@@ -224,6 +281,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 						setAttributes={ setAttributes }
 						prefix="meta"
 						title={ __( 'Meta typography', 'axiom-blocks' ) }
+						responsive
 					/>
 				) }
 
@@ -246,7 +304,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 						{ stars.map( ( _, i ) => (
 							<StarSVG
 								key={ i }
-								size={ starSize }
+								size={ resolvedStarSize }
 								color={ emptyColor }
 							/>
 						) ) }
@@ -258,7 +316,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 						{ stars.map( ( _, i ) => (
 							<StarSVG
 								key={ i }
-								size={ starSize }
+								size={ resolvedStarSize }
 								color={ filledColor }
 							/>
 						) ) }
@@ -270,7 +328,7 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 						className="axiom-blocks-star-rating__meta"
 						style={ {
 							color: textColor,
-							...getTypographyStyle( attributes, 'meta' ),
+							...metaTypoStyle,
 						} }
 					>
 						{ showValue && (
@@ -303,6 +361,32 @@ export const StarRating = {
 		),
 		icon: <BlockIcon slug="star-rating" />,
 		edit: StarRatingEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const {
+				rating, maxStars, precision,
+				showValue, showCount, reviewCount, countLabel,
+			} = attributes;
+			const blockProps = useBlockProps.save( { className: 'axiom-blocks-star-rating' } );
+			const normalized = clampRating( rating, maxStars, precision );
+			const display = precision === 'full'
+				? Math.round( normalized ).toString()
+				: normalized.toFixed( 1 );
+			return (
+				<div { ...blockProps }>
+					<span className="axiom-blocks-star-rating__value">{ display }</span>
+					{ showCount && (
+						<span className="axiom-blocks-star-rating__count">
+							({ Number( reviewCount ).toLocaleString() } { countLabel })
+						</span>
+					) }
+				</div>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

@@ -4,50 +4,6 @@
  * file covers the inspector icon picker and editor-canvas affordances.
  */
 
-/* Inspector: icon picker row */
-.ab-acc-icon-field {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 12px;
-	margin-bottom: 12px;
-
-	&__label {
-		font-size: 11px;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		color: #1e1e1e;
-	}
-
-	&__btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		padding: 8px;
-		background: #fff;
-		border: 1px solid #e0e0e0;
-		border-radius: 6px;
-		cursor: pointer;
-
-		svg {
-			width: 20px;
-			height: 20px;
-		}
-
-		&:hover {
-			border-color: #7c3aed;
-			color: #7c3aed;
-		}
-	}
-}
-
-.ab-acc-icon-pop {
-	padding: 8px;
-}
-
 /* Editor canvas: keep panels expanded for editing */
 .ab-accordion__item.is-editor {
 

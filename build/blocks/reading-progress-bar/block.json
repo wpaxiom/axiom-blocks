@@ -18,6 +18,14 @@
       "type": "string",
       "default": "4px"
     },
+    "heightTablet": {
+      "type": "string",
+      "default": ""
+    },
+    "heightMobile": {
+      "type": "string",
+      "default": ""
+    },
     "color": {
       "type": "string",
       "default": "#7C3AED"

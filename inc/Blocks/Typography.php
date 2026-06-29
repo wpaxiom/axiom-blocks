@@ -68,7 +68,11 @@ class Typography {
 		foreach ( self::MAP as $css => $attr ) {
 			$key = self::key( $prefix, $attr );
 			if ( ! empty( $attributes[ $key ] ) ) {
-				$parts[] = $css . ': ' . esc_attr( (string) $attributes[ $key ] );
+				// Return raw CSS values — escaping happens at the echo site
+				// (safecss_filter_attr and/or esc_attr). Pre-escaping here turns a
+				// quoted font-family (e.g. "Courier New") into &quot; entities, whose
+				// trailing ';' then breaks safecss_filter_attr's declaration parsing.
+				$parts[] = $css . ': ' . (string) $attributes[ $key ];
 			}
 		}
 		return implode( '; ', $parts );

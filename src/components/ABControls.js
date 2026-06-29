@@ -4,8 +4,21 @@
  */
 
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useRef, useEffect } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
+import { Caret } from './Caret';
+
+/* Normalize a units list (strings or { label, value }) into option objects. */
+function normalizeUnits( units ) {
+	if ( ! Array.isArray( units ) ) {
+		return [];
+	}
+	return units.map( ( u ) =>
+		typeof u === 'string'
+			? { label: u, value: u }
+			: { label: u.label ?? u.value, value: u.value }
+	);
+}
 
 /* ── Range slider + number input ─────────────────────────────────────────── */
 export function ABRangeControl( {
@@ -17,16 +30,49 @@ export function ABRangeControl( {
 	step = 1,
 	unit = '%',
 	help,
+	units,
+	onUnitChange,
 } ) {
 	const num = parseFloat( value ) || 0;
 	const clamped = Math.min( Math.max( num, min ), max );
 	const pct = ( ( clamped - min ) / ( max - min ) ) * 100;
 
+	// Opt-in: when a multi-unit list is supplied, the inline unit label becomes a
+	// click-to-change picker (styled popover). Otherwise it's a static label.
+	const unitList = normalizeUnits( units );
+	const hasUnitMenu = unitList.length > 1 && typeof onUnitChange === 'function';
+
+	const [ unitOpen, setUnitOpen ] = useState( false );
+	const pxWrapRef = useRef( null );
+
+	useEffect( () => {
+		if ( ! unitOpen ) {
+			return undefined;
+		}
+		const close = ( e ) => {
+			if ( pxWrapRef.current && ! pxWrapRef.current.contains( e.target ) ) {
+				setUnitOpen( false );
+			}
+		};
+		const onKey = ( e ) => e.key === 'Escape' && setUnitOpen( false );
+		document.addEventListener( 'mousedown', close );
+		document.addEventListener( 'keydown', onKey );
+		return () => {
+			document.removeEventListener( 'mousedown', close );
+			document.removeEventListener( 'keydown', onKey );
+		};
+	}, [ unitOpen ] );
+
 	return (
 		<div className="ab-ctrl">
 			{ label && <div className="ab-ctrl__label">{ label }</div> }
 			<div className="ab-ctrl__range-row">
-				<div className="ab-ctrl__px-wrap">
+				<div
+					className={ `ab-ctrl__px-wrap${
+						hasUnitMenu ? ' has-unit-menu' : ''
+					}` }
+					ref={ hasUnitMenu ? pxWrapRef : undefined }
+				>
 					<input
 						type="number"
 						className="ab-ctrl__px-input"
@@ -39,7 +85,54 @@ export function ABRangeControl( {
 						step={ step }
 						placeholder={ `${ min }` }
 					/>
-					{ unit && <span className="ab-ctrl__unit">{ unit }</span> }
+					{ unit && ! hasUnitMenu && (
+						<span className="ab-ctrl__unit">{ unit }</span>
+					) }
+					{ hasUnitMenu && (
+						<>
+							<button
+								type="button"
+								className="ab-ctrl__unit ab-ctrl__unit--menu"
+								onClick={ () =>
+									setUnitOpen( ( v ) => ! v )
+								}
+								aria-haspopup="listbox"
+								aria-expanded={ unitOpen }
+								aria-label={ __( 'Change unit', 'axiom-blocks' ) }
+							>
+								{ unit }
+							</button>
+							{ unitOpen && (
+								<ul
+									className="ab-ctrl__unit-list"
+									role="listbox"
+								>
+									{ unitList.map( ( u ) => (
+										<li key={ u.value } role="none">
+											<button
+												type="button"
+												role="option"
+												aria-selected={
+													u.value === unit
+												}
+												className={ `ab-ctrl__unit-opt${
+													u.value === unit
+														? ' is-active'
+														: ''
+												}` }
+												onClick={ () => {
+													onUnitChange( u.value );
+													setUnitOpen( false );
+												} }
+											>
+												{ u.label }
+											</button>
+										</li>
+									) ) }
+								</ul>
+							) }
+						</>
+					) }
 				</div>
 				<input
 					type="range"
@@ -63,42 +156,71 @@ export function ABRangeControl( {
 export function ABSelectControl( { label, value, onChange, options } ) {
 	const selectedLabel =
 		options.find( ( o ) => o.value === value )?.label ?? '';
+	const [ open, setOpen ] = useState( false );
+	const wrapRef = useRef( null );
+
+	useEffect( () => {
+		if ( ! open ) {
+			return undefined;
+		}
+		const close = ( e ) => {
+			if ( wrapRef.current && ! wrapRef.current.contains( e.target ) ) {
+				setOpen( false );
+			}
+		};
+		const onKey = ( e ) => e.key === 'Escape' && setOpen( false );
+		document.addEventListener( 'mousedown', close );
+		document.addEventListener( 'keydown', onKey );
+		return () => {
+			document.removeEventListener( 'mousedown', close );
+			document.removeEventListener( 'keydown', onKey );
+		};
+	}, [ open ] );
+
 	return (
 		<div className="ab-ctrl">
 			{ label && <div className="ab-ctrl__label">{ label }</div> }
-			<div className="ab-ctrl__select-wrap">
-				{ /* Native select is invisible but fully interactive (click/keyboard) */ }
-				<select
-					className="ab-ctrl__select"
-					value={ value }
-					onChange={ ( e ) => onChange( e.target.value ) }
+			<div
+				className={ `ab-ctrl__select-wrap${
+					open ? ' is-open' : ''
+				}` }
+				ref={ wrapRef }
+			>
+				<button
+					type="button"
+					className="ab-ctrl__select-display"
+					onClick={ () => setOpen( ( v ) => ! v ) }
+					aria-haspopup="listbox"
+					aria-expanded={ open }
 					aria-label={ label }
 				>
-					{ options.map( ( o ) => (
-						<option key={ o.value } value={ o.value }>
-							{ o.label }
-						</option>
-					) ) }
-				</select>
-				{ /* Visual display — pointer-events:none lets clicks pass to native select */ }
-				<div className="ab-ctrl__select-display" aria-hidden="true">
 					<span className="ab-ctrl__select-text">
 						{ selectedLabel }
 					</span>
-					<svg
-						className="ab-ctrl__select-arrow"
-						viewBox="0 0 10 6"
-						fill="none"
-					>
-						<path
-							d="M1 1l4 4 4-4"
-							stroke="currentColor"
-							strokeWidth="1.5"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</svg>
-				</div>
+					<Caret className="ab-ctrl__select-arrow" />
+				</button>
+				{ open && (
+					<ul className="ab-ctrl__select-list" role="listbox">
+						{ options.map( ( o ) => (
+							<li key={ o.value } role="none">
+								<button
+									type="button"
+									role="option"
+									aria-selected={ o.value === value }
+									className={ `ab-ctrl__select-opt${
+										o.value === value ? ' is-active' : ''
+									}` }
+									onClick={ () => {
+										onChange( o.value );
+										setOpen( false );
+									} }
+								>
+									{ o.label }
+								</button>
+							</li>
+						) ) }
+					</ul>
+				) }
 			</div>
 		</div>
 	);
@@ -110,9 +232,10 @@ export function ABColorControl( {
 	color,
 	onChange,
 	enableReset = true,
+	defaultColor = '',
 } ) {
 	const id = useInstanceId( ABColorControl, 'ab-color' );
-	const showReset = enableReset && !! color;
+	const showReset = enableReset && !! color && color !== defaultColor;
 	return (
 		<div className="ab-ctrl">
 			{ ( label || showReset ) && (
@@ -124,7 +247,7 @@ export function ABColorControl( {
 						<button
 							type="button"
 							className="ab-ctrl__reset"
-							onClick={ () => onChange( '' ) }
+							onClick={ () => onChange( defaultColor ) }
 						>
 							{ __( 'Reset', 'axiom-blocks' ) }
 						</button>
@@ -252,20 +375,7 @@ export function ABSubAccordion( { title, children, defaultOpen = false } ) {
 				aria-expanded={ isOpen }
 			>
 				<span className="ab-sub-acc__title">{ title }</span>
-				<svg
-					viewBox="0 0 16 16"
-					width="12"
-					height="12"
-					className="ab-sub-acc__chev"
-					fill="none"
-					stroke="currentColor"
-					strokeWidth="1.8"
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					aria-hidden="true"
-				>
-					<path d="M4 6l4 4 4-4" />
-				</svg>
+				<Caret className="ab-sub-acc__chev" />
 			</button>
 			{ isOpen && <div className="ab-sub-acc__body">{ children }</div> }
 		</div>

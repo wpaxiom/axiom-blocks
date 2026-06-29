@@ -12,17 +12,29 @@ import {
 	ABRangeControl,
 	ABSubAccordion,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
+import { useDeviceType } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveAlignValue,
+	responsiveVarValue,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
+
+/* Accent bar alignment is margin-based (auto margins), so it needs two maps. */
+const ACCENT_ML_MAP = { left: '0', center: 'auto', right: 'auto' };
+const ACCENT_MR_MAP = { left: 'auto', center: 'auto', right: '0' };
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../components/deprecations';
 import { HIGHLIGHT_FORMAT } from './format';
+import metadata from './block.json';
 
 /* Slider helpers: attributes store px strings ('' = inherit). */
 const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
@@ -87,27 +99,52 @@ function AdvancedHeadingEdit( { attributes, setAttributes } ) {
 		linkHoverColor,
 	} = attributes;
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
 		className: 'ab-ah',
 		style: {
 			...getHeadingVars( attributes ),
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
+			'--ab-ah-accent-w': responsiveVarValue(
+				attributes,
+				'accentWidth',
+				device
+			),
+			'--ab-ah-accent-h': responsiveVarValue(
+				attributes,
+				'accentThickness',
+				device
+			),
 		},
 	} );
 
 	const headingStyle = {
 		color: headingColor || undefined,
-		...getTypographyStyle( attributes, 'heading' ),
+		...useTypographyStyle( attributes, 'heading' ),
 	};
 	const subStyle = {
 		color: subColor || undefined,
-		...getTypographyStyle( attributes, 'sub' ),
+		...useTypographyStyle( attributes, 'sub' ),
 	};
 
 	const accent = accentEnabled && (
 		<span
 			className={ `ab-ah__accent is-accent-${ accentAlign }` }
 			aria-hidden="true"
+			style={ {
+				marginLeft: responsiveAlignValue(
+					attributes,
+					'accentAlign',
+					device,
+					ACCENT_ML_MAP
+				),
+				marginRight: responsiveAlignValue(
+					attributes,
+					'accentAlign',
+					device,
+					ACCENT_MR_MAP
+				),
+			} }
 		/>
 	);
 
@@ -250,51 +287,97 @@ function AdvancedHeadingEdit( { attributes, setAttributes } ) {
 									setAttributes( { accentPosition: v } )
 								}
 							/>
-							<ABSelectControl
-								label={ __( 'Alignment', 'axiom-blocks' ) }
-								value={ accentAlign }
-								options={ [
-									{
-										label: __( 'Left', 'axiom-blocks' ),
-										value: 'left',
-									},
-									{
-										label: __( 'Center', 'axiom-blocks' ),
-										value: 'center',
-									},
-									{
-										label: __( 'Right', 'axiom-blocks' ),
-										value: 'right',
-									},
-								] }
-								onChange={ ( v ) =>
-									setAttributes( { accentAlign: v } )
-								}
-							/>
-							<ABRangeControl
-								label={ __( 'Width', 'axiom-blocks' ) }
-								value={ fromPx( accentWidth, 60 ) }
-								onChange={ ( v ) =>
-									setAttributes( { accentWidth: toPx( v ) } )
-								}
-								min={ 10 }
-								max={ 400 }
-								step={ 1 }
-								unit="px"
-							/>
-							<ABRangeControl
-								label={ __( 'Thickness', 'axiom-blocks' ) }
-								value={ fromPx( accentThickness, 4 ) }
-								onChange={ ( v ) =>
-									setAttributes( {
-										accentThickness: toPx( v ),
-									} )
-								}
-								min={ 1 }
-								max={ 20 }
-								step={ 1 }
-								unit="px"
-							/>
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="accentAlign"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABSelectControl
+										label={ __( 'Alignment', 'axiom-blocks' ) }
+										value={
+											value !== '' && value != null
+												? value
+												: inherited ?? 'left'
+										}
+										options={ [
+											{
+												label: __(
+													'Left',
+													'axiom-blocks'
+												),
+												value: 'left',
+											},
+											{
+												label: __(
+													'Center',
+													'axiom-blocks'
+												),
+												value: 'center',
+											},
+											{
+												label: __(
+													'Right',
+													'axiom-blocks'
+												),
+												value: 'right',
+											},
+										] }
+										onChange={ setValue }
+									/>
+								) }
+							</ABResponsive>
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="accentWidth"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABRangeControl
+										label={ __( 'Width', 'axiom-blocks' ) }
+										value={ fromPx(
+											value !== '' && value != null
+												? value
+												: inherited,
+											60
+										) }
+										onChange={ ( v ) =>
+											setValue( toPx( v ) )
+										}
+										min={ 10 }
+										max={ 400 }
+										step={ 1 }
+										unit="px"
+									/>
+								) }
+							</ABResponsive>
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="accentThickness"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABRangeControl
+										label={ __(
+											'Thickness',
+											'axiom-blocks'
+										) }
+										value={ fromPx(
+											value !== '' && value != null
+												? value
+												: inherited,
+											4
+										) }
+										onChange={ ( v ) =>
+											setValue( toPx( v ) )
+										}
+										min={ 1 }
+										max={ 20 }
+										step={ 1 }
+										unit="px"
+									/>
+								) }
+							</ABResponsive>
 							<ABColorControl
 								label={ __( 'Colour', 'axiom-blocks' ) }
 								color={ accentColor }
@@ -354,6 +437,7 @@ function AdvancedHeadingEdit( { attributes, setAttributes } ) {
 								setAttributes={ setAttributes }
 								prefix="heading"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 						{ subEnabled && (
@@ -365,6 +449,7 @@ function AdvancedHeadingEdit( { attributes, setAttributes } ) {
 									setAttributes={ setAttributes }
 									prefix="sub"
 									unwrapped
+									responsive
 								/>
 							</ABSubAccordion>
 						) }
@@ -411,6 +496,41 @@ export const AdvancedHeading = {
 		),
 		icon: <BlockIcon slug="advanced-heading" />,
 		edit: AdvancedHeadingEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const {
+				headingText,
+				tagName,
+				subEnabled,
+				subText,
+				subTag,
+				subPosition,
+			} = attributes;
+			const blockProps = useBlockProps.save( { className: 'ab-ah' } );
+			const sub =
+				subEnabled && subText ? (
+					<RichText.Content
+						tagName={ subTag }
+						className="ab-ah__sub"
+						value={ subText }
+					/>
+				) : null;
+			return (
+				<div { ...blockProps }>
+					{ 'above' === subPosition && sub }
+					<RichText.Content
+						tagName={ tagName }
+						className="ab-ah__heading"
+						value={ headingText }
+					/>
+					{ 'below' === subPosition && sub }
+				</div>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

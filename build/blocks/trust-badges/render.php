@@ -109,8 +109,8 @@ $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 
 $axiom_blocks_badge_lib = get_badges();
 
-$axiom_blocks_heading_typo = Typography::inline_style( $axiom_blocks_a, 'heading' );
-$axiom_blocks_label_typo   = Typography::inline_style( $axiom_blocks_a, 'label' );
+$axiom_blocks_heading_typo = safecss_filter_attr( Typography::inline_style( $axiom_blocks_a, 'heading' ) );
+$axiom_blocks_label_typo   = safecss_filter_attr( Typography::inline_style( $axiom_blocks_a, 'label' ) );
 
 $axiom_blocks_heading_align = (string) ( $axiom_blocks_a['headingAlign'] ?? 'center' );
 $axiom_blocks_heading_style = 'text-align: ' . sanitize_html_class( $axiom_blocks_heading_align );

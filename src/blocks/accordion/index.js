@@ -5,7 +5,7 @@ import {
 	InnerBlocks,
 	InspectorControls,
 } from '@wordpress/block-editor';
-import { PanelBody, Dropdown } from '@wordpress/components';
+import { PanelBody } from '@wordpress/components';
 import {
 	ABSelectControl,
 	ABColorControl,
@@ -16,11 +16,16 @@ import {
 import {
 	SpacingPanel,
 	SpacingControl,
-	getSpacingStyle,
+	useSpacingStyle,
 } from '../../components/SpacingPanel';
 import { TypographyPanel } from '../../components/TypographyPanel';
-import { IconPicker } from '../../components/IconPicker';
-import { ICON_LIBRARY } from '../../components/iconLibrary';
+import { useDeviceType } from '../../components/responsive';
+
+
+import { resolveTypographyAttrs } from '../../components/typographyTargets';
+import { ABResponsive } from '../../components/ABResponsive';
+import { responsiveVarValue } from '../../components/responsiveProps';
+import { IconControl } from '../../components/IconControl';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -134,7 +139,6 @@ function AccordionEdit( { attributes, setAttributes } ) {
 		iconPosition,
 		rotateIcon,
 		iconColor,
-		iconSize,
 		headerBg,
 		headerColor,
 		activeHeaderBg,
@@ -150,11 +154,20 @@ function AccordionEdit( { attributes, setAttributes } ) {
 		containerBorderRadius,
 	} = attributes;
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
 		className: getAccordionClasses( attributes ).join( ' ' ),
 		style: {
-			...getAccordionVars( attributes ),
-			...getSpacingStyle( attributes ),
+			...getAccordionVars(
+				resolveTypographyAttrs( attributes, [ 'header' ], device )
+			),
+			...useSpacingStyle( attributes ),
+			'--ab-acc-gap': responsiveVarValue( attributes, 'itemGap', device ),
+			'--ab-acc-icon-size': responsiveVarValue(
+				attributes,
+				'iconSize',
+				device
+			),
 		},
 	} );
 
@@ -264,44 +277,13 @@ function AccordionEdit( { attributes, setAttributes } ) {
 					/>
 					{ showIcon && (
 						<>
-							<div className="ab-acc-icon-field">
-								<span className="ab-acc-icon-field__label">
-									{ __( 'Icon', 'axiom-blocks' ) }
-								</span>
-								<Dropdown
-									className="ab-acc-icon-field__pick"
-									popoverProps={ {
-										placement: 'bottom-start',
-									} }
-									renderToggle={ ( { isOpen, onToggle } ) => (
-										<button
-											type="button"
-											className="ab-acc-icon-field__btn"
-											onClick={ onToggle }
-											aria-expanded={ isOpen }
-											aria-label={ __(
-												'Choose icon',
-												'axiom-blocks'
-											) }
-										>
-											{ ICON_LIBRARY[ iconSlug ] ||
-												ICON_LIBRARY[ 'chevron-down' ] }
-										</button>
-									) }
-									renderContent={ () => (
-										<div className="ab-acc-icon-pop">
-											<IconPicker
-												value={ iconSlug }
-												onChange={ ( v ) =>
-													setAttributes( {
-														iconSlug: v,
-													} )
-												}
-											/>
-										</div>
-									) }
-								/>
-							</div>
+							<IconControl
+								value={ iconSlug }
+								onChange={ ( v ) =>
+									setAttributes( { iconSlug: v } )
+								}
+								fallback="chevron-down"
+							/>
 							<ABSelectControl
 								label={ __( 'Icon position', 'axiom-blocks' ) }
 								value={ iconPosition }
@@ -329,17 +311,26 @@ function AccordionEdit( { attributes, setAttributes } ) {
 									setAttributes( { rotateIcon: v } )
 								}
 							/>
-							<ABRangeControl
-								label={ __( 'Icon size', 'axiom-blocks' ) }
-								value={ fromPx( iconSize, 20 ) }
-								onChange={ ( v ) =>
-									setAttributes( { iconSize: toPx( v ) } )
-								}
-								min={ 10 }
-								max={ 48 }
-								step={ 1 }
-								unit="px"
-							/>
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="iconSize"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABRangeControl
+										label={ __( 'Icon size', 'axiom-blocks' ) }
+										value={ fromPx(
+											value === '' ? inherited : value,
+											20
+										) }
+										onChange={ ( v ) => setValue( toPx( v ) ) }
+										min={ 10 }
+										max={ 48 }
+										step={ 1 }
+										unit="px"
+									/>
+								) }
+							</ABResponsive>
 							<ABColorControl
 								label={ __( 'Icon colour', 'axiom-blocks' ) }
 								color={ iconColor }
@@ -386,6 +377,9 @@ function AccordionEdit( { attributes, setAttributes } ) {
 						type="headerPadding"
 						attrs={ attributes }
 						onChange={ ( update ) => setAttributes( update ) }
+						responsive={ true }
+						device={ device }
+						showDeviceSwitcher={ true }
 					/>
 				</PanelBody>
 
@@ -408,6 +402,9 @@ function AccordionEdit( { attributes, setAttributes } ) {
 						type="bodyPadding"
 						attrs={ attributes }
 						onChange={ ( update ) => setAttributes( update ) }
+						responsive={ true }
+						device={ device }
+						showDeviceSwitcher={ true }
 					/>
 				</PanelBody>
 
@@ -452,20 +449,33 @@ function AccordionEdit( { attributes, setAttributes } ) {
 								step={ 1 }
 								unit="px"
 							/>
-							<ABRangeControl
-								label={ __(
-									'Gap between items',
-									'axiom-blocks'
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="itemGap"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABRangeControl
+										label={ __(
+											'Gap between items',
+											'axiom-blocks'
+										) }
+										value={ fromPx(
+											value !== '' && value != null
+												? value
+												: inherited,
+											8
+										) }
+										onChange={ ( v ) =>
+											setValue( toPx( v ) )
+										}
+										min={ 0 }
+										max={ 32 }
+										step={ 1 }
+										unit="px"
+									/>
 								) }
-								value={ fromPx( itemGap, 8 ) }
-								onChange={ ( v ) =>
-									setAttributes( { itemGap: toPx( v ) } )
-								}
-								min={ 0 }
-								max={ 32 }
-								step={ 1 }
-								unit="px"
-							/>
+							</ABResponsive>
 						</ABSubAccordion>
 						<ABSubAccordion
 							title={ __( 'Container', 'axiom-blocks' ) }
@@ -514,6 +524,7 @@ function AccordionEdit( { attributes, setAttributes } ) {
 					setAttributes={ setAttributes }
 					prefix="header"
 					title={ __( 'Header typography', 'axiom-blocks' ) }
+					responsive
 				/>
 
 				<SpacingPanel

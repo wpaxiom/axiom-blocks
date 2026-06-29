@@ -11,7 +11,7 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, Notice } from '@wordpress/components';
 import { ABToggleControl } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -67,7 +67,7 @@ export const DeviceVisibility = {
                     ${ showOnTablet ? 'is-visible-tablet' : 'is-hidden-tablet' }
                     ${ showOnMobile ? 'is-visible-mobile' : 'is-hidden-mobile' }
                 `,
-				style: getSpacingStyle( attributes ),
+				style: useSpacingStyle( attributes ),
 			} );
 
 			// Check if all devices are hidden

@@ -6,6 +6,8 @@
 import { __ } from '@wordpress/i18n';
 import { PanelBody } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+import { useDeviceType, resolveResponsive } from './responsive';
+import { DeviceSwitcher } from './DeviceSwitcher';
 
 /* Shared attribute definitions — spread into each block's attributes object */
 export const SPACING_ATTRS = {
@@ -20,25 +22,37 @@ export const SPACING_ATTRS = {
 };
 
 /* Build a style object from block attributes for use in useBlockProps.
- * Uses CSS custom properties so the stylesheet (which uses --ab-padding-*) works. */
-export function getSpacingStyle( attrs ) {
+ * Uses CSS custom properties so the stylesheet (which uses --ab-padding-*) works.
+ *
+ * `device` resolves the value for the active WP preview device (cascade
+ * Mobile → Tablet → Desktop). Defaults to Desktop, so existing callers that pass
+ * only `attrs` are unchanged. */
+/* Hook form: resolves spacing for the active WP preview device. Blocks spread
+ * this into useBlockProps so the editor canvas previews the device's values. */
+export function useSpacingStyle( attrs ) {
+	const device = useDeviceType();
+	return getSpacingStyle( attrs, device );
+}
+
+export function getSpacingStyle( attrs, device = 'Desktop' ) {
+	const v = ( key ) => resolveResponsive( attrs, key, device ) || undefined;
 	return {
-		'--ab-padding-top': attrs.paddingTop || undefined,
-		'--ab-padding-right': attrs.paddingRight || undefined,
-		'--ab-padding-bottom': attrs.paddingBottom || undefined,
-		'--ab-padding-left': attrs.paddingLeft || undefined,
-		'--ab-margin-top': attrs.marginTop || undefined,
-		'--ab-margin-right': attrs.marginRight || undefined,
-		'--ab-margin-bottom': attrs.marginBottom || undefined,
-		'--ab-margin-left': attrs.marginLeft || undefined,
-		paddingTop: attrs.paddingTop || undefined,
-		paddingRight: attrs.paddingRight || undefined,
-		paddingBottom: attrs.paddingBottom || undefined,
-		paddingLeft: attrs.paddingLeft || undefined,
-		marginTop: attrs.marginTop || undefined,
-		marginRight: attrs.marginRight || undefined,
-		marginBottom: attrs.marginBottom || undefined,
-		marginLeft: attrs.marginLeft || undefined,
+		'--ab-padding-top': v( 'paddingTop' ),
+		'--ab-padding-right': v( 'paddingRight' ),
+		'--ab-padding-bottom': v( 'paddingBottom' ),
+		'--ab-padding-left': v( 'paddingLeft' ),
+		'--ab-margin-top': v( 'marginTop' ),
+		'--ab-margin-right': v( 'marginRight' ),
+		'--ab-margin-bottom': v( 'marginBottom' ),
+		'--ab-margin-left': v( 'marginLeft' ),
+		paddingTop: v( 'paddingTop' ),
+		paddingRight: v( 'paddingRight' ),
+		paddingBottom: v( 'paddingBottom' ),
+		paddingLeft: v( 'paddingLeft' ),
+		marginTop: v( 'marginTop' ),
+		marginRight: v( 'marginRight' ),
+		marginBottom: v( 'marginBottom' ),
+		marginLeft: v( 'marginLeft' ),
 	};
 }
 
@@ -143,12 +157,34 @@ const UnlinkSvg = () => (
 );
 
 /* ── Single axis control (Padding or Margin) ────────────────────────────── */
-export function SpacingControl( { label, type, attrs, onChange } ) {
-	const attrKeys = SIDES.map(
+export function SpacingControl( {
+	label,
+	type,
+	attrs,
+	onChange,
+	responsive = false,
+	device = 'Desktop',
+	showDeviceSwitcher = false,
+} ) {
+	const baseKeys = SIDES.map(
 		( s ) => `${ type }${ s.key[ 0 ].toUpperCase() }${ s.key.slice( 1 ) }`
 	);
-	// null when a side is not applied, number when it is.
+	// Edit the device-specific keys when on Tablet/Mobile; base keys otherwise.
+	const perDevice = responsive && device !== 'Desktop';
+	const attrKeys = baseKeys.map( ( k ) =>
+		perDevice ? `${ k }${ device }` : k
+	);
+	// null when a side is not applied (on this device), number when it is.
 	const vals = attrKeys.map( ( k ) => parseNum( attrs[ k ] ) );
+	// Value inherited from the larger device — shown as placeholder when empty.
+	const parentDevice = device === 'Mobile' ? 'Tablet' : 'Desktop';
+	const inherited = baseKeys.map( ( bk ) =>
+		perDevice
+			? parseNum( resolveResponsive( attrs, bk, parentDevice ) )
+			: null
+	);
+	const placeholderFor = ( i ) =>
+		perDevice && inherited[ i ] !== null ? String( inherited[ i ] ) : '—';
 
 	const allSame = vals.every( ( v ) => v === vals[ 0 ] );
 	const hasAny = vals.some( ( v ) => v !== null );
@@ -183,14 +219,18 @@ export function SpacingControl( { label, type, attrs, onChange } ) {
 			<div className="ab-sp-label-row">
 				<span className="ab-sp-label">{ label }</span>
 				<div className="ab-sp-actions">
-					<button
-						type="button"
-						className="ab-sp-reset"
-						onClick={ reset }
-						disabled={ ! hasAny }
-					>
-						{ __( 'Reset', 'axiom-blocks' ) }
-					</button>
+					{ hasAny && (
+						<button
+							type="button"
+							className="ab-sp-reset is-visible"
+							onClick={ reset }
+						>
+							{ __( 'Reset', 'axiom-blocks' ) }
+						</button>
+					) }
+					{ responsive && showDeviceSwitcher && (
+						<DeviceSwitcher compact />
+					) }
 					<button
 						type="button"
 						className={ `ab-sp-link${
@@ -223,7 +263,7 @@ export function SpacingControl( { label, type, attrs, onChange } ) {
 							onChange={ ( e ) => setAll( e.target.value ) }
 							min={ 0 }
 							max={ 200 }
-							placeholder="—"
+							placeholder={ placeholderFor( 0 ) }
 						/>
 						<span className="ab-sp-unit">PX</span>
 					</div>
@@ -271,7 +311,7 @@ export function SpacingControl( { label, type, attrs, onChange } ) {
 										}
 										min={ 0 }
 										max={ 200 }
-										placeholder="—"
+										placeholder={ placeholderFor( i ) }
 									/>
 									<span className="ab-sp-unit">PX</span>
 								</div>
@@ -285,7 +325,10 @@ export function SpacingControl( { label, type, attrs, onChange } ) {
 }
 
 /* ── Public panel component ─────────────────────────────────────────────── */
-export function SpacingPanel( { attributes, setAttributes } ) {
+export function SpacingPanel( { attributes, setAttributes, responsive = true } ) {
+	// Always read the device (hook must run unconditionally); only used when
+	// `responsive` is on. Driven by WordPress's native top-bar device switcher.
+	const device = useDeviceType();
 	return (
 		<PanelBody
 			title={ __( 'Spacing', 'axiom-blocks' ) }
@@ -296,6 +339,9 @@ export function SpacingPanel( { attributes, setAttributes } ) {
 				type="padding"
 				attrs={ attributes }
 				onChange={ ( update ) => setAttributes( update ) }
+				responsive={ responsive }
+				device={ device }
+				showDeviceSwitcher={ true }
 			/>
 			<div className="ab-sp-sep" />
 			<SpacingControl
@@ -303,6 +349,9 @@ export function SpacingPanel( { attributes, setAttributes } ) {
 				type="margin"
 				attrs={ attributes }
 				onChange={ ( update ) => setAttributes( update ) }
+				responsive={ responsive }
+				device={ device }
+				showDeviceSwitcher={ true }
 			/>
 		</PanelBody>
 	);

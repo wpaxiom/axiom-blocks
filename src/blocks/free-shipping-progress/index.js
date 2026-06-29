@@ -9,7 +9,7 @@ import {
 	ABTextareaControl,
 	ABRangeControl,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -39,7 +39,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 
 	const blockProps = useBlockProps( {
 		className: `axiom-blocks-fsp-preview is-align-${ textAlign }`,
-		style: getSpacingStyle( attributes ),
+		style: useSpacingStyle( attributes ),
 	} );
 
 	const modeLabel =
@@ -189,11 +189,13 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Progress fill', 'axiom-blocks' ) }
 						color={ barColor }
+						defaultColor="#7C3AED"
 						onChange={ ( c ) => setAttributes( { barColor: c } ) }
 					/>
 					<ABColorControl
 						label={ __( 'Track', 'axiom-blocks' ) }
 						color={ barBackground }
+						defaultColor="#e5e7eb"
 						onChange={ ( c ) =>
 							setAttributes( { barBackground: c } )
 						}
@@ -201,6 +203,7 @@ function FreeShippingProgressEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Qualified fill', 'axiom-blocks' ) }
 						color={ qualifiedColor }
+						defaultColor="#10b981"
 						onChange={ ( c ) =>
 							setAttributes( { qualifiedColor: c } )
 						}

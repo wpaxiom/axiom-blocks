@@ -6,17 +6,19 @@ import {
 	RichText,
 } from '@wordpress/block-editor';
 import { ICON_LIBRARY } from '../../../components/iconLibrary';
+import { useIconNode } from '../../../components/useCustomIcons';
 import { BlockIcon } from '../../../blockIcons';
+import { innerBlocksDeprecation } from '../../../components/deprecations';
 
 function AccordionItemEdit( { attributes, setAttributes, context } ) {
 	const { title } = attributes;
+	const resolveIcon = useIconNode();
 	const showIcon = context[ 'axiom-blocks/accordionShowIcon' ] !== false;
 	const iconSlug =
 		context[ 'axiom-blocks/accordionIconSlug' ] || 'chevron-down';
 	const iconPosition =
 		context[ 'axiom-blocks/accordionIconPosition' ] || 'right';
-	const headingTag =
-		context[ 'axiom-blocks/accordionHeadingLevel' ] || 'h3';
+	const headingTag = context[ 'axiom-blocks/accordionHeadingLevel' ] || 'h3';
 
 	const blockProps = useBlockProps( {
 		className: `ab-accordion__item is-editor ab-accordion__item--icon-${ iconPosition }`,
@@ -42,7 +44,7 @@ function AccordionItemEdit( { attributes, setAttributes, context } ) {
 
 	const icon = showIcon && (
 		<span className="ab-accordion__icon" contentEditable={ false }>
-			{ ICON_LIBRARY[ iconSlug ] || ICON_LIBRARY[ 'chevron-down' ] }
+			{ resolveIcon( iconSlug ) || ICON_LIBRARY[ 'chevron-down' ] }
 		</span>
 	);
 
@@ -77,6 +79,32 @@ export const AccordionItem = {
 		),
 		icon: <BlockIcon slug="accordion-item" />,
 		edit: AccordionItemEdit,
-		save: () => <InnerBlocks.Content />,
+		save: ( { attributes } ) => {
+			const blockProps = useBlockProps.save( {
+				className: 'ab-accordion__item',
+			} );
+			return (
+				<details { ...blockProps }>
+					<summary className="ab-accordion__header">
+						<RichText.Content
+							tagName="span"
+							className="ab-accordion__title"
+							value={ attributes.title }
+						/>
+					</summary>
+					<div className="ab-accordion__body">
+						<div className="ab-accordion__body-inner">
+							<InnerBlocks.Content />
+						</div>
+					</div>
+				</details>
+			);
+		},
+		deprecated: [
+			innerBlocksDeprecation( {
+				attributes: { title: { type: 'string', default: '' } },
+				supports: { html: false, reusable: false, anchor: true },
+			} ),
+		],
 	},
 };

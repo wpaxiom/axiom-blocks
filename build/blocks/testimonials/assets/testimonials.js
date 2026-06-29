@@ -328,6 +328,8 @@
 		var reverse = root.getAttribute( 'data-marquee-reverse' ) === '1';
 		var pauseHover = root.getAttribute( 'data-marquee-pause' ) !== '0';
 
+		root.classList.add( 'is-ready' );
+
 		function layout() {
 			var visible = visibleColumns( cols );
 			sizeCards( cards, viewport, visible, gap );
@@ -362,8 +364,6 @@
 			window.clearTimeout( resizeTimer );
 			resizeTimer = window.setTimeout( layout, 150 );
 		} );
-
-		root.classList.add( 'is-ready' );
 	}
 
 	/* ── Init ──────────────────────────────────────────────────────────────── */

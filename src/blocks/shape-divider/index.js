@@ -7,7 +7,7 @@ import {
 	ABColorControl,
 	ABToggleControl,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -35,16 +35,21 @@ function ShapeDividerEdit( { attributes, setAttributes } ) {
 		flipVertical,
 	} = attributes;
 
-	const transforms = [];
-	if ( flipHorizontal ) transforms.push( 'scaleX(-1)' );
-	if ( flipVertical ) transforms.push( 'scaleY(-1)' );
+	const pathTransform = flipHorizontal || flipVertical
+		? 'matrix(' + [
+			flipHorizontal ? -1 : 1, 0,
+			0, flipVertical ? -1 : 1,
+			flipHorizontal ? 1200 : 0,
+			flipVertical ? 120 : 0,
+		].join( ' ' ) + ')'
+		: undefined;
 
 	const blockProps = useBlockProps( {
 		className: `axiom-blocks-shape-divider axiom-blocks-shape-divider--${ shape } axiom-blocks-shape-divider--editor`,
 		style: {
 			height,
 			background: backgroundColor,
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
 		},
 		'aria-hidden': 'true',
 	} );
@@ -112,6 +117,7 @@ function ShapeDividerEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Shape color', 'axiom-blocks' ) }
 						color={ color }
+						defaultColor="#ffffff"
 						onChange={ ( c ) => setAttributes( { color: c } ) }
 					/>
 					<ABColorControl
@@ -121,6 +127,7 @@ function ShapeDividerEdit( { attributes, setAttributes } ) {
 								? '#ffffff'
 								: backgroundColor
 						}
+						defaultColor="#f6f7f7"
 						onChange={ ( c ) =>
 							setAttributes( { backgroundColor: c } )
 						}
@@ -148,11 +155,11 @@ function ShapeDividerEdit( { attributes, setAttributes } ) {
 					viewBox="0 0 1200 120"
 					preserveAspectRatio="none"
 					className="axiom-blocks-shape-divider__svg"
-					style={ { transform: transforms.join( ' ' ) || undefined } }
 				>
 					<path
 						d={ SHAPE_PATHS[ shape ] || SHAPE_PATHS.wave }
 						fill={ color }
+						transform={ pathTransform }
 					/>
 				</svg>
 			</div>

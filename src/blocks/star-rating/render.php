@@ -100,7 +100,7 @@ $axiom_blocks_aria_label = sprintf(
 
 	<?php
 	if ( $axiom_blocks_show_value || $axiom_blocks_show_count ) :
-		$axiom_blocks_meta_typo  = Typography::inline_style( $attributes, 'meta' );
+		$axiom_blocks_meta_typo  = safecss_filter_attr( Typography::inline_style( $attributes, 'meta' ) );
 		$axiom_blocks_meta_style = 'color: ' . $axiom_blocks_text_color . ';';
 		if ( '' !== $axiom_blocks_meta_typo ) {
 			$axiom_blocks_meta_style .= $axiom_blocks_meta_typo . ';';

@@ -1,6 +1,6 @@
 {
   "name": "axiom-blocks",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A collection of powerful Gutenberg blocks",
   "main": "build/index.js",
   "scripts": {

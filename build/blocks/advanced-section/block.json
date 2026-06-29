@@ -39,6 +39,8 @@
     "overlayBlendMode":         { "type": "string",  "default": "normal" },
 
     "minHeight":            { "type": "string",  "default": "400px" },
+    "minHeightTablet":      { "type": "string",  "default": "" },
+    "minHeightMobile":      { "type": "string",  "default": "" },
     "mobileMinHeight":      { "type": "string",  "default": "" },
     "verticalAlign":        { "type": "string",  "default": "center" },
     "horizontalAlign":      { "type": "string",  "default": "center" },

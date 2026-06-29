@@ -16,9 +16,17 @@ import {
 import {
 	SpacingPanel,
 	SpacingControl,
-	getSpacingStyle,
+	useSpacingStyle,
 } from '../../components/SpacingPanel';
 import { TypographyPanel } from '../../components/TypographyPanel';
+import { useDeviceType } from '../../components/responsive';
+
+import { resolveTypographyAttrs } from '../../components/typographyTargets';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveGridColumns,
+	responsiveVarValue,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -152,7 +160,6 @@ function CounterGroupEdit( { attributes, setAttributes } ) {
 		iconPosition,
 		iconColor,
 		iconHoverColor,
-		iconSize,
 		numberColor,
 		numberHoverColor,
 		labelPosition,
@@ -165,11 +172,29 @@ function CounterGroupEdit( { attributes, setAttributes } ) {
 		cardShadow,
 	} = attributes;
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
 		className: getCounterGroupClasses( attributes ).join( ' ' ),
 		style: {
-			...getCounterGroupVars( attributes ),
-			...getSpacingStyle( attributes ),
+			...getCounterGroupVars(
+				resolveTypographyAttrs(
+					attributes,
+					[ 'number', 'label' ],
+					device
+				)
+			),
+			...useSpacingStyle( attributes ),
+			gridTemplateColumns: responsiveGridColumns(
+				attributes,
+				'columns',
+				device
+			),
+			'--ab-counter-gap': responsiveVarValue( attributes, 'gap', device ),
+			'--ab-counter-icon-size': responsiveVarValue(
+				attributes,
+				'iconSize',
+				device
+			),
 		},
 	} );
 
@@ -188,26 +213,49 @@ function CounterGroupEdit( { attributes, setAttributes } ) {
 					title={ __( 'Layout', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<ABRangeControl
-						label={ __( 'Columns', 'axiom-blocks' ) }
-						value={ columns ?? 3 }
-						onChange={ ( v ) =>
-							setAttributes( { columns: v ?? 1 } )
-						}
-						min={ 1 }
-						max={ 6 }
-						step={ 1 }
-						unit=""
-					/>
-					<ABRangeControl
-						label={ __( 'Gap', 'axiom-blocks' ) }
-						value={ fromPx( gap, 24 ) }
-						onChange={ ( v ) => setAttributes( { gap: toPx( v ) } ) }
-						min={ 0 }
-						max={ 80 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="columns"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Columns', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 3
+								}
+								onChange={ ( v ) => setValue( v ?? 1 ) }
+								min={ 1 }
+								max={ 6 }
+								step={ 1 }
+								unit=""
+							/>
+						) }
+					</ABResponsive>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="gap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Gap', 'axiom-blocks' ) }
+								value={ fromPx(
+									value !== '' && value != null
+										? value
+										: inherited,
+									24
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 0 }
+								max={ 80 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					<ABToggleControl
 						label={ __( 'Stack on mobile', 'axiom-blocks' ) }
 						checked={ !! stackOnMobile }
@@ -350,17 +398,26 @@ function CounterGroupEdit( { attributes, setAttributes } ) {
 							setAttributes( { iconPosition: v } )
 						}
 					/>
-					<ABRangeControl
-						label={ __( 'Size', 'axiom-blocks' ) }
-						value={ fromPx( iconSize, 32 ) }
-						onChange={ ( v ) =>
-							setAttributes( { iconSize: toPx( v ) } )
-						}
-						min={ 16 }
-						max={ 80 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="iconSize"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Size', 'axiom-blocks' ) }
+								value={ fromPx(
+									value === '' ? inherited : value,
+									32
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 16 }
+								max={ 80 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					<ABColorControl
 						label={ __( 'Colour', 'axiom-blocks' ) }
 						color={ iconColor }
@@ -504,6 +561,9 @@ function CounterGroupEdit( { attributes, setAttributes } ) {
 						type="cardPadding"
 						attrs={ attributes }
 						onChange={ ( update ) => setAttributes( update ) }
+						responsive={ true }
+						device={ device }
+						showDeviceSwitcher={ true }
 					/>
 				</PanelBody>
 
@@ -520,6 +580,7 @@ function CounterGroupEdit( { attributes, setAttributes } ) {
 								setAttributes={ setAttributes }
 								prefix="number"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 						<ABSubAccordion title={ __( 'Label', 'axiom-blocks' ) }>
@@ -528,6 +589,7 @@ function CounterGroupEdit( { attributes, setAttributes } ) {
 								setAttributes={ setAttributes }
 								prefix="label"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 					</div>

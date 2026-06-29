@@ -1,11 +1,11 @@
 === Axiom Blocks - Page Builder & FSE Kit ===
-Contributors: wpaxiom
+Contributors: wpaxiom, shuvo586
 Donate link: https://wpaxiom.com/donate
 Tags: gutenberg, blocks, editor, page-builder, woocommerce
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,7 +50,9 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 = Features =
 
 * Enable or disable individual blocks to keep your editor lightweight
-* Responsive controls for all layout blocks
+* **Responsive controls** - typography (all blocks), columns, gap, alignment, and sizes with per-device overrides and live editor previews
+* **Deactivation survival** - authored content from dynamic blocks stays visible on the page even if the plugin is deactivated (semantic save fallback + deprecation migration)
+* **Shared icon system** - 136 curated Lucide icons plus custom SVG uploads, shared across all icon-supporting blocks
 * Clean, semantic markup with no extra wrapper bloat
 * Fully compatible with Full Site Editing (FSE) and block themes
 * Optimized performance - only loads assets for active blocks
@@ -146,6 +148,15 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Changelog ==
 
+= 1.0.4 =
+* Deactivation survival for Accordion, Advanced Heading, Advanced Button, and Notice blocks.
+* Responsive controls - per-device typography, columns, gap, alignment, and sizes with live editor previews.
+* Shared custom icon library - upload an SVG once and use it across any icon-supporting block; Advanced Button upgraded to the full library.
+* Advanced Section focal point controls replaced with native Axiom range controls.
+* Fixed conditional-assets gate - 8 blocks no longer render unstyled when used as the only Axiom block on a page.
+* Fixed testimonials marquee layout and shape divider transform issues.
+* Color picker reset links now correctly match each field's default value; spacing and typography reset buttons updated for consistency.
+
 = 1.0.3 =
 * New block: Info Box - a styled box that holds an Icon, Advanced Heading, text, and Advanced Button as editable blocks, with predefined Default/Bordered/Card/Accent styles and a single gap control for the spacing between items, plus stack or row direction, alignment, background, border, corner radius, and shadow.
 
@@ -166,6 +177,9 @@ Developers can redirect the feedback to their own server - or disable it entirel
 * Full Site Editing (FSE) support.
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+Adds responsive controls, deactivation survival, custom icon library, Advanced Section focal point improvements, and multiple bug fixes.
 
 = 1.0.3 =
 Adds the Info Box block - a styled box holding an icon, heading, text, and button as blocks, with full control of the spacing between them.

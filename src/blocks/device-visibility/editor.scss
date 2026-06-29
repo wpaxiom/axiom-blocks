@@ -22,6 +22,12 @@
 		border-bottom: 4px solid #46b450;
 	}
 
+	&.is-hidden-desktop,
+	&.is-hidden-tablet,
+	&.is-hidden-mobile {
+		display: block !important;
+	}
+
 	.axiom-blocks-visibility-label {
 		position: absolute;
 		top: -12px;

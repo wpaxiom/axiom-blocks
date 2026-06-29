@@ -34,16 +34,20 @@ if ( ! isset( $axiom_blocks_shape_paths[ $axiom_blocks_shape ] ) ) {
 
 $axiom_blocks_shape_path = $axiom_blocks_shape_paths[ $axiom_blocks_shape ];
 
-$axiom_blocks_transforms = array();
-if ( $axiom_blocks_flip_horizontal ) {
-	$axiom_blocks_transforms[] = 'scaleX(-1)';
+$axiom_blocks_path_transform = '';
+if ( $axiom_blocks_flip_horizontal || $axiom_blocks_flip_vertical ) {
+	$axiom_blocks_sx = $axiom_blocks_flip_horizontal ? -1 : 1;
+	$axiom_blocks_sy = $axiom_blocks_flip_vertical   ? -1 : 1;
+	$axiom_blocks_tx = $axiom_blocks_flip_horizontal ? 1200 : 0;
+	$axiom_blocks_ty = $axiom_blocks_flip_vertical   ? 120 : 0;
+	$axiom_blocks_path_transform = sprintf(
+		' transform="matrix(%d 0 0 %d %d %d)"',
+		$axiom_blocks_sx,
+		$axiom_blocks_sy,
+		$axiom_blocks_tx,
+		$axiom_blocks_ty
+	);
 }
-if ( $axiom_blocks_flip_vertical ) {
-	$axiom_blocks_transforms[] = 'scaleY(-1)';
-}
-$axiom_blocks_svg_style = $axiom_blocks_transforms
-	? 'transform: ' . implode( ' ', $axiom_blocks_transforms )
-	: '';
 
 // Wrapper attributes — assemble id/class/style from block supports + our own values.
 $axiom_blocks_spacing_style  = Spacing::inline_style( $attributes );
@@ -81,10 +85,10 @@ $axiom_blocks_style_attr  = safecss_filter_attr( implode( '; ', $axiom_blocks_st
 $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 
 $axiom_blocks_svg_markup = sprintf(
-	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="axiom-blocks-shape-divider__svg" aria-hidden="true"%1$s><path d="%2$s" fill="%3$s"></path></svg>',
-	'' !== $axiom_blocks_svg_style ? ' style="' . esc_attr( $axiom_blocks_svg_style ) . '"' : '',
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="axiom-blocks-shape-divider__svg" aria-hidden="true"><path d="%s" fill="%s"%s></path></svg>',
 	esc_attr( $axiom_blocks_shape_path ),
-	esc_attr( $axiom_blocks_color )
+	esc_attr( $axiom_blocks_color ),
+	$axiom_blocks_path_transform
 );
 ?>
 <div <?php echo '' !== $axiom_blocks_id_attr ? 'id="' . esc_attr( $axiom_blocks_id_attr ) . '" ' : ''; ?>class="<?php echo esc_attr( $axiom_blocks_class_attr ); ?>" aria-hidden="true"<?php echo '' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : ''; ?>>

@@ -6,7 +6,7 @@ import {
 	MediaUploadCheck,
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import {
 	ABRangeControl,
 	ABSelectControl,
@@ -19,6 +19,8 @@ import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../components/deprecations';
+import metadata from './block.json';
 
 const ASPECT_RATIOS = [
 	{ label: 'Auto (use before image)', value: 'auto' },
@@ -98,7 +100,7 @@ function BeforeAfterSliderEdit( { attributes, setAttributes } ) {
 
 	const blockProps = useBlockProps( {
 		className: 'axiom-blocks-bas',
-		style: getSpacingStyle( attributes ),
+		style: useSpacingStyle( attributes ),
 	} );
 
 	const frameStyle = {
@@ -201,6 +203,7 @@ function BeforeAfterSliderEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Handle color', 'axiom-blocks' ) }
 						color={ handleColor }
+						defaultColor="#ffffff"
 						onChange={ ( v ) =>
 							setAttributes( { handleColor: v } )
 						}
@@ -208,6 +211,7 @@ function BeforeAfterSliderEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Line color', 'axiom-blocks' ) }
 						color={ lineColor }
+						defaultColor="#ffffff"
 						onChange={ ( v ) => setAttributes( { lineColor: v } ) }
 					/>
 				</PanelBody>
@@ -298,6 +302,35 @@ export const BeforeAfterSlider = {
 		description: __( 'Drag to compare two images.', 'axiom-blocks' ),
 		icon: <BlockIcon slug="before-after-slider" />,
 		edit: BeforeAfterSliderEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const { beforeImage, afterImage, beforeLabel, afterLabel, showLabels } = attributes;
+			const blockProps = useBlockProps.save( { className: 'axiom-blocks-bas' } );
+			return (
+				<div { ...blockProps }>
+					<div className="axiom-blocks-bas__image-group">
+						{ showLabels && (
+							<div className="axiom-blocks-bas__label axiom-blocks-bas__label--before">{ beforeLabel }</div>
+						) }
+						{ beforeImage?.url && (
+							<img src={ beforeImage.url } alt={ beforeImage.alt || '' } className="axiom-blocks-bas__img axiom-blocks-bas__img--before" style={ { maxWidth: '100%', height: 'auto' } } />
+						) }
+					</div>
+					<div className="axiom-blocks-bas__image-group">
+						{ showLabels && (
+							<div className="axiom-blocks-bas__label axiom-blocks-bas__label--after">{ afterLabel }</div>
+						) }
+						{ afterImage?.url && (
+							<img src={ afterImage.url } alt={ afterImage.alt || '' } className="axiom-blocks-bas__img axiom-blocks-bas__img--after" style={ { maxWidth: '100%', height: 'auto' } } />
+						) }
+					</div>
+				</div>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

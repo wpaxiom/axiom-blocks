@@ -17,13 +17,15 @@ import {
 } from '../../../components/ABControls';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../../components/TypographyPanel';
 import { BlockIcon } from '../../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../../components/deprecations';
+import metadata from './block.json';
 
 const STROKE = {
 	fill: 'none',
@@ -170,11 +172,11 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 		className: `ab-pt-plan ${ isHighlight ? 'is-highlight' : '' }`,
 	} );
 
-	const nameStyle = getTypographyStyle( attributes, 'name' );
-	const priceStyle = getTypographyStyle( attributes, 'price' );
-	const descStyle = getTypographyStyle( attributes, 'desc' );
-	const featureStyle = getTypographyStyle( attributes, 'feature' );
-	const ctaStyle = getTypographyStyle( attributes, 'cta' );
+	const nameStyle = useTypographyStyle( attributes, 'name' );
+	const priceStyle = useTypographyStyle( attributes, 'price' );
+	const descStyle = useTypographyStyle( attributes, 'desc' );
+	const featureStyle = useTypographyStyle( attributes, 'feature' );
+	const ctaStyle = useTypographyStyle( attributes, 'cta' );
 
 	return (
 		<>
@@ -280,6 +282,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								setAttributes={ setAttributes }
 								prefix="name"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 						<ABSubAccordion title={ __( 'Price', 'axiom-blocks' ) }>
@@ -288,6 +291,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								setAttributes={ setAttributes }
 								prefix="price"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 						<ABSubAccordion
@@ -298,6 +302,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								setAttributes={ setAttributes }
 								prefix="desc"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 						<ABSubAccordion
@@ -308,6 +313,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								setAttributes={ setAttributes }
 								prefix="feature"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 						<ABSubAccordion
@@ -318,6 +324,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 								setAttributes={ setAttributes }
 								prefix="cta"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 					</div>
@@ -559,6 +566,75 @@ export const PricingPlan = {
 		),
 		icon: <BlockIcon slug="pricing-table" />,
 		edit: PricingPlanEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const {
+				name,
+				badge,
+				currency,
+				price,
+				period,
+				showCurrency,
+				showPeriod,
+				description,
+				isHighlight,
+				features,
+				ctaLabel,
+				ctaUrl,
+				ctaNewTab,
+			} = attributes;
+
+			const blockProps = useBlockProps.save( {
+				className: `ab-pt-plan${ isHighlight ? ' is-highlight' : '' }`,
+			} );
+
+			const list = Array.isArray( features ) ? features : [];
+
+			return (
+				<article { ...blockProps }>
+					{ badge && (
+						<div className="ab-pt-plan__badge">{ badge }</div>
+					) }
+					{ name && (
+						<RichText.Content tagName="h3" className="ab-pt-plan__name" value={ name } />
+					) }
+					<div className="ab-pt-plan__price">
+						{ showCurrency !== false && currency && (
+							<span className="ab-pt-plan__currency">{ currency }</span>
+						) }
+						{ price && (
+							<span className="ab-pt-plan__amount">{ price }</span>
+						) }
+						{ showPeriod !== false && period && (
+							<span className="ab-pt-plan__period">{ period }</span>
+						) }
+					</div>
+					{ description && (
+						<RichText.Content tagName="p" className="ab-pt-plan__desc" value={ description } />
+					) }
+					{ list.length > 0 && (
+						<ul className="ab-pt-plan__features">
+							{ list.map( ( f ) => (
+								<li key={ f.id } className={ `ab-pt-feat${ f.included ? ' is-included' : ' is-excluded' }` }>
+									<RichText.Content tagName="span" className="ab-pt-feat__text" value={ f.text } />
+								</li>
+							) ) }
+						</ul>
+					) }
+					{ ctaLabel && (
+						<div className="ab-pt-plan__cta-area">
+							<a className="ab-pt-plan__cta" href={ ctaUrl || '#' } target={ ctaNewTab ? '_blank' : undefined } rel={ ctaNewTab ? 'noopener noreferrer' : undefined }>
+								{ ctaLabel }
+							</a>
+						</div>
+					) }
+				</article>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

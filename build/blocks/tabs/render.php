@@ -96,7 +96,7 @@ $axiom_blocks_style_attr  = safecss_filter_attr( implode( '; ', $axiom_blocks_st
 
 $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 
-$axiom_blocks_label_typo = Typography::inline_style( $attributes, 'label' );
+$axiom_blocks_label_typo = safecss_filter_attr( Typography::inline_style( $attributes, 'label' ) );
 ?>
 <div <?php echo '' !== $axiom_blocks_id_attr ? 'id="' . esc_attr( $axiom_blocks_id_attr ) . '" ' : ''; ?>class="<?php echo esc_attr( $axiom_blocks_class_attr ); ?>"<?php echo '' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : ''; ?> data-active-tab="<?php echo esc_attr( $axiom_blocks_active_tab ); ?>">
 	<div

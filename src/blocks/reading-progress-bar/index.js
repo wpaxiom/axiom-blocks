@@ -1,25 +1,32 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
+import { useDeviceType, resolveResponsiveAttrs } from '../../components/responsive';
 import {
 	ABSelectControl,
-	ABTextControl,
 	ABRangeControl,
 	ABColorControl,
 	ABToggleControl,
 } from '../../components/ABControls';
+import { ABResponsive } from '../../components/ABResponsive';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
 
+const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
+const fromPx = ( v, fallback ) =>
+	v === '' || v == null ? fallback : parseFloat( v );
+
 function ReadingProgressBarEdit( { attributes, setAttributes } ) {
 	if ( ! isBlockEnabled( 'reading-progress-bar' ) ) {
 		return <DisabledBlockMessage blockName="Reading Progress Bar" />;
 	}
+	const device = useDeviceType();
+	const resolved = resolveResponsiveAttrs( attributes, [ 'height' ], device );
 	const { position, height, color, backgroundColor, showTrack, zIndex } =
-		attributes;
+		resolved;
 
 	const blockProps = useBlockProps( {
 		className: 'axiom-blocks-reading-progress-bar-preview',
@@ -71,15 +78,30 @@ function ReadingProgressBarEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<ABTextControl
-						label={ __( 'Height', 'axiom-blocks' ) }
-						value={ height }
-						onChange={ ( v ) => setAttributes( { height: v } ) }
-						help={ __( 'e.g. 4px, 0.5rem', 'axiom-blocks' ) }
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="height"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Height', 'axiom-blocks' ) }
+								value={ fromPx(
+									value === '' ? inherited : value,
+									4
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 1 }
+								max={ 20 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					<ABColorControl
 						label={ __( 'Fill color', 'axiom-blocks' ) }
 						color={ color }
+						defaultColor="#7C3AED"
 						onChange={ ( c ) => setAttributes( { color: c } ) }
 					/>
 					<ABToggleControl
@@ -91,6 +113,7 @@ function ReadingProgressBarEdit( { attributes, setAttributes } ) {
 						<ABColorControl
 							label={ __( 'Track color', 'axiom-blocks' ) }
 							color={ backgroundColor }
+							defaultColor="#e5e7eb"
 							onChange={ ( c ) =>
 								setAttributes( { backgroundColor: c } )
 							}

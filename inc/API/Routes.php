@@ -10,6 +10,7 @@ namespace AxiomBlocks\API;
 
 use AxiomBlocks\Admin\Settings;
 use AxiomBlocks\Blocks\Blocks;
+use AxiomBlocks\Blocks\CustomIcons;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -91,6 +92,45 @@ class Routes {
 
 		register_rest_route(
 			self::NAMESPACE,
+			'/custom-icons',
+			array(
+				array(
+					'methods'             => 'GET',
+					'callback'            => array( self::class, 'get_custom_icons' ),
+					'permission_callback' => array( self::class, 'edit_permission_check' ),
+				),
+				array(
+					'methods'             => 'POST',
+					'callback'            => array( self::class, 'add_custom_icon' ),
+					'permission_callback' => array( self::class, 'permission_check' ),
+					'args'                => array(
+						'svg'   => array(
+							'required' => true,
+							'type'     => 'string',
+						),
+						'label' => array(
+							'required' => false,
+							'type'     => 'string',
+							'default'  => '',
+						),
+					),
+				),
+				array(
+					'methods'             => 'DELETE',
+					'callback'            => array( self::class, 'delete_custom_icon' ),
+					'permission_callback' => array( self::class, 'permission_check' ),
+					'args'                => array(
+						'id' => array(
+							'required' => true,
+							'type'     => 'string',
+						),
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
 			'/free-shipping-progress',
 			array(
 				'methods'             => 'GET',
@@ -139,6 +179,80 @@ class Routes {
 	 */
 	public static function permission_check(): bool {
 		return current_user_can( 'manage_options' );
+	}
+
+	/**
+	 * Check if the user can edit content (and therefore read the custom icon set).
+	 *
+	 * @return bool True if user has edit_posts capability.
+	 */
+	public static function edit_permission_check(): bool {
+		return current_user_can( 'edit_posts' );
+	}
+
+	/**
+	 * List all site-wide custom icons.
+	 *
+	 * @return \WP_REST_Response Custom icons.
+	 */
+	public static function get_custom_icons(): \WP_REST_Response {
+		return rest_ensure_response( CustomIcons::all() );
+	}
+
+	/**
+	 * Add a custom icon.
+	 *
+	 * @param \WP_REST_Request $request REST request object.
+	 * @return \WP_REST_Response|\WP_Error Stored icon, or an error when the SVG is invalid.
+	 */
+	public static function add_custom_icon( \WP_REST_Request $request ) {
+		$icon = CustomIcons::add(
+			(string) $request->get_param( 'label' ),
+			(string) $request->get_param( 'svg' )
+		);
+
+		if ( null === $icon ) {
+			return new \WP_Error(
+				'axiom_invalid_svg',
+				__( 'That doesn’t look like a valid <svg>. Paste the full SVG markup.', 'axiom-blocks' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		return rest_ensure_response( $icon );
+	}
+
+	/**
+	 * Delete a custom icon, refusing while it is still in use.
+	 *
+	 * @param \WP_REST_Request $request REST request object.
+	 * @return \WP_REST_Response|\WP_Error Result, or a 409 when the icon is in use.
+	 */
+	public static function delete_custom_icon( \WP_REST_Request $request ) {
+		$id = sanitize_text_field( (string) $request->get_param( 'id' ) );
+
+		$usage = CustomIcons::usage_count( $id );
+		if ( $usage > 0 ) {
+			return new \WP_Error(
+				'axiom_icon_in_use',
+				sprintf(
+					/* translators: %d: number of blocks using the icon. */
+					_n(
+						'Can’t delete — %d block is using this icon. Remove it from that block first.',
+						'Can’t delete — %d blocks are using this icon. Remove it from those blocks first.',
+						$usage,
+						'axiom-blocks'
+					),
+					$usage
+				),
+				array(
+					'status' => 409,
+					'count'  => $usage,
+				)
+			);
+		}
+
+		return rest_ensure_response( array( 'deleted' => CustomIcons::delete( $id ) ) );
 	}
 
 	/**

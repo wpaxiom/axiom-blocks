@@ -12,18 +12,24 @@ import {
 	ABRangeControl,
 	ABTextControl,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
+import { useDeviceType } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import { responsiveVarValue } from '../../components/responsiveProps';
 import { IconPicker } from '../../components/IconPicker';
 import { ICON_LIBRARY } from '../../components/iconLibrary';
+import { useIconNode } from '../../components/useCustomIcons';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../components/deprecations';
+import metadata from './block.json';
 
 const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
 const fromPx = ( v, fallback ) =>
@@ -107,12 +113,13 @@ function IconListEdit( { attributes, setAttributes } ) {
 		return <DisabledBlockMessage blockName="Icon List" />;
 	}
 
+	const resolveIcon = useIconNode();
+
 	const {
 		items,
 		layout,
 		iconPosition,
 		itemsAlign,
-		iconSize,
 		iconColor,
 		gap,
 		rowGap,
@@ -148,12 +155,24 @@ function IconListEdit( { attributes, setAttributes } ) {
 		setAttributes( { items: copy } );
 	};
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
 		className: getIconListClasses( attributes ).join( ' ' ),
 		style: {
 			...getIconListVars( attributes ),
-			...getSpacingStyle( attributes ),
-			...getTypographyStyle( attributes ),
+			...useSpacingStyle( attributes ),
+			...useTypographyStyle( attributes ),
+			'--ab-il-gap': responsiveVarValue( attributes, 'gap', device ),
+			'--ab-il-row-gap': responsiveVarValue(
+				attributes,
+				'rowGap',
+				device
+			),
+			'--ab-il-icon-size': responsiveVarValue(
+				attributes,
+				'iconSize',
+				device
+			),
 		},
 	} );
 
@@ -221,50 +240,84 @@ function IconListEdit( { attributes, setAttributes } ) {
 					title={ __( 'Icon', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<ABRangeControl
-						label={ __( 'Size', 'axiom-blocks' ) }
-						value={ fromPx( iconSize, 20 ) }
-						onChange={ ( v ) =>
-							setAttributes( { iconSize: toPx( v ) } )
-						}
-						min={ 10 }
-						max={ 64 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="iconSize"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Size', 'axiom-blocks' ) }
+								value={ fromPx(
+									value === '' ? inherited : value,
+									20
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 10 }
+								max={ 64 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					<ABColorControl
 						label={ __( 'Colour', 'axiom-blocks' ) }
 						color={ iconColor }
 						onChange={ ( v ) => setAttributes( { iconColor: v } ) }
 					/>
-					<ABRangeControl
-						label={ __( 'Icon gap', 'axiom-blocks' ) }
-						value={ fromPx( gap, 10 ) }
-						onChange={ ( v ) =>
-							setAttributes( { gap: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 40 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="gap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Icon gap', 'axiom-blocks' ) }
+								value={ fromPx(
+									value !== '' && value != null
+										? value
+										: inherited,
+									10
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 0 }
+								max={ 40 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 				</PanelBody>
 
 				<PanelBody
 					title={ __( 'Spacing & divider', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<ABRangeControl
-						label={ __( 'Space between items', 'axiom-blocks' ) }
-						value={ fromPx( rowGap, 12 ) }
-						onChange={ ( v ) =>
-							setAttributes( { rowGap: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 60 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="rowGap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __(
+									'Space between items',
+									'axiom-blocks'
+								) }
+								value={ fromPx(
+									value !== '' && value != null
+										? value
+										: inherited,
+									12
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 0 }
+								max={ 60 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					<ABToggleControl
 						label={ __( 'Divider between items', 'axiom-blocks' ) }
 						checked={ !! showDivider }
@@ -309,6 +362,7 @@ function IconListEdit( { attributes, setAttributes } ) {
 				<TypographyPanel
 					attributes={ attributes }
 					setAttributes={ setAttributes }
+					responsive
 				/>
 
 				<SpacingPanel
@@ -335,7 +389,7 @@ function IconListEdit( { attributes, setAttributes } ) {
 										'axiom-blocks'
 									) }
 								>
-									{ ICON_LIBRARY[ item.icon ] ||
+									{ resolveIcon( item.icon ) ||
 										ICON_LIBRARY.check }
 								</button>
 							) }
@@ -474,6 +528,31 @@ export const IconList = {
 		),
 		icon: <BlockIcon slug="icon-list" />,
 		edit: IconListEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const { items } = attributes;
+			const blockProps = useBlockProps.save();
+			const list = Array.isArray( items ) ? items : [];
+			return (
+				<ul { ...blockProps }>
+					{ list.map( ( item ) => (
+						<li key={ item.id } className="ab-icon-list__item">
+							{ item.url ? (
+								<a className="ab-icon-list__link" href={ item.url }>
+									<RichText.Content tagName="span" className="ab-icon-list__text" value={ item.text } />
+								</a>
+							) : (
+								<RichText.Content tagName="span" className="ab-icon-list__text" value={ item.text } />
+							) }
+						</li>
+					) ) }
+				</ul>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

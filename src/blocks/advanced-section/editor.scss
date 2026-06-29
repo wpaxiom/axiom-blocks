@@ -31,47 +31,25 @@
 	margin: -4px 0 14px;
 }
 
-/* ── Length control unit toggle (px / vh / rem) ─────────────────────────── */
-.ab-len-units {
-	display: inline-flex;
-	margin-top: 6px;
-	border: 1px solid #e5e7eb;
-	border-radius: 4px;
-	overflow: hidden;
-
-	&__btn {
-		padding: 4px 10px;
-		margin: 0;
-		border: 0;
-		border-right: 1px solid #e5e7eb;
-		background: #fff;
-		color: #6b7280;
-		font-size: 11px;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		cursor: pointer;
-		transition: background 0.12s, color 0.12s;
-
-		&:last-child {
-			border-right: 0;
-		}
-
-		&:hover {
-			color: #1e1e1e;
-		}
-
-		&.is-active {
-			background: #faf5ff;
-			color: #7c3aed;
-		}
-	}
-}
-
 /* Focal point picker preview lives inside .ab-ctrl — keep it tight. */
 .ab-ctrl .components-focal-point-picker__media {
 	border-radius: 4px;
 	overflow: hidden;
+}
+
+/* The picker carries `__nextHasNoMarginBottom`, so add our standard control gap
+   (16px) below the image before the Left/Top range controls that follow. */
+.ab-ctrl .components-focal-point-picker-wrapper {
+	margin-bottom: 16px;
+}
+
+/* Hide the native Left/Top number inputs — they ship WP's default styling and
+   don't match our control design. We render our own ABRangeControls below.
+   WP names this row `focal-point-picker__controls` (no `components-` prefix in
+   current builds); older builds used the prefixed form — target both. */
+.ab-ctrl .focal-point-picker__controls,
+.ab-ctrl .components-focal-point-picker__controls {
+	display: none;
 }
 
 /* ── Advanced Section block styles (editor preview) ─────────────────────── */

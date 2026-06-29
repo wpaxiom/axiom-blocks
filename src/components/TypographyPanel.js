@@ -7,8 +7,11 @@
  */
 
 import { __ } from '@wordpress/i18n';
+import { useState, useRef, useEffect } from '@wordpress/element';
 import { PanelBody } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
+import { useDeviceType, resolveResponsive } from './responsive';
+import { DeviceSwitcher } from './DeviceSwitcher';
 
 const KEYS = [
 	'fontFamily',
@@ -47,6 +50,23 @@ export function typographyAttrs( prefix = '' ) {
 export function getTypographyStyle( attrs, prefix = '' ) {
 	return KEYS.reduce( ( acc, k ) => {
 		const v = attrs[ camel( prefix, k ) ];
+		if ( v ) acc[ k ] = v;
+		return acc;
+	}, {} );
+}
+
+/**
+ * Hook form: resolves typography for the active WordPress preview device (cascade
+ * Mobile → Tablet → Desktop). Blocks apply this to the styled element so the
+ * editor canvas previews the device's values when the native device switch flips.
+ * Falls back to the Desktop value, so it is a drop-in for getTypographyStyle.
+ * @param attrs
+ * @param prefix
+ */
+export function useTypographyStyle( attrs, prefix = '' ) {
+	const device = useDeviceType();
+	return KEYS.reduce( ( acc, k ) => {
+		const v = resolveResponsive( attrs, camel( prefix, k ), device );
 		if ( v ) acc[ k ] = v;
 		return acc;
 	}, {} );
@@ -202,20 +222,73 @@ function NumPill( {
 }
 
 function SelectPill( { value, onChange, options } ) {
+	const [ open, setOpen ] = useState( false );
+	const ref = useRef( null );
+	const selectedLabel =
+		options.find( ( o ) => ( o.value || '' ) === ( value || '' ) )?.label ??
+		'';
+
+	useEffect( () => {
+		if ( ! open ) {
+			return undefined;
+		}
+		const close = ( e ) => {
+			if ( ref.current && ! ref.current.contains( e.target ) ) {
+				setOpen( false );
+			}
+		};
+		const onKey = ( e ) => e.key === 'Escape' && setOpen( false );
+		document.addEventListener( 'mousedown', close );
+		document.addEventListener( 'keydown', onKey );
+		return () => {
+			document.removeEventListener( 'mousedown', close );
+			document.removeEventListener( 'keydown', onKey );
+		};
+	}, [ open ] );
+
 	return (
-		<div className={ `ab-tp-select${ value ? ' is-applied' : '' }` }>
-			<select
+		<div
+			className={ `ab-tp-select${ value ? ' is-applied' : '' }${
+				open ? ' is-open' : ''
+			}` }
+			ref={ ref }
+		>
+			<button
+				type="button"
 				className="ab-tp-select__el"
-				value={ value }
-				onChange={ ( e ) => onChange( e.target.value ) }
+				onClick={ () => setOpen( ( v ) => ! v ) }
+				aria-haspopup="listbox"
+				aria-expanded={ open }
 			>
-				{ options.map( ( o ) => (
-					<option key={ o.value || 'd' } value={ o.value }>
-						{ o.label }
-					</option>
-				) ) }
-			</select>
+				{ selectedLabel }
+			</button>
 			<ChevronSvg />
+			{ open && (
+				<ul className="ab-tp-select__list" role="listbox">
+					{ options.map( ( o ) => (
+						<li key={ o.value || 'd' } role="none">
+							<button
+								type="button"
+								role="option"
+								aria-selected={
+									( o.value || '' ) === ( value || '' )
+								}
+								className={ `ab-tp-select__opt${
+									( o.value || '' ) === ( value || '' )
+										? ' is-active'
+										: ''
+								}` }
+								onClick={ () => {
+									onChange( o.value );
+									setOpen( false );
+								} }
+							>
+								{ o.label }
+							</button>
+						</li>
+					) ) }
+				</ul>
+			) }
 		</div>
 	);
 }
@@ -400,16 +473,31 @@ export function TypographyPanel( {
 	title,
 	initialOpen = false,
 	unwrapped = false,
+	responsive = false,
 } ) {
-	const get = ( k ) => attributes[ camel( prefix, k ) ] || '';
-	const set = ( k, v ) => setAttributes( { [ camel( prefix, k ) ]: v } );
+	// Hook runs unconditionally; only steers attribute keys when `responsive` is on.
+	const device = useDeviceType();
+	const perDevice = responsive && device !== 'Desktop';
+	const attrKey = ( k ) =>
+		perDevice ? `${ camel( prefix, k ) }${ device }` : camel( prefix, k );
 
-	const hasAny = KEYS.some( ( k ) => attributes[ camel( prefix, k ) ] );
+	const get = ( k ) => attributes[ attrKey( k ) ] || '';
+	const set = ( k, v ) => setAttributes( { [ attrKey( k ) ]: v } );
+
+	// Value inherited from the larger device — shown as a placeholder so the
+	// cascade is visible when the current device's value is empty.
+	const inherited = ( k ) => {
+		if ( ! perDevice ) return '';
+		const parent = device === 'Mobile' ? 'Tablet' : 'Desktop';
+		return resolveResponsive( attributes, camel( prefix, k ), parent ) || '';
+	};
+
+	const hasAny = KEYS.some( ( k ) => attributes[ attrKey( k ) ] );
 
 	const reset = () => {
 		const update = {};
 		KEYS.forEach( ( k ) => {
-			update[ camel( prefix, k ) ] = '';
+			update[ attrKey( k ) ] = '';
 		} );
 		setAttributes( update );
 	};
@@ -425,9 +513,13 @@ export function TypographyPanel( {
 		} ) ),
 	];
 
-	const currentFamily = get( 'fontFamily' );
+	// Weight options follow the *effective* family for the active device (the
+	// device value, or whatever it inherits) so the list stays correct on Tablet/Mobile.
+	const resolvedFamily = perDevice
+		? resolveResponsive( attributes, camel( prefix, 'fontFamily' ), device ) || ''
+		: get( 'fontFamily' );
 	const selectedFamily = fontFamilies.find(
-		( f ) => f.fontFamily === currentFamily
+		( f ) => f.fontFamily === resolvedFamily
 	);
 	const weightOptions = weightOptionsFor( selectedFamily );
 
@@ -437,24 +529,41 @@ export function TypographyPanel( {
 	const handleFamilyChange = ( v ) => {
 		const next = fontFamilies.find( ( f ) => f.fontFamily === v );
 		const allowed = weightOptionsFor( next ).map( ( o ) => o.value );
-		const update = { [ camel( prefix, 'fontFamily' ) ]: v };
+		const update = { [ attrKey( 'fontFamily' ) ]: v };
 		const currentWeight = get( 'fontWeight' );
 		if ( currentWeight && ! allowed.includes( currentWeight ) ) {
-			update[ camel( prefix, 'fontWeight' ) ] = '';
+			update[ attrKey( 'fontWeight' ) ] = '';
 		}
 		setAttributes( update );
 	};
 
+	// Numeric pill placeholder: the inherited (cascade) value on Tablet/Mobile, else
+	// the field's own default hint.
+	const phNum = ( k, fallback ) => {
+		const inh = stripUnit( inherited( k ) );
+		return inh !== '' ? inh : fallback;
+	};
+
+	const barLabel = title || __( 'Typography', 'axiom-blocks' );
+
 	const inner = (
 		<div className="ab-tp">
-			{ hasAny && (
-				<button
-					type="button"
-					className="ab-tp__reset"
-					onClick={ reset }
-				>
-					{ __( 'Reset', 'axiom-blocks' ) }
-				</button>
+			{ responsive && (
+				<div className="ab-tp-bar">
+					<span className="ab-tp-bar__label">{ barLabel }</span>
+					<div className="ab-tp-bar__actions">
+						{ hasAny && (
+							<button
+								type="button"
+								className="ab-tp-bar__reset is-visible"
+								onClick={ reset }
+							>
+								{ __( 'Reset', 'axiom-blocks' ) }
+							</button>
+						) }
+						<DeviceSwitcher compact />
+					</div>
+				</div>
 			) }
 
 			{ /* Family — full width */ }
@@ -478,7 +587,7 @@ export function TypographyPanel( {
 					min={ 8 }
 					max={ 128 }
 					step={ 1 }
-					placeholder="—"
+					placeholder={ phNum( 'fontSize', '—' ) }
 				/>
 			</div>
 
@@ -491,7 +600,10 @@ export function TypographyPanel( {
 						min={ 0.8 }
 						max={ 3 }
 						step={ 0.05 }
-						placeholder={ __( 'Auto', 'axiom-blocks' ) }
+						placeholder={ phNum(
+							'lineHeight',
+							__( 'Auto', 'axiom-blocks' )
+						) }
 						prefixIcon={ <IconLineH /> }
 					/>
 				</Field>
@@ -503,7 +615,7 @@ export function TypographyPanel( {
 						min={ -0.1 }
 						max={ 0.5 }
 						step={ 0.01 }
-						placeholder="0"
+						placeholder={ phNum( 'letterSpacing', '0' ) }
 						prefixIcon={ <IconLetterS /> }
 					/>
 				</Field>

@@ -128,8 +128,11 @@ $axiom_blocks_id_attr            = $axiom_blocks_block_supports['id'] ?? '';
 	$axiom_blocks_faq_entries = array();
 	foreach ( $axiom_blocks_items as $axiom_blocks_index => $axiom_blocks_item ) :
 		$axiom_blocks_title = (string) ( $axiom_blocks_item['attrs']['title'] ?? '' );
-		$axiom_blocks_body  = ( new WP_Block( $axiom_blocks_item ) )->render();
-		$axiom_blocks_open  = ( 0 === $axiom_blocks_index && $axiom_blocks_first_open );
+		$axiom_blocks_body  = '';
+		foreach ( ( $axiom_blocks_item['innerBlocks'] ?? array() ) as $axiom_blocks_inner ) {
+			$axiom_blocks_body .= ( new WP_Block( $axiom_blocks_inner ) )->render();
+		}
+		$axiom_blocks_open = ( 0 === $axiom_blocks_index && $axiom_blocks_first_open );
 
 		$axiom_blocks_item_id = (string) ( $axiom_blocks_item['attrs']['anchor'] ?? '' );
 

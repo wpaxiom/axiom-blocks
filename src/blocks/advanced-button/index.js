@@ -11,19 +11,24 @@ import {
 	ABColorControl,
 	ABToggleControl,
 	ABRangeControl,
-	ABSubAccordion,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
+import { useDeviceType } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import { responsiveVarValue } from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
-import { BUTTON_ICONS, BUTTON_ICON_OPTIONS } from './icons';
+import { nullSaveDeprecation } from '../../components/deprecations';
+import { IconControl } from '../../components/IconControl';
+import { useIconNode } from '../../components/useCustomIcons';
+import metadata from './block.json';
 
 /* Slider helpers: attributes store px strings ('' = inherit the preset). */
 const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
@@ -97,7 +102,6 @@ function AdvancedButtonEdit( { attributes, setAttributes } ) {
 		htmlType,
 		icon,
 		iconPosition,
-		iconSize,
 		iconGap,
 		iconOnly,
 		stylePreset,
@@ -116,16 +120,24 @@ function AdvancedButtonEdit( { attributes, setAttributes } ) {
 		hoverShadow,
 	} = attributes;
 
-	const iconSvg = icon && BUTTON_ICONS[ icon ] ? BUTTON_ICONS[ icon ] : null;
+	const resolveIcon = useIconNode();
+	const iconSvg = icon ? resolveIcon( icon ) : null;
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
-		className: getButtonClasses( attributes ).join( ' ' ),
-		style: {
-			...getButtonVars( attributes ),
-			...getSpacingStyle( attributes ),
-			...getTypographyStyle( attributes ),
-		},
+		className: 'ab-adv-btn-wrap',
 	} );
+	const buttonClassName = getButtonClasses( attributes ).join( ' ' );
+	const buttonStyle = {
+		...getButtonVars( attributes ),
+		...useSpacingStyle( attributes ),
+		...useTypographyStyle( attributes ),
+		'--ab-advbtn-icon': responsiveVarValue(
+			attributes,
+			'iconSize',
+			device
+		),
+	};
 
 	const shadowOptions = ( withInherit ) => [
 		...( withInherit
@@ -273,11 +285,10 @@ function AdvancedButtonEdit( { attributes, setAttributes } ) {
 					title={ __( 'Icon', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<ABSelectControl
-						label={ __( 'Icon', 'axiom-blocks' ) }
+					<IconControl
 						value={ icon }
-						options={ BUTTON_ICON_OPTIONS }
 						onChange={ ( v ) => setAttributes( { icon: v } ) }
+						clearable
 					/>
 					{ icon && (
 						<>
@@ -298,17 +309,26 @@ function AdvancedButtonEdit( { attributes, setAttributes } ) {
 									setAttributes( { iconPosition: v } )
 								}
 							/>
-							<ABRangeControl
-								label={ __( 'Icon size', 'axiom-blocks' ) }
-								value={ fromPx( iconSize, 18 ) }
-								onChange={ ( v ) =>
-									setAttributes( { iconSize: toPx( v ) } )
-								}
-								min={ 10 }
-								max={ 48 }
-								step={ 1 }
-								unit="px"
-							/>
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="iconSize"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABRangeControl
+										label={ __( 'Icon size', 'axiom-blocks' ) }
+										value={ fromPx(
+											value === '' ? inherited : value,
+											18
+										) }
+										onChange={ ( v ) => setValue( toPx( v ) ) }
+										min={ 10 }
+										max={ 48 }
+										step={ 1 }
+										unit="px"
+									/>
+								) }
+							</ABResponsive>
 							<ABRangeControl
 								label={ __( 'Gap', 'axiom-blocks' ) }
 								value={ fromPx( iconGap, 8 ) }
@@ -339,57 +359,48 @@ function AdvancedButtonEdit( { attributes, setAttributes } ) {
 					title={ __( 'Colors & hover', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<div className="ab-sub-acc-list">
-						<ABSubAccordion
-							title={ __( 'Normal', 'axiom-blocks' ) }
-							defaultOpen
-						>
-							<ABColorControl
-								label={ __( 'Text', 'axiom-blocks' ) }
-								color={ textColor }
-								onChange={ ( v ) =>
-									setAttributes( { textColor: v } )
-								}
-							/>
-							<ABColorControl
-								label={ __( 'Background', 'axiom-blocks' ) }
-								color={ bgColor }
-								onChange={ ( v ) =>
-									setAttributes( { bgColor: v } )
-								}
-							/>
-							<ABColorControl
-								label={ __( 'Border', 'axiom-blocks' ) }
-								color={ borderColor }
-								onChange={ ( v ) =>
-									setAttributes( { borderColor: v } )
-								}
-							/>
-						</ABSubAccordion>
-						<ABSubAccordion title={ __( 'Hover', 'axiom-blocks' ) }>
-							<ABColorControl
-								label={ __( 'Text', 'axiom-blocks' ) }
-								color={ hoverTextColor }
-								onChange={ ( v ) =>
-									setAttributes( { hoverTextColor: v } )
-								}
-							/>
-							<ABColorControl
-								label={ __( 'Background', 'axiom-blocks' ) }
-								color={ hoverBgColor }
-								onChange={ ( v ) =>
-									setAttributes( { hoverBgColor: v } )
-								}
-							/>
-							<ABColorControl
-								label={ __( 'Border', 'axiom-blocks' ) }
-								color={ hoverBorderColor }
-								onChange={ ( v ) =>
-									setAttributes( { hoverBorderColor: v } )
-								}
-							/>
-						</ABSubAccordion>
-					</div>
+					<ABColorControl
+						label={ __( 'Text', 'axiom-blocks' ) }
+						color={ textColor }
+						onChange={ ( v ) =>
+							setAttributes( { textColor: v } )
+						}
+					/>
+					<ABColorControl
+						label={ __( 'Background', 'axiom-blocks' ) }
+						color={ bgColor }
+						onChange={ ( v ) =>
+							setAttributes( { bgColor: v } )
+						}
+					/>
+					<ABColorControl
+						label={ __( 'Border', 'axiom-blocks' ) }
+						color={ borderColor }
+						onChange={ ( v ) =>
+							setAttributes( { borderColor: v } )
+						}
+					/>
+					<ABColorControl
+						label={ __( 'Hover text', 'axiom-blocks' ) }
+						color={ hoverTextColor }
+						onChange={ ( v ) =>
+							setAttributes( { hoverTextColor: v } )
+						}
+					/>
+					<ABColorControl
+						label={ __( 'Hover background', 'axiom-blocks' ) }
+						color={ hoverBgColor }
+						onChange={ ( v ) =>
+							setAttributes( { hoverBgColor: v } )
+						}
+					/>
+					<ABColorControl
+						label={ __( 'Hover border', 'axiom-blocks' ) }
+						color={ hoverBorderColor }
+						onChange={ ( v ) =>
+							setAttributes( { hoverBorderColor: v } )
+						}
+					/>
 					<ABSelectControl
 						label={ __( 'Hover effect', 'axiom-blocks' ) }
 						value={ hoverEffect }
@@ -499,6 +510,7 @@ function AdvancedButtonEdit( { attributes, setAttributes } ) {
 				<TypographyPanel
 					attributes={ attributes }
 					setAttributes={ setAttributes }
+					responsive
 				/>
 
 				<SpacingPanel
@@ -508,34 +520,44 @@ function AdvancedButtonEdit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<div { ...blockProps }>
-				{ iconSvg && 'left' === iconPosition && (
-					<span className="ab-adv-btn__icon">{ iconSvg }</span>
-				) }
-				<span className="ab-adv-btn__content">
-					<RichText
-						tagName="span"
-						className="ab-adv-btn__text"
-						value={ text }
-						onChange={ ( v ) => setAttributes( { text: v } ) }
-						placeholder={ __( 'Button label…', 'axiom-blocks' ) }
-						allowedFormats={ [ 'core/bold', 'core/italic' ] }
-					/>
-					{ showSubCaption && (
+				<div className={ buttonClassName } style={ buttonStyle }>
+					{ iconSvg && 'left' === iconPosition && (
+						<span className="ab-adv-btn__icon">{ iconSvg }</span>
+					) }
+					<span className="ab-adv-btn__content">
 						<RichText
 							tagName="span"
-							className="ab-adv-btn__sub"
-							value={ subCaption }
+							className="ab-adv-btn__text"
+							value={ text }
 							onChange={ ( v ) =>
-								setAttributes( { subCaption: v } )
+								setAttributes( { text: v } )
 							}
-							placeholder={ __( 'Sub-caption…', 'axiom-blocks' ) }
-							allowedFormats={ [] }
+							placeholder={ __(
+								'Button label…',
+								'axiom-blocks'
+							) }
+							allowedFormats={ [ 'core/bold', 'core/italic' ] }
 						/>
+						{ showSubCaption && (
+							<RichText
+								tagName="span"
+								className="ab-adv-btn__sub"
+								value={ subCaption }
+								onChange={ ( v ) =>
+									setAttributes( { subCaption: v } )
+								}
+								placeholder={ __(
+									'Sub-caption…',
+									'axiom-blocks'
+								) }
+								allowedFormats={ [] }
+							/>
+						) }
+					</span>
+					{ iconSvg && 'right' === iconPosition && (
+						<span className="ab-adv-btn__icon">{ iconSvg }</span>
 					) }
-				</span>
-				{ iconSvg && 'right' === iconPosition && (
-					<span className="ab-adv-btn__icon">{ iconSvg }</span>
-				) }
+				</div>
 			</div>
 		</>
 	);
@@ -551,6 +573,72 @@ export const AdvancedButton = {
 		),
 		icon: <BlockIcon slug="advanced-button" />,
 		edit: AdvancedButtonEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const {
+				text,
+				subCaption,
+				showSubCaption,
+				url,
+				opensInNewTab,
+				relNoFollow,
+				relSponsored,
+				isDownload,
+				htmlType,
+			} = attributes;
+			const blockProps = useBlockProps.save( {
+				className: 'ab-adv-btn-wrap',
+			} );
+			const content = (
+				<span className="ab-adv-btn__content">
+					<RichText.Content
+						tagName="span"
+						className="ab-adv-btn__text"
+						value={ text }
+					/>
+					{ showSubCaption && subCaption && (
+						<RichText.Content
+							tagName="span"
+							className="ab-adv-btn__sub"
+							value={ subCaption }
+						/>
+					) }
+				</span>
+			);
+			let inner;
+			if ( 'submit' === htmlType ) {
+				inner = (
+					<button type="submit" className="ab-adv-btn">
+						{ content }
+					</button>
+				);
+			} else {
+				const rel =
+					[
+						opensInNewTab && 'noopener noreferrer',
+						relNoFollow && 'nofollow',
+						relSponsored && 'sponsored',
+					]
+						.filter( Boolean )
+						.join( ' ' ) || undefined;
+				inner = (
+					<a
+						className="ab-adv-btn"
+						href={ url || '#' }
+						target={ opensInNewTab ? '_blank' : undefined }
+						rel={ rel }
+						download={ isDownload || undefined }
+					>
+						{ content }
+					</a>
+				);
+			}
+			return <div { ...blockProps }>{ inner }</div>;
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

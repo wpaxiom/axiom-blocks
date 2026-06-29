@@ -16,7 +16,9 @@ import {
 	ABColorControl,
 	ABToggleControl,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
+import { ABResponsive } from '../../components/ABResponsive';
+import { useDeviceType, resolveResponsive } from '../../components/responsive';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -170,27 +172,9 @@ function LengthControl( { label, value, onChange, help, min = 0 } ) {
 				max={ cfg.max }
 				step={ 1 }
 				unit={ unit }
+				units={ LENGTH_UNITS }
+				onUnitChange={ setUnit }
 			/>
-			<div
-				className="ab-len-units"
-				role="radiogroup"
-				aria-label={ __( 'Unit', 'axiom-blocks' ) }
-			>
-				{ LENGTH_UNITS.map( ( u ) => (
-					<button
-						key={ u.value }
-						type="button"
-						role="radio"
-						aria-checked={ u.value === unit }
-						className={ `ab-len-units__btn${
-							u.value === unit ? ' is-active' : ''
-						}` }
-						onClick={ () => setUnit( u.value ) }
-					>
-						{ u.label }
-					</button>
-				) ) }
-			</div>
 			{ help && <p className="ab-ctrl__help">{ help }</p> }
 		</div>
 	);
@@ -230,7 +214,6 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 		overlayGradientToColor,
 		overlayOpacity,
 		overlayBlendMode,
-		minHeight,
 		mobileMinHeight,
 		verticalAlign,
 		horizontalAlign,
@@ -251,6 +234,18 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 
 	const bgStyle = buildBackgroundStyle( attributes );
 	const overlayBg = buildOverlayBackground( attributes );
+
+	// Preview the active device's min-height (legacy mobileMinHeight folds in as
+	// the Tablet override, mirroring the frontend cascade).
+	const device = useDeviceType();
+	const resolvedMinHeight =
+		resolveResponsive(
+			mobileMinHeight && ! attributes.minHeightTablet
+				? { ...attributes, minHeightTablet: mobileMinHeight }
+				: attributes,
+			'minHeight',
+			device
+		) || '400px';
 
 	const borderInline =
 		borderStyle && borderStyle !== 'none' && borderWidth > 0
@@ -282,7 +277,6 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 			`axiom-blocks-section--${ backgroundType }`,
 			`is-h-${ horizontalAlign }`,
 			`is-v-${ verticalAlign }`,
-			mobileMinHeight ? 'has-mobile-min-h' : '',
 			isParallax ? 'has-parallax' : '',
 		]
 			.filter( Boolean )
@@ -299,10 +293,8 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 			...parallaxStyle,
 			...borderInline,
 			borderRadius: borderRadius ? `${ borderRadius }px` : undefined,
-			// Use a CSS variable so a media query can swap in the mobile value.
-			'--axiom-blocks-section-min-h': minHeight || '400px',
-			'--axiom-blocks-section-min-h-mobile':
-				mobileMinHeight || minHeight || '400px',
+			// Device-resolved so the canvas reflects the active preview device.
+			'--axiom-blocks-section-min-h': resolvedMinHeight,
 			minHeight: 'var(--axiom-blocks-section-min-h, 400px)',
 			'--axiom-blocks-section-justify':
 				V_ALIGN_MAP[ verticalAlign ] || 'center',
@@ -312,7 +304,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 			'--axiom-blocks-section-overlay-opacity':
 				( overlayOpacity || 0 ) / 100,
 			'--axiom-blocks-section-overlay-blend': overlayBlendMode,
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
 		},
 	} );
 
@@ -382,6 +374,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							<ABColorControl
 								label={ __( 'From', 'axiom-blocks' ) }
 								color={ gradientFromColor }
+								defaultColor="#4f46e5"
 								onChange={ ( c ) =>
 									setAttributes( { gradientFromColor: c } )
 								}
@@ -411,6 +404,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 									<ABColorControl
 										label={ __( 'Mid', 'axiom-blocks' ) }
 										color={ gradientMidColor }
+										defaultColor="#9333ea"
 										onChange={ ( c ) =>
 											setAttributes( {
 												gradientMidColor: c,
@@ -438,6 +432,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							<ABColorControl
 								label={ __( 'To', 'axiom-blocks' ) }
 								color={ gradientToColor }
+								defaultColor="#ec4899"
 								onChange={ ( c ) =>
 									setAttributes( { gradientToColor: c } )
 								}
@@ -574,6 +569,52 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 												} )
 											}
 											__nextHasNoMarginBottom
+										/>
+										<ABRangeControl
+											label={ __( 'Left', 'axiom-blocks' ) }
+											value={ Math.round(
+												positionToFocalPoint(
+													backgroundPosition
+												).x * 100
+											) }
+											onChange={ ( v ) =>
+												setAttributes( {
+													backgroundPosition:
+														focalPointToPosition( {
+															x: ( v ?? 50 ) / 100,
+															y: positionToFocalPoint(
+																backgroundPosition
+															).y,
+														} ),
+												} )
+											}
+											min={ 0 }
+											max={ 100 }
+											step={ 1 }
+											unit="%"
+										/>
+										<ABRangeControl
+											label={ __( 'Top', 'axiom-blocks' ) }
+											value={ Math.round(
+												positionToFocalPoint(
+													backgroundPosition
+												).y * 100
+											) }
+											onChange={ ( v ) =>
+												setAttributes( {
+													backgroundPosition:
+														focalPointToPosition( {
+															x: positionToFocalPoint(
+																backgroundPosition
+															).x,
+															y: ( v ?? 50 ) / 100,
+														} ),
+												} )
+											}
+											min={ 0 }
+											max={ 100 }
+											step={ 1 }
+											unit="%"
 										/>
 										<ABSelectControl
 											label={ __(
@@ -788,6 +829,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							<ABColorControl
 								label={ __( 'From', 'axiom-blocks' ) }
 								color={ overlayGradientFromColor }
+								defaultColor="#000000"
 								onChange={ ( c ) =>
 									setAttributes( {
 										overlayGradientFromColor: c,
@@ -893,6 +935,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 							<ABColorControl
 								label={ __( 'Color', 'axiom-blocks' ) }
 								color={ borderColor || '#000000' }
+								defaultColor="#000000"
 								onChange={ ( c ) =>
 									setAttributes( { borderColor: c } )
 								}
@@ -916,22 +959,19 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 					title={ __( 'Layout', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<LengthControl
-						label={ __( 'Min height', 'axiom-blocks' ) }
-						value={ minHeight }
-						onChange={ ( v ) => setAttributes( { minHeight: v } ) }
-					/>
-					<LengthControl
-						label={ __( 'Min height (mobile)', 'axiom-blocks' ) }
-						value={ mobileMinHeight }
-						onChange={ ( v ) =>
-							setAttributes( { mobileMinHeight: v } )
-						}
-						help={ __(
-							'Optional override below 768px.',
-							'axiom-blocks'
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="minHeight"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<LengthControl
+								label={ __( 'Min height', 'axiom-blocks' ) }
+								value={ value === '' ? inherited : value }
+								onChange={ setValue }
+							/>
 						) }
-					/>
+					</ABResponsive>
 					<ABSelectControl
 						label={ __( 'Vertical', 'axiom-blocks' ) }
 						value={ verticalAlign }
@@ -979,6 +1019,7 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 				<SpacingPanel
 					attributes={ attributes }
 					setAttributes={ setAttributes }
+					responsive
 				/>
 			</InspectorControls>
 

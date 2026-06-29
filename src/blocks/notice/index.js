@@ -4,7 +4,7 @@ import {
 	InspectorControls,
 	RichText,
 } from '@wordpress/block-editor';
-import { PanelBody, Dropdown } from '@wordpress/components';
+import { PanelBody } from '@wordpress/components';
 import {
 	ABSelectControl,
 	ABColorControl,
@@ -12,18 +12,24 @@ import {
 	ABRangeControl,
 	ABSubAccordion,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
-import { IconPicker } from '../../components/IconPicker';
+import { IconControl } from '../../components/IconControl';
 import { ICON_LIBRARY } from '../../components/iconLibrary';
+import { useIconNode } from '../../components/useCustomIcons';
+import { useDeviceType } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import { responsiveVarValue } from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
+import { nullSaveDeprecation } from '../../components/deprecations';
+import metadata from './block.json';
 
 const TYPE_ICON = {
 	info: 'info',
@@ -60,7 +66,6 @@ function NoticeEdit( { attributes, setAttributes } ) {
 		message,
 		showIcon,
 		iconSlug,
-		iconSize,
 		iconColor,
 		dismissible,
 		bgColor,
@@ -70,7 +75,9 @@ function NoticeEdit( { attributes, setAttributes } ) {
 	} = attributes;
 
 	const activeIcon = iconSlug || TYPE_ICON[ noticeType ] || 'info';
+	const resolveIcon = useIconNode();
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
 		className: [
 			'ab-notice',
@@ -79,9 +86,17 @@ function NoticeEdit( { attributes, setAttributes } ) {
 		].join( ' ' ),
 		style: {
 			...getNoticeVars( attributes ),
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
+			'--ab-notice-icon-size': responsiveVarValue(
+				attributes,
+				'iconSize',
+				device
+			),
 		},
 	} );
+
+	const titleTypoStyle = useTypographyStyle( attributes, 'title' );
+	const contentTypoStyle = useTypographyStyle( attributes, 'content' );
 
 	return (
 		<>
@@ -139,44 +154,12 @@ function NoticeEdit( { attributes, setAttributes } ) {
 					/>
 					{ showIcon && (
 						<>
-							<div className="ab-notice-icon-field">
-								<span className="ab-notice-icon-field__label">
-									{ __( 'Icon', 'axiom-blocks' ) }
-								</span>
-								<Dropdown
-									className="ab-notice-icon-field__pick"
-									popoverProps={ {
-										placement: 'bottom-start',
-									} }
-									renderToggle={ ( { isOpen, onToggle } ) => (
-										<button
-											type="button"
-											className="ab-notice-icon-field__btn"
-											onClick={ onToggle }
-											aria-expanded={ isOpen }
-											aria-label={ __(
-												'Choose icon',
-												'axiom-blocks'
-											) }
-										>
-											{ ICON_LIBRARY[ activeIcon ] ||
-												ICON_LIBRARY[ 'info' ] }
-										</button>
-									) }
-									renderContent={ () => (
-										<div className="ab-notice-icon-pop">
-											<IconPicker
-												value={ activeIcon }
-												onChange={ ( v ) =>
-													setAttributes( {
-														iconSlug: v,
-													} )
-												}
-											/>
-										</div>
-									) }
-								/>
-							</div>
+							<IconControl
+								value={ activeIcon }
+								onChange={ ( v ) =>
+									setAttributes( { iconSlug: v } )
+								}
+							/>
 							{ iconSlug && (
 								<ABToggleControl
 									label={ __(
@@ -189,17 +172,26 @@ function NoticeEdit( { attributes, setAttributes } ) {
 									}
 								/>
 							) }
-							<ABRangeControl
-								label={ __( 'Icon size', 'axiom-blocks' ) }
-								value={ fromPx( iconSize, 22 ) }
-								onChange={ ( v ) =>
-									setAttributes( { iconSize: toPx( v ) } )
-								}
-								min={ 12 }
-								max={ 48 }
-								step={ 1 }
-								unit="px"
-							/>
+							<ABResponsive
+								attributes={ attributes }
+								setAttributes={ setAttributes }
+								attrKey="iconSize"
+							>
+								{ ( { value, setValue, inherited } ) => (
+									<ABRangeControl
+										label={ __( 'Icon size', 'axiom-blocks' ) }
+										value={ fromPx(
+											value === '' ? inherited : value,
+											22
+										) }
+										onChange={ ( v ) => setValue( toPx( v ) ) }
+										min={ 12 }
+										max={ 48 }
+										step={ 1 }
+										unit="px"
+									/>
+								) }
+							</ABResponsive>
 							<ABColorControl
 								label={ __( 'Icon colour', 'axiom-blocks' ) }
 								color={ iconColor }
@@ -256,6 +248,7 @@ function NoticeEdit( { attributes, setAttributes } ) {
 								setAttributes={ setAttributes }
 								prefix="title"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 						<ABSubAccordion
@@ -266,6 +259,7 @@ function NoticeEdit( { attributes, setAttributes } ) {
 								setAttributes={ setAttributes }
 								prefix="content"
 								unwrapped
+								responsive
 							/>
 						</ABSubAccordion>
 					</div>
@@ -280,7 +274,7 @@ function NoticeEdit( { attributes, setAttributes } ) {
 			<div { ...blockProps }>
 				{ showIcon && (
 					<span className="ab-notice__icon" contentEditable={ false }>
-						{ ICON_LIBRARY[ activeIcon ] || ICON_LIBRARY[ 'info' ] }
+						{ resolveIcon( activeIcon ) || ICON_LIBRARY[ 'info' ] }
 					</span>
 				) }
 				<div className="ab-notice__content">
@@ -291,7 +285,7 @@ function NoticeEdit( { attributes, setAttributes } ) {
 						onChange={ ( v ) => setAttributes( { title: v } ) }
 						placeholder={ __( 'Notice title…', 'axiom-blocks' ) }
 						allowedFormats={ [ 'core/bold', 'core/italic' ] }
-						style={ getTypographyStyle( attributes, 'title' ) }
+						style={ titleTypoStyle }
 					/>
 					<RichText
 						tagName="div"
@@ -307,7 +301,7 @@ function NoticeEdit( { attributes, setAttributes } ) {
 							'core/italic',
 							'core/link',
 						] }
-						style={ getTypographyStyle( attributes, 'content' ) }
+						style={ contentTypoStyle }
 					/>
 				</div>
 				{ dismissible && (
@@ -334,6 +328,35 @@ export const Notice = {
 		),
 		icon: <BlockIcon slug="notice" />,
 		edit: NoticeEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const { title, message } = attributes;
+			const blockProps = useBlockProps.save();
+			return (
+				<div { ...blockProps }>
+					<div className="ab-notice__content">
+						{ title && (
+							<RichText.Content
+								tagName="strong"
+								className="ab-notice__title"
+								value={ title }
+							/>
+						) }
+						{ message && (
+							<RichText.Content
+								tagName="div"
+								className="ab-notice__message"
+								value={ message }
+							/>
+						) }
+					</div>
+				</div>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

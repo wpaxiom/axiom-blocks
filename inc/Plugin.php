@@ -20,7 +20,11 @@ use AxiomBlocks\Admin\Feedback;
 use AxiomBlocks\API\Routes;
 use AxiomBlocks\Blocks\Blocks;
 use AxiomBlocks\Blocks\Registry;
+use AxiomBlocks\Blocks\ResponsiveProps;
+use AxiomBlocks\Blocks\ResponsiveSpacing;
+use AxiomBlocks\Blocks\ResponsiveTypography;
 use AxiomBlocks\Frontend\Assets;
+use AxiomBlocks\Frontend\ResponsiveStyles;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -81,6 +85,18 @@ final class Plugin {
 		// Frontend assets.
 		Assets::init();
 
+		// Per-instance responsive CSS (printed in the footer via the styles API).
+		ResponsiveStyles::init();
+
+		// Central responsive spacing for every Axiom block that has spacing.
+		ResponsiveSpacing::init();
+
+		// Central responsive typography for blocks with a Typography panel.
+		ResponsiveTypography::init();
+
+		// Central responsive per-block controls (columns, …) via ABResponsive.
+		ResponsiveProps::init();
+
 		// Admin UI.
 		if ( is_admin() ) {
 			Dashboard::init();
@@ -134,6 +150,7 @@ final class Plugin {
 			array(
 				'enabledBlocks'      => Blocks::get_enabled(),
 				'svgUploadSupported' => $svg_upload_supported,
+				'canManageIcons'     => current_user_can( 'manage_options' ),
 			)
 		);
 	}

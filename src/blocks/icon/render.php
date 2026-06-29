@@ -18,12 +18,9 @@ use AxiomBlocks\Blocks\Spacing;
 
 $axiom_blocks_a = $attributes ?? array();
 
-$axiom_blocks_type  = 'custom' === ( $axiom_blocks_a['iconType'] ?? 'library' ) ? 'custom' : 'library';
 $axiom_blocks_label = (string) ( $axiom_blocks_a['iconLabel'] ?? '' );
 
-$axiom_blocks_svg = 'custom' === $axiom_blocks_type
-	? (string) ( $axiom_blocks_a['customSvg'] ?? '' )
-	: Icons::get( (string) ( $axiom_blocks_a['iconSlug'] ?? '' ) );
+$axiom_blocks_svg = Icons::get( (string) ( $axiom_blocks_a['iconSlug'] ?? '' ) );
 
 if ( '' === trim( $axiom_blocks_svg ) ) {
 	return;

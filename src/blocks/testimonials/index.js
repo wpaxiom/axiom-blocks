@@ -17,9 +17,17 @@ import {
 import {
 	SpacingPanel,
 	SpacingControl,
-	getSpacingStyle,
+	useSpacingStyle,
 } from '../../components/SpacingPanel';
 import { TypographyPanel } from '../../components/TypographyPanel';
+import { useDeviceType } from '../../components/responsive';
+
+import { resolveTypographyAttrs } from '../../components/typographyTargets';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveGridColumns,
+	responsiveVarValue,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -183,11 +191,24 @@ function TestimonialsEdit( { attributes, setAttributes } ) {
 		quoteColor,
 	} = attributes;
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
 		className: getTestimonialsClasses( attributes ).join( ' ' ),
 		style: {
-			...getTestimonialsVars( attributes ),
-			...getSpacingStyle( attributes ),
+			...getTestimonialsVars(
+				resolveTypographyAttrs(
+					attributes,
+					Object.keys( TYPO_SHORT ),
+					device
+				)
+			),
+			...useSpacingStyle( attributes ),
+			gridTemplateColumns: responsiveGridColumns(
+				attributes,
+				'columns',
+				device
+			),
+			'--ab-tst-gap': responsiveVarValue( attributes, 'gap', device ),
 		},
 	} );
 
@@ -225,30 +246,53 @@ function TestimonialsEdit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { layout: v } ) }
 					/>
-					<ABRangeControl
-						label={
-							'marquee' === layout
-								? __( 'Cards in view', 'axiom-blocks' )
-								: __( 'Columns', 'axiom-blocks' )
-						}
-						value={ columns ?? 3 }
-						onChange={ ( v ) =>
-							setAttributes( { columns: v ?? 1 } )
-						}
-						min={ 1 }
-						max={ 5 }
-						step={ 1 }
-						unit=""
-					/>
-					<ABRangeControl
-						label={ __( 'Gap', 'axiom-blocks' ) }
-						value={ fromPx( gap, 24 ) }
-						onChange={ ( v ) => setAttributes( { gap: toPx( v ) } ) }
-						min={ 0 }
-						max={ 80 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="columns"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={
+									'marquee' === layout
+										? __( 'Cards in view', 'axiom-blocks' )
+										: __( 'Columns', 'axiom-blocks' )
+								}
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 3
+								}
+								onChange={ ( v ) => setValue( v ?? 1 ) }
+								min={ 1 }
+								max={ 5 }
+								step={ 1 }
+								unit=""
+							/>
+						) }
+					</ABResponsive>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="gap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Gap', 'axiom-blocks' ) }
+								value={ fromPx(
+									value !== '' && value != null
+										? value
+										: inherited,
+									24
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 0 }
+								max={ 80 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					{ 'grid' === layout && (
 						<ABToggleControl
 							label={ __( 'Stack on mobile', 'axiom-blocks' ) }
@@ -417,6 +461,9 @@ function TestimonialsEdit( { attributes, setAttributes } ) {
 						type="cardPadding"
 						attrs={ attributes }
 						onChange={ ( update ) => setAttributes( update ) }
+						responsive={ true }
+						device={ device }
+						showDeviceSwitcher={ true }
 					/>
 				</PanelBody>
 
@@ -620,6 +667,7 @@ function TestimonialsEdit( { attributes, setAttributes } ) {
 									setAttributes={ setAttributes }
 									prefix={ prefix }
 									unwrapped
+									responsive
 								/>
 							</ABSubAccordion>
 						) ) }

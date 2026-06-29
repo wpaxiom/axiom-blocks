@@ -6,6 +6,8 @@ import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../../components/DisabledBlockMessage';
+import { innerBlocksDeprecation } from '../../../components/deprecations';
+import metadata from './block.json';
 
 function TabPanelEdit( { attributes, setAttributes, context, clientId } ) {
 	if ( ! isBlockEnabled( 'tab-panel' ) ) {
@@ -59,6 +61,26 @@ export const TabPanel = {
 		description: __( 'A panel inside the Tabs block.', 'axiom-blocks' ),
 		icon: <BlockIcon slug="tab-panel" />,
 		edit: TabPanelEdit,
-		save: () => <InnerBlocks.Content />,
+		save: ( { attributes } ) => {
+			const { tabId, label } = attributes;
+			const blockProps = useBlockProps.save( {
+				className: 'axiom-blocks-tab-panel',
+				'data-tab-id': tabId,
+			} );
+			return (
+				<div { ...blockProps }>
+					{ label && (
+						<span className="axiom-blocks-tab-panel__label">{ label }</span>
+					) }
+					<InnerBlocks.Content />
+				</div>
+			);
+		},
+		deprecated: [
+			innerBlocksDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

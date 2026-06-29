@@ -73,6 +73,7 @@ class Assets {
 			|| has_block( 'axiom-blocks/before-after-slider' )
 			|| has_block( 'axiom-blocks/pricing-table' )
 			|| has_block( 'axiom-blocks/button-group' )
+			|| has_block( 'axiom-blocks/advanced-button' )
 			|| has_block( 'axiom-blocks/advanced-heading' )
 			|| has_block( 'axiom-blocks/icon' )
 			|| has_block( 'axiom-blocks/icon-list' )

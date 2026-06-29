@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "title": "Icon",
   "category": "axiom-blocks",
-  "description": "Pick an icon from the library or paste your own SVG, then style its size, colour, shape, and link.",
+  "description": "Pick an icon from the library, then style its size, colour, shape, and link.",
   "keywords": [
     "icon",
     "svg",
@@ -15,17 +15,9 @@
   "textdomain": "axiom-blocks",
   "icon": "star-filled",
   "attributes": {
-    "iconType": {
-      "type": "string",
-      "default": "library"
-    },
     "iconSlug": {
       "type": "string",
       "default": "star"
-    },
-    "customSvg": {
-      "type": "string",
-      "default": ""
     },
     "iconLabel": {
       "type": "string",

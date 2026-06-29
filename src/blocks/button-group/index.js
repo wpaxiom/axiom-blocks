@@ -11,7 +11,21 @@ import {
 	ABToggleControl,
 	ABRangeControl,
 } from '../../components/ABControls';
+import { useDeviceType } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveVarValue,
+	responsiveAlignValue,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
+
+/* justify includes Space between, so it carries its own map (not ALIGN_FLEX_MAP). */
+const JUSTIFY_MAP = {
+	left: 'flex-start',
+	center: 'center',
+	right: 'flex-end',
+	'space-between': 'space-between',
+};
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
@@ -48,11 +62,25 @@ function ButtonGroupEdit( { attributes, setAttributes } ) {
 	if ( ! isBlockEnabled( 'advanced-button' ) ) {
 		return <DisabledBlockMessage blockName="Button Group" />;
 	}
-	const { orientation, justify, gap, stackOnMobile } = attributes;
+	const { orientation, stackOnMobile } = attributes;
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
 		className: getGroupClasses( attributes ).join( ' ' ),
-		style: { '--ab-btng-gap': `${ gap ?? 12 }px` },
+		style: {
+			'--ab-btng-gap': responsiveVarValue(
+				attributes,
+				'gap',
+				device,
+				'px'
+			),
+			justifyContent: responsiveAlignValue(
+				attributes,
+				'justify',
+				device,
+				JUSTIFY_MAP
+			),
+		},
 	} );
 
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
@@ -87,38 +115,65 @@ function ButtonGroupEdit( { attributes, setAttributes } ) {
 							setAttributes( { orientation: v } )
 						}
 					/>
-					<ABSelectControl
-						label={ __( 'Alignment', 'axiom-blocks' ) }
-						value={ justify }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-							{
-								label: __( 'Space between', 'axiom-blocks' ),
-								value: 'space-between',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { justify: v } ) }
-					/>
-					<ABRangeControl
-						label={ __( 'Gap', 'axiom-blocks' ) }
-						value={ gap }
-						onChange={ ( v ) => setAttributes( { gap: v ?? 0 } ) }
-						min={ 0 }
-						max={ 64 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="justify"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABSelectControl
+								label={ __( 'Alignment', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 'left'
+								}
+								options={ [
+									{
+										label: __( 'Left', 'axiom-blocks' ),
+										value: 'left',
+									},
+									{
+										label: __( 'Center', 'axiom-blocks' ),
+										value: 'center',
+									},
+									{
+										label: __( 'Right', 'axiom-blocks' ),
+										value: 'right',
+									},
+									{
+										label: __(
+											'Space between',
+											'axiom-blocks'
+										),
+										value: 'space-between',
+									},
+								] }
+								onChange={ setValue }
+							/>
+						) }
+					</ABResponsive>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="gap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Gap', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 0
+								}
+								onChange={ ( v ) => setValue( v ?? 0 ) }
+								min={ 0 }
+								max={ 64 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					{ 'horizontal' === orientation && (
 						<ABToggleControl
 							label={ __( 'Stack on mobile', 'axiom-blocks' ) }

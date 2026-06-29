@@ -7,11 +7,18 @@ import {
 	ABToggleControl,
 	ABRangeControl,
 	ABTextControl,
-	ABTextareaControl,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
-import { IconPicker } from '../../components/IconPicker';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
+import { useDeviceType, resolveResponsiveAttrs } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveAlignValue,
+	responsiveVarValue,
+	ALIGN_FLEX_MAP,
+} from '../../components/responsiveProps';
+import { IconControl } from '../../components/IconControl';
 import { ICON_LIBRARY } from '../../components/iconLibrary';
+import { useIconNode } from '../../components/useCustomIcons';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -58,11 +65,8 @@ function IconEdit( { attributes, setAttributes } ) {
 	}
 
 	const {
-		iconType,
 		iconSlug,
-		customSvg,
 		iconLabel,
-		iconSize,
 		iconColor,
 		iconHoverColor,
 		rotation,
@@ -81,32 +85,33 @@ function IconEdit( { attributes, setAttributes } ) {
 		relSponsored,
 	} = attributes;
 
+	const device = useDeviceType();
+	const resolved = resolveResponsiveAttrs( attributes, [ 'iconAlign' ], device );
+	const resolveIcon = useIconNode();
 	const blockProps = useBlockProps( {
-		className: `ab-icon ab-icon--align-${ iconAlign }`,
+		className: `ab-icon ab-icon--align-${ resolved.iconAlign }`,
 		style: {
 			...getIconVars( attributes ),
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
+			'--ab-icon-size': responsiveVarValue(
+				attributes,
+				'iconSize',
+				device
+			),
+			justifyContent: responsiveAlignValue(
+				attributes,
+				'iconAlign',
+				device,
+				ALIGN_FLEX_MAP
+			),
 		},
 	} );
 
-	const glyph =
-		iconType === 'custom' ? (
-			customSvg ? (
-				<span
-					className="ab-icon__glyph"
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={ { __html: customSvg } }
-				/>
-			) : (
-				<span className="ab-icon__glyph ab-icon__glyph--empty">
-					{ __( 'Paste SVG', 'axiom-blocks' ) }
-				</span>
-			)
-		) : (
-			<span className="ab-icon__glyph">
-				{ ICON_LIBRARY[ iconSlug ] || ICON_LIBRARY.star }
-			</span>
-		);
+	const glyph = (
+		<span className="ab-icon__glyph">
+			{ resolveIcon( iconSlug ) || ICON_LIBRARY.star }
+		</span>
+	);
 
 	return (
 		<>
@@ -115,43 +120,14 @@ function IconEdit( { attributes, setAttributes } ) {
 					title={ __( 'Icon', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<ABSelectControl
-						label={ __( 'Source', 'axiom-blocks' ) }
-						value={ iconType }
-						options={ [
-							{
-								label: __( 'Icon library', 'axiom-blocks' ),
-								value: 'library',
-							},
-							{
-								label: __( 'Custom SVG', 'axiom-blocks' ),
-								value: 'custom',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { iconType: v } ) }
+					<IconControl
+						label={ __( 'Icon', 'axiom-blocks' ) }
+						value={ iconSlug }
+						onChange={ ( v ) =>
+							setAttributes( { iconSlug: v } )
+						}
+						fallback="star"
 					/>
-					{ iconType === 'library' ? (
-						<IconPicker
-							value={ iconSlug }
-							onChange={ ( v ) =>
-								setAttributes( { iconSlug: v } )
-							}
-						/>
-					) : (
-						<ABTextareaControl
-							label={ __( 'SVG markup', 'axiom-blocks' ) }
-							value={ customSvg }
-							onChange={ ( v ) =>
-								setAttributes( { customSvg: v } )
-							}
-							rows={ 5 }
-							placeholder="<svg …>…</svg>"
-							help={ __(
-								'Paste an <svg>. Use currentColor for fills/strokes so the colour controls apply.',
-								'axiom-blocks'
-							) }
-						/>
-					) }
 					<ABTextControl
 						label={ __( 'Accessible label', 'axiom-blocks' ) }
 						value={ iconLabel }
@@ -167,17 +143,26 @@ function IconEdit( { attributes, setAttributes } ) {
 					title={ __( 'Style', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<ABRangeControl
-						label={ __( 'Size', 'axiom-blocks' ) }
-						value={ fromPx( iconSize, 48 ) }
-						onChange={ ( v ) =>
-							setAttributes( { iconSize: toPx( v ) } )
-						}
-						min={ 12 }
-						max={ 240 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="iconSize"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Size', 'axiom-blocks' ) }
+								value={ fromPx(
+									value === '' ? inherited : value,
+									48
+								) }
+								onChange={ ( v ) => setValue( toPx( v ) ) }
+								min={ 12 }
+								max={ 240 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 					<ABRangeControl
 						label={ __( 'Rotation', 'axiom-blocks' ) }
 						value={ rotation || 0 }
@@ -187,25 +172,37 @@ function IconEdit( { attributes, setAttributes } ) {
 						step={ 1 }
 						unit="°"
 					/>
-					<ABSelectControl
-						label={ __( 'Alignment', 'axiom-blocks' ) }
-						value={ iconAlign }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { iconAlign: v } ) }
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="iconAlign"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABSelectControl
+								label={ __( 'Alignment', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 'center'
+								}
+								options={ [
+									{
+										label: __( 'Left', 'axiom-blocks' ),
+										value: 'left',
+									},
+									{
+										label: __( 'Center', 'axiom-blocks' ),
+										value: 'center',
+									},
+									{
+										label: __( 'Right', 'axiom-blocks' ),
+										value: 'right',
+									},
+								] }
+								onChange={ setValue }
+							/>
+						) }
+					</ABResponsive>
 					<ABColorControl
 						label={ __( 'Colour', 'axiom-blocks' ) }
 						color={ iconColor }
@@ -420,7 +417,7 @@ export const Icon = {
 	settings: {
 		title: __( 'Icon', 'axiom-blocks' ),
 		description: __(
-			'Pick an icon from the library or paste your own SVG, then style its size, colour, shape, and link.',
+			'Pick an icon from the library, then style its size, colour, shape, and link.',
 			'axiom-blocks'
 		),
 		icon: <BlockIcon slug="icon" />,

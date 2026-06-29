@@ -15,6 +15,8 @@ import {
 } from '../../../components/ABControls';
 import { BlockIcon } from '../../../blockIcons';
 import { HIGHLIGHT_FORMAT } from '../../advanced-heading/format';
+import { nullSaveDeprecation } from '../../../components/deprecations';
+import metadata from './block.json';
 
 const QUOTE_SVG = (
 	<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -340,6 +342,62 @@ export const Testimonial = {
 		),
 		icon: <BlockIcon slug="testimonial" />,
 		edit: TestimonialEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const {
+				quote, name, role, company,
+				avatarUrl, avatarAlt,
+			} = attributes;
+			const blockProps = useBlockProps.save( { className: 'ab-testimonial' } );
+			return (
+				<div { ...blockProps }>
+					{ quote && (
+						<blockquote className="ab-testimonial__quote">
+							<RichText.Content
+								tagName="p"
+								value={ quote }
+							/>
+							{ ( name || role || company ) && (
+								<cite>
+									{ avatarUrl && (
+										<img
+											className="ab-testimonial__avatar-img"
+											src={ avatarUrl }
+											alt={ avatarAlt || name }
+										/>
+									) }
+									{ name && (
+										<RichText.Content
+											tagName="p"
+											className="ab-testimonial__name"
+											value={ name }
+										/>
+									) }
+									{ role && (
+										<RichText.Content
+											tagName="p"
+											className="ab-testimonial__role"
+											value={ role }
+										/>
+									) }
+									{ company && (
+										<RichText.Content
+											tagName="p"
+											className="ab-testimonial__company"
+											value={ company }
+										/>
+									) }
+								</cite>
+							) }
+						</blockquote>
+					) }
+				</div>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };

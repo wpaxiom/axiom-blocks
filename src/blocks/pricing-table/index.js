@@ -13,11 +13,17 @@ import {
 	ABToggleControl,
 	ABRangeControl,
 } from '../../components/ABControls';
-import { SpacingPanel, getSpacingStyle } from '../../components/SpacingPanel';
+import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
 import {
 	TypographyPanel,
-	getTypographyStyle,
+	useTypographyStyle,
 } from '../../components/TypographyPanel';
+import { useDeviceType, resolveResponsiveAttrs } from '../../components/responsive';
+import { ABResponsive } from '../../components/ABResponsive';
+import {
+	responsiveGridColumns,
+	responsiveVarValue,
+} from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -150,6 +156,8 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 		headingAlign,
 	} = attributes;
 
+	const device = useDeviceType();
+	const resolved = resolveResponsiveAttrs( attributes, [ 'columns' ], device );
 	const blockProps = useBlockProps( {
 		className: [
 			'axiom-blocks-pricing-table',
@@ -159,21 +167,30 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 			.filter( Boolean )
 			.join( ' ' ),
 		style: {
-			'--ab-pt-columns': Math.max( 1, Math.min( 4, columns || 3 ) ),
-			'--ab-pt-gap': `${ gap || 0 }px`,
+			'--ab-pt-columns': Math.max( 1, Math.min( 4, resolved.columns || 3 ) ),
+			'--ab-pt-gap': responsiveVarValue( attributes, 'gap', device, 'px' ),
 			'--ab-pt-accent': accentColor || '#7C3AED',
-			...getSpacingStyle( attributes ),
+			...useSpacingStyle( attributes ),
 		},
 	} );
 
 	const headingStyle = {
 		// Legacy fallback — typography spread overrides if headingTextAlign is set.
 		textAlign: headingAlign || undefined,
-		...getTypographyStyle( attributes, 'heading' ),
+		...useTypographyStyle( attributes, 'heading' ),
 	};
 
 	const innerBlocksProps = useInnerBlocksProps(
-		{ className: 'axiom-blocks-pricing-table__grid' },
+		{
+			className: 'axiom-blocks-pricing-table__grid',
+			style: {
+				gridTemplateColumns: responsiveGridColumns(
+					attributes,
+					'columns',
+					device
+				),
+			},
+		},
 		{
 			allowedBlocks: [ 'axiom-blocks/pricing-plan' ],
 			template: DEFAULT_PLANS,
@@ -191,28 +208,52 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 					title={ __( 'Layout', 'axiom-blocks' ) }
 					initialOpen={ true }
 				>
-					<ABRangeControl
-						label={ __( 'Columns', 'axiom-blocks' ) }
-						value={ columns }
-						onChange={ ( v ) =>
-							setAttributes( {
-								columns: Math.max( 1, Math.min( 4, v || 1 ) ),
-							} )
-						}
-						min={ 1 }
-						max={ 4 }
-						step={ 1 }
-						unit=""
-					/>
-					<ABRangeControl
-						label={ __( 'Gap', 'axiom-blocks' ) }
-						value={ gap }
-						onChange={ ( v ) => setAttributes( { gap: v ?? 0 } ) }
-						min={ 0 }
-						max={ 64 }
-						step={ 1 }
-						unit="px"
-					/>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="columns"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Columns', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 3
+								}
+								onChange={ ( v ) =>
+									setValue(
+										Math.max( 1, Math.min( 4, v || 1 ) )
+									)
+								}
+								min={ 1 }
+								max={ 4 }
+								step={ 1 }
+								unit=""
+							/>
+						) }
+					</ABResponsive>
+					<ABResponsive
+						attributes={ attributes }
+						setAttributes={ setAttributes }
+						attrKey="gap"
+					>
+						{ ( { value, setValue, inherited } ) => (
+							<ABRangeControl
+								label={ __( 'Gap', 'axiom-blocks' ) }
+								value={
+									value !== '' && value != null
+										? value
+										: inherited ?? 0
+								}
+								onChange={ ( v ) => setValue( v ?? 0 ) }
+								min={ 0 }
+								max={ 64 }
+								step={ 1 }
+								unit="px"
+							/>
+						) }
+					</ABResponsive>
 				</PanelBody>
 
 				{ /* ── Heading ───────────────────────────────────────────── */ }
@@ -274,6 +315,7 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 						setAttributes={ setAttributes }
 						prefix="heading"
 						title={ __( 'Heading typography', 'axiom-blocks' ) }
+						responsive
 					/>
 				) }
 
@@ -304,6 +346,7 @@ function PricingTableEdit( { attributes, setAttributes } ) {
 					<ABColorControl
 						label={ __( 'Accent color', 'axiom-blocks' ) }
 						color={ accentColor }
+						defaultColor="#7C3AED"
 						onChange={ ( v ) =>
 							setAttributes( { accentColor: v } )
 						}

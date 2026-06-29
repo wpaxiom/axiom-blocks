@@ -177,10 +177,16 @@ class Icons {
 	/**
 	 * Resolve a single icon by slug. Returns '' for unknown slugs.
 	 *
-	 * @param string $slug Icon slug.
+	 * A slug prefixed with `custom:` resolves from the site-wide custom icon
+	 * store (CustomIcons); everything else resolves from the built-in library.
+	 *
+	 * @param string $slug Icon slug or `custom:<id>` reference.
 	 * @return string Inline SVG markup, or empty string.
 	 */
 	public static function get( string $slug ): string {
+		if ( 0 === strpos( $slug, CustomIcons::PREFIX ) ) {
+			return CustomIcons::get( $slug );
+		}
 		$all = self::all();
 		return $all[ $slug ] ?? '';
 	}

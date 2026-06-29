@@ -16,6 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AxiomBlocks\Blocks\Spacing;
+use AxiomBlocks\Blocks\Responsive;
+use AxiomBlocks\Frontend\ResponsiveStyles;
 
 $axiom_blocks_bg_type         = $attributes['backgroundType'] ?? 'color';
 $axiom_blocks_bg_color        = $attributes['backgroundColor'] ?? '';
@@ -128,9 +130,9 @@ if ( $axiom_blocks_border_radius > 0 ) {
 	$axiom_blocks_bg_parts[] = 'border-radius: ' . (int) $axiom_blocks_border_radius . 'px';
 }
 
-// Min-height drives a CSS var so the mobile media query can override it.
+// Desktop min-height stays inline (back-compat); Tablet/Mobile overrides are
+// emitted as scoped media-query CSS below.
 $axiom_blocks_bg_parts[] = '--axiom-blocks-section-min-h: ' . esc_attr( $axiom_blocks_min_height );
-$axiom_blocks_bg_parts[] = '--axiom-blocks-section-min-h-mobile: ' . esc_attr( '' !== $axiom_blocks_mobile_min_height ? $axiom_blocks_mobile_min_height : $axiom_blocks_min_height );
 $axiom_blocks_bg_parts[] = 'min-height: var(--axiom-blocks-section-min-h, 400px)';
 
 $axiom_blocks_bg_parts[] = '--axiom-blocks-section-justify: ' . esc_attr( $axiom_blocks_v_map[ $axiom_blocks_v_align ] ?? 'center' );
@@ -159,11 +161,20 @@ $axiom_blocks_wrapper_classes = array(
 	'is-h-' . $axiom_blocks_h_align,
 	'is-v-' . $axiom_blocks_v_align,
 );
-if ( '' !== $axiom_blocks_mobile_min_height ) {
-	$axiom_blocks_wrapper_classes[] = 'has-mobile-min-h';
-}
 if ( $axiom_blocks_is_parallax ) {
 	$axiom_blocks_wrapper_classes[] = 'has-parallax';
+}
+
+// Retired mobileMinHeight folds into the cascade as the Tablet override.
+$axiom_blocks_mh_attrs = $attributes;
+if ( empty( $axiom_blocks_mh_attrs['minHeightTablet'] ) && '' !== $axiom_blocks_mobile_min_height ) {
+	$axiom_blocks_mh_attrs['minHeightTablet'] = $axiom_blocks_mobile_min_height;
+}
+$axiom_blocks_mh_map = array( 'min-height' => 'minHeight' );
+if ( Responsive::has_overrides( $axiom_blocks_mh_attrs, $axiom_blocks_mh_map ) ) {
+	$axiom_blocks_mh_class          = Responsive::instance_class( $axiom_blocks_mh_attrs, $axiom_blocks_mh_map );
+	$axiom_blocks_wrapper_classes[] = $axiom_blocks_mh_class;
+	ResponsiveStyles::add( Responsive::css( $axiom_blocks_mh_class, $axiom_blocks_mh_attrs, $axiom_blocks_mh_map ) );
 }
 
 $axiom_blocks_block_supports = WP_Block_Supports::get_instance()->apply_block_supports();

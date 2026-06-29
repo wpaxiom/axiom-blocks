@@ -56,11 +56,11 @@ $axiom_blocks_style_attr = safecss_filter_attr( rtrim( trim( $axiom_blocks_block
 
 $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 
-$axiom_blocks_name_style    = Typography::inline_style( $axiom_blocks_a, 'name' );
-$axiom_blocks_price_style   = Typography::inline_style( $axiom_blocks_a, 'price' );
-$axiom_blocks_desc_style    = Typography::inline_style( $axiom_blocks_a, 'desc' );
-$axiom_blocks_feature_style = Typography::inline_style( $axiom_blocks_a, 'feature' );
-$axiom_blocks_cta_style     = Typography::inline_style( $axiom_blocks_a, 'cta' );
+$axiom_blocks_name_style    = safecss_filter_attr( Typography::inline_style( $axiom_blocks_a, 'name' ) );
+$axiom_blocks_price_style   = safecss_filter_attr( Typography::inline_style( $axiom_blocks_a, 'price' ) );
+$axiom_blocks_desc_style    = safecss_filter_attr( Typography::inline_style( $axiom_blocks_a, 'desc' ) );
+$axiom_blocks_feature_style = safecss_filter_attr( Typography::inline_style( $axiom_blocks_a, 'feature' ) );
+$axiom_blocks_cta_style     = safecss_filter_attr( Typography::inline_style( $axiom_blocks_a, 'cta' ) );
 ?>
 <article <?php echo '' !== $axiom_blocks_id_attr ? 'id="' . esc_attr( $axiom_blocks_id_attr ) . '" ' : ''; ?>class="<?php echo esc_attr( $axiom_blocks_class_attr ); ?>"<?php echo '' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : ''; ?>>
 	<?php if ( '' !== $axiom_blocks_badge ) : ?>

@@ -4,14 +4,16 @@ import {
 	InspectorControls,
 	RichText,
 } from '@wordpress/block-editor';
-import { PanelBody, Dropdown } from '@wordpress/components';
+import { PanelBody } from '@wordpress/components';
 import {
 	ABTextControl,
 	ABRangeControl,
 } from '../../../components/ABControls';
-import { IconPicker } from '../../../components/IconPicker';
-import { ICON_LIBRARY } from '../../../components/iconLibrary';
+import { IconControl } from '../../../components/IconControl';
+import { useIconNode } from '../../../components/useCustomIcons';
 import { BlockIcon } from '../../../blockIcons';
+import { nullSaveDeprecation } from '../../../components/deprecations';
+import metadata from './block.json';
 
 function formatNumber( value, decimals, thousandsSep, decimalSep ) {
 	const num = parseFloat( value ) || 0;
@@ -29,6 +31,8 @@ function formatNumber( value, decimals, thousandsSep, decimalSep ) {
 function CounterEdit( { attributes, setAttributes, context } ) {
 	const { startValue, endValue, decimals, prefix, suffix, label, iconSlug } =
 		attributes;
+	const resolveIcon = useIconNode();
+	const iconNode = resolveIcon( iconSlug );
 	const separator = context[ 'axiom-blocks/counterSeparator' ] !== false;
 	const thousandsSep = separator
 		? context[ 'axiom-blocks/counterThousandsSep' ] || ','
@@ -92,58 +96,13 @@ function CounterEdit( { attributes, setAttributes, context } ) {
 					title={ __( 'Icon', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<div className="ab-counter-icon-field">
-						<span className="ab-counter-icon-field__label">
-							{ __( 'Icon', 'axiom-blocks' ) }
-						</span>
-						<Dropdown
-							className="ab-counter-icon-field__pick"
-							popoverProps={ { placement: 'bottom-start' } }
-							renderToggle={ ( { isOpen, onToggle } ) => (
-								<button
-									type="button"
-									className="ab-counter-icon-field__btn"
-									onClick={ onToggle }
-									aria-expanded={ isOpen }
-									aria-label={ __(
-										'Choose icon',
-										'axiom-blocks'
-									) }
-								>
-									{ iconSlug && ICON_LIBRARY[ iconSlug ] ? (
-										ICON_LIBRARY[ iconSlug ]
-									) : (
-										<span className="ab-counter-icon-field__none">
-											{ __( 'None', 'axiom-blocks' ) }
-										</span>
-									) }
-								</button>
-							) }
-							renderContent={ () => (
-								<div className="ab-counter-icon-pop">
-									<IconPicker
-										value={ iconSlug }
-										onChange={ ( v ) =>
-											setAttributes( { iconSlug: v } )
-										}
-									/>
-								</div>
-							) }
-						/>
-					</div>
-					{ iconSlug && (
-						<div className="ab-btn-row">
-							<button
-								type="button"
-								className="ab-btn ab-btn--danger"
-								onClick={ () =>
-									setAttributes( { iconSlug: '' } )
-								}
-							>
-								{ __( 'Remove icon', 'axiom-blocks' ) }
-							</button>
-						</div>
-					) }
+					<IconControl
+						value={ iconSlug }
+						onChange={ ( v ) =>
+							setAttributes( { iconSlug: v } )
+						}
+						clearable
+					/>
 					<div className="ab-ctrl ab-block-note">
 						<p className="ab-ctrl__help">
 							{ __(
@@ -156,13 +115,13 @@ function CounterEdit( { attributes, setAttributes, context } ) {
 			</InspectorControls>
 
 			<div { ...blockProps }>
-				{ iconSlug && ICON_LIBRARY[ iconSlug ] && (
+				{ iconSlug && iconNode && (
 					<span
 						className="ab-counter__icon"
 						aria-hidden="true"
 						contentEditable={ false }
 					>
-						{ ICON_LIBRARY[ iconSlug ] }
+						{ iconNode }
 					</span>
 				) }
 				<span className="ab-counter__number" contentEditable={ false }>
@@ -191,6 +150,23 @@ export const Counter = {
 		),
 		icon: <BlockIcon slug="counter" />,
 		edit: CounterEdit,
-		save: () => null,
+		save: ( { attributes } ) => {
+			const { endValue, prefix, suffix, label } = attributes;
+			const blockProps = useBlockProps.save( { className: 'ab-counter' } );
+			return (
+				<div { ...blockProps }>
+					<span className="ab-counter__number">{ prefix }{ endValue }{ suffix }</span>
+					{ label && (
+						<RichText.Content tagName="div" className="ab-counter__label" value={ label } />
+					) }
+				</div>
+			);
+		},
+		deprecated: [
+			nullSaveDeprecation( {
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+			} ),
+		],
 	},
 };
