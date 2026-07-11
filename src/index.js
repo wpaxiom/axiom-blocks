@@ -36,6 +36,9 @@ import { Counter } from './blocks/counter-group/counter';
 import { Testimonials } from './blocks/testimonials';
 import { Testimonial } from './blocks/testimonials/testimonial';
 import { InfoBox } from './blocks/info-box';
+import { ContentSlider } from './blocks/content-slider';
+import { Slide } from './blocks/content-slider/slide';
+import { TableOfContents } from './blocks/table-of-contents';
 import { TrustBadges } from './blocks/trust-badges';
 import { FreeShippingProgress } from './blocks/free-shipping-progress';
 
@@ -149,6 +152,9 @@ const blocks = [
 	Testimonials,
 	Testimonial,
 	InfoBox,
+	ContentSlider,
+	Slide,
+	TableOfContents,
 	TrustBadges,
 	FreeShippingProgress,
 ];

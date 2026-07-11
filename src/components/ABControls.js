@@ -6,7 +6,18 @@
 import { __ } from '@wordpress/i18n';
 import { useState, useRef, useEffect } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
+import { useSelect } from '@wordpress/data';
+import { Dropdown } from '@wordpress/components';
+import { colord } from 'colord';
 import { Caret } from './Caret';
+import { AxiomColorPicker } from './AxiomColorPicker';
+
+/* Trigger label always reads as hex (6-digit opaque, 8-digit with alpha) — a
+ * raw rgba()/hsl() string in the panel confuses users. */
+function toHexLabel( str ) {
+	const c = colord( str || '' );
+	return c.isValid() && str ? c.toHex().toUpperCase() : '';
+}
 
 /* Normalize a units list (strings or { label, value }) into option objects. */
 function normalizeUnits( units ) {
@@ -226,16 +237,29 @@ export function ABSelectControl( { label, value, onChange, options } ) {
 	);
 }
 
-/* ── Color swatch + native color picker ──────────────────────────────────── */
+/* ── Color: theme palette + full picker (hex/rgb/hsl + alpha) ─────────────────
+ * Popover uses WP's ColorPalette (theme swatches, custom picker, clear) with a
+ * swatch trigger styled to our scheme. Same props as before so every block that
+ * uses ABColorControl keeps working — only the picker UI is richer now. */
 export function ABColorControl( {
 	label,
 	color,
 	onChange,
 	enableReset = true,
 	defaultColor = '',
+	// Display-only rendered default: shown in the swatch/picker when `color` is
+	// empty, WITHOUT setting the attribute — so the swatch reflects the real
+	// default yet Reset visibility still keys off the raw (empty) value.
+	fallbackColor = '',
 } ) {
-	const id = useInstanceId( ABColorControl, 'ab-color' );
+	// getSettings().colors = the theme palette, available since WP 6.0 (no
+	// deprecation, unlike useSetting/useSettings which is 6.5+).
+	const paletteColors = useSelect(
+		( select ) => select( 'core/block-editor' ).getSettings().colors || [],
+		[]
+	);
 	const showReset = enableReset && !! color && color !== defaultColor;
+	const displayColor = color || fallbackColor;
 	return (
 		<div className="ab-ctrl">
 			{ ( label || showReset ) && (
@@ -254,22 +278,35 @@ export function ABColorControl( {
 					) }
 				</div>
 			) }
-			<label htmlFor={ id } className="ab-ctrl__color-wrap">
-				<span className="ab-ctrl__color-hex">
-					{ color || __( 'Default', 'axiom-blocks' ) }
-				</span>
-				<span
-					className="ab-ctrl__color-swatch"
-					style={ { background: color } }
-				/>
-				<input
-					id={ id }
-					type="color"
-					className="ab-ctrl__color-input"
-					value={ color || '#ffffff' }
-					onChange={ ( e ) => onChange( e.target.value ) }
-				/>
-			</label>
+			<Dropdown
+				className="ab-ctrl__color-dropdown"
+				contentClassName="ab-color-popover"
+				popoverProps={ { placement: 'left-start' } }
+				renderToggle={ ( { isOpen, onToggle } ) => (
+					<button
+						type="button"
+						className="ab-ctrl__color-wrap"
+						onClick={ onToggle }
+						aria-expanded={ isOpen }
+					>
+						<span className="ab-ctrl__color-hex">
+							{ toHexLabel( color ) ||
+								__( 'Default', 'axiom-blocks' ) }
+						</span>
+						<span
+							className="ab-ctrl__color-swatch"
+							style={ { background: displayColor || 'transparent' } }
+						/>
+					</button>
+				) }
+				renderContent={ () => (
+					<AxiomColorPicker
+						value={ displayColor }
+						onChange={ ( v ) => onChange( v || '' ) }
+						colors={ paletteColors }
+					/>
+				) }
+			/>
 		</div>
 	);
 }

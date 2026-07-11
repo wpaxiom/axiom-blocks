@@ -25,6 +25,7 @@ use AxiomBlocks\Blocks\ResponsiveSpacing;
 use AxiomBlocks\Blocks\ResponsiveTypography;
 use AxiomBlocks\Frontend\Assets;
 use AxiomBlocks\Frontend\ResponsiveStyles;
+use AxiomBlocks\Frontend\TableOfContents;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -84,6 +85,9 @@ final class Plugin {
 
 		// Frontend assets.
 		Assets::init();
+
+		// Table of Contents: inject heading ids + build the list on the_content.
+		TableOfContents::init();
 
 		// Per-instance responsive CSS (printed in the footer via the styles API).
 		ResponsiveStyles::init();

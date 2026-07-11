@@ -54,6 +54,9 @@ class Registry {
 		self::register_testimonials();
 		self::register_testimonial();
 		self::register_info_box();
+		self::register_content_slider();
+		self::register_slide();
+		self::register_table_of_contents();
 		self::register_trust_badges();
 		self::register_free_shipping_progress();
 
@@ -317,6 +320,33 @@ class Registry {
 	 */
 	private static function register_info_box(): void {
 		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/info-box' );
+	}
+
+	/**
+	 * Register Content Slider Block (parent)
+	 *
+	 * @return void
+	 */
+	private static function register_content_slider(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/content-slider' );
+	}
+
+	/**
+	 * Register Slide Block (child of Content Slider)
+	 *
+	 * @return void
+	 */
+	private static function register_slide(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/content-slider/slide' );
+	}
+
+	/**
+	 * Register Table of Contents Block
+	 *
+	 * @return void
+	 */
+	private static function register_table_of_contents(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/table-of-contents' );
 	}
 
 	/**

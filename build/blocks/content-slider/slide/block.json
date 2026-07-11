@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/slide",
+	"version": "1.0.0",
+	"title": "Slide",
+	"category": "axiom-blocks",
+	"description": "A single slide inside the Slider block. Holds any blocks.",
+	"textdomain": "axiom-blocks",
+	"icon": "align-center",
+	"parent": ["axiom-blocks/content-slider"],
+	"attributes": {
+		"contentAlign":  { "type": "string", "default": "center" },
+		"verticalAlign": { "type": "string", "default": "center" },
+		"bgColor":       { "type": "string", "default": "" }
+	},
+	"usesContext": ["axiom-blocks/sliderEffect"],
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true
+	},
+	"editorScript": "file:./index.js"
+}

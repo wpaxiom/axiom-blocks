@@ -600,6 +600,31 @@ export const BLOCK_ICONS = {
 			<path d="M6 15h12" />
 		</>
 	),
+	'content-slider': (
+		<>
+			<path d="M18 22H4a2 2 0 0 1-2-2V6" />
+			<path d="m22 13-1.296-1.296a2.41 2.41 0 0 0-3.408 0L11 18" />
+			<circle cx="12" cy="8" r="2" />
+			<rect width="16" height="16" x="6" y="2" rx="2" />
+		</>
+	),
+	slide: (
+		<>
+			<path d="M2 3v18" />
+			<rect width="12" height="18" x="6" y="3" rx="2" />
+			<path d="M22 3v18" />
+		</>
+	),
+	'table-of-contents': (
+		<>
+			<path d="M21 12H8" />
+			<path d="M21 6H8" />
+			<path d="M21 18H8" />
+			<path d="M3 6h.01" />
+			<path d="M3 12h.01" />
+			<path d="M3 18h.01" />
+		</>
+	),
 };
 
 const DEFAULT_ICON = (

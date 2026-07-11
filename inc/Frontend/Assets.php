@@ -82,6 +82,8 @@ class Assets {
 			|| has_block( 'axiom-blocks/counter-group' )
 			|| has_block( 'axiom-blocks/testimonials' )
 			|| has_block( 'axiom-blocks/info-box' )
+			|| has_block( 'axiom-blocks/content-slider' )
+			|| has_block( 'axiom-blocks/table-of-contents' )
 			|| has_block( 'axiom-blocks/trust-badges' )
 			|| has_block( 'axiom-blocks/free-shipping-progress' );
 	}

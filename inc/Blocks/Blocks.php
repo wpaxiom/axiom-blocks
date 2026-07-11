@@ -179,6 +179,22 @@ class Blocks {
 			'description' => 'Styled box for an icon, heading, text, and button as blocks',
 			'icon'        => 'info',
 		),
+		array(
+			'id'          => 'content-slider',
+			'name'        => 'Content Slider',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Content slider with slide, fade, and coverflow effects',
+			'icon'        => 'images-alt2',
+		),
+		array(
+			'id'          => 'table-of-contents',
+			'name'        => 'Table of Contents',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Auto-generated contents from headings with smooth scroll and active highlight',
+			'icon'        => 'list-view',
+		),
 
 		// ── WooCommerce ──────────────────────────────────────────────────────
 		array(

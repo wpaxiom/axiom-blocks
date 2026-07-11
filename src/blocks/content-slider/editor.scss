@@ -1,0 +1,53 @@
+/**
+ * Slider — editor-only affordances.
+ *
+ * The editor replicates the frontend one-slide-at-a-time view as a simple
+ * horizontal carousel (React state drives the arrows/dots) so authors see the
+ * real layout. Every effect renders as this carousel for editing; the actual
+ * fade/coverflow transition still runs on the front end. `.ab-slider.is-editor`
+ * (two classes) out-specifies the fade/coverflow effect rules in style.scss.
+ */
+
+.ab-slider.is-editor {
+	.ab-slider__viewport {
+		position: relative;
+		overflow: hidden;
+		perspective: none;
+	}
+
+	.ab-slider__track {
+		display: flex;
+		flex-direction: row;
+		transform-style: flat;
+	}
+
+	&.ab-slider--vertical .ab-slider__track {
+		flex-direction: column;
+	}
+
+	.ab-slide {
+		position: relative;
+		inset: auto;
+		flex: 0 0
+			calc(
+				(
+						100% - (
+								var(--ab-slider-gap, 16px) *
+									(var(--ab-editor-per-view, 1) - 1)
+							)
+					) / var(--ab-editor-per-view, 1)
+			);
+		width: auto;
+		opacity: 1;
+		pointer-events: auto;
+		outline: 1px dashed rgba(124, 58, 237, 0.35);
+		outline-offset: -1px;
+	}
+
+	.ab-help-note {
+		margin: 0;
+		font-size: 12px;
+		font-style: italic;
+		color: #757575;
+	}
+}

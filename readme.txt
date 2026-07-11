@@ -5,7 +5,7 @@ Tags: gutenberg, blocks, editor, page-builder, woocommerce
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,8 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 * **Testimonials** - Grid, carousel, or marquee testimonials with author details, avatars, and star ratings.
 * **Info Box** - A styled box that holds an icon, heading, text, and button as editable blocks, with predefined styles and a single control for the spacing between items.
 * **Tabs** - Horizontal tabs container that accepts any blocks inside.
+* **Content Slider** - A slider/carousel that holds any blocks per slide, with slide, fade, and coverflow effects, autoplay, arrows and dots, drag and swipe, keyboard control, responsive slides-per-view, and an optional click-to-zoom lightbox.
+* **Table of Contents** - Auto-built from your page headings, with numbered/bullet/none markers, nesting, smooth scroll, active-section highlight, a sticky sidebar with internal scroll, a collapsible panel, a reading-progress rail, copy-link, back-to-top, a mobile dock bar, and light or dark schemes.
 * **Countdown Timer** - Live countdown to a target date or time.
 * **Copy to Clipboard** - Button that copies text or code snippets to the visitor's clipboard.
 * **Star Rating** - 5-star display block perfect for reviews and testimonials.
@@ -53,6 +55,7 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 * **Responsive controls** - typography (all blocks), columns, gap, alignment, and sizes with per-device overrides and live editor previews
 * **Deactivation survival** - authored content from dynamic blocks stays visible on the page even if the plugin is deactivated (semantic save fallback + deprecation migration)
 * **Shared icon system** - 136 curated Lucide icons plus custom SVG uploads, shared across all icon-supporting blocks
+* **Advanced colour picker** - every colour control has an HSV canvas, theme palette, Hex/RGB/HSL inputs, alpha, eyedropper, and recent colours
 * Clean, semantic markup with no extra wrapper bloat
 * Fully compatible with Full Site Editing (FSE) and block themes
 * Optimized performance - only loads assets for active blocks
@@ -148,6 +151,11 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Changelog ==
 
+= 1.0.5 =
+* New block: Content Slider - a slider/carousel that holds any blocks per slide, with slide, fade, and coverflow effects, autoplay with loop and pause-on-hover, arrows and dots, drag and swipe, keyboard control, responsive slides-per-view, adaptive height, and an optional click-to-zoom lightbox.
+* New block: Table of Contents - auto-built from your page headings, with numbered/bullet/none markers, nesting, smooth scroll, active-section highlight, a sticky sidebar with internal scroll, a collapsible panel, a per-section reading-progress rail, copy-link, back-to-top, a mobile dock bar, and light or dark schemes.
+* New colour picker - every colour control now uses a redesigned picker with an HSV canvas, theme palette, Hex/RGB/HSL inputs, alpha, an eyedropper, and recent colours.
+
 = 1.0.4 =
 * Deactivation survival for Accordion, Advanced Heading, Advanced Button, and Notice blocks.
 * Responsive controls - per-device typography, columns, gap, alignment, and sizes with live editor previews.
@@ -177,6 +185,9 @@ Developers can redirect the feedback to their own server - or disable it entirel
 * Full Site Editing (FSE) support.
 
 == Upgrade Notice ==
+
+= 1.0.5 =
+Adds two new blocks - Content Slider and Table of Contents - plus a redesigned colour picker with an HSV canvas, alpha, eyedropper, and recent colours.
 
 = 1.0.4 =
 Adds responsive controls, deactivation survival, custom icon library, Advanced Section focal point improvements, and multiple bug fixes.

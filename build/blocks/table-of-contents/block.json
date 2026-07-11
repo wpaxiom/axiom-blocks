@@ -1,0 +1,98 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/table-of-contents",
+	"version": "1.0.0",
+	"title": "Table of Contents",
+	"category": "axiom-blocks",
+	"description": "Auto-generated table of contents from the page's headings — anchor links, smooth scroll, active-section highlight, sticky, and per-section reading progress.",
+	"keywords": ["table of contents", "toc", "index", "anchor", "navigation"],
+	"textdomain": "axiom-blocks",
+	"icon": "list-view",
+	"attributes": {
+		"eyebrow":     { "type": "string",  "default": "On this page" },
+		"title":       { "type": "string",  "default": "" },
+		"showTitle":   { "type": "boolean", "default": false },
+		"titleTag":    { "type": "string",  "default": "h2" },
+		"colorScheme": { "type": "string",  "default": "light" },
+
+		"levelH1": { "type": "boolean", "default": false },
+		"levelH2": { "type": "boolean", "default": true },
+		"levelH3": { "type": "boolean", "default": true },
+		"levelH4": { "type": "boolean", "default": true },
+		"levelH5": { "type": "boolean", "default": false },
+		"levelH6": { "type": "boolean", "default": false },
+
+		"markerType":   { "type": "string", "default": "numbered" },
+		"numberPrefix": { "type": "string", "default": "" },
+
+		"collapsible":      { "type": "boolean", "default": false },
+		"initialCollapsed": { "type": "boolean", "default": false },
+		"showSectionCount": { "type": "boolean", "default": true },
+
+		"smoothScroll": { "type": "boolean", "default": true },
+		"scrollOffset": { "type": "number",  "default": 0 },
+		"scrollSpy":    { "type": "boolean", "default": true },
+
+		"sticky":       { "type": "boolean", "default": false },
+		"stickyOffset": { "type": "number",  "default": 24 },
+		"hideOnMobile": { "type": "boolean", "default": false },
+		"mobileDock":   { "type": "boolean", "default": true },
+
+		"backToTop":       { "type": "boolean", "default": false },
+		"footerBackToTop": { "type": "boolean", "default": false },
+		"copyLink":        { "type": "boolean", "default": false },
+		"sectionProgress": { "type": "boolean", "default": false },
+
+		"indent":  { "type": "string", "default": "" },
+		"itemGap": { "type": "string", "default": "" },
+
+		"bgColor":        { "type": "string", "default": "" },
+		"textColor":      { "type": "string", "default": "" },
+		"linkHoverColor": { "type": "string", "default": "" },
+		"activeColor":    { "type": "string", "default": "" },
+		"markerColor":    { "type": "string", "default": "" },
+		"progressColor":  { "type": "string", "default": "" },
+		"borderColor":    { "type": "string", "default": "" },
+		"borderWidth":    { "type": "string", "default": "" },
+		"borderRadius":   { "type": "string", "default": "" },
+
+		"titleFontFamily":     { "type": "string", "default": "" },
+		"titleFontWeight":     { "type": "string", "default": "" },
+		"titleFontSize":       { "type": "string", "default": "" },
+		"titleLineHeight":     { "type": "string", "default": "" },
+		"titleLetterSpacing":  { "type": "string", "default": "" },
+		"titleTextTransform":  { "type": "string", "default": "" },
+		"titleTextDecoration": { "type": "string", "default": "" },
+		"titleTextAlign":      { "type": "string", "default": "" },
+
+		"contentFontFamily":     { "type": "string", "default": "" },
+		"contentFontWeight":     { "type": "string", "default": "" },
+		"contentFontSize":       { "type": "string", "default": "" },
+		"contentLineHeight":     { "type": "string", "default": "" },
+		"contentLetterSpacing":  { "type": "string", "default": "" },
+		"contentTextTransform":  { "type": "string", "default": "" },
+		"contentTextDecoration": { "type": "string", "default": "" },
+		"contentTextAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./editor.scss",
+	"style":        "file:./style.scss",
+	"viewScript":   "file:./assets/toc.js",
+	"render":       "file:./render.php"
+}

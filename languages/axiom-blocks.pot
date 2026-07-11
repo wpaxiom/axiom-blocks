@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.4\n"
+"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/axiom-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-29T18:00:08+00:00\n"
+"POT-Creation-Date: 2026-07-11T16:54:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axiom-blocks\n"
@@ -45,7 +45,7 @@ msgstr ""
 
 #: inc/Admin/Dashboard.php:46
 #: inc/Admin/Dashboard.php:47
-#: inc/Plugin.php:129
+#: inc/Plugin.php:133
 #: src/admin/components/Header.js:17
 msgid "Axiom Blocks"
 msgstr ""
@@ -137,6 +137,14 @@ msgstr[1] ""
 msgid "Custom %d"
 msgstr ""
 
+#. translators: %d is the number of sections in the table of contents.
+#: inc/Frontend/TableOfContents.php:234
+#, php-format
+msgid "%d section"
+msgid_plural "%d sections"
+msgstr[0] ""
+msgstr[1] ""
+
 #: src/blocks/accordion/render.php:125
 msgid "Expand all"
 msgstr ""
@@ -200,6 +208,23 @@ msgstr ""
 msgid "Rating: %1$s out of %2$s"
 msgstr ""
 
+#: src/blocks/table-of-contents/render.php:141
+msgid "Table of contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/render.php:153
+msgid "Open table of contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/render.php:178
+msgid "Toggle table of contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/render.php:198
+#: src/blocks/table-of-contents/index.js:722
+msgid "Back to top"
+msgstr ""
+
 #: src/blocks/tabs/render.php:110
 #: src/blocks/tabs/index.js:303
 msgid "Tab"
@@ -261,6 +286,7 @@ msgstr ""
 #: src/admin/components/Dashboard.js:412
 #: src/blocks/advanced-section/index.js:959
 #: src/blocks/button-group/index.js:98
+#: src/blocks/content-slider/index.js:209
 #: src/blocks/countdown-timer/index.js:383
 #: src/blocks/countdown-timer/index.js:387
 #: src/blocks/counter-group/index.js:213
@@ -493,6 +519,8 @@ msgid "A single collapsible panel inside the Accordion block."
 msgstr ""
 
 #: src/blocks/accordion/index.js:186
+#: src/blocks/content-slider/index.js:320
+#: src/blocks/table-of-contents/index.js:282
 msgid "Behaviour"
 msgstr ""
 
@@ -582,6 +610,7 @@ msgstr ""
 #: src/blocks/advanced-section/index.js:574
 #: src/blocks/advanced-section/index.js:1001
 #: src/blocks/button-group/index.js:133
+#: src/blocks/content-slider/slide/index.js:16
 #: src/blocks/copy-to-clipboard/index.js:214
 #: src/blocks/copy-to-clipboard/index.js:248
 #: src/blocks/countdown-timer/index.js:421
@@ -606,6 +635,7 @@ msgstr ""
 #: src/blocks/advanced-heading/index.js:319
 #: src/blocks/advanced-section/index.js:1009
 #: src/blocks/button-group/index.js:141
+#: src/blocks/content-slider/slide/index.js:18
 #: src/blocks/copy-to-clipboard/index.js:218
 #: src/blocks/copy-to-clipboard/index.js:256
 #: src/blocks/countdown-timer/index.js:435
@@ -646,11 +676,13 @@ msgstr ""
 #: src/blocks/accordion/index.js:391
 #: src/blocks/advanced-button/index.js:370
 #: src/blocks/advanced-section/index.js:318
+#: src/blocks/content-slider/slide/index.js:77
 #: src/blocks/counter-group/index.js:501
 #: src/blocks/icon/index.js:250
 #: src/blocks/info-box/index.js:237
 #: src/blocks/notice/index.js:211
 #: src/blocks/shape-divider/index.js:124
+#: src/blocks/table-of-contents/index.js:462
 #: src/blocks/testimonials/index.js:419
 msgid "Background"
 msgstr ""
@@ -687,6 +719,8 @@ msgstr ""
 #: src/blocks/advanced-button/index.js:377
 #: src/blocks/advanced-button/index.js:458
 #: src/blocks/advanced-section/index.js:890
+#: src/blocks/content-slider/index.js:497
+#: src/blocks/table-of-contents/index.js:508
 #: src/blocks/testimonials/index.js:424
 msgid "Border"
 msgstr ""
@@ -698,6 +732,7 @@ msgstr ""
 #: src/blocks/accordion/index.js:420
 #: src/blocks/accordion/index.js:484
 #: src/blocks/advanced-heading/index.js:382
+#: src/blocks/content-slider/index.js:501
 #: src/blocks/counter-group/index.js:422
 #: src/blocks/counter-group/index.js:440
 #: src/blocks/counter-group/index.js:483
@@ -712,15 +747,18 @@ msgstr ""
 #: src/blocks/advanced-button/index.js:462
 #: src/blocks/advanced-heading/index.js:337
 #: src/blocks/advanced-section/index.js:925
+#: src/blocks/content-slider/index.js:506
 msgid "Width"
 msgstr ""
 
 #: src/blocks/accordion/index.js:440
 #: src/blocks/accordion/index.js:506
+#: src/blocks/content-slider/index.js:517
 #: src/blocks/free-shipping-progress/index.js:173
 #: src/blocks/icon/index.js:279
 #: src/blocks/info-box/index.js:260
 #: src/blocks/notice/index.js:228
+#: src/blocks/table-of-contents/index.js:527
 #: src/blocks/testimonials/index.js:442
 msgid "Corner radius"
 msgstr ""
@@ -756,6 +794,7 @@ msgstr ""
 #: src/blocks/counter-group/index.js:541
 #: src/blocks/icon/index.js:229
 #: src/blocks/info-box/index.js:275
+#: src/blocks/table-of-contents/index.js:260
 #: src/blocks/testimonials/testimonial/index.js:176
 #: src/components/IconControl.js:31
 #: src/components/IconPicker.js:165
@@ -843,6 +882,7 @@ msgstr ""
 #: src/blocks/advanced-heading/index.js:413
 #: src/blocks/icon-list/index.js:349
 #: src/blocks/icon/index.js:360
+#: src/blocks/table-of-contents/index.js:468
 #: src/blocks/testimonials/testimonial/index.js:217
 #: src/components/iconLibrary.js:1364
 msgid "Link"
@@ -1105,6 +1145,7 @@ msgstr ""
 #: src/blocks/advanced-section/index.js:984
 #: src/blocks/advanced-section/index.js:1005
 #: src/blocks/button-group/index.js:137
+#: src/blocks/content-slider/slide/index.js:17
 #: src/blocks/copy-to-clipboard/index.js:252
 #: src/blocks/countdown-timer/index.js:428
 #: src/blocks/free-shipping-progress/index.js:153
@@ -1127,11 +1168,13 @@ msgstr ""
 #: src/blocks/advanced-heading/index.js:393
 #: src/blocks/icon-list/index.js:340
 #: src/blocks/notice/index.js:207
+#: src/blocks/table-of-contents/index.js:441
 msgid "Colours"
 msgstr ""
 
 #: src/blocks/advanced-heading/index.js:418
 #: src/blocks/icon-list/index.js:354
+#: src/blocks/table-of-contents/index.js:474
 msgid "Link hover"
 msgstr ""
 
@@ -1140,6 +1183,7 @@ msgstr ""
 #: src/blocks/counter-group/index.js:571
 #: src/blocks/notice/index.js:241
 #: src/blocks/pricing-table/pricing-plan/index.js:273
+#: src/blocks/table-of-contents/index.js:568
 #: src/blocks/testimonials/index.js:659
 #: src/blocks/trust-badges/index.js:636
 #: src/components/TypographyPanel.js:505
@@ -1262,6 +1306,7 @@ msgstr ""
 
 #: src/blocks/advanced-section/index.js:597
 #: src/blocks/advanced-section/index.js:980
+#: src/blocks/content-slider/slide/index.js:22
 #: src/blocks/counter-group/index.js:389
 #: src/blocks/testimonials/index.js:479
 msgid "Top"
@@ -1352,6 +1397,7 @@ msgstr ""
 
 #: src/blocks/advanced-section/index.js:976
 #: src/blocks/button-group/index.js:110
+#: src/blocks/content-slider/index.js:233
 #: src/blocks/countdown-timer/index.js:398
 #: src/blocks/icon-list/index.js:191
 #: src/blocks/tabs/index.js:572
@@ -1359,11 +1405,13 @@ msgid "Vertical"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:988
+#: src/blocks/content-slider/slide/index.js:24
 msgid "Bottom"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:997
 #: src/blocks/button-group/index.js:106
+#: src/blocks/content-slider/index.js:232
 #: src/blocks/countdown-timer/index.js:391
 #: src/blocks/icon-list/index.js:195
 #: src/blocks/tabs/index.js:568
@@ -1456,6 +1504,7 @@ msgid "Learn more"
 msgstr ""
 
 #: src/blocks/button-group/index.js:102
+#: src/blocks/content-slider/index.js:224
 #: src/blocks/tabs/index.js:564
 msgid "Orientation"
 msgstr ""
@@ -1476,6 +1525,232 @@ msgstr ""
 
 #: src/blocks/button-group/index.js:198
 msgid "Arrange Advanced Buttons in a row or stack with alignment and gap controls."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:28
+msgid "Slide one…"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:213
+msgid "Effect"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:216
+#: src/blocks/content-slider/slide/index.js:63
+#: src/blocks/content-slider/slide/index.js:94
+msgid "Slide"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:217
+msgid "Fade"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:218
+msgid "Coverflow"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:227
+msgid "Vertical needs a slider height (set below)."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:246
+msgid "Slides per view"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:249
+msgid "How many slides show at once."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:250
+msgid "0 = inherit from a larger screen."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:268
+msgid "Slides to scroll"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:269
+msgid "How many slides advance per arrow/swipe."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:282
+msgid "Fade shows one slide at a time."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:286
+msgid "Gap between slides"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:295
+msgid "Slider height"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:296
+msgid "0 = auto (fit slide content)."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:308
+msgid "Adaptive height"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:309
+msgid "Resize the slider to the current slide instead of the tallest."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:324
+#: src/blocks/testimonials/index.js:313
+msgid "Autoplay"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:331
+#: src/blocks/testimonials/index.js:321
+msgid "Autoplay delay"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:342
+#: src/blocks/testimonials/index.js:354
+#: src/blocks/testimonials/index.js:405
+msgid "Pause on hover"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:349
+msgid "Play / pause button"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:350
+msgid "Accessible control to stop the autoplay (recommended)."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:362
+#: src/blocks/testimonials/index.js:349
+msgid "Loop"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:367
+msgid "Draggable / swipe"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:372
+#: src/blocks/testimonials/index.js:338
+msgid "Transition speed"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:381
+msgid "Lightbox on click"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:382
+msgid "Click an image inside a slide to open it full-size."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:392
+#: src/components/iconLibrary.js:1550
+msgid "Navigation"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:396
+#: src/blocks/testimonials/index.js:361
+msgid "Show arrows"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:403
+msgid "Arrow colour"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:411
+msgid "Arrow background"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:419
+msgid "Arrow side spacing"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:420
+msgid "Distance from the left/right edge."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:433
+msgid "Show pagination"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:440
+msgid "Pagination style"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:443
+msgid "Dots"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:444
+msgid "Fraction (1 / 5)"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:445
+msgid "Progress bar"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:452
+msgid "Pagination colour"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:460
+msgid "Active colour"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:468
+msgid "Spacing above pagination"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:469
+msgid "Gap between the slide content and the pagination."
+msgstr ""
+
+#: src/blocks/content-slider/index.js:481
+msgid "Space between dots"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:544
+msgid "Previous slide"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:553
+msgid "Next slide"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:566
+msgid "Pause autoplay"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:612
+msgid "Go to slide"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:626
+msgid "Content Slider"
+msgstr ""
+
+#: src/blocks/content-slider/index.js:627
+msgid "A content slider with slide, fade, and coverflow effects — any blocks per slide."
+msgstr ""
+
+#: src/blocks/content-slider/slide/index.js:23
+msgid "Middle"
+msgstr ""
+
+#: src/blocks/content-slider/slide/index.js:51
+msgid "Add slide content…"
+msgstr ""
+
+#: src/blocks/content-slider/slide/index.js:65
+msgid "Content alignment"
+msgstr ""
+
+#: src/blocks/content-slider/slide/index.js:71
+msgid "Vertical alignment"
+msgstr ""
+
+#: src/blocks/content-slider/slide/index.js:95
+msgid "A single slide inside the Slider block. Holds any blocks."
 msgstr ""
 
 #: src/blocks/copy-to-clipboard/index.js:151
@@ -1875,6 +2150,7 @@ msgstr ""
 #: src/blocks/counter-group/index.js:515
 #: src/blocks/icon/index.js:296
 #: src/blocks/info-box/index.js:249
+#: src/blocks/table-of-contents/index.js:516
 #: src/blocks/testimonials/index.js:431
 msgid "Border width"
 msgstr ""
@@ -2197,7 +2473,7 @@ msgid "Describe this feature…"
 msgstr ""
 
 #: src/blocks/info-box/index.js:53
-#: src/components/ABControls.js:259
+#: src/components/ABControls.js:294
 #: src/components/TypographyPanel.js:94
 #: src/components/TypographyPanel.js:163
 #: src/components/TypographyPanel.js:509
@@ -2291,6 +2567,7 @@ msgid "Accent / border"
 msgstr ""
 
 #: src/blocks/notice/index.js:245
+#: src/blocks/table-of-contents/index.js:572
 msgid "Title"
 msgstr ""
 
@@ -2753,6 +3030,199 @@ msgstr ""
 msgid "Display a 5-star rating with optional value and review count."
 msgstr ""
 
+#: src/blocks/table-of-contents/index.js:204
+msgid "Structure"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:208
+msgid "Eyebrow label"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:213
+msgid "Show title"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:214
+msgid "A larger heading below the eyebrow."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:223
+msgid "Title tag"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:232
+msgid "Plain"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:242
+msgid "Include heading levels"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:248
+msgid "List marker"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:252
+msgid "Numbered"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:256
+msgid "Bullet"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:268
+msgid "Number prefix"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:269
+msgid "Text before each number, e.g. \"Step \"."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:286
+msgid "Smooth scroll"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:293
+msgid "Scroll offset"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:294
+msgid "Extra space above the target â€” clear a fixed header."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:308
+msgid "Highlight active section"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:312
+msgid "Marks the item for the section in view."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:320
+msgid "Reading-progress rail"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:321
+msgid "A sliding purple rail follows the section in view."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:331
+msgid "Collapsible"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:340
+msgid "Start collapsed"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:350
+msgid "Show section count"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:362
+msgid "Sticky on scroll"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:369
+msgid "Sticky top offset"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:383
+msgid "Disable sticky on mobile"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:394
+msgid "Mobile dock bar"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:398
+msgid "On phones, dock as a bar that opens a bottom sheet."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:411
+msgid "Copy-link on each item"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:412
+msgid "Adds a button to copy a direct link to the heading."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:420
+msgid "Footer back-to-top"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:421
+msgid "A \"Back to top\" link inside the panel footer."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:431
+msgid "Floating back-to-top button"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:445
+msgid "Colour scheme"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:449
+#: src/components/TypographyPanel.js:82
+msgid "Light"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:453
+msgid "Dark"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:482
+msgid "Active section"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:490
+msgid "Marker"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:499
+msgid "Progress"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:540
+msgid "List layout"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:544
+msgid "Nesting indent"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:555
+msgid "Item spacing"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:582
+msgid "List items"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:611
+msgid "On this page"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:624
+msgid "In this guide"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:669
+msgid "No headings yet"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:671
+msgid "Add headings to your content and pick which levels to include â€” they will appear here automatically."
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:734
+msgid "Table of Contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/index.js:735
+msgid "Auto-generated table of contents from the page headings, with smooth scroll and active-section highlight."
+msgstr ""
+
 #: src/blocks/tabs/index.js:136
 msgid "Icon library"
 msgstr ""
@@ -2908,31 +3378,6 @@ msgstr ""
 
 #: src/blocks/testimonials/index.js:258
 msgid "Cards in view"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:313
-msgid "Autoplay"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:321
-msgid "Autoplay delay"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:338
-msgid "Transition speed"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:349
-msgid "Loop"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:354
-#: src/blocks/testimonials/index.js:405
-msgid "Pause on hover"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:361
-msgid "Show arrows"
 msgstr ""
 
 #: src/blocks/testimonials/index.js:368
@@ -3209,11 +3654,11 @@ msgstr ""
 msgid "Payment, security, and service trust badges with presets."
 msgstr ""
 
-#: src/components/ABControls.js:101
+#: src/components/ABControls.js:112
 msgid "Change unit"
 msgstr ""
 
-#: src/components/ABControls.js:252
+#: src/components/ABControls.js:276
 #: src/components/ABResponsive.js:69
 #: src/components/SpacingPanel.js:228
 #: src/components/TypographyPanel.js:561
@@ -3222,6 +3667,22 @@ msgstr ""
 
 #: src/components/ABResponsive.js:64
 msgid "Clear this device’s value"
+msgstr ""
+
+#: src/components/AxiomColorPicker.js:439
+msgid "Theme"
+msgstr ""
+
+#: src/components/AxiomColorPicker.js:474
+msgid "Recent"
+msgstr ""
+
+#: src/components/AxiomColorPicker.js:508
+msgid "Pick from screen"
+msgstr ""
+
+#: src/components/AxiomColorPicker.js:519
+msgid "Clear"
 msgstr ""
 
 #: src/components/DeviceSwitcher.js:64
@@ -3652,10 +4113,6 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-#: src/components/iconLibrary.js:1550
-msgid "Navigation"
-msgstr ""
-
 #: src/components/iconLibrary.js:1556
 msgid "Compass"
 msgstr ""
@@ -3831,10 +4288,6 @@ msgstr ""
 
 #: src/components/TypographyPanel.js:81
 msgid "Extra Light"
-msgstr ""
-
-#: src/components/TypographyPanel.js:82
-msgid "Light"
 msgstr ""
 
 #: src/components/TypographyPanel.js:83
@@ -4070,6 +4523,7 @@ msgid "compare"
 msgstr ""
 
 #: src/blocks/before-after-slider/block.json
+#: src/blocks/content-slider/block.json
 msgctxt "block keyword"
 msgid "slider"
 msgstr ""
@@ -4097,6 +4551,47 @@ msgstr ""
 #: src/blocks/button-group/block.json
 msgctxt "block keyword"
 msgid "group"
+msgstr ""
+
+#: src/blocks/content-slider/block.json
+msgctxt "block title"
+msgid "Content Slider"
+msgstr ""
+
+#: src/blocks/content-slider/block.json
+msgctxt "block description"
+msgid "A content slider — put any blocks in each slide, with slide/fade/coverflow effects, autoplay, arrows, dots, and an optional lightbox. No jQuery, no bundled library."
+msgstr ""
+
+#: src/blocks/content-slider/block.json
+#: src/blocks/testimonials/block.json
+msgctxt "block keyword"
+msgid "carousel"
+msgstr ""
+
+#: src/blocks/content-slider/block.json
+msgctxt "block keyword"
+msgid "slideshow"
+msgstr ""
+
+#: src/blocks/content-slider/block.json
+msgctxt "block keyword"
+msgid "gallery"
+msgstr ""
+
+#: src/blocks/content-slider/block.json
+msgctxt "block keyword"
+msgid "coverflow"
+msgstr ""
+
+#: src/blocks/content-slider/slide/block.json
+msgctxt "block title"
+msgid "Slide"
+msgstr ""
+
+#: src/blocks/content-slider/slide/block.json
+msgctxt "block description"
+msgid "A single slide inside the Slider block. Holds any blocks."
 msgstr ""
 
 #: src/blocks/copy-to-clipboard/block.json
@@ -4541,6 +5036,41 @@ msgctxt "block keyword"
 msgid "testimonial"
 msgstr ""
 
+#: src/blocks/table-of-contents/block.json
+msgctxt "block title"
+msgid "Table of Contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.json
+msgctxt "block description"
+msgid "Auto-generated table of contents from the page's headings — anchor links, smooth scroll, active-section highlight, sticky, and per-section reading progress."
+msgstr ""
+
+#: src/blocks/table-of-contents/block.json
+msgctxt "block keyword"
+msgid "table of contents"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.json
+msgctxt "block keyword"
+msgid "toc"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.json
+msgctxt "block keyword"
+msgid "index"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.json
+msgctxt "block keyword"
+msgid "anchor"
+msgstr ""
+
+#: src/blocks/table-of-contents/block.json
+msgctxt "block keyword"
+msgid "navigation"
+msgstr ""
+
 #: src/blocks/tabs/block.json
 msgctxt "block title"
 msgid "Tabs"
@@ -4596,11 +5126,6 @@ msgstr ""
 #: src/blocks/testimonials/block.json
 msgctxt "block keyword"
 msgid "quote"
-msgstr ""
-
-#: src/blocks/testimonials/block.json
-msgctxt "block keyword"
-msgid "carousel"
 msgstr ""
 
 #: src/blocks/testimonials/testimonial/block.json

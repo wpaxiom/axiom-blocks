@@ -1,0 +1,597 @@
+/**
+ * Table of Contents — shared frontend + editor styles.
+ * Adapted from the BlockSuite design-system handoff. The look ships as the
+ * default; per-block colour/typography controls override the tokens inline
+ * (see render.php / index.js). Dynamic values arrive as --ab-toc-* props.
+ */
+
+.ab-toc {
+
+	/* Tokens — light defaults. Controls override these inline. */
+	--ab-toc-bg: #fff;
+	--ab-toc-border: #e2e8f0;
+	--ab-toc-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.05);
+	--ab-toc-title: #0f172a;
+	--ab-toc-eyebrow: #64748b;
+	--ab-toc-link: #475569;
+	--ab-toc-link-hover: #0f172a;
+	--ab-toc-active: #7c3aed;
+	--ab-toc-active-bg: #f5f3ff;
+	--ab-toc-rail: #e2e8f0;
+	--ab-toc-marker: #94a3b8;
+	--ab-toc-icon: #94a3b8;
+	--ab-toc-icon-hover: #7c3aed;
+	--ab-toc-progress-tr: #ede9fe;
+	--ab-toc-progress: var(--ab-toc-active);
+	--ab-toc-bw: 1px;
+	--ab-toc-radius: 12px;
+	--ab-toc-indent: 20px;
+	--ab-toc-gap: 2px;
+
+	font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+	background: var(--ab-toc-bg);
+	border: var(--ab-toc-bw) solid var(--ab-toc-border);
+	border-radius: var(--ab-toc-radius);
+	box-shadow: var(--ab-toc-shadow);
+	padding: 18px 20px 20px;
+	color: var(--ab-toc-link);
+	-webkit-font-smoothing: antialiased;
+
+	&.ab-toc--empty {
+		display: none;
+	}
+}
+
+/* Dark theme */
+.ab-toc--dark {
+	--ab-toc-bg: #0f1e38;
+	--ab-toc-border: #22304f;
+	--ab-toc-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 4px 14px rgba(0, 0, 0, 0.28);
+	--ab-toc-title: #f1f5f9;
+	--ab-toc-eyebrow: #8fa8cc;
+	--ab-toc-link: #b7c4da;
+	--ab-toc-link-hover: #fff;
+	--ab-toc-active: #a78bfa;
+	--ab-toc-active-bg: rgba(124, 58, 237, 0.16);
+	--ab-toc-rail: #22304f;
+	--ab-toc-marker: #64748b;
+	--ab-toc-icon: #64748b;
+	--ab-toc-icon-hover: #a78bfa;
+	--ab-toc-progress-tr: rgba(124, 58, 237, 0.22);
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.ab-toc__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.ab-toc__head-titles {
+	min-width: 0;
+}
+
+.ab-toc__eyebrow {
+	margin: 0;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--ab-toc-eyebrow);
+}
+
+.ab-toc__count {
+	font-variant-numeric: tabular-nums;
+}
+
+.ab-toc__title {
+	margin: 2px 0 0;
+	font-size: 15px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	line-height: 1.3;
+	color: var(--ab-toc-title);
+}
+
+/* Collapse / close button */
+.ab-toc__toggle {
+	flex: none;
+	width: 30px;
+	height: 30px;
+	display: grid;
+	place-items: center;
+	border: 1px solid var(--ab-toc-border);
+	border-radius: 7px;
+	background: transparent;
+	color: var(--ab-toc-eyebrow);
+	cursor: pointer;
+	transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+
+	&:hover {
+		color: var(--ab-toc-active);
+		border-color: var(--ab-toc-active);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--ab-toc-active);
+		outline-offset: 2px;
+	}
+
+	svg {
+		width: 15px;
+		height: 15px;
+		transition: transform 0.2s ease;
+	}
+}
+
+.ab-toc.is-collapsed .ab-toc__toggle svg {
+	transform: rotate(-90deg);
+}
+
+/* ── Body / collapse ───────────────────────────────────────────────────── */
+.ab-toc__body {
+	overflow: hidden;
+}
+
+.ab-toc--collapsible .ab-toc__body {
+	max-height: 1500px;
+	opacity: 1;
+	transition: max-height 0.28s ease, opacity 0.2s ease;
+}
+
+.ab-toc.is-collapsed .ab-toc__body {
+	max-height: 0;
+	opacity: 0;
+}
+
+.ab-toc.is-collapsed .ab-toc__head {
+	margin-bottom: 0;
+}
+
+/* ── List + rail ───────────────────────────────────────────────────────── */
+.ab-toc__list-ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--ab-toc-gap);
+	counter-reset: ab-toc-item;
+}
+
+/* Vertical rail (scroll-spy track) */
+.ab-toc__list-ul::before {
+	content: "";
+	position: absolute;
+	inset-inline-start: 0;
+	top: 4px;
+	bottom: 4px;
+	width: 2px;
+	border-radius: 2px;
+	background: var(--ab-toc-rail);
+}
+
+.ab-toc__item {
+	margin: 0;
+	position: relative;
+	counter-increment: ab-toc-item;
+}
+
+/* Active rail segment */
+.ab-toc__item.is-active::before {
+	content: "";
+	position: absolute;
+	inset-inline-start: 0;
+	top: 6px;
+	bottom: 6px;
+	width: 2px;
+	border-radius: 2px;
+	background: var(--ab-toc-active);
+}
+
+.ab-toc__link {
+	position: relative;
+	display: flex;
+	align-items: baseline;
+	gap: 9px;
+	padding: 7px 30px 7px calc(16px + var(--ab-toc-depth, 0) * var(--ab-toc-indent));
+	font-size: 14px;
+	line-height: 1.4;
+	font-weight: 500;
+	color: var(--ab-toc-link);
+	text-decoration: none;
+	border-radius: 7px;
+	cursor: pointer;
+	transition: color 0.15s ease, background 0.15s ease;
+
+	&:hover {
+		color: var(--ab-toc-link-hover);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--ab-toc-active);
+		outline-offset: 1px;
+	}
+}
+
+.ab-toc__item.is-active > .ab-toc__link {
+	color: var(--ab-toc-active);
+	font-weight: 600;
+	background: var(--ab-toc-active-bg);
+}
+
+/* Depth type-scale: shrink a notch per level */
+.ab-toc__item--h3 .ab-toc__link,
+.ab-toc__item--h4 .ab-toc__link,
+.ab-toc__item--h5 .ab-toc__link,
+.ab-toc__item--h6 .ab-toc__link {
+	font-size: 13.5px;
+}
+
+.ab-toc__item--h4 .ab-toc__link,
+.ab-toc__item--h5 .ab-toc__link,
+.ab-toc__item--h6 .ab-toc__link {
+	font-size: 13px;
+}
+
+.ab-toc__text {
+	min-width: 0;
+}
+
+/* ── Markers ───────────────────────────────────────────────────────────── */
+.ab-toc__marker {
+	flex: none;
+	color: var(--ab-toc-marker);
+	font-variant-numeric: tabular-nums;
+	transition: color 0.15s ease;
+}
+
+.ab-toc__item.is-active > .ab-toc__link .ab-toc__marker {
+	color: var(--ab-toc-active);
+}
+
+/* Numbered */
+.ab-toc--numbered .ab-toc__marker {
+	font-family: "DM Mono", ui-monospace, monospace;
+	font-size: 12px;
+	min-width: 1.4em;
+
+	&::before {
+		content: attr(data-prefix) counter(ab-toc-item);
+	}
+}
+
+/* Bullet */
+.ab-toc--bullet .ab-toc__marker {
+	align-self: center;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: currentcolor;
+	transform: translateY(-1px);
+}
+
+/* None */
+.ab-toc--none .ab-toc__marker {
+	display: none;
+}
+
+/* ── Copy-link affordance ──────────────────────────────────────────────── */
+.ab-toc__copy {
+	position: absolute;
+	inset-inline-end: 6px;
+	top: 50%;
+	transform: translateY(-50%) scale(0.9);
+	width: 22px;
+	height: 22px;
+	display: grid;
+	place-items: center;
+	border: 0;
+	background: transparent;
+	color: var(--ab-toc-icon);
+	border-radius: 5px;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.14s ease, color 0.14s ease, transform 0.14s ease;
+
+	svg {
+		width: 13px;
+		height: 13px;
+	}
+
+	&:hover {
+		color: var(--ab-toc-icon-hover);
+	}
+
+	&:focus-visible {
+		opacity: 1;
+		outline: 2px solid var(--ab-toc-active);
+		outline-offset: 1px;
+	}
+
+	&.is-copied {
+		color: #16a34a;
+	}
+}
+
+.ab-toc__link:hover .ab-toc__copy,
+.ab-toc__link:focus-within .ab-toc__copy {
+	opacity: 1;
+	transform: translateY(-50%) scale(1);
+}
+
+/* ── Per-item reading progress ─────────────────────────────────────────── */
+.ab-toc--progress .ab-toc__list-ul::before {
+	background: var(--ab-toc-progress-tr);
+}
+
+.ab-toc__progress {
+	position: absolute;
+	inset-inline-start: 0;
+	top: 0;
+	width: 2px;
+	height: 0;
+	border-radius: 2px;
+	background: var(--ab-toc-progress);
+	transition: height 0.2s ease, top 0.2s ease;
+}
+
+.ab-toc--progress .ab-toc__item.is-active::before {
+	display: none;
+}
+
+/* ── Footer back-to-top ────────────────────────────────────────────────── */
+.ab-toc__foot {
+	margin-top: 14px;
+	padding-top: 12px;
+	border-top: 1px solid var(--ab-toc-border);
+}
+
+.ab-toc__top {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	font-size: 12.5px;
+	font-weight: 600;
+	color: var(--ab-toc-eyebrow);
+	background: transparent;
+	border: 0;
+	padding: 4px 6px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: color 0.15s ease;
+
+	svg {
+		width: 14px;
+		height: 14px;
+	}
+
+	&:hover {
+		color: var(--ab-toc-active);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--ab-toc-active);
+		outline-offset: 2px;
+	}
+}
+
+/* ── Empty state ───────────────────────────────────────────────────────── */
+.ab-toc__empty {
+	display: flex;
+	align-items: flex-start;
+	gap: 11px;
+	color: var(--ab-toc-eyebrow);
+
+	svg {
+		flex: none;
+		width: 20px;
+		height: 20px;
+		margin-top: 1px;
+		color: var(--ab-toc-marker);
+	}
+
+	p {
+		margin: 0;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	strong {
+		display: block;
+		margin-bottom: 2px;
+		font-weight: 600;
+		color: var(--ab-toc-title);
+	}
+}
+
+/* ── Sticky sidebar ────────────────────────────────────────────────────── */
+.ab-toc--sticky {
+	position: sticky;
+	top: var(--ab-toc-sticky-offset, 24px);
+	align-self: flex-start;
+	z-index: 10;
+}
+
+.ab-toc--sticky .ab-toc__body {
+	max-height: calc(100vh - var(--ab-toc-sticky-offset, 24px) - 5rem);
+	overflow-y: auto;
+	margin-inline-end: -8px;
+	padding-inline-end: 8px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--ab-toc-rail) transparent;
+
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: var(--ab-toc-rail);
+		border-radius: 4px;
+	}
+}
+
+.ab-toc--sticky.is-collapsed .ab-toc__body {
+	max-height: 0;
+}
+
+/* ── Mobile dock (pill → bottom sheet) ─────────────────────────────────── */
+.ab-toc__bar,
+.ab-toc__scrim {
+	display: none;
+}
+
+.ab-toc__bar {
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+	background: var(--ab-toc-bg);
+	border: 1px solid var(--ab-toc-border);
+	border-radius: 11px;
+	box-shadow: 0 6px 20px rgba(15, 23, 42, 0.14);
+	padding: 12px 14px;
+	color: var(--ab-toc-title);
+	cursor: pointer;
+	font: inherit;
+
+	svg {
+		width: 17px;
+		height: 17px;
+	}
+}
+
+.ab-toc__bar-ico {
+	flex: none;
+	display: grid;
+	place-items: center;
+	color: var(--ab-toc-active);
+}
+
+.ab-toc__bar-label {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ab-toc-title);
+}
+
+.ab-toc__bar-meta {
+	margin-inline-start: auto;
+	font-size: 12px;
+	color: var(--ab-toc-eyebrow);
+}
+
+.ab-toc__bar-chev {
+	color: var(--ab-toc-marker);
+	display: grid;
+	place-items: center;
+}
+
+@media ( max-width: 600px ) {
+
+	.ab-toc--sticky.ab-toc--hide-mobile {
+		position: static;
+		max-height: none;
+
+		.ab-toc__body {
+			max-height: none;
+			overflow: hidden;
+		}
+	}
+
+	/* Dock: the panel becomes a bottom sheet; a pill bar summons it. */
+	.ab-toc--dock {
+		position: fixed;
+		inset: auto 0 0 0;
+		top: auto;
+		z-index: 1000;
+		margin: 0;
+		max-height: 76vh;
+		border-radius: 16px 16px 0 0;
+		box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.22);
+		transform: translateY(100%);
+		transition: transform 0.26s ease;
+
+		&.is-open {
+			transform: translateY(0);
+		}
+
+		.ab-toc__body {
+			max-height: 60vh;
+			overflow-y: auto;
+		}
+
+		.ab-toc__bar {
+			display: flex;
+			position: fixed;
+			inset: auto 16px 16px 16px;
+			z-index: 999;
+		}
+
+		&.is-open .ab-toc__bar {
+			display: none;
+		}
+
+		.ab-toc__scrim {
+			display: block;
+			position: fixed;
+			inset: 0;
+			z-index: 998;
+			background: rgba(2, 6, 23, 0.45);
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.26s ease, visibility 0.26s ease;
+		}
+
+		&.is-open .ab-toc__scrim {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}
+
+/* ── Back-to-top floating button (appended to <body> by the view script) ── */
+.ab-toc-back-to-top {
+	position: fixed;
+	inset-block-end: 24px;
+	inset-inline-end: 24px;
+	z-index: 100;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border: 0;
+	border-radius: 50%;
+	background: #7c3aed;
+	color: #fff;
+	cursor: pointer;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(8px);
+	transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+	box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+
+	svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	&.is-visible {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+
+	.ab-toc *,
+	.ab-toc__body,
+	.ab-toc__progress,
+	.ab-toc__toggle svg,
+	.ab-toc-back-to-top {
+		transition: none !important;
+	}
+}

@@ -97,6 +97,15 @@ const BLOCKS = [
 		],
 	},
 	{ id: 'info-box', files: [ 'block.json', 'render.php' ] },
+	{
+		id: 'content-slider',
+		files: [ 'block.json', 'render.php', 'assets/content-slider.js' ],
+		extras: [ [ 'slide/block.json', 'slide/block.json' ] ],
+	},
+	{
+		id: 'table-of-contents',
+		files: [ 'block.json', 'render.php', 'assets/toc.js' ],
+	},
 ];
 
 /** Non-block files copied to build/. */

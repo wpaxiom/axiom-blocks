@@ -1,0 +1,29 @@
+/**
+ * Table of Contents — editor-only affordances.
+ */
+
+.ab-toc__control-label {
+	margin: 12px 0 6px;
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #757575;
+}
+
+.ab-toc__level-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 4px 12px;
+	margin-bottom: 12px;
+}
+
+/* The editor preview list is not interactive — show text cursor, no link. */
+.editor-styles-wrapper .ab-toc .ab-toc__link {
+	cursor: default;
+
+	&:hover,
+	&:focus-visible {
+		text-decoration: none;
+	}
+}

@@ -22,6 +22,8 @@
 @import "blocks/counter-group/editor";
 @import "blocks/testimonials/editor";
 @import "blocks/info-box/editor";
+@import "blocks/content-slider/editor";
+@import "blocks/table-of-contents/editor";
 @import "blocks/trust-badges/editor";
 @import "blocks/free-shipping-progress/editor";
 
@@ -828,21 +830,35 @@ $ab-field-focus-color: #7c3aed;
 
 	// ── Color ─────────────────────────────────────────────────────────────────
 
+	&__color-dropdown {
+		display: block;
+		width: 100%;
+	}
+
 	&__color-wrap {
 		position: relative;
 		display: flex;
 		align-items: center;
 		gap: 8px;
+		width: 100%;
 		height: $ab-field-h;
+		margin: 0;
 		padding: 0 10px;
 		border: $ab-field-border;
 		border-radius: $ab-field-radius;
 		cursor: pointer;
 		background: #fff;
+		font: inherit;
+		text-align: left;
 		transition: border-color 0.12s;
 
 		&:hover {
 			border-color: #b8bfc9;
+		}
+
+		&:focus-visible {
+			outline: 2px solid #7c3aed;
+			outline-offset: 1px;
 		}
 	}
 
@@ -852,6 +868,10 @@ $ab-field-focus-color: #7c3aed;
 		color: #1e1e1e;
 		letter-spacing: 0.02em;
 		flex: 1;
+		min-width: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	&__color-swatch {
@@ -862,16 +882,328 @@ $ab-field-focus-color: #7c3aed;
 		display: block;
 		flex-shrink: 0;
 	}
+}
 
-	&__color-input {
-		position: absolute;
-		inset: 0;
-		opacity: 0;
-		width: 100%;
-		height: 100%;
+// ── Color popover (ABColorControl → AxiomColorPicker) — BlockSuite design ────
+.axcp {
+	$accent: #7c3aed;
+	$accent-hover: #6d28d9;
+	$text: #1e1e1e;
+	$muted: #6b7280;
+	$muted-2: #9ca3af;
+	$field-border: #dcdde1;
+	$fill: #f1f0f5;
+	$checker: repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 16px 16px;
+
+	width: 244px;
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	background: #fff;
+	font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+	user-select: none;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	// Saturation / value canvas
+	&-sv {
+		position: relative;
+		height: 148px;
+		border-radius: 8px;
+		overflow: hidden;
+		cursor: crosshair;
+		touch-action: none;
+
+		&__white {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+		}
+
+		&__black {
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(to top, #000, rgba(0, 0, 0, 0));
+		}
+
+		&__knob {
+			position: absolute;
+			width: 14px;
+			height: 14px;
+			border-radius: 999px;
+			border: 2px solid #fff;
+			box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.4);
+			transform: translate(-50%, -50%);
+			pointer-events: none;
+		}
+	}
+
+	// Sliders
+	&-sliders {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	&-slider {
+		position: relative;
+		height: 14px;
+		border-radius: 999px;
+		cursor: pointer;
+		touch-action: none;
+
+		&--hue {
+			background: linear-gradient(
+				to right,
+				#f00 0%,
+				#ff0 17%,
+				#0f0 33%,
+				#0ff 50%,
+				#00f 67%,
+				#f0f 83%,
+				#f00 100%
+			);
+		}
+
+		&--alpha {
+			background: $checker;
+		}
+
+		&__fill {
+			position: absolute;
+			inset: 0;
+			border-radius: 999px;
+		}
+
+		&__thumb {
+			position: absolute;
+			top: 50%;
+			width: 16px;
+			height: 16px;
+			border-radius: 999px;
+			background: #fff;
+			border: 2px solid #fff;
+			box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.3);
+			transform: translate(-50%, -50%);
+			pointer-events: none;
+		}
+	}
+
+	// Segmented toggle
+	&-seg {
+		display: flex;
+		background: $fill;
+		border-radius: 8px;
+		padding: 3px;
+		gap: 2px;
+
+		button {
+			flex: 1;
+			height: 26px;
+			border: none;
+			background: transparent;
+			border-radius: 6px;
+			font-family: inherit;
+			font-size: 12px;
+			font-weight: 600;
+			color: $muted;
+			cursor: pointer;
+			transition: background 0.12s, color 0.12s, box-shadow 0.12s;
+
+			&:hover {
+				color: $text;
+			}
+
+			&.is-active {
+				background: #fff;
+				color: $accent;
+				box-shadow: 0 1px 2px rgba(30, 20, 50, 0.14);
+			}
+		}
+	}
+
+	// Fields
+	&-fields {
+		display: flex;
+		gap: 6px;
+	}
+
+	&-field {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+
+		&.is-hex {
+			flex: 2;
+		}
+
+		&__box {
+			width: 100%;
+			height: 32px;
+			border: 1px solid $field-border;
+			border-radius: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0 6px;
+			transition: border-color 0.12s, box-shadow 0.12s;
+
+			&.is-focus {
+				border-color: $accent;
+				box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
+			}
+		}
+
+		&__hash {
+			color: $muted-2;
+			font-family: "DM Mono", "Courier New", monospace;
+			font-size: 13px;
+			margin-right: 2px;
+		}
+
+		input {
+			width: 100%;
+			border: none;
+			outline: none;
+			background: transparent;
+			font-family: "DM Mono", "Courier New", monospace;
+			font-size: 13px;
+			color: $text;
+			text-align: center;
+			appearance: textfield;
+
+			&::-webkit-outer-spin-button,
+			&::-webkit-inner-spin-button {
+				appearance: none;
+				margin: 0;
+			}
+		}
+
+		&.is-hex input {
+			text-align: left;
+		}
+
+		&__lbl {
+			font-family: inherit;
+			font-size: 11px;
+			font-weight: 600;
+			color: $muted-2;
+			letter-spacing: 0.02em;
+		}
+	}
+
+	// Sections (theme / recent)
+	&-section {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+
+		&__title {
+			font-family: inherit;
+			font-size: 11px;
+			font-weight: 600;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			color: $muted;
+		}
+	}
+
+	&-swatches {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 7px;
+	}
+
+	&-swatch {
+		position: relative;
+		width: 22px;
+		height: 22px;
+		border-radius: 999px;
 		cursor: pointer;
 		border: none;
 		padding: 0;
+		box-shadow: inset 0 0 0 1px rgba(30, 30, 30, 0.1);
+		transition: transform 0.1s;
+
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			border-radius: 999px;
+			background: var(--sw);
+		}
+
+		&.is-alpha {
+			background: $checker;
+			background-size: 8px 8px;
+		}
+
+		&:hover {
+			transform: scale(1.08);
+		}
+
+		&.is-selected {
+			box-shadow: 0 0 0 2px $accent;
+		}
+	}
+
+	// Divider + footer
+	&-divider {
+		height: 1px;
+		background: #efeef3;
+		margin: 2px 0;
+	}
+
+	&-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&-icon-btn {
+		width: 30px;
+		height: 30px;
+		border: 1px solid $field-border;
+		border-radius: 6px;
+		background: #fff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		color: $muted;
+		transition: border-color 0.12s, color 0.12s, background 0.12s;
+
+		&:hover {
+			border-color: $accent;
+			color: $accent;
+		}
+
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	&-clear-btn {
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: 12px;
+		font-weight: 500;
+		color: $muted;
+		padding: 0;
+
+		&:hover {
+			color: $text;
+		}
 	}
 }
 

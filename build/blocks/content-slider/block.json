@@ -1,0 +1,72 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/content-slider",
+	"version": "1.0.0",
+	"title": "Content Slider",
+	"category": "axiom-blocks",
+	"description": "A content slider — put any blocks in each slide, with slide/fade/coverflow effects, autoplay, arrows, dots, and an optional lightbox. No jQuery, no bundled library.",
+	"keywords": ["slider", "carousel", "slideshow", "gallery", "coverflow"],
+	"textdomain": "axiom-blocks",
+	"icon": "images-alt2",
+	"attributes": {
+		"effect":              { "type": "string",  "default": "slide" },
+		"orientation":         { "type": "string",  "default": "horizontal" },
+		"slidesPerView":       { "type": "number",  "default": 1 },
+		"slidesPerViewTablet": { "type": "number",  "default": 0 },
+		"slidesPerViewMobile": { "type": "number",  "default": 0 },
+		"slidesToScroll":      { "type": "number",  "default": 1 },
+		"gap":                 { "type": "string",  "default": "" },
+		"adaptiveHeight":      { "type": "boolean", "default": false },
+
+		"autoplay":       { "type": "boolean", "default": false },
+		"autoplaySpeed":  { "type": "number",  "default": 4000 },
+		"loop":           { "type": "boolean", "default": true },
+		"pauseOnHover":   { "type": "boolean", "default": true },
+		"showPauseButton":{ "type": "boolean", "default": true },
+		"slideSpeed":     { "type": "number",  "default": 500 },
+		"draggable":      { "type": "boolean", "default": true },
+
+		"showArrows":     { "type": "boolean", "default": true },
+		"arrowOffset":    { "type": "string",  "default": "" },
+		"showDots":       { "type": "boolean", "default": true },
+		"paginationType": { "type": "string",  "default": "bullets" },
+		"paginationGap":  { "type": "string",  "default": "" },
+		"dotGap":         { "type": "string",  "default": "" },
+		"lightbox":       { "type": "boolean", "default": false },
+
+		"sliderHeight": { "type": "string", "default": "" },
+
+		"arrowColor":     { "type": "string", "default": "" },
+		"arrowBg":        { "type": "string", "default": "" },
+		"dotColor":       { "type": "string", "default": "" },
+		"dotActiveColor": { "type": "string", "default": "" },
+
+		"borderColor":  { "type": "string", "default": "" },
+		"borderWidth":  { "type": "string", "default": "" },
+		"borderRadius": { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"providesContext": {
+		"axiom-blocks/sliderEffect": "effect"
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./editor.scss",
+	"style":        "file:./style.scss",
+	"viewScript":   "file:./assets/content-slider.js",
+	"render":       "file:./render.php"
+}
