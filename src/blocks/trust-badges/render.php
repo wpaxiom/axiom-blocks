@@ -38,12 +38,23 @@ $axiom_blocks_axiom_blocks_alignment = $axiom_blocks_a['alignment'] ?? 'center';
 $axiom_blocks_columns                = (int) ( $axiom_blocks_a['columns'] ?? 4 );
 $axiom_blocks_gap                    = (int) ( $axiom_blocks_a['gap'] ?? 16 );
 $axiom_blocks_color_mode             = $axiom_blocks_a['colorMode'] ?? 'color';
-$axiom_blocks_icon_color             = $axiom_blocks_a['iconColor'] ?? '#1e1e1e';
 $axiom_blocks_show_card              = ! empty( $axiom_blocks_a['showCard'] );
-$axiom_blocks_card_color             = $axiom_blocks_a['cardColor'] ?? '#ffffff';
 $axiom_blocks_card_radius            = (int) ( $axiom_blocks_a['cardRadius'] ?? 8 );
 $axiom_blocks_show_border            = ! empty( $axiom_blocks_a['showBorder'] );
-$axiom_blocks_border_col             = $axiom_blocks_a['borderColor'] ?? '#e5e7eb';
+
+// An emptied color row means "the shipped default", which is what the picker
+// advertises — so fall back on '' too, not only on a missing key.
+$axiom_blocks_icon_color = '' !== (string) ( $axiom_blocks_a['iconColor'] ?? '' ) ? $axiom_blocks_a['iconColor'] : '#1e1e1e';
+$axiom_blocks_card_color = '' !== (string) ( $axiom_blocks_a['cardColor'] ?? '' ) ? $axiom_blocks_a['cardColor'] : '#ffffff';
+$axiom_blocks_border_col = '' !== (string) ( $axiom_blocks_a['borderColor'] ?? '' ) ? $axiom_blocks_a['borderColor'] : '#e5e7eb';
+
+/* Card background. The shipped `showCard` toggle was retired from the UI — it
+   survives only as the fallback here, so an untouched block paints exactly what
+   it did before, while the Styles ▸ Card ▸ Background row (the NEW `cardBg`)
+   wins whenever it is set. Mirrors shippedCardBg()/hasCardBg() in index.js. */
+$axiom_blocks_shipped_card_bg = $axiom_blocks_show_card ? $axiom_blocks_card_color : 'transparent';
+$axiom_blocks_card_bg         = '' !== (string) ( $axiom_blocks_a['cardBg'] ?? '' ) ? $axiom_blocks_a['cardBg'] : $axiom_blocks_shipped_card_bg;
+$axiom_blocks_has_card        = 'transparent' !== $axiom_blocks_card_bg;
 
 $axiom_blocks_selected_ids  = is_array( $axiom_blocks_a['selectedBadges'] ?? null ) ? $axiom_blocks_a['selectedBadges'] : array();
 $axiom_blocks_custom_badges = is_array( $axiom_blocks_a['customBadges'] ?? null ) ? $axiom_blocks_a['customBadges'] : array();
@@ -60,7 +71,7 @@ $axiom_blocks_classes = array(
 	'is-size-' . sanitize_html_class( $axiom_blocks_badge_size ),
 	'is-color-' . sanitize_html_class( $axiom_blocks_color_mode ),
 );
-if ( $axiom_blocks_show_card ) {
+if ( $axiom_blocks_has_card ) {
 	$axiom_blocks_classes[] = 'has-card';
 }
 if ( $axiom_blocks_show_border ) {
@@ -69,14 +80,66 @@ if ( $axiom_blocks_show_border ) {
 
 $axiom_blocks_css_vars = array(
 	'--ab-tb-gap'         => $axiom_blocks_gap . 'px',
-	'--ab-tb-card-bg'     => $axiom_blocks_show_card ? $axiom_blocks_card_color : 'transparent',
+	'--ab-tb-card-bg'     => $axiom_blocks_card_bg,
 	'--ab-tb-card-radius' => $axiom_blocks_card_radius . 'px',
-	'--ab-tb-border'      => $axiom_blocks_show_border ? '1px solid ' . $axiom_blocks_border_col : '0',
 	'--ab-tb-columns'     => 'grid' === $axiom_blocks_layout ? (string) max( 2, min( 6, $axiom_blocks_columns ) ) : 'unset',
 	'--ab-tb-icon-size'   => $axiom_blocks_px . 'px',
 );
 if ( 'color' !== $axiom_blocks_color_mode ) {
 	$axiom_blocks_css_vars['--ab-tb-icon-color'] = $axiom_blocks_icon_color;
+}
+if ( ! empty( $axiom_blocks_a['cardColorHover'] ) ) {
+	$axiom_blocks_css_vars['--ab-tb-card-bg-h'] = $axiom_blocks_a['cardColorHover'];
+}
+if ( ! empty( $axiom_blocks_a['labelColor'] ) ) {
+	// The shipped label is dimmed to 70%; a chosen color would inherit that cap.
+	$axiom_blocks_css_vars['--ab-tb-label-opacity'] = '1';
+}
+
+/* Design-layer card (2026-08-05). Every var is optional: an unset attribute
+   emits nothing, so style.scss falls back to the shipped value. Mirrors
+   getTrustBadgesVars() in index.js — keep the two in step. */
+$axiom_blocks_var_map = array(
+	'--ab-tb-card-radius-tl' => 'cardRadiusTopLeft',
+	'--ab-tb-card-radius-tr' => 'cardRadiusTopRight',
+	'--ab-tb-card-radius-br' => 'cardRadiusBottomRight',
+	'--ab-tb-card-radius-bl' => 'cardRadiusBottomLeft',
+	'--ab-tb-shadow'         => 'cardShadow',
+	'--ab-tb-shadow-h'       => 'cardShadowHover',
+	'--ab-tb-pt'             => 'cardPaddingTop',
+	'--ab-tb-pr'             => 'cardPaddingRight',
+	'--ab-tb-pb'             => 'cardPaddingBottom',
+	'--ab-tb-pl'             => 'cardPaddingLeft',
+	'--ab-tb-item-gap'       => 'cardGap',
+	'--ab-tb-heading-color'  => 'headingColor',
+	'--ab-tb-label-color'    => 'labelColor',
+);
+foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
+	if ( isset( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) && '' !== (string) $axiom_blocks_a[ $axiom_blocks_attr_key ] ) {
+		$axiom_blocks_css_vars[ $axiom_blocks_css_var ] = $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+
+/* Border. The retired "Show border" toggle survives as `.has-border`, which sets
+   the shipped 1px as `--ab-tb-bw-def` — so the per-side widths below are the live
+   control and an explicit `0px` is what turns a legacy border off. */
+$axiom_blocks_css_vars['--ab-tb-bc'] = $axiom_blocks_border_col;
+
+$axiom_blocks_any_width  = false;
+$axiom_blocks_width_keys = array( 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth' );
+$axiom_blocks_width_vars = array( '--ab-tb-bw-top', '--ab-tb-bw-right', '--ab-tb-bw-bottom', '--ab-tb-bw-left' );
+foreach ( $axiom_blocks_width_keys as $axiom_blocks_i => $axiom_blocks_width_key ) {
+	if ( '' !== (string) ( $axiom_blocks_a[ $axiom_blocks_width_key ] ?? '' ) ) {
+		$axiom_blocks_css_vars[ $axiom_blocks_width_vars[ $axiom_blocks_i ] ] = $axiom_blocks_a[ $axiom_blocks_width_key ];
+		$axiom_blocks_any_width = true;
+	}
+}
+
+// A border style only means anything once a width is set; default it to solid
+// so a width-only edit paints, matching the editor preview.
+$axiom_blocks_border_style = (string) ( $axiom_blocks_a['borderStyle'] ?? '' );
+if ( '' !== $axiom_blocks_border_style || $axiom_blocks_any_width ) {
+	$axiom_blocks_css_vars['--ab-tb-bs'] = '' !== $axiom_blocks_border_style ? $axiom_blocks_border_style : 'solid';
 }
 
 $axiom_blocks_var_decls = array();

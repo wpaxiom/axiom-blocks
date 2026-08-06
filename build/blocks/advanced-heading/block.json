@@ -39,11 +39,23 @@
       "type": "string",
       "default": "below"
     },
+    "headingSubGap": {
+      "type": "string",
+      "default": ""
+    },
+    "headingMaxWidth": {
+      "type": "string",
+      "default": ""
+    },
     "highlightColor": {
       "type": "string",
       "default": ""
     },
     "highlightBg": {
+      "type": "string",
+      "default": ""
+    },
+    "highlightRadius": {
       "type": "string",
       "default": ""
     },

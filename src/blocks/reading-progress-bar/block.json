@@ -41,10 +41,21 @@
     "zIndex": {
       "type": "number",
       "default": 9999
-    }
+    },
+
+    "barBgType":           { "type": "string", "default": "" },
+    "barBgGradType":       { "type": "string", "default": "linear" },
+    "barBgGradAngle":      { "type": "number", "default": 90 },
+    "barBgGradStops":      { "type": "array",  "default": [] },
+    "barBgImage":          { "type": "object", "default": null },
+    "barBgOverlay":        { "type": "string", "default": "" },
+    "barBgOverlayType":    { "type": "string", "default": "color" },
+    "barBgOverlayOpacity": { "type": "number", "default": 0 },
+    "barBgOverlayBlend":   { "type": "string", "default": "normal" }
   },
   "supports": {
     "html": false,
+    "anchor": true,
     "multiple": false,
     "reusable": false
   },

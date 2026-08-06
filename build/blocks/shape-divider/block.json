@@ -34,6 +34,19 @@
       "type": "boolean",
       "default": false
     },
+    "heightTablet": { "type": "string", "default": "" },
+    "heightMobile": { "type": "string", "default": "" },
+
+    "shapeBgType":           { "type": "string", "default": "" },
+    "shapeBgGradType":       { "type": "string", "default": "linear" },
+    "shapeBgGradAngle":      { "type": "number", "default": 90 },
+    "shapeBgGradStops":      { "type": "array",  "default": [] },
+    "shapeBgImage":          { "type": "object", "default": null },
+    "shapeBgOverlay":        { "type": "string", "default": "" },
+    "shapeBgOverlayType":    { "type": "string", "default": "color" },
+    "shapeBgOverlayOpacity": { "type": "number", "default": 0 },
+    "shapeBgOverlayBlend":   { "type": "string", "default": "normal" },
+
     "paddingTop":    { "type": "string", "default": "" },
     "paddingRight":  { "type": "string", "default": "" },
     "paddingBottom": { "type": "string", "default": "" },
@@ -45,6 +58,7 @@
   },
   "supports": {
     "html": false,
+    "anchor": true,
     "align": ["wide", "full"]
   },
   "editorScript": "file:./index.js",

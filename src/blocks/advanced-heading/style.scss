@@ -1,7 +1,7 @@
 /**
  * Advanced Heading — frontend styles.
  *
- * Dynamic values (highlight, accent, link colours) arrive as CSS custom
+ * Dynamic values (highlight, accent, link colors) arrive as CSS custom
  * properties set inline on the wrapper by render.php (mirrored by edit). The
  * highlight mark and accent line read those vars with sensible fallbacks.
  */
@@ -12,6 +12,7 @@ $ah-purple: #7c3aed;
 
 	&__heading {
 		margin: 0;
+		max-width: var(--ab-ah-maxw);
 
 		a {
 			color: var(--ab-ah-link, inherit);
@@ -25,7 +26,7 @@ $ah-purple: #7c3aed;
 	}
 
 	&__sub {
-		margin: 0.4em 0 0;
+		margin: 0;
 		opacity: 0.85;
 
 		a {
@@ -38,9 +39,21 @@ $ah-purple: #7c3aed;
 		}
 	}
 
-	// Sub-heading sitting above the heading needs its gap below, not above.
+	// Gap between heading and sub-heading — controllable via --ab-ah-sub-gap
+	// (defaults to the original 0.4em). The margin sits on the side facing the
+	// heading, based on the sub's position, so an accent line between them can't
+	// swallow the gap.
+	&__sub--below {
+		margin-top: var(--ab-ah-sub-gap, 0.4em);
+	}
+
+	&__sub--above {
+		margin-bottom: var(--ab-ah-sub-gap, 0.4em);
+	}
+
+	// Fallback for deactivation-survival save markup (base class only, sub below).
 	&__heading + &__sub {
-		margin: 0.4em 0 0;
+		margin-top: var(--ab-ah-sub-gap, 0.4em);
 	}
 
 	// ── Accent line ───────────────────────────────────────────────────────────
@@ -70,13 +83,14 @@ $ah-purple: #7c3aed;
 }
 
 // ── Highlight mark (custom RichText format) ──────────────────────────────────
-// Colours are block-level: driven by the wrapper's --ab-ah-hl-* vars so every
-// highlight in the heading shares one curated style. Class + tag are frozen.
+// Colors are per-run: each highlight may carry its own inline background/color
+// (set from the toolbar popover), which overrides these vars. Highlights without
+// an inline color fall back to the block-level --ab-ah-hl-* defaults. Frozen tag/class.
 .ab-ah-highlight {
 	background: var(--ab-ah-hl-bg, #fef9c3);
 	color: var(--ab-ah-hl-color, inherit);
 	padding: 0.05em 0.2em;
-	border-radius: 0.15em;
+	border-radius: var(--ab-ah-hl-radius, 0.15em);
 	box-decoration-break: clone;
 	-webkit-box-decoration-break: clone;
 }

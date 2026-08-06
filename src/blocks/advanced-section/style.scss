@@ -27,8 +27,27 @@
 	flex-direction: column;
 	justify-content: var(--axiom-blocks-section-justify, center);
 	align-items: var(--axiom-blocks-section-align, center);
+	text-align: var(--ab-sec-ta, inherit);
 	overflow: hidden;
 	box-sizing: border-box;
+
+	/* Background — the shared BackgroundControl emits one shorthand var. */
+	background: var(--ab-sec-bg, transparent);
+	background-attachment: var(--ab-sec-attach, scroll);
+
+	border-style: var(--ab-sec-bs, none);
+	border-color: var(--ab-sec-bc, transparent);
+	border-top-width: var(--ab-sec-bw-top, var(--ab-sec-bw, 0));
+	border-right-width: var(--ab-sec-bw-right, var(--ab-sec-bw, 0));
+	border-bottom-width: var(--ab-sec-bw-bottom, var(--ab-sec-bw, 0));
+	border-left-width: var(--ab-sec-bw-left, var(--ab-sec-bw, 0));
+	border-radius: var(--ab-sec-radius-tl, var(--ab-sec-radius, 0))
+		var(--ab-sec-radius-tr, var(--ab-sec-radius, 0))
+		var(--ab-sec-radius-br, var(--ab-sec-radius, 0))
+		var(--ab-sec-radius-bl, var(--ab-sec-radius, 0));
+	box-shadow: var(--ab-sec-shadow, none);
+	width: var(--ab-sec-w, auto);
+	max-width: var(--ab-sec-mw, none);
 	padding-top: var(--ab-padding-top, 0);
 	padding-right: var(--ab-padding-right, 0);
 	padding-bottom: var(--ab-padding-bottom, 0);
@@ -39,16 +58,16 @@
 	margin-left: var(--ab-margin-left, 0);
 
 	/* Overlay as a pseudo-element so child DOM isn't disturbed and WP's
-     * layout selectors (direct-child `>` combinators) still match inner blocks.
-     * `background` (not `background-color`) so a gradient string also works.
-     * Falls back to the legacy `--...-overlay-color` var so older posts still render. */
+	 * layout selectors (direct-child `>` combinators) still match inner blocks.
+	 * `background` (not `background-color`) so a gradient string also works.
+	 * Falls back to the legacy `--...-overlay-color` var so older posts still render. */
 	&::after {
 		content: "";
 		position: absolute;
 		inset: 0;
-		background: var(--axiom-blocks-section-overlay-bg, var(--axiom-blocks-section-overlay-color, transparent));
-		opacity: var(--axiom-blocks-section-overlay-opacity, 0);
-		mix-blend-mode: var(--axiom-blocks-section-overlay-blend, normal);
+		background: var(--ab-sec-overlay-bg, var(--axiom-blocks-section-overlay-bg, var(--axiom-blocks-section-overlay-color, transparent)));
+		opacity: var(--ab-sec-overlay-opacity, var(--axiom-blocks-section-overlay-opacity, 0));
+		mix-blend-mode: var(--ab-sec-overlay-blend, var(--axiom-blocks-section-overlay-blend, normal));
 		pointer-events: none;
 		z-index: 0;
 	}
@@ -110,6 +129,31 @@
  */
 .axiom-blocks-section.is-h-left > :not(.alignleft):not(.alignright):not(.alignfull):not(.alignwide),
 .axiom-blocks-section.is-h-right > :not(.alignleft):not(.alignright):not(.alignfull):not(.alignwide) {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+/* ── Layout engine (L6) — additive. The base rule above is the 'constrained'
+ * mode (unchanged); these classes only appear when layoutType is flex/grid. */
+.axiom-blocks-section--layout-flex {
+	flex-direction: var(--ab-sec-fd, row);
+	flex-wrap: var(--ab-sec-fw, wrap);
+	justify-content: var(--ab-sec-jc, center);
+	align-items: var(--ab-sec-ai, center);
+	gap: var(--ab-sec-gap, 0);
+}
+
+.axiom-blocks-section--layout-grid {
+	display: grid;
+	grid-template-columns: repeat(var(--ab-sec-cols, 3), minmax(0, 1fr));
+	align-items: var(--ab-sec-ai, stretch);
+	gap: var(--ab-sec-gap, 0);
+}
+
+/* Cancel WP constrained-layout auto margins on children so flex/grid justify +
+ * gap actually govern placement. Specificity (0,3,0) beats WP's child rule. */
+.axiom-blocks-section--layout-flex > :not(.alignfull):not(.alignwide),
+.axiom-blocks-section--layout-grid > :not(.alignfull):not(.alignwide) {
 	margin-left: 0;
 	margin-right: 0;
 }

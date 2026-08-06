@@ -16,13 +16,13 @@
 		);
 	}
 
-	var ARROW_PREV =
+	const ARROW_PREV =
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>';
-	var ARROW_NEXT =
+	const ARROW_NEXT =
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>';
 
 	function visibleColumns( cols ) {
-		var w = window.innerWidth;
+		const w = window.innerWidth;
 		if ( w <= 600 ) {
 			return 1;
 		}
@@ -33,51 +33,54 @@
 	}
 
 	function gapPx( root ) {
-		var g = getComputedStyle( root ).getPropertyValue( '--ab-tst-gap' );
-		var n = parseInt( g, 10 );
+		const g = getComputedStyle( root ).getPropertyValue( '--ab-tst-gap' );
+		const n = parseInt( g, 10 );
 		return isNaN( n ) ? 24 : n;
 	}
 
 	/* ── Read more ─────────────────────────────────────────────────────────── */
 	function initReadMore( root ) {
-		var quotes = root.querySelectorAll( '.ab-testimonial__quote' );
+		const quotes = root.querySelectorAll( '.ab-testimonial__quote' );
 		Array.prototype.forEach.call( quotes, function ( quote ) {
 			if ( quote.scrollHeight - quote.clientHeight < 4 ) {
 				return;
 			}
-			var btn = document.createElement( 'button' );
+			const btn = document.createElement( 'button' );
 			btn.type = 'button';
 			btn.className = 'ab-testimonial__readmore';
 			btn.textContent = 'Read more';
 			btn.setAttribute( 'aria-expanded', 'false' );
 			quote.insertAdjacentElement( 'afterend', btn );
 			btn.addEventListener( 'click', function () {
-				var expanded = quote.classList.toggle( 'is-expanded' );
+				const expanded = quote.classList.toggle( 'is-expanded' );
 				btn.textContent = expanded ? 'Read less' : 'Read more';
-				btn.setAttribute( 'aria-expanded', expanded ? 'true' : 'false' );
+				btn.setAttribute(
+					'aria-expanded',
+					expanded ? 'true' : 'false'
+				);
 			} );
 		} );
 	}
 
 	/* ── Shared: move cards into a track inside a viewport ─────────────────── */
 	function buildTrack( root ) {
-		var cards = Array.prototype.slice.call(
+		const cards = Array.prototype.slice.call(
 			root.querySelectorAll( ':scope > .ab-testimonial' )
 		);
-		var viewport = document.createElement( 'div' );
+		const viewport = document.createElement( 'div' );
 		viewport.className = 'ab-testimonials__viewport';
-		var track = document.createElement( 'div' );
+		const track = document.createElement( 'div' );
 		track.className = 'ab-testimonials__track';
 		cards.forEach( function ( c ) {
 			track.appendChild( c );
 		} );
 		viewport.appendChild( track );
 		root.appendChild( viewport );
-		return { viewport: viewport, track: track, cards: cards };
+		return { viewport, track, cards };
 	}
 
 	function sizeCards( cards, viewport, cols, gap ) {
-		var width = ( viewport.clientWidth - gap * ( cols - 1 ) ) / cols;
+		const width = ( viewport.clientWidth - gap * ( cols - 1 ) ) / cols;
 		cards.forEach( function ( c ) {
 			c.style.width = width + 'px';
 		} );
@@ -86,31 +89,31 @@
 
 	/* ── Carousel ──────────────────────────────────────────────────────────── */
 	function initCarousel( root ) {
-		var built = buildTrack( root );
-		var track = built.track;
-		var cards = built.cards;
-		var viewport = built.viewport;
-		var total = cards.length;
+		const built = buildTrack( root );
+		const track = built.track;
+		const cards = built.cards;
+		const viewport = built.viewport;
+		const total = cards.length;
 
-		var cols = parseInt( root.getAttribute( 'data-columns' ), 10 ) || 3;
-		var loop = root.getAttribute( 'data-loop' ) !== '0';
-		var showArrows = root.getAttribute( 'data-arrows' ) !== '0';
-		var showDots = root.getAttribute( 'data-dots' ) !== '0';
-		var speed = parseInt( root.getAttribute( 'data-slide-speed' ), 10 );
+		const cols = parseInt( root.getAttribute( 'data-columns' ), 10 ) || 3;
+		const loop = root.getAttribute( 'data-loop' ) !== '0';
+		const showArrows = root.getAttribute( 'data-arrows' ) !== '0';
+		const showDots = root.getAttribute( 'data-dots' ) !== '0';
+		let speed = parseInt( root.getAttribute( 'data-slide-speed' ), 10 );
 		if ( isNaN( speed ) ) {
 			speed = 500;
 		}
-		var autoplay =
+		const autoplay =
 			root.getAttribute( 'data-autoplay' ) === '1' && ! reducedMotion();
-		var autoplayDelay =
+		const autoplayDelay =
 			parseInt( root.getAttribute( 'data-autoplay-speed' ), 10 ) || 4000;
-		var pauseHover = root.getAttribute( 'data-pause-hover' ) !== '0';
+		const pauseHover = root.getAttribute( 'data-pause-hover' ) !== '0';
 
-		var index = 0;
-		var visible = visibleColumns( cols );
-		var cardW = 0;
-		var gap = gapPx( root );
-		var timer = null;
+		let index = 0;
+		let visible = visibleColumns( cols );
+		let cardW = 0;
+		const gap = gapPx( root );
+		let timer = null;
 
 		function maxIndex() {
 			return Math.max( 0, total - visible );
@@ -142,7 +145,7 @@
 		}
 
 		function goTo( i, animate ) {
-			var max = maxIndex();
+			const max = maxIndex();
 			if ( loop ) {
 				if ( i < 0 ) {
 					i = max;
@@ -183,7 +186,7 @@
 		}
 
 		/* Dots */
-		var dotsWrap = null;
+		let dotsWrap = null;
 		function renderDots() {
 			if ( ! showDots ) {
 				return;
@@ -194,15 +197,15 @@
 				root.appendChild( dotsWrap );
 			}
 			dotsWrap.innerHTML = '';
-			var count = maxIndex() + 1;
+			const count = maxIndex() + 1;
 			if ( count <= 1 ) {
 				dotsWrap.style.display = 'none';
 				return;
 			}
 			dotsWrap.style.display = '';
-			for ( var i = 0; i < count; i++ ) {
+			for ( let i = 0; i < count; i++ ) {
 				( function ( i ) {
-					var dot = document.createElement( 'button' );
+					const dot = document.createElement( 'button' );
 					dot.type = 'button';
 					dot.className = 'ab-testimonials__dot';
 					dot.setAttribute(
@@ -222,8 +225,8 @@
 			if ( ! dotsWrap ) {
 				return;
 			}
-			var dots = dotsWrap.children;
-			for ( var i = 0; i < dots.length; i++ ) {
+			const dots = dotsWrap.children;
+			for ( let i = 0; i < dots.length; i++ ) {
 				dots[ i ].classList.toggle( 'is-active', i === index );
 			}
 		}
@@ -266,9 +269,9 @@
 		} );
 
 		/* Touch / pointer drag */
-		var dragX = 0;
-		var startTx = 0;
-		var dragging = false;
+		let dragX = 0;
+		let startTx = 0;
+		let dragging = false;
 		viewport.addEventListener(
 			'pointerdown',
 			function ( e ) {
@@ -284,17 +287,16 @@
 			if ( ! dragging ) {
 				return;
 			}
-			var dx = e.clientX - dragX;
-			track.style.transform =
-				'translateX(' + ( startTx + dx ) + 'px)';
+			const dx = e.clientX - dragX;
+			track.style.transform = 'translateX(' + ( startTx + dx ) + 'px)';
 		} );
 		window.addEventListener( 'pointerup', function ( e ) {
 			if ( ! dragging ) {
 				return;
 			}
 			dragging = false;
-			var dx = e.clientX - dragX;
-			var threshold = ( cardW + gap ) / 4;
+			const dx = e.clientX - dragX;
+			const threshold = ( cardW + gap ) / 4;
 			if ( dx <= -threshold ) {
 				goTo( index + 1 );
 			} else if ( dx >= threshold ) {
@@ -305,7 +307,7 @@
 			start();
 		} );
 
-		var resizeTimer = null;
+		let resizeTimer = null;
 		window.addEventListener( 'resize', function () {
 			window.clearTimeout( resizeTimer );
 			resizeTimer = window.setTimeout( layout, 150 );
@@ -318,29 +320,29 @@
 
 	/* ── Marquee ───────────────────────────────────────────────────────────── */
 	function initMarquee( root ) {
-		var built = buildTrack( root );
-		var track = built.track;
-		var cards = built.cards;
-		var viewport = built.viewport;
+		const built = buildTrack( root );
+		const track = built.track;
+		const cards = built.cards;
+		const viewport = built.viewport;
 
-		var cols = parseInt( root.getAttribute( 'data-columns' ), 10 ) || 3;
-		var gap = gapPx( root );
-		var reverse = root.getAttribute( 'data-marquee-reverse' ) === '1';
-		var pauseHover = root.getAttribute( 'data-marquee-pause' ) !== '0';
+		const cols = parseInt( root.getAttribute( 'data-columns' ), 10 ) || 3;
+		const gap = gapPx( root );
+		const reverse = root.getAttribute( 'data-marquee-reverse' ) === '1';
+		const pauseHover = root.getAttribute( 'data-marquee-pause' ) !== '0';
 
 		root.classList.add( 'is-ready' );
 
 		function layout() {
-			var visible = visibleColumns( cols );
+			const visible = visibleColumns( cols );
 			sizeCards( cards, viewport, visible, gap );
 		}
 		layout();
 
 		// Duplicate the set once for a seamless -50% loop.
 		cards.forEach( function ( c ) {
-			var clone = c.cloneNode( true );
+			const clone = c.cloneNode( true );
 			clone.setAttribute( 'aria-hidden', 'true' );
-			var link = clone.querySelector( '.ab-testimonial__link' );
+			const link = clone.querySelector( '.ab-testimonial__link' );
 			if ( link ) {
 				link.setAttribute( 'tabindex', '-1' );
 			}
@@ -359,7 +361,7 @@
 			} );
 		}
 
-		var resizeTimer = null;
+		let resizeTimer = null;
 		window.addEventListener( 'resize', function () {
 			window.clearTimeout( resizeTimer );
 			resizeTimer = window.setTimeout( layout, 150 );
@@ -377,8 +379,10 @@
 			initReadMore( root );
 		}
 
-		var layout = root.getAttribute( 'data-layout' );
-		var count = root.querySelectorAll( ':scope > .ab-testimonial' ).length;
+		const layout = root.getAttribute( 'data-layout' );
+		const count = root.querySelectorAll(
+			':scope > .ab-testimonial'
+		).length;
 		if ( count < 2 ) {
 			return;
 		}
@@ -390,9 +394,7 @@
 	}
 
 	function initAll() {
-		document
-			.querySelectorAll( '.ab-testimonials' )
-			.forEach( initGroup );
+		document.querySelectorAll( '.ab-testimonials' ).forEach( initGroup );
 	}
 
 	if ( document.readyState === 'loading' ) {

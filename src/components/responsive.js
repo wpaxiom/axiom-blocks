@@ -17,7 +17,11 @@ export const DEVICES = [ 'Desktop', 'Tablet', 'Mobile' ];
 
 const isSet = ( v ) => v !== '' && v != null;
 
-/** Attribute key for a base key on a given device ('' suffix for Desktop). */
+/**
+ * Attribute key for a base key on a given device ('' suffix for Desktop).
+ * @param baseKey
+ * @param device
+ */
 export function deviceKey( baseKey, device ) {
 	return device === 'Desktop' ? baseKey : `${ baseKey }${ device }`;
 }

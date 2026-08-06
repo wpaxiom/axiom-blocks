@@ -34,6 +34,94 @@ if ( ! isset( $axiom_blocks_shape_paths[ $axiom_blocks_shape ] ) ) {
 
 $axiom_blocks_shape_path = $axiom_blocks_shape_paths[ $axiom_blocks_shape ];
 
+/* ── Gradient fill ─────────────────────────────────────────────────────────────
+   The shape is an SVG `<path fill>`, which no CSS gradient can paint, so the
+   Fill background's gradient attrs become an SVG paint server instead. Mirrors
+   src/blocks/shape-divider/gradient.js — keep the two in step. Flat colors keep
+   the shipped `fill="#rrggbb"` and emit no <defs> at all. */
+$axiom_blocks_gradient_defs = '';
+$axiom_blocks_fill          = $axiom_blocks_color;
+
+if ( 'gradient' === ( $attributes['shapeBgType'] ?? '' ) ) {
+	$axiom_blocks_raw_stops = $attributes['shapeBgGradStops'] ?? array();
+	$axiom_blocks_stops     = array();
+
+	if ( is_array( $axiom_blocks_raw_stops ) ) {
+		foreach ( array_values( $axiom_blocks_raw_stops ) as $axiom_blocks_i => $axiom_blocks_stop ) {
+			if ( empty( $axiom_blocks_stop['color'] ) ) {
+				continue;
+			}
+			$axiom_blocks_stop_color   = trim( (string) $axiom_blocks_stop['color'] );
+			$axiom_blocks_stop_opacity = null;
+
+			// `stop-color` takes no alpha channel in older renderers.
+			if ( preg_match( '/^#([0-9a-f]{6})([0-9a-f]{2})$/i', $axiom_blocks_stop_color, $axiom_blocks_hex ) ) {
+				$axiom_blocks_stop_color   = '#' . $axiom_blocks_hex[1];
+				$axiom_blocks_stop_opacity = (string) ( round( ( hexdec( $axiom_blocks_hex[2] ) / 255 ) * 1000 ) / 1000 );
+			}
+
+			$axiom_blocks_position = isset( $axiom_blocks_stop['position'] )
+				? (float) $axiom_blocks_stop['position']
+				: ( $axiom_blocks_i ? 100 : 0 );
+
+			$axiom_blocks_stops[] = array(
+				'color'    => $axiom_blocks_stop_color,
+				'opacity'  => $axiom_blocks_stop_opacity,
+				'position' => max( 0, min( 100, $axiom_blocks_position ) ),
+			);
+		}
+	}
+
+	// SVG stop offsets must ascend, unlike a CSS stop list.
+	usort(
+		$axiom_blocks_stops,
+		static function ( $a, $b ) {
+			return $a['position'] <=> $b['position'];
+		}
+	);
+
+	if ( count( $axiom_blocks_stops ) >= 2 ) {
+		$axiom_blocks_grad_id     = wp_unique_id( 'ab-sd-grad-' );
+		$axiom_blocks_stop_markup = '';
+		foreach ( $axiom_blocks_stops as $axiom_blocks_stop ) {
+			$axiom_blocks_stop_markup .= sprintf(
+				'<stop offset="%s%%" stop-color="%s"%s></stop>',
+				esc_attr( (string) $axiom_blocks_stop['position'] ),
+				esc_attr( $axiom_blocks_stop['color'] ),
+				null !== $axiom_blocks_stop['opacity']
+					? ' stop-opacity="' . esc_attr( $axiom_blocks_stop['opacity'] ) . '"'
+					: ''
+			);
+		}
+
+		if ( 'radial' === ( $attributes['shapeBgGradType'] ?? 'linear' ) ) {
+			$axiom_blocks_gradient_defs = sprintf(
+				'<defs><radialGradient id="%s" cx="0.5" cy="0.5" r="0.5">%s</radialGradient></defs>',
+				esc_attr( $axiom_blocks_grad_id ),
+				$axiom_blocks_stop_markup
+			);
+		} else {
+			// CSS angles run clockwise from "to top"; SVG wants a vector in the
+			// 0–1 object bounding box, y pointing down.
+			$axiom_blocks_rad = ( (float) ( $attributes['shapeBgGradAngle'] ?? 90 ) ) * M_PI / 180;
+			$axiom_blocks_dx  = sin( $axiom_blocks_rad ) / 2;
+			$axiom_blocks_dy  = cos( $axiom_blocks_rad ) / 2;
+
+			$axiom_blocks_gradient_defs = sprintf(
+				'<defs><linearGradient id="%s" x1="%s" y1="%s" x2="%s" y2="%s">%s</linearGradient></defs>',
+				esc_attr( $axiom_blocks_grad_id ),
+				esc_attr( (string) ( round( ( 0.5 - $axiom_blocks_dx ) * 10000 ) / 10000 ) ),
+				esc_attr( (string) ( round( ( 0.5 + $axiom_blocks_dy ) * 10000 ) / 10000 ) ),
+				esc_attr( (string) ( round( ( 0.5 + $axiom_blocks_dx ) * 10000 ) / 10000 ) ),
+				esc_attr( (string) ( round( ( 0.5 - $axiom_blocks_dy ) * 10000 ) / 10000 ) ),
+				$axiom_blocks_stop_markup
+			);
+		}
+
+		$axiom_blocks_fill = 'url(#' . $axiom_blocks_grad_id . ')';
+	}
+}
+
 $axiom_blocks_path_transform = '';
 if ( $axiom_blocks_flip_horizontal || $axiom_blocks_flip_vertical ) {
 	$axiom_blocks_sx = $axiom_blocks_flip_horizontal ? -1 : 1;
@@ -85,9 +173,10 @@ $axiom_blocks_style_attr  = safecss_filter_attr( implode( '; ', $axiom_blocks_st
 $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 
 $axiom_blocks_svg_markup = sprintf(
-	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="axiom-blocks-shape-divider__svg" aria-hidden="true"><path d="%s" fill="%s"%s></path></svg>',
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" class="axiom-blocks-shape-divider__svg" aria-hidden="true">%s<path d="%s" fill="%s"%s></path></svg>',
+	$axiom_blocks_gradient_defs,
 	esc_attr( $axiom_blocks_shape_path ),
-	esc_attr( $axiom_blocks_color ),
+	esc_attr( $axiom_blocks_fill ),
 	$axiom_blocks_path_transform
 );
 ?>

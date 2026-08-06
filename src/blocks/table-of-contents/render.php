@@ -63,17 +63,20 @@ $axiom_blocks_has_toggle = $axiom_blocks_collapsible || $axiom_blocks_dock;
 
 /* ── Wrapper CSS custom properties + spacing ──────────────────────────────── */
 $axiom_blocks_var_map = array(
-	'--ab-toc-bg'         => 'bgColor',
-	'--ab-toc-link'       => 'textColor',
-	'--ab-toc-link-hover' => 'linkHoverColor',
-	'--ab-toc-active'     => 'activeColor',
-	'--ab-toc-marker'     => 'markerColor',
-	'--ab-toc-progress'   => 'progressColor',
-	'--ab-toc-border'     => 'borderColor',
-	'--ab-toc-bw'         => 'borderWidth',
-	'--ab-toc-radius'     => 'borderRadius',
-	'--ab-toc-indent'     => 'indent',
-	'--ab-toc-gap'        => 'itemGap',
+	'--ab-toc-bg'            => 'bgColor',
+	'--ab-toc-link'          => 'textColor',
+	'--ab-toc-link-hover'    => 'linkHoverColor',
+	'--ab-toc-active'        => 'activeColor',
+	'--ab-toc-marker'        => 'markerColor',
+	'--ab-toc-progress'      => 'progressColor',
+	'--ab-toc-border'        => 'borderColor',
+	'--ab-toc-bs'            => 'borderStyle',
+	'--ab-toc-bw'            => 'borderWidth',
+	'--ab-toc-radius'        => 'borderRadius',
+	'--ab-toc-indent'        => 'indent',
+	'--ab-toc-gap'           => 'itemGap',
+	'--ab-toc-shadow'        => 'tocShadow',
+	'--ab-toc-title-color'   => 'titleColor',
 );
 $axiom_blocks_style_parts = array();
 foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
@@ -81,6 +84,49 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 		$axiom_blocks_style_parts[] = $axiom_blocks_css_var . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
 	}
 }
+
+/* Border — per-side falls back to the legacy single `borderWidth`. */
+$axiom_blocks_border_map      = array(
+	'top'    => 'borderTopWidth',
+	'right'  => 'borderRightWidth',
+	'bottom' => 'borderBottomWidth',
+	'left'   => 'borderLeftWidth',
+);
+$axiom_blocks_border_fallback = $axiom_blocks_a['borderWidth'] ?? '';
+foreach ( $axiom_blocks_border_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_border_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_style_parts[] = '--ab-toc-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_val;
+	}
+}
+
+/* Radius — per-corner falls back to the legacy single `borderRadius`. */
+$axiom_blocks_radius_map      = array(
+	'tl' => 'radiusTopLeft',
+	'tr' => 'radiusTopRight',
+	'br' => 'radiusBottomRight',
+	'bl' => 'radiusBottomLeft',
+);
+$axiom_blocks_radius_fallback = $axiom_blocks_a['borderRadius'] ?? '';
+foreach ( $axiom_blocks_radius_map as $axiom_blocks_corner => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_radius_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_style_parts[] = '--ab-toc-radius-' . $axiom_blocks_corner . ': ' . $axiom_blocks_val;
+	}
+}
+
+/* Max width — inline-only (content-slider / info-box pattern): unset ⇒ no output
+   so the ToC fills the content column; ResponsiveProps adds the media rules. */
+if ( ! empty( $axiom_blocks_a['maxWidth'] ) ) {
+	$axiom_blocks_style_parts[] = 'max-width: ' . $axiom_blocks_a['maxWidth'];
+}
+
 if ( $axiom_blocks_sticky ) {
 	$axiom_blocks_style_parts[] = '--ab-toc-sticky-offset: ' . (int) ( $axiom_blocks_a['stickyOffset'] ?? 24 ) . 'px';
 }

@@ -70,7 +70,9 @@ export const TabPanel = {
 			return (
 				<div { ...blockProps }>
 					{ label && (
-						<span className="axiom-blocks-tab-panel__label">{ label }</span>
+						<span className="axiom-blocks-tab-panel__label">
+							{ label }
+						</span>
 					) }
 					<InnerBlocks.Content />
 				</div>

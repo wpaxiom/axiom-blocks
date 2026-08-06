@@ -19,15 +19,38 @@
 	// so any padding the user adds via the Spacing panel stays inside.
 	box-sizing: border-box;
 
+	// Container box — additive design-layer controls. Unset ⇒ shipped look
+	// (borderless, square, no shadow, full width).
+	border-style: var(--ab-fsp-bs, solid);
+	border-color: var(--ab-fsp-bc, transparent);
+	border-top-width: var(--ab-fsp-bw-top, 0);
+	border-right-width: var(--ab-fsp-bw-right, 0);
+	border-bottom-width: var(--ab-fsp-bw-bottom, 0);
+	border-left-width: var(--ab-fsp-bw-left, 0);
+	border-top-left-radius: var(--ab-fsp-cont-radius-tl, 0);
+	border-top-right-radius: var(--ab-fsp-cont-radius-tr, 0);
+	border-bottom-right-radius: var(--ab-fsp-cont-radius-br, 0);
+	border-bottom-left-radius: var(--ab-fsp-cont-radius-bl, 0);
+	box-shadow: var(--ab-fsp-shadow, none);
+	// Max width is inline-only (render.php / editor emit `max-width` when set)
+	// — same pattern as content-slider. A static `max-width: var(…, none)` on
+	// the root collapses the editor canvas; inline-only avoids that.
+
 	&.is-qualified {
 		--ab-fsp-fill-color: var(--ab-fsp-qualified-color);
 	}
 
 	&__msg {
-		font-size: 0.95em;
-		line-height: 1.4;
+		font-family: var(--ab-fsp-msg-ff);
+		font-weight: var(--ab-fsp-msg-fw);
+		font-size: var(--ab-fsp-msg-fs, 0.95em);
+		line-height: var(--ab-fsp-msg-lh, 1.4);
+		letter-spacing: var(--ab-fsp-msg-ls);
+		text-transform: var(--ab-fsp-msg-tt);
+		text-decoration: var(--ab-fsp-msg-td);
+		text-align: var(--ab-fsp-msg-ta);
 		margin: 0 0 0.5rem;
-		color: inherit;
+		color: var(--ab-fsp-msg-color, inherit);
 	}
 
 	&__amount-left {
@@ -39,14 +62,21 @@
 		width: 100%;
 		height: var(--ab-fsp-bar-height);
 		background: var(--ab-fsp-bar-bg);
-		border-radius: var(--ab-fsp-radius);
+		// Per-corner radius falls back to the legacy single `--ab-fsp-radius`
+		// (old blocks set only that), then 999px.
+		border-top-left-radius: var(--ab-fsp-radius-tl, var(--ab-fsp-radius, 999px));
+		border-top-right-radius: var(--ab-fsp-radius-tr, var(--ab-fsp-radius, 999px));
+		border-bottom-right-radius: var(--ab-fsp-radius-br, var(--ab-fsp-radius, 999px));
+		border-bottom-left-radius: var(--ab-fsp-radius-bl, var(--ab-fsp-radius, 999px));
 		overflow: hidden;
 	}
 
 	&__fill {
 		height: 100%;
 		width: 0;
-		background: var(--ab-fsp-fill-color);
+		// Flat color (legacy) is the fallback; a gradient (barBgType set) wins
+		// via --ab-fsp-fill-bg. The qualified state still swaps the flat color.
+		background: var(--ab-fsp-fill-bg, var(--ab-fsp-fill-color));
 		border-radius: inherit;
 		transition: width 0.35s ease, background-color 0.25s ease;
 	}

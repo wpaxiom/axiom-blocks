@@ -22,8 +22,24 @@ $axiom_blocks_badge         = (string) ( $axiom_blocks_a['badge'] ?? '' );
 $axiom_blocks_currency      = (string) ( $axiom_blocks_a['currency'] ?? '' );
 $axiom_blocks_price         = (string) ( $axiom_blocks_a['price'] ?? '' );
 $axiom_blocks_period        = (string) ( $axiom_blocks_a['period'] ?? '' );
-$axiom_blocks_show_currency = ! isset( $axiom_blocks_a['showCurrency'] ) || ! empty( $axiom_blocks_a['showCurrency'] );
-$axiom_blocks_show_period   = ! isset( $axiom_blocks_a['showPeriod'] ) || ! empty( $axiom_blocks_a['showPeriod'] );
+/* Currency / period visibility is a table-wide setting (user 2026-08-03), passed
+   down as context. Both must agree: the table's value drives every plan, while a
+   plan that was explicitly switched off before the setting moved up stays off —
+   `true` is the shipped default, so a stored `false` is always deliberate. */
+$axiom_blocks_plan_currency  = ! isset( $axiom_blocks_a['showCurrency'] ) || ! empty( $axiom_blocks_a['showCurrency'] );
+$axiom_blocks_plan_period    = ! isset( $axiom_blocks_a['showPeriod'] ) || ! empty( $axiom_blocks_a['showPeriod'] );
+$axiom_blocks_table_currency = true;
+$axiom_blocks_table_period   = true;
+if ( isset( $block ) && is_object( $block ) ) {
+	if ( isset( $block->context['axiom-blocks/showCurrency'] ) ) {
+		$axiom_blocks_table_currency = ! empty( $block->context['axiom-blocks/showCurrency'] );
+	}
+	if ( isset( $block->context['axiom-blocks/showPeriod'] ) ) {
+		$axiom_blocks_table_period = ! empty( $block->context['axiom-blocks/showPeriod'] );
+	}
+}
+$axiom_blocks_show_currency = $axiom_blocks_table_currency && $axiom_blocks_plan_currency;
+$axiom_blocks_show_period   = $axiom_blocks_table_period && $axiom_blocks_plan_period;
 $axiom_blocks_description   = (string) ( $axiom_blocks_a['description'] ?? '' );
 $axiom_blocks_is_highlight  = ! empty( $axiom_blocks_a['isHighlight'] );
 $axiom_blocks_features      = is_array( $axiom_blocks_a['features'] ?? null ) ? $axiom_blocks_a['features'] : array();

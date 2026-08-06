@@ -18,35 +18,37 @@
 		);
 	}
 
-	var ARROW_PREV =
+	const ARROW_PREV =
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>';
-	var ARROW_NEXT =
+	const ARROW_NEXT =
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>';
-	var ARROW_UP =
+	const ARROW_UP =
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>';
-	var ARROW_DOWN =
+	const ARROW_DOWN =
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
-	var ICON_PLAY =
+	const ICON_PLAY =
 		'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 3.5v17a1 1 0 0 0 1.53.85l13-8.5a1 1 0 0 0 0-1.7l-13-8.5A1 1 0 0 0 6 3.5Z"/></svg>';
-	var ICON_PAUSE =
+	const ICON_PAUSE =
 		'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
-	var ICON_CLOSE =
+	const ICON_CLOSE =
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
 
 	function attrNum( root, name, def ) {
-		var v = parseInt( root.getAttribute( name ), 10 );
+		const v = parseInt( root.getAttribute( name ), 10 );
 		return isNaN( v ) ? def : v;
 	}
 
 	function gapPx( root ) {
-		var g = getComputedStyle( root ).getPropertyValue( '--ab-slider-gap' );
-		var n = parseInt( g, 10 );
+		const g =
+			getComputedStyle( root ).getPropertyValue( '--ab-slider-gap' );
+		const n = parseInt( g, 10 );
 		return isNaN( n ) ? 16 : n;
 	}
 
 	function heightPx( root ) {
-		var h = getComputedStyle( root ).getPropertyValue( '--ab-slider-height' );
-		var n = parseInt( h, 10 );
+		const h =
+			getComputedStyle( root ).getPropertyValue( '--ab-slider-height' );
+		const n = parseInt( h, 10 );
 		return isNaN( n ) ? 0 : n;
 	}
 
@@ -54,10 +56,10 @@
 		if ( effect === 'fade' ) {
 			return 1;
 		}
-		var d = Math.max( 1, attrNum( root, 'data-per-view', 1 ) );
-		var t = attrNum( root, 'data-per-view-tablet', 0 );
-		var m = attrNum( root, 'data-per-view-mobile', 0 );
-		var w = window.innerWidth;
+		const d = Math.max( 1, attrNum( root, 'data-per-view', 1 ) );
+		const t = attrNum( root, 'data-per-view-tablet', 0 );
+		const m = attrNum( root, 'data-per-view-mobile', 0 );
+		const w = window.innerWidth;
 		if ( w <= 600 ) {
 			return m > 0 ? m : 1;
 		}
@@ -73,15 +75,15 @@
 		}
 		root.dataset.abSliderReady = '1';
 
-		var viewport = root.querySelector( '.ab-slider__viewport' );
-		var track = root.querySelector( '.ab-slider__track' );
+		const viewport = root.querySelector( '.ab-slider__viewport' );
+		const track = root.querySelector( '.ab-slider__track' );
 		if ( ! viewport || ! track ) {
 			return;
 		}
-		var slides = Array.prototype.slice.call(
+		const slides = Array.prototype.slice.call(
 			track.querySelectorAll( ':scope > .ab-slide' )
 		);
-		var total = slides.length;
+		const total = slides.length;
 		if ( total < 2 ) {
 			if ( root.getAttribute( 'data-lightbox' ) === '1' ) {
 				initLightbox( root, slides );
@@ -89,43 +91,43 @@
 			return;
 		}
 
-		var effect = root.getAttribute( 'data-effect' ) || 'slide';
-		var vertical =
+		const effect = root.getAttribute( 'data-effect' ) || 'slide';
+		const vertical =
 			root.getAttribute( 'data-orientation' ) === 'vertical' &&
 			effect === 'slide';
-		var loop = root.getAttribute( 'data-loop' ) !== '0';
-		var showArrows = root.getAttribute( 'data-arrows' ) !== '0';
-		var showDots = root.getAttribute( 'data-dots' ) !== '0';
-		var pagType = root.getAttribute( 'data-pagination' ) || 'bullets';
-		var draggable = root.getAttribute( 'data-draggable' ) !== '0';
-		var adaptive =
+		const loop = root.getAttribute( 'data-loop' ) !== '0';
+		const showArrows = root.getAttribute( 'data-arrows' ) !== '0';
+		const showDots = root.getAttribute( 'data-dots' ) !== '0';
+		const pagType = root.getAttribute( 'data-pagination' ) || 'bullets';
+		const draggable = root.getAttribute( 'data-draggable' ) !== '0';
+		const adaptive =
 			root.getAttribute( 'data-adaptive' ) === '1' &&
 			effect === 'slide' &&
 			! vertical;
-		var scroll =
+		const scroll =
 			effect === 'slide'
 				? Math.max( 1, attrNum( root, 'data-scroll', 1 ) )
 				: 1;
-		var speed = attrNum( root, 'data-slide-speed', 500 );
-		var autoplay =
+		const speed = attrNum( root, 'data-slide-speed', 500 );
+		const autoplay =
 			root.getAttribute( 'data-autoplay' ) === '1' && ! reducedMotion();
-		var autoplayDelay = attrNum( root, 'data-autoplay-speed', 4000 );
-		var pauseHover = root.getAttribute( 'data-pause-hover' ) !== '0';
-		var pauseButton = root.getAttribute( 'data-pause-button' ) === '1';
+		const autoplayDelay = attrNum( root, 'data-autoplay-speed', 4000 );
+		const pauseHover = root.getAttribute( 'data-pause-hover' ) !== '0';
+		const pauseButton = root.getAttribute( 'data-pause-button' ) === '1';
 
 		root.style.setProperty( '--ab-slider-speed', speed + 'ms' );
 
-		var axis = vertical ? 'Y' : 'X';
-		var index = 0;
-		var perView = perViewFor( root, effect );
-		var gap = gapPx( root );
-		var slideSize = 0;
-		var timer = null;
-		var userPaused = false;
-		var prevBtn = null;
-		var nextBtn = null;
-		var pagWrap = null;
-		var pauseBtn = null;
+		const axis = vertical ? 'Y' : 'X';
+		let index = 0;
+		let perView = perViewFor( root, effect );
+		const gap = gapPx( root );
+		let slideSize = 0;
+		let timer = null;
+		let userPaused = false;
+		let prevBtn = null;
+		let nextBtn = null;
+		let pagWrap = null;
+		let pauseBtn = null;
 
 		function maxIndex() {
 			if ( effect === 'slide' ) {
@@ -138,7 +140,7 @@
 		function sizeSlides() {
 			perView = Math.min( perViewFor( root, effect ), total );
 			if ( effect === 'fade' ) {
-				var maxH = 0;
+				let maxH = 0;
 				slides.forEach( function ( s ) {
 					s.style.flex = '';
 					s.style.width = '';
@@ -151,7 +153,7 @@
 				return;
 			}
 			if ( vertical ) {
-				var vh = heightPx( root ) || 400;
+				const vh = heightPx( root ) || 400;
 				viewport.style.height = vh + 'px';
 				slideSize = ( vh - gap * ( perView - 1 ) ) / perView;
 				// flex-basis (not width) — the base CSS sets flex:0 0 100%,
@@ -176,12 +178,13 @@
 			if ( ! adaptive ) {
 				return;
 			}
-			var h = 0;
-			for ( var i = index; i < index + perView && i < total; i++ ) {
+			let h = 0;
+			for ( let i = index; i < index + perView && i < total; i++ ) {
 				// Measure the content, not the slide: flex stretches every
 				// slide to the tallest one, so slide.offsetHeight would always
 				// read the tallest and never adapt.
-				var content = slides[ i ].querySelector( '.ab-slide__content' );
+				const content =
+					slides[ i ].querySelector( '.ab-slide__content' );
 				h = Math.max(
 					h,
 					content ? content.offsetHeight : slides[ i ].offsetHeight
@@ -195,7 +198,7 @@
 
 		/* ── Apply ───────────────────────────────────────────────────────── */
 		function apply( animate ) {
-			var dur = animate && ! reducedMotion() ? speed : 0;
+			const dur = animate && ! reducedMotion() ? speed : 0;
 			if ( effect === 'slide' ) {
 				track.style.transition = 'transform ' + dur + 'ms ease';
 				track.style.transform =
@@ -222,14 +225,14 @@
 		}
 
 		function applyCoverflow() {
-			var spacing = slideSize * 0.62;
+			const spacing = slideSize * 0.62;
 			slides.forEach( function ( s, i ) {
-				var k = i - index;
-				var abs = Math.abs( k );
-				var sign = k < 0 ? 1 : -1;
-				var rot = k === 0 ? 0 : sign * 40;
-				var scale = k === 0 ? 1 : 0.82;
-				var x = k * spacing - slideSize / 2;
+				const k = i - index;
+				const abs = Math.abs( k );
+				const sign = k < 0 ? 1 : -1;
+				const rot = k === 0 ? 0 : sign * 40;
+				const scale = k === 0 ? 1 : 0.82;
+				const x = k * spacing - slideSize / 2;
 				s.style.width = slideSize + 'px';
 				s.style.transform =
 					'translateX(' +
@@ -246,7 +249,7 @@
 		}
 
 		function goTo( i, animate ) {
-			var max = maxIndex();
+			const max = maxIndex();
 			if ( loop ) {
 				if ( i < 0 ) {
 					i = max;
@@ -319,7 +322,7 @@
 				root.appendChild( pagWrap );
 			}
 			pagWrap.innerHTML = '';
-			var pages = pageCount();
+			const pages = pageCount();
 			if ( pages <= 1 ) {
 				pagWrap.style.display = 'none';
 				return;
@@ -334,13 +337,13 @@
 					total +
 					'</span>';
 			} else if ( pagType === 'progress' ) {
-				var bar = document.createElement( 'div' );
+				const bar = document.createElement( 'div' );
 				bar.className = 'ab-slider__progress-bar';
 				pagWrap.appendChild( bar );
 			} else {
-				for ( var i = 0; i < pages; i++ ) {
+				for ( let i = 0; i < pages; i++ ) {
 					( function ( i ) {
-						var dot = document.createElement( 'button' );
+						const dot = document.createElement( 'button' );
 						dot.type = 'button';
 						dot.className = 'ab-slider__dot';
 						dot.setAttribute(
@@ -363,23 +366,21 @@
 				return;
 			}
 			if ( pagType === 'fraction' ) {
-				var cur = pagWrap.querySelector( '.ab-slider__frac-current' );
+				const cur = pagWrap.querySelector( '.ab-slider__frac-current' );
 				if ( cur ) {
-					cur.textContent = String(
-						Math.min( total, index + 1 )
-					);
+					cur.textContent = String( Math.min( total, index + 1 ) );
 				}
 			} else if ( pagType === 'progress' ) {
-				var bar = pagWrap.querySelector( '.ab-slider__progress-bar' );
+				const bar = pagWrap.querySelector( '.ab-slider__progress-bar' );
 				if ( bar ) {
-					var max = maxIndex();
-					var pct = max <= 0 ? 100 : ( index / max ) * 100;
+					const max = maxIndex();
+					const pct = max <= 0 ? 100 : ( index / max ) * 100;
 					bar.style.width = pct + '%';
 				}
 			} else {
-				var dots = pagWrap.children;
-				var active = currentPage();
-				for ( var i = 0; i < dots.length; i++ ) {
+				const dots = pagWrap.children;
+				const active = currentPage();
+				for ( let i = 0; i < dots.length; i++ ) {
 					dots[ i ].classList.toggle( 'is-active', i === active );
 				}
 			}
@@ -439,8 +440,8 @@
 		root.setAttribute( 'tabindex', '0' );
 		root.setAttribute( 'aria-roledescription', 'carousel' );
 		root.addEventListener( 'keydown', function ( e ) {
-			var back = vertical ? 'ArrowUp' : 'ArrowLeft';
-			var fwd = vertical ? 'ArrowDown' : 'ArrowRight';
+			const back = vertical ? 'ArrowUp' : 'ArrowLeft';
+			const fwd = vertical ? 'ArrowDown' : 'ArrowRight';
 			if ( e.key === back ) {
 				prev();
 				restart();
@@ -452,10 +453,10 @@
 
 		/* ── Drag / swipe ────────────────────────────────────────────────── */
 		if ( draggable ) {
-			var dragStart = 0;
-			var startTx = 0;
-			var dragging = false;
-			var coord = function ( e ) {
+			let dragStart = 0;
+			let startTx = 0;
+			let dragging = false;
+			const coord = function ( e ) {
 				return vertical ? e.clientY : e.clientX;
 			};
 			viewport.addEventListener(
@@ -475,7 +476,7 @@
 				if ( ! dragging || effect !== 'slide' ) {
 					return;
 				}
-				var d = coord( e ) - dragStart;
+				const d = coord( e ) - dragStart;
 				track.style.transform =
 					'translate' + axis + '(' + ( startTx + d ) + 'px)';
 			} );
@@ -484,8 +485,8 @@
 					return;
 				}
 				dragging = false;
-				var d = coord( e ) - dragStart;
-				var threshold = Math.max( 40, ( slideSize + gap ) / 4 );
+				const d = coord( e ) - dragStart;
+				const threshold = Math.max( 40, ( slideSize + gap ) / 4 );
 				if ( d <= -threshold ) {
 					next();
 				} else if ( d >= threshold ) {
@@ -498,7 +499,7 @@
 		}
 
 		/* ── Resize ──────────────────────────────────────────────────────── */
-		var resizeTimer = null;
+		let resizeTimer = null;
 		window.addEventListener( 'resize', function () {
 			window.clearTimeout( resizeTimer );
 			resizeTimer = window.setTimeout( layout, 150 );
@@ -525,9 +526,9 @@
 
 	/* ── Lightbox ──────────────────────────────────────────────────────────── */
 	function initLightbox( root, slides ) {
-		var images = [];
+		const images = [];
 		slides.forEach( function ( s ) {
-			var imgs = s.querySelectorAll( 'img' );
+			const imgs = s.querySelectorAll( 'img' );
 			Array.prototype.forEach.call( imgs, function ( img ) {
 				images.push( img );
 			} );
@@ -536,14 +537,12 @@
 			return;
 		}
 
-		var overlay = null;
-		var stage = null;
-		var current = 0;
+		let overlay = null;
+		let stage = null;
+		let current = 0;
 
 		function fullSrc( img ) {
-			return (
-				img.getAttribute( 'data-full' ) || img.currentSrc || img.src
-			);
+			return img.getAttribute( 'data-full' ) || img.currentSrc || img.src;
 		}
 
 		function build() {
@@ -556,7 +555,7 @@
 			stage.alt = '';
 			overlay.appendChild( stage );
 
-			var close = mkBtn(
+			const close = mkBtn(
 				'ab-slider-lightbox__close',
 				'Close',
 				ICON_CLOSE
@@ -565,7 +564,7 @@
 			overlay.appendChild( close );
 
 			if ( images.length > 1 ) {
-				var prev = mkBtn(
+				const prev = mkBtn(
 					'ab-slider-lightbox__prev',
 					'Previous image',
 					ARROW_PREV
@@ -573,7 +572,7 @@
 				prev.addEventListener( 'click', function () {
 					show( current - 1 );
 				} );
-				var next = mkBtn(
+				const next = mkBtn(
 					'ab-slider-lightbox__next',
 					'Next image',
 					ARROW_NEXT
@@ -595,7 +594,7 @@
 		}
 
 		function mkBtn( cls, label, svg ) {
-			var b = document.createElement( 'button' );
+			const b = document.createElement( 'button' );
 			b.type = 'button';
 			b.className = 'ab-slider-lightbox__btn ' + cls;
 			b.setAttribute( 'aria-label', label );
@@ -638,7 +637,7 @@
 			}
 			overlay.classList.remove( 'is-open' );
 			document.removeEventListener( 'keydown', onKey );
-			var el = overlay;
+			const el = overlay;
 			overlay = null;
 			window.setTimeout( function () {
 				if ( el && el.parentNode ) {

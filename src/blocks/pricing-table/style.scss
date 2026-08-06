@@ -13,8 +13,8 @@
 	&__heading {
 		font-size: 1.5rem;
 		font-weight: 700;
-		margin: 0 0 24px;
-		color: inherit;
+		margin: 0 0 var(--ab-pt-heading-gap, 24px);
+		color: var(--ab-pt-heading-color, inherit);
 	}
 
 	&__grid {
@@ -32,15 +32,36 @@
 	}
 }
 
-/* ── Plan card ───────────────────────────────────────────────────────────── */
+/* ── Plan card ───────────────────────────────────────────────────────────────
+   The §25.4 inheritance chain, read right-to-left: a plan's own `--plan-card-*`
+   wins, else the table's `--ab-pt-card-*` default, else the shipped value.
+
+   The three `cardStyle` presets (bordered/filled/minimal) were REMOVED
+   2026-08-05 — every look they produced is now built from the Styles → Cards
+   rows. The shipped card is what `bordered` painted (1px #e5e7eb border on
+   white), inlined into the fallbacks below. Do not re-add a preset layer. */
 .ab-pt-plan {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	gap: 14px;
-	padding: 28px 24px;
-	border-radius: 12px;
-	background: #fff;
+	gap: var(--plan-card-gap, var(--ab-pt-card-gap, 14px));
+	padding-top: var(--plan-card-pt, var(--ab-pt-card-pt, 28px));
+	padding-right: var(--plan-card-pr, var(--ab-pt-card-pr, 24px));
+	padding-bottom: var(--plan-card-pb, var(--ab-pt-card-pb, 28px));
+	padding-left: var(--plan-card-pl, var(--ab-pt-card-pl, 24px));
+	border-style: var(--plan-card-bs, var(--ab-pt-card-bs, solid));
+	border-color: var(--plan-card-bc, var(--ab-pt-card-bc, #e5e7eb));
+	border-top-width: var(--plan-card-bw-top, var(--ab-pt-card-bw-top, 1px));
+	border-right-width: var(--plan-card-bw-right, var(--ab-pt-card-bw-right, 1px));
+	border-bottom-width: var(--plan-card-bw-bottom, var(--ab-pt-card-bw-bottom, 1px));
+	border-left-width: var(--plan-card-bw-left, var(--ab-pt-card-bw-left, 1px));
+	border-top-left-radius: var(--plan-card-radius-tl, var(--ab-pt-card-radius-tl, 12px));
+	border-top-right-radius: var(--plan-card-radius-tr, var(--ab-pt-card-radius-tr, 12px));
+	border-bottom-right-radius: var(--plan-card-radius-br, var(--ab-pt-card-radius-br, 12px));
+	border-bottom-left-radius: var(--plan-card-radius-bl, var(--ab-pt-card-radius-bl, 12px));
+	box-shadow: var(--plan-card-shadow, var(--ab-pt-card-shadow, none));
+	min-height: var(--plan-card-minh, var(--ab-pt-card-minh, auto));
+	background: var(--plan-card-bg, var(--ab-pt-card-bg, #fff));
 	color: #1e1e1e;
 	box-sizing: border-box;
 	transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
@@ -50,57 +71,102 @@
 		top: -12px;
 		left: 50%;
 		transform: translateX(-50%);
-		padding: 4px 12px;
-		background: var(--ab-pt-accent);
-		color: #fff;
-		font-size: 11px;
-		font-weight: 700;
-		letter-spacing: 0.04em;
-		text-transform: uppercase;
-		border-radius: 99px;
+		padding-top: var(--ab-pt-badge-pt, 4px);
+		padding-right: var(--ab-pt-badge-pr, 12px);
+		padding-bottom: var(--ab-pt-badge-pb, 4px);
+		padding-left: var(--ab-pt-badge-pl, 12px);
+		border-style: var(--ab-pt-badge-bs, solid);
+		border-color: var(--ab-pt-badge-bc, transparent);
+		border-top-width: var(--ab-pt-badge-bw-top, 0);
+		border-right-width: var(--ab-pt-badge-bw-right, 0);
+		border-bottom-width: var(--ab-pt-badge-bw-bottom, 0);
+		border-left-width: var(--ab-pt-badge-bw-left, 0);
+		background: var(--ab-pt-badge-bg, var(--ab-pt-accent));
+		color: var(--ab-pt-badge-color, #fff);
+		font-family: var(--ab-pt-badge-ff);
+		font-size: var(--ab-pt-badge-fs, 11px);
+		font-weight: var(--ab-pt-badge-fw, 700);
+		line-height: var(--ab-pt-badge-lh);
+		letter-spacing: var(--ab-pt-badge-ls, 0.04em);
+		text-transform: var(--ab-pt-badge-tt, uppercase);
+		border-top-left-radius: var(--ab-pt-badge-radius-tl, 99px);
+		border-top-right-radius: var(--ab-pt-badge-radius-tr, 99px);
+		border-bottom-right-radius: var(--ab-pt-badge-radius-br, 99px);
+		border-bottom-left-radius: var(--ab-pt-badge-radius-bl, 99px);
 		white-space: nowrap;
 	}
 
+	/* Plan-component typography set on the table (`--ab-pt-*`). A plan's own
+	   typography is written inline by pricing-plan/render.php and beats these,
+	   which is what keeps individually-styled saved content rendering. */
 	&__name {
 		margin: 0;
-		font-size: 1.25rem;
-		font-weight: 700;
-		line-height: 1.2;
+		color: var(--ab-pt-name-color, inherit);
+		font-family: var(--ab-pt-name-ff);
+		font-size: var(--ab-pt-name-fs, 1.25rem);
+		font-weight: var(--ab-pt-name-fw, 700);
+		line-height: var(--ab-pt-name-lh, 1.2);
+		letter-spacing: var(--ab-pt-name-ls);
+		text-transform: var(--ab-pt-name-tt);
+		text-decoration: var(--ab-pt-name-td);
 	}
 
 	&__price {
 		display: flex;
 		align-items: baseline;
-		gap: 2px;
+		gap: var(--ab-pt-price-gap, 2px);
 		margin: 4px 0 2px;
+		color: var(--ab-pt-price-color, inherit);
 	}
 
 	&__currency {
-		font-size: 1.25rem;
-		font-weight: 600;
+		color: var(--ab-pt-currency-color, inherit);
+		font-family: var(--ab-pt-currency-ff);
+		font-size: var(--ab-pt-currency-fs, 1.25rem);
+		font-weight: var(--ab-pt-currency-fw, 600);
+		line-height: var(--ab-pt-currency-lh);
+		letter-spacing: var(--ab-pt-currency-ls);
+		text-transform: var(--ab-pt-currency-tt);
 		align-self: flex-start;
 		margin-top: 6px;
 		opacity: 0.7;
 	}
 
+	/* Price styles the number itself — the container can't, because the amount
+	   and period each carry their own shipped size. The currency symbol keeps
+	   its shipped scale and only follows the Price color. */
 	&__amount {
-		font-size: 2.75rem;
-		font-weight: 800;
-		line-height: 1;
+		font-family: var(--ab-pt-price-ff);
+		font-size: var(--ab-pt-price-fs, 2.75rem);
+		font-weight: var(--ab-pt-price-fw, 800);
+		line-height: var(--ab-pt-price-lh, 1);
+		letter-spacing: var(--ab-pt-price-ls);
+		text-transform: var(--ab-pt-price-tt);
 	}
 
 	&__period {
-		font-size: 0.95rem;
-		font-weight: 500;
-		opacity: 0.65;
+		color: var(--ab-pt-period-color, inherit);
+		font-family: var(--ab-pt-period-ff);
+		font-size: var(--ab-pt-period-fs, 0.95rem);
+		font-weight: var(--ab-pt-period-fw, 500);
+		line-height: var(--ab-pt-period-lh);
+		letter-spacing: var(--ab-pt-period-ls);
+		text-transform: var(--ab-pt-period-tt);
+		opacity: var(--ab-pt-period-op, 0.65);
 		margin-left: 4px;
 	}
 
 	&__desc {
 		margin: 0;
-		font-size: 0.9rem;
-		line-height: 1.5;
-		opacity: 0.75;
+		color: var(--ab-pt-desc-color, inherit);
+		font-family: var(--ab-pt-desc-ff);
+		font-size: var(--ab-pt-desc-fs, 0.9rem);
+		font-weight: var(--ab-pt-desc-fw);
+		line-height: var(--ab-pt-desc-lh, 1.5);
+		letter-spacing: var(--ab-pt-desc-ls);
+		text-transform: var(--ab-pt-desc-tt);
+		text-decoration: var(--ab-pt-desc-td);
+		opacity: var(--ab-pt-desc-op, 0.75);
 	}
 
 	&__features {
@@ -109,7 +175,7 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		gap: var(--ab-pt-feat-gap, 10px);
 		flex: 1 1 auto;
 	}
 
@@ -124,20 +190,40 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 12px 20px;
-		border-radius: 8px;
-		font-size: 0.95rem;
-		font-weight: 600;
+		padding-top: var(--ab-pt-cta-pt, 12px);
+		padding-right: var(--ab-pt-cta-pr, 20px);
+		padding-bottom: var(--ab-pt-cta-pb, 12px);
+		padding-left: var(--ab-pt-cta-pl, 20px);
+		border-top-left-radius: var(--ab-pt-cta-radius-tl, 8px);
+		border-top-right-radius: var(--ab-pt-cta-radius-tr, 8px);
+		border-bottom-right-radius: var(--ab-pt-cta-radius-br, 8px);
+		border-bottom-left-radius: var(--ab-pt-cta-radius-bl, 8px);
+		font-family: var(--ab-pt-cta-ff);
+		font-size: var(--ab-pt-cta-fs, 0.95rem);
+		font-weight: var(--ab-pt-cta-fw, 600);
+		line-height: var(--ab-pt-cta-lh);
+		letter-spacing: var(--ab-pt-cta-ls);
+		text-transform: var(--ab-pt-cta-tt);
 		text-decoration: none;
-		background: #f3f4f6;
-		color: #1e1e1e;
-		border: 1px solid transparent;
+		background: var(--ab-pt-cta-bg, #f3f4f6);
+		color: var(--ab-pt-cta-color, #1e1e1e);
+		border-style: var(--ab-pt-cta-bs, solid);
+		border-color: var(--ab-pt-cta-bc, transparent);
+		border-top-width: var(--ab-pt-cta-bw-top, 1px);
+		border-right-width: var(--ab-pt-cta-bw-right, 1px);
+		border-bottom-width: var(--ab-pt-cta-bw-bottom, 1px);
+		border-left-width: var(--ab-pt-cta-bw-left, 1px);
+		box-shadow: var(--ab-pt-cta-shadow, none);
 		transition: background 0.15s, color 0.15s, border-color 0.15s;
 		cursor: pointer;
 
+		/* Hover falls through: explicit hover value → the normal value (so a
+		   custom button holds steady rather than snapping to the shipped grey)
+		   → the shipped hover. */
 		&:hover {
-			background: #e5e7eb;
-			color: #1e1e1e;
+			background: var(--ab-pt-cta-bg-h, var(--ab-pt-cta-bg, #e5e7eb));
+			color: var(--ab-pt-cta-color-h, var(--ab-pt-cta-color, #1e1e1e));
+			box-shadow: var(--ab-pt-cta-shadow-h, var(--ab-pt-cta-shadow, none));
 		}
 	}
 }
@@ -146,7 +232,7 @@
 .ab-pt-feat {
 	display: flex;
 	align-items: flex-start;
-	gap: 10px;
+	gap: var(--ab-pt-feat-icon-gap, 10px);
 	font-size: 0.9rem;
 	line-height: 1.45;
 
@@ -155,66 +241,65 @@
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
-		width: 18px;
-		height: 18px;
+		width: var(--ab-pt-feat-icon-size, 18px);
+		height: var(--ab-pt-feat-icon-size, 18px);
 		margin-top: 1px;
+
+		svg {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	&__text {
+		color: var(--ab-pt-feat-color, inherit);
+		font-family: var(--ab-pt-feat-ff);
+		font-size: var(--ab-pt-feat-fs);
+		font-weight: var(--ab-pt-feat-fw);
+		line-height: var(--ab-pt-feat-lh);
+		letter-spacing: var(--ab-pt-feat-ls);
+		text-transform: var(--ab-pt-feat-tt);
 	}
 
 	&.is-included &__icon {
-		color: var(--ab-pt-accent);
+		color: var(--ab-pt-feat-icon, var(--ab-pt-accent));
 	}
 
 	&.is-excluded &__icon {
-		color: #9ca3af;
+		color: var(--ab-pt-feat-icon-ex, #9ca3af);
 	}
 
 	&.is-excluded &__text {
-		opacity: 0.55;
-		text-decoration: line-through;
+		opacity: var(--ab-pt-feat-ex-op, 0.55);
+		text-decoration: var(--ab-pt-feat-ex-td, line-through);
 	}
-}
-
-/* ── Card style variants ─────────────────────────────────────────────────── */
-.axiom-blocks-pricing-table.is-card-bordered .ab-pt-plan {
-	border: 1px solid #e5e7eb;
-	background: #fff;
-}
-
-.axiom-blocks-pricing-table.is-card-filled .ab-pt-plan {
-	background: #f9fafb;
-	border: 1px solid transparent;
-}
-
-.axiom-blocks-pricing-table.is-card-minimal .ab-pt-plan {
-	background: transparent;
-	border: 0;
-	padding: 20px 12px;
 }
 
 /* ── Highlighted plan ────────────────────────────────────────────────────── */
 .ab-pt-plan.is-highlight {
-	border-color: var(--ab-pt-accent);
-	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+
+	/* Featured border: the Featured tab's own value, else Accent — deliberately
+	   NOT falling back to `--ab-pt-card-bc`, or a table that set a card border
+	   color would tint its highlighted card with it instead of the accent.
+	   Widths and style do fall through to the Default tab, so a featured card
+	   only diverges where you actually set it. */
+	border-color: var(--plan-card-bc, var(--ab-pt-cardf-bc, var(--ab-pt-accent)));
+	border-style: var(--plan-card-bs, var(--ab-pt-cardf-bs, var(--ab-pt-card-bs, solid)));
+	border-top-width: var(--plan-card-bw-top, var(--ab-pt-cardf-bw-top, var(--ab-pt-card-bw-top, 1px)));
+	border-right-width: var(--plan-card-bw-right, var(--ab-pt-cardf-bw-right, var(--ab-pt-card-bw-right, 1px)));
+	border-bottom-width: var(--plan-card-bw-bottom, var(--ab-pt-cardf-bw-bottom, var(--ab-pt-card-bw-bottom, 1px)));
+	border-left-width: var(--plan-card-bw-left, var(--ab-pt-cardf-bw-left, var(--ab-pt-card-bw-left, 1px)));
+	background: var(--plan-card-bg, var(--ab-pt-cardf-bg, var(--ab-pt-card-bg, #fff)));
+	box-shadow: var(--plan-card-shadow, var(--ab-pt-cardf-shadow, 0 12px 32px #00000014));
 
 	.ab-pt-plan__cta {
-		background: var(--ab-pt-accent);
-		color: #fff;
+		background: var(--ab-pt-cta-bg, var(--ab-pt-accent));
+		color: var(--ab-pt-cta-color, #fff);
 
 		&:hover {
-			background: var(--ab-pt-accent);
-			color: #fff;
-			opacity: 0.9;
+			background: var(--ab-pt-cta-bg-h, var(--ab-pt-cta-bg, var(--ab-pt-accent)));
+			color: var(--ab-pt-cta-color-h, var(--ab-pt-cta-color, #fff));
+			opacity: var(--ab-pt-cta-hover-op, 0.9);
 		}
 	}
-}
-
-.axiom-blocks-pricing-table.is-card-minimal .ab-pt-plan.is-highlight {
-	border: 1px solid var(--ab-pt-accent);
-	padding: 28px 24px;
-	background: #fff;
-}
-
-.axiom-blocks-pricing-table.is-card-filled .ab-pt-plan.is-highlight {
-	background: #fff;
-	border-color: var(--ab-pt-accent);
 }

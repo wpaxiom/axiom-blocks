@@ -1,7 +1,7 @@
 /**
  * Notice / Alert — shared styles (editor + frontend).
- * Per-type presets set the colour custom properties; render.php / the editor
- * override them inline when the user picks custom colours. Static rules live
+ * Per-type presets set the color custom properties; render.php / the editor
+ * override them inline when the user picks custom colors. Static rules live
  * here so safecss_filter_attr can't strip them.
  */
 .ab-notice {
@@ -20,7 +20,12 @@
 	color: var(--ab-notice-color);
 	border: 1px solid color-mix(in srgb, var(--ab-notice-accent) 35%, transparent);
 	border-left: 4px solid var(--ab-notice-accent);
-	border-radius: var(--ab-notice-radius);
+	/* Per-corner radius falls back to the legacy single `--ab-notice-radius`. */
+	border-top-left-radius: var(--ab-notice-radius-tl, var(--ab-notice-radius, 8px));
+	border-top-right-radius: var(--ab-notice-radius-tr, var(--ab-notice-radius, 8px));
+	border-bottom-right-radius: var(--ab-notice-radius-br, var(--ab-notice-radius, 8px));
+	border-bottom-left-radius: var(--ab-notice-radius-bl, var(--ab-notice-radius, 8px));
+	box-shadow: var(--ab-notice-shadow, none);
 }
 
 .ab-notice--success {
@@ -64,6 +69,8 @@
 
 .ab-notice__title {
 	font-weight: 600;
+	/* Additive title color falls back to the shared text color. */
+	color: var(--ab-notice-title-color, var(--ab-notice-color));
 }
 
 .ab-notice__title:not(:empty) + .ab-notice__message {
@@ -106,4 +113,16 @@
 .ab-notice.is-dismissing {
 	opacity: 0;
 	transition: opacity 0.25s ease;
+}
+
+// Per-run Highlight format chrome, reused from Advanced Heading so highlights in
+// the notice message render with padding/radius (color + weight are inline, so
+// they need no class CSS). Per-run marks carry their own inline background.
+.ab-notice .ab-ah-highlight {
+	background: var(--ab-ah-hl-bg, #fef9c3);
+	color: var(--ab-ah-hl-color, inherit);
+	padding: 0.05em 0.2em;
+	border-radius: 0.15em;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
 }

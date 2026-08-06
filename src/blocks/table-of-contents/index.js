@@ -1,24 +1,18 @@
-﻿import { __ } from '@wordpress/i18n';
-import {
-	useBlockProps,
-	InspectorControls,
-	RichText,
-} from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import {
 	ABSelectControl,
-	ABColorControl,
 	ABToggleControl,
 	ABTextControl,
 	ABRangeControl,
-	ABSubAccordion,
 } from '../../components/ABControls';
-import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
-import {
-	TypographyPanel,
-	useTypographyStyle,
-} from '../../components/TypographyPanel';
+import { useSpacingStyle } from '../../components/SpacingPanel';
+import { useTypographyStyle } from '../../components/TypographyPanel';
+import { ABInspectorGroups } from '../../components/ABInspectorGroups';
+import { useDeviceType } from '../../components/responsive';
+import { responsiveVarValue } from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -34,11 +28,13 @@ const stripTags = ( html ) =>
 		.replace( /<[^>]+>/g, '' )
 		.trim();
 
-/* Real CSS fallbacks so the inspector swatches show the shipping defaults. */
+/* Real CSS fallbacks so the inspector swatches show the shipping defaults. The
+ * defaults are scheme-dependent (light/dark), so DESIGN is built per-render. */
 const COLOR_DEFAULTS = {
 	light: {
 		bgColor: '#ffffff',
 		textColor: '#475569',
+		titleColor: '#0f172a',
 		linkHoverColor: '#0f172a',
 		activeColor: '#7c3aed',
 		markerColor: '#94a3b8',
@@ -48,6 +44,7 @@ const COLOR_DEFAULTS = {
 	dark: {
 		bgColor: '#0f1e38',
 		textColor: '#b7c4da',
+		titleColor: '#f1f5f9',
 		linkHoverColor: '#ffffff',
 		activeColor: '#a78bfa',
 		markerColor: '#64748b',
@@ -98,10 +95,21 @@ export function getTocVars( attributes ) {
 		markerColor,
 		progressColor,
 		borderColor,
+		borderStyle,
 		borderWidth,
+		borderTopWidth,
+		borderRightWidth,
+		borderBottomWidth,
+		borderLeftWidth,
 		borderRadius,
+		radiusTopLeft,
+		radiusTopRight,
+		radiusBottomRight,
+		radiusBottomLeft,
 		indent,
 		itemGap,
+		tocShadow,
+		titleColor,
 	} = attributes;
 	return {
 		'--ab-toc-bg': bgColor || undefined,
@@ -111,10 +119,119 @@ export function getTocVars( attributes ) {
 		'--ab-toc-marker': markerColor || undefined,
 		'--ab-toc-progress': progressColor || undefined,
 		'--ab-toc-border': borderColor || undefined,
+		'--ab-toc-bs': borderStyle || undefined,
 		'--ab-toc-bw': borderWidth || undefined,
+		// Border — per-side falls back to the legacy single `borderWidth`.
+		'--ab-toc-bw-top': borderTopWidth || borderWidth || undefined,
+		'--ab-toc-bw-right': borderRightWidth || borderWidth || undefined,
+		'--ab-toc-bw-bottom': borderBottomWidth || borderWidth || undefined,
+		'--ab-toc-bw-left': borderLeftWidth || borderWidth || undefined,
 		'--ab-toc-radius': borderRadius || undefined,
+		// Radius — per-corner falls back to the legacy single `borderRadius`.
+		'--ab-toc-radius-tl': radiusTopLeft || borderRadius || undefined,
+		'--ab-toc-radius-tr': radiusTopRight || borderRadius || undefined,
+		'--ab-toc-radius-br': radiusBottomRight || borderRadius || undefined,
+		'--ab-toc-radius-bl': radiusBottomLeft || borderRadius || undefined,
 		'--ab-toc-indent': indent || undefined,
 		'--ab-toc-gap': itemGap || undefined,
+		'--ab-toc-shadow': tocShadow || undefined,
+		// Additive title color — CSS falls back to the shipped title token
+		// (`--ab-toc-title-color, var(--ab-toc-title)`).
+		'--ab-toc-title-color': titleColor || undefined,
+	};
+}
+
+const TOC_BW = [
+	'borderTopWidth',
+	'borderRightWidth',
+	'borderBottomWidth',
+	'borderLeftWidth',
+];
+const TOC_RADIUS = [
+	'radiusTopLeft',
+	'radiusTopRight',
+	'radiusBottomRight',
+	'radiusBottomLeft',
+];
+
+/* Anatomy-as-declaration — the part-first (Option C) Styles UI is rendered from
+ * this config by ABInspectorGroups/TargetSection. Built per-render so the color
+ * swatches show the active light/dark scheme's shipping defaults. ToC is dynamic
+ * (`save: () => null` → render.php), so every new attr is additive — old saved
+ * blocks stay byte-identical. Links is the only stateful part: it ships
+ * `linkHoverColor` + `activeColor`, so hover/active are P1 state pills. */
+function buildDesign( colorScheme, sectionProgress ) {
+	const d = COLOR_DEFAULTS[ colorScheme === 'dark' ? 'dark' : 'light' ];
+	return {
+		block: 'toc',
+		targets: [
+			{
+				noun: __( 'Container', 'axiom-blocks' ),
+				colors: [
+					{
+						label: __( 'Marker', 'axiom-blocks' ),
+						bind: 'markerColor',
+						fallback: d.markerColor,
+					},
+					...( sectionProgress
+						? [
+								{
+									label: __( 'Progress', 'axiom-blocks' ),
+									bind: 'progressColor',
+									fallback: d.progressColor,
+								},
+						  ]
+						: [] ),
+				],
+				background: { bind: 'bgColor', fallback: d.bgColor },
+				border: {
+					widthKeys: TOC_BW,
+					legacyWidth: 'borderWidth',
+					styleKey: 'borderStyle',
+					colorKey: 'borderColor',
+					colorDefault: d.borderColor,
+					max: 8,
+				},
+				radius: {
+					keys: TOC_RADIUS,
+					legacyRadius: 'borderRadius',
+					max: 40,
+				},
+				shadow: { bind: 'tocShadow' },
+				size: {
+					bind: 'maxWidth',
+					label: __( 'Max width', 'axiom-blocks' ),
+					responsive: true,
+				},
+			},
+			{
+				noun: __( 'Title', 'axiom-blocks' ),
+				colors: [
+					{
+						label: __( 'Text', 'axiom-blocks' ),
+						bind: 'titleColor',
+						fallback: d.titleColor,
+					},
+				],
+				typography: 'title',
+			},
+			{
+				noun: __( 'Links', 'axiom-blocks' ),
+				states: [ 'hover', 'active' ],
+				colors: [
+					{
+						label: __( 'Text', 'axiom-blocks' ),
+						bind: 'textColor',
+						fallback: d.textColor,
+						stateBind: {
+							hover: 'linkHoverColor',
+							active: 'activeColor',
+						},
+					},
+				],
+				typography: 'content',
+			},
+		],
 	};
 }
 
@@ -142,7 +259,7 @@ function TocEdit( { attributes, setAttributes } ) {
 	} = attributes;
 
 	const isDark = colorScheme === 'dark';
-	const swatchDefaults = COLOR_DEFAULTS[ isDark ? 'dark' : 'light' ];
+	const design = buildDesign( colorScheme, sectionProgress );
 
 	const levels = [ 1, 2, 3, 4, 5, 6 ].filter(
 		( n ) => attributes[ `levelH${ n }` ]
@@ -173,6 +290,7 @@ function TocEdit( { attributes, setAttributes } ) {
 		? Math.min( ...items.map( ( h ) => h.level ) )
 		: 0;
 
+	const device = useDeviceType();
 	const blockProps = useBlockProps( {
 		className: [ 'ab-toc', `ab-toc--${ markerType }` ]
 			.concat( sectionProgress ? [ 'ab-toc--progress' ] : [] )
@@ -182,6 +300,9 @@ function TocEdit( { attributes, setAttributes } ) {
 		style: {
 			...getTocVars( attributes ),
 			...useSpacingStyle( attributes ),
+			// Max-width is inline-only (content-slider / info-box pattern): unset
+			// ⇒ inherits the layout width; ResponsiveProps adds the media rules.
+			maxWidth: responsiveVarValue( attributes, 'maxWidth', device ),
 		},
 	} );
 
@@ -197,406 +318,282 @@ function TocEdit( { attributes, setAttributes } ) {
 		/>
 	);
 
-	return (
+	const leading = (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Structure', 'axiom-blocks' ) }
-					initialOpen={ true }
-				>
-					<ABTextControl
-						label={ __( 'Eyebrow label', 'axiom-blocks' ) }
-						value={ eyebrow }
-						onChange={ ( v ) => setAttributes( { eyebrow: v } ) }
-					/>
-					<ABToggleControl
-						label={ __( 'Show title', 'axiom-blocks' ) }
-						help={ __(
-							'A larger heading below the eyebrow.',
-							'axiom-blocks'
-						) }
-						checked={ !! showTitle }
-						onChange={ ( v ) => setAttributes( { showTitle: v } ) }
-					/>
-					{ showTitle && (
-						<ABSelectControl
-							label={ __( 'Title tag', 'axiom-blocks' ) }
-							value={ titleTag }
-							options={ [
-								{ label: 'H2', value: 'h2' },
-								{ label: 'H3', value: 'h3' },
-								{ label: 'H4', value: 'h4' },
-								{ label: 'H5', value: 'h5' },
-								{ label: 'H6', value: 'h6' },
-								{
-									label: __( 'Plain', 'axiom-blocks' ),
-									value: 'div',
-								},
-							] }
-							onChange={ ( v ) =>
-								setAttributes( { titleTag: v } )
-							}
-						/>
+			<PanelBody
+				title={ __( 'Structure', 'axiom-blocks' ) }
+				initialOpen={ true }
+			>
+				<ABTextControl
+					label={ __( 'Eyebrow label', 'axiom-blocks' ) }
+					value={ eyebrow }
+					onChange={ ( v ) => setAttributes( { eyebrow: v } ) }
+				/>
+				<ABToggleControl
+					label={ __( 'Show title', 'axiom-blocks' ) }
+					help={ __(
+						'A larger heading below the eyebrow.',
+						'axiom-blocks'
 					) }
-					<p className="ab-toc__control-label">
-						{ __( 'Include heading levels', 'axiom-blocks' ) }
-					</p>
-					<div className="ab-toc__level-grid">
-						{ [ 1, 2, 3, 4, 5, 6 ].map( levelToggle ) }
-					</div>
+					checked={ !! showTitle }
+					onChange={ ( v ) => setAttributes( { showTitle: v } ) }
+				/>
+				{ showTitle && (
 					<ABSelectControl
-						label={ __( 'List marker', 'axiom-blocks' ) }
-						value={ markerType }
+						label={ __( 'Title tag', 'axiom-blocks' ) }
+						value={ titleTag }
 						options={ [
+							{ label: 'H2', value: 'h2' },
+							{ label: 'H3', value: 'h3' },
+							{ label: 'H4', value: 'h4' },
+							{ label: 'H5', value: 'h5' },
+							{ label: 'H6', value: 'h6' },
 							{
-								label: __( 'Numbered', 'axiom-blocks' ),
-								value: 'numbered',
-							},
-							{
-								label: __( 'Bullet', 'axiom-blocks' ),
-								value: 'bullet',
-							},
-							{
-								label: __( 'None', 'axiom-blocks' ),
-								value: 'none',
+								label: __( 'Plain', 'axiom-blocks' ),
+								value: 'div',
 							},
 						] }
-						onChange={ ( v ) => setAttributes( { markerType: v } ) }
+						onChange={ ( v ) => setAttributes( { titleTag: v } ) }
 					/>
-					{ markerType === 'numbered' && (
-						<ABTextControl
-							label={ __( 'Number prefix', 'axiom-blocks' ) }
-							help={ __(
-								'Text before each number, e.g. "Step ".',
+				) }
+				<p className="ab-toc__control-label">
+					{ __( 'Include heading levels', 'axiom-blocks' ) }
+				</p>
+				<div className="ab-toc__level-grid">
+					{ [ 1, 2, 3, 4, 5, 6 ].map( levelToggle ) }
+				</div>
+			</PanelBody>
+
+			<PanelBody
+				title={ __( 'Behaviour', 'axiom-blocks' ) }
+				initialOpen={ false }
+			>
+				<ABToggleControl
+					label={ __( 'Smooth scroll', 'axiom-blocks' ) }
+					checked={ !! attributes.smoothScroll }
+					onChange={ ( v ) => setAttributes( { smoothScroll: v } ) }
+				/>
+				<ABRangeControl
+					label={ __( 'Scroll offset', 'axiom-blocks' ) }
+					help={ __(
+						'Extra space above the target â€” clear a fixed header.',
+						'axiom-blocks'
+					) }
+					value={ attributes.scrollOffset || 0 }
+					onChange={ ( v ) => setAttributes( { scrollOffset: v } ) }
+					min={ 0 }
+					max={ 200 }
+					step={ 1 }
+					unit="px"
+				/>
+				<ABToggleControl
+					label={ __( 'Highlight active section', 'axiom-blocks' ) }
+					help={ __(
+						'Marks the item for the section in view.',
+						'axiom-blocks'
+					) }
+					checked={ !! attributes.scrollSpy }
+					onChange={ ( v ) => setAttributes( { scrollSpy: v } ) }
+				/>
+				<ABToggleControl
+					label={ __( 'Reading-progress rail', 'axiom-blocks' ) }
+					help={ __(
+						'A sliding purple rail follows the section in view.',
+						'axiom-blocks'
+					) }
+					checked={ !! sectionProgress }
+					onChange={ ( v ) =>
+						setAttributes( { sectionProgress: v } )
+					}
+				/>
+				<ABToggleControl
+					label={ __( 'Collapsible', 'axiom-blocks' ) }
+					checked={ !! collapsible }
+					onChange={ ( v ) => setAttributes( { collapsible: v } ) }
+				/>
+				{ collapsible && (
+					<ABToggleControl
+						label={ __( 'Start collapsed', 'axiom-blocks' ) }
+						checked={ !! attributes.initialCollapsed }
+						onChange={ ( v ) =>
+							setAttributes( { initialCollapsed: v } )
+						}
+					/>
+				) }
+				<ABToggleControl
+					label={ __( 'Sticky on scroll', 'axiom-blocks' ) }
+					checked={ !! sticky }
+					onChange={ ( v ) => setAttributes( { sticky: v } ) }
+				/>
+				{ sticky && (
+					<>
+						<ABRangeControl
+							label={ __( 'Sticky top offset', 'axiom-blocks' ) }
+							value={ attributes.stickyOffset || 0 }
+							onChange={ ( v ) =>
+								setAttributes( { stickyOffset: v } )
+							}
+							min={ 0 }
+							max={ 160 }
+							step={ 1 }
+							unit="px"
+						/>
+						<ABToggleControl
+							label={ __(
+								'Disable sticky on mobile',
 								'axiom-blocks'
 							) }
-							value={ numberPrefix }
+							checked={ !! hideOnMobile }
 							onChange={ ( v ) =>
-								setAttributes( { numberPrefix: v } )
+								setAttributes( { hideOnMobile: v } )
 							}
 						/>
-					) }
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Behaviour', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABToggleControl
-						label={ __( 'Smooth scroll', 'axiom-blocks' ) }
-						checked={ !! attributes.smoothScroll }
-						onChange={ ( v ) =>
-							setAttributes( { smoothScroll: v } )
-						}
-					/>
-					<ABRangeControl
-						label={ __( 'Scroll offset', 'axiom-blocks' ) }
-						help={ __(
-							'Extra space above the target â€” clear a fixed header.',
-							'axiom-blocks'
-						) }
-						value={ attributes.scrollOffset || 0 }
-						onChange={ ( v ) =>
-							setAttributes( { scrollOffset: v } )
-						}
-						min={ 0 }
-						max={ 200 }
-						step={ 1 }
-						unit="px"
-					/>
-					<ABToggleControl
-						label={ __(
-							'Highlight active section',
-							'axiom-blocks'
-						) }
-						help={ __(
-							'Marks the item for the section in view.',
-							'axiom-blocks'
-						) }
-						checked={ !! attributes.scrollSpy }
-						onChange={ ( v ) => setAttributes( { scrollSpy: v } ) }
-					/>
-					<ABToggleControl
-						label={ __( 'Reading-progress rail', 'axiom-blocks' ) }
-						help={ __(
-							'A sliding purple rail follows the section in view.',
-							'axiom-blocks'
-						) }
-						checked={ !! sectionProgress }
-						onChange={ ( v ) =>
-							setAttributes( { sectionProgress: v } )
-						}
-					/>
-					<ABToggleControl
-						label={ __( 'Collapsible', 'axiom-blocks' ) }
-						checked={ !! collapsible }
-						onChange={ ( v ) =>
-							setAttributes( { collapsible: v } )
-						}
-					/>
-					{ collapsible && (
-						<>
+						{ ! hideOnMobile && (
 							<ABToggleControl
 								label={ __(
-									'Start collapsed',
+									'Mobile dock bar',
 									'axiom-blocks'
 								) }
-								checked={ !! attributes.initialCollapsed }
-								onChange={ ( v ) =>
-									setAttributes( { initialCollapsed: v } )
-								}
-							/>
-							<ABToggleControl
-								label={ __(
-									'Show section count',
+								help={ __(
+									'On phones, dock as a bar that opens a bottom sheet.',
 									'axiom-blocks'
 								) }
-								checked={ !! showSectionCount }
+								checked={ !! mobileDock }
 								onChange={ ( v ) =>
-									setAttributes( { showSectionCount: v } )
+									setAttributes( { mobileDock: v } )
 								}
 							/>
-						</>
-					) }
-					<ABToggleControl
-						label={ __( 'Sticky on scroll', 'axiom-blocks' ) }
-						checked={ !! sticky }
-						onChange={ ( v ) => setAttributes( { sticky: v } ) }
-					/>
-					{ sticky && (
-						<>
-							<ABRangeControl
-								label={ __(
-									'Sticky top offset',
-									'axiom-blocks'
-								) }
-								value={ attributes.stickyOffset || 0 }
-								onChange={ ( v ) =>
-									setAttributes( { stickyOffset: v } )
-								}
-								min={ 0 }
-								max={ 160 }
-								step={ 1 }
-								unit="px"
-							/>
-							<ABToggleControl
-								label={ __(
-									'Disable sticky on mobile',
-									'axiom-blocks'
-								) }
-								checked={ !! hideOnMobile }
-								onChange={ ( v ) =>
-									setAttributes( { hideOnMobile: v } )
-								}
-							/>
-							{ ! hideOnMobile && (
-								<ABToggleControl
-									label={ __(
-										'Mobile dock bar',
-										'axiom-blocks'
-									) }
-									help={ __(
-										'On phones, dock as a bar that opens a bottom sheet.',
-										'axiom-blocks'
-									) }
-									checked={ !! mobileDock }
-									onChange={ ( v ) =>
-										setAttributes( { mobileDock: v } )
-									}
-								/>
-							) }
-						</>
-					) }
-					<ABToggleControl
-						label={ __( 'Copy-link on each item', 'axiom-blocks' ) }
-						help={ __(
-							'Adds a button to copy a direct link to the heading.',
-							'axiom-blocks'
 						) }
-						checked={ !! attributes.copyLink }
-						onChange={ ( v ) => setAttributes( { copyLink: v } ) }
-					/>
-					<ABToggleControl
-						label={ __( 'Footer back-to-top', 'axiom-blocks' ) }
-						help={ __(
-							'A "Back to top" link inside the panel footer.',
-							'axiom-blocks'
-						) }
-						checked={ !! footerBackToTop }
-						onChange={ ( v ) =>
-							setAttributes( { footerBackToTop: v } )
-						}
-					/>
-					<ABToggleControl
-						label={ __(
-							'Floating back-to-top button',
-							'axiom-blocks'
-						) }
-						checked={ !! backToTop }
-						onChange={ ( v ) => setAttributes( { backToTop: v } ) }
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Colours', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABSelectControl
-						label={ __( 'Colour scheme', 'axiom-blocks' ) }
-						value={ colorScheme }
-						options={ [
-							{
-								label: __( 'Light', 'axiom-blocks' ),
-								value: 'light',
-							},
-							{
-								label: __( 'Dark', 'axiom-blocks' ),
-								value: 'dark',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { colorScheme: v } )
-						}
-					/>
-					<ABColorControl
-						label={ __( 'Background', 'axiom-blocks' ) }
-						color={ attributes.bgColor }
-						fallbackColor={ swatchDefaults.bgColor }
-						onChange={ ( v ) => setAttributes( { bgColor: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Link', 'axiom-blocks' ) }
-						color={ attributes.textColor }
-						fallbackColor={ swatchDefaults.textColor }
-						onChange={ ( v ) => setAttributes( { textColor: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Link hover', 'axiom-blocks' ) }
-						color={ attributes.linkHoverColor }
-						fallbackColor={ swatchDefaults.linkHoverColor }
-						onChange={ ( v ) =>
-							setAttributes( { linkHoverColor: v } )
-						}
-					/>
-					<ABColorControl
-						label={ __( 'Active section', 'axiom-blocks' ) }
-						color={ attributes.activeColor }
-						fallbackColor={ swatchDefaults.activeColor }
-						onChange={ ( v ) =>
-							setAttributes( { activeColor: v } )
-						}
-					/>
-					<ABColorControl
-						label={ __( 'Marker', 'axiom-blocks' ) }
-						color={ attributes.markerColor }
-						fallbackColor={ swatchDefaults.markerColor }
-						onChange={ ( v ) =>
-							setAttributes( { markerColor: v } )
-						}
-					/>
-					{ sectionProgress && (
-						<ABColorControl
-							label={ __( 'Progress', 'axiom-blocks' ) }
-							color={ attributes.progressColor }
-							fallbackColor={ swatchDefaults.progressColor }
-							onChange={ ( v ) =>
-								setAttributes( { progressColor: v } )
-							}
-						/>
+					</>
+				) }
+				<ABToggleControl
+					label={ __( 'Copy-link on each item', 'axiom-blocks' ) }
+					help={ __(
+						'Adds a button to copy a direct link to the heading.',
+						'axiom-blocks'
 					) }
-					<ABColorControl
-						label={ __( 'Border', 'axiom-blocks' ) }
-						color={ attributes.borderColor }
-						fallbackColor={ swatchDefaults.borderColor }
-						onChange={ ( v ) =>
-							setAttributes( { borderColor: v } )
-						}
-					/>
-					<ABRangeControl
-						label={ __( 'Border width', 'axiom-blocks' ) }
-						value={ fromPx( attributes.borderWidth, 1 ) }
-						onChange={ ( v ) =>
-							setAttributes( { borderWidth: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 8 }
-						step={ 1 }
-						unit="px"
-					/>
-					<ABRangeControl
-						label={ __( 'Corner radius', 'axiom-blocks' ) }
-						value={ fromPx( attributes.borderRadius, 12 ) }
-						onChange={ ( v ) =>
-							setAttributes( { borderRadius: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 32 }
-						step={ 1 }
-						unit="px"
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'List layout', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABRangeControl
-						label={ __( 'Nesting indent', 'axiom-blocks' ) }
-						value={ fromPx( attributes.indent, 20 ) }
-						onChange={ ( v ) =>
-							setAttributes( { indent: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 48 }
-						step={ 1 }
-						unit="px"
-					/>
-					<ABRangeControl
-						label={ __( 'Item spacing', 'axiom-blocks' ) }
-						value={ fromPx( attributes.itemGap, 2 ) }
-						onChange={ ( v ) =>
-							setAttributes( { itemGap: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 32 }
-						step={ 1 }
-						unit="px"
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Typography', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<div className="ab-sub-acc-list">
-						<ABSubAccordion title={ __( 'Title', 'axiom-blocks' ) }>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="title"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-						<ABSubAccordion
-							title={ __( 'List items', 'axiom-blocks' ) }
-						>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="content"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-					</div>
-				</PanelBody>
-
-				<SpacingPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
+					checked={ !! attributes.copyLink }
+					onChange={ ( v ) => setAttributes( { copyLink: v } ) }
 				/>
-			</InspectorControls>
+				<ABToggleControl
+					label={ __( 'Footer back-to-top', 'axiom-blocks' ) }
+					help={ __(
+						'A "Back to top" link inside the panel footer.',
+						'axiom-blocks'
+					) }
+					checked={ !! footerBackToTop }
+					onChange={ ( v ) =>
+						setAttributes( { footerBackToTop: v } )
+					}
+				/>
+				<ABToggleControl
+					label={ __(
+						'Floating back-to-top button',
+						'axiom-blocks'
+					) }
+					checked={ !! backToTop }
+					onChange={ ( v ) => setAttributes( { backToTop: v } ) }
+				/>
+			</PanelBody>
+
+			<PanelBody
+				title={ __( 'List layout', 'axiom-blocks' ) }
+				initialOpen={ false }
+			>
+				<ABSelectControl
+					label={ __( 'List marker', 'axiom-blocks' ) }
+					value={ markerType }
+					options={ [
+						{
+							label: __( 'Numbered', 'axiom-blocks' ),
+							value: 'numbered',
+						},
+						{
+							label: __( 'Bullet', 'axiom-blocks' ),
+							value: 'bullet',
+						},
+						{
+							label: __( 'None', 'axiom-blocks' ),
+							value: 'none',
+						},
+					] }
+					onChange={ ( v ) => setAttributes( { markerType: v } ) }
+				/>
+				{ markerType === 'numbered' && (
+					<ABTextControl
+						label={ __( 'Number prefix', 'axiom-blocks' ) }
+						help={ __(
+							'Text before each number, e.g. "Step ".',
+							'axiom-blocks'
+						) }
+						value={ numberPrefix }
+						onChange={ ( v ) =>
+							setAttributes( { numberPrefix: v } )
+						}
+					/>
+				) }
+				<ABRangeControl
+					label={ __( 'Nesting indent', 'axiom-blocks' ) }
+					value={ fromPx( attributes.indent, 20 ) }
+					onChange={ ( v ) => setAttributes( { indent: toPx( v ) } ) }
+					min={ 0 }
+					max={ 48 }
+					step={ 1 }
+					unit="px"
+				/>
+				<ABRangeControl
+					label={ __( 'Item spacing', 'axiom-blocks' ) }
+					value={ fromPx( attributes.itemGap, 2 ) }
+					onChange={ ( v ) =>
+						setAttributes( { itemGap: toPx( v ) } )
+					}
+					min={ 0 }
+					max={ 32 }
+					step={ 1 }
+					unit="px"
+				/>
+				{ collapsible && (
+					<ABToggleControl
+						label={ __( 'Show section count', 'axiom-blocks' ) }
+						checked={ !! showSectionCount }
+						onChange={ ( v ) =>
+							setAttributes( { showSectionCount: v } )
+						}
+					/>
+				) }
+			</PanelBody>
+
+			<PanelBody
+				title={ __( 'Color scheme', 'axiom-blocks' ) }
+				initialOpen={ false }
+			>
+				<ABSelectControl
+					label={ __( 'Color scheme', 'axiom-blocks' ) }
+					value={ colorScheme }
+					options={ [
+						{
+							label: __( 'Light', 'axiom-blocks' ),
+							value: 'light',
+						},
+						{
+							label: __( 'Dark', 'axiom-blocks' ),
+							value: 'dark',
+						},
+					] }
+					onChange={ ( v ) => setAttributes( { colorScheme: v } ) }
+				/>
+			</PanelBody>
+		</>
+	);
+
+	return (
+		<>
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ design }
+				leading={ leading }
+			/>
 
 			<nav { ...blockProps }>
 				<div className="ab-toc__head">

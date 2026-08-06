@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AxiomBlocks\Blocks\AllowedHtml;
+use AxiomBlocks\Blocks\Background;
 use AxiomBlocks\Blocks\Icons;
 use AxiomBlocks\Blocks\Spacing;
 use AxiomBlocks\Blocks\Typography;
@@ -36,13 +37,27 @@ if ( ! in_array( $axiom_blocks_align, array( 'left', 'center', 'right' ), true )
 
 /* ── Wrapper CSS custom properties + spacing + typography ─────────────────── */
 $axiom_blocks_var_map     = array(
-	'--ab-il-icon-size'  => 'iconSize',
-	'--ab-il-icon-color' => 'iconColor',
-	'--ab-il-gap'        => 'gap',
-	'--ab-il-row-gap'    => 'rowGap',
-	'--ab-il-divider'    => 'dividerColor',
-	'--ab-il-link'       => 'linkColor',
-	'--ab-il-link-h'     => 'linkHoverColor',
+	'--ab-il-icon-size'          => 'iconSize',
+	'--ab-il-icon-color'         => 'iconColor',
+	'--ab-il-gap'                => 'gap',
+	'--ab-il-row-gap'            => 'rowGap',
+	'--ab-il-divider'            => 'dividerColor',
+	'--ab-il-divider-thickness'  => 'dividerThickness',
+	'--ab-il-link'               => 'linkColor',
+	'--ab-il-link-h'             => 'linkHoverColor',
+	'--ab-il-item-bc'            => 'itemBorderColor',
+	'--ab-il-item-bw-top'        => 'itemBorderTopWidth',
+	'--ab-il-item-bw-right'      => 'itemBorderRightWidth',
+	'--ab-il-item-bw-bottom'     => 'itemBorderBottomWidth',
+	'--ab-il-item-bw-left'       => 'itemBorderLeftWidth',
+	'--ab-il-item-radius-tl'     => 'itemRadiusTopLeft',
+	'--ab-il-item-radius-tr'     => 'itemRadiusTopRight',
+	'--ab-il-item-radius-br'     => 'itemRadiusBottomRight',
+	'--ab-il-item-radius-bl'     => 'itemRadiusBottomLeft',
+	'--ab-il-item-pt'            => 'itemPaddingTop',
+	'--ab-il-item-pr'            => 'itemPaddingRight',
+	'--ab-il-item-pb'            => 'itemPaddingBottom',
+	'--ab-il-item-pl'            => 'itemPaddingLeft',
 );
 $axiom_blocks_style_parts = array();
 foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
@@ -53,6 +68,37 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 if ( ! empty( $axiom_blocks_a['textColor'] ) ) {
 	$axiom_blocks_style_parts[] = 'color: ' . $axiom_blocks_a['textColor'];
 }
+
+/* Item border style — solid when any width is set, else the chosen style. */
+$axiom_blocks_item_bw = ! empty( $axiom_blocks_a['itemBorderTopWidth'] )
+	|| ! empty( $axiom_blocks_a['itemBorderRightWidth'] )
+	|| ! empty( $axiom_blocks_a['itemBorderBottomWidth'] )
+	|| ! empty( $axiom_blocks_a['itemBorderLeftWidth'] );
+$axiom_blocks_item_bs = $axiom_blocks_a['itemBorderStyle'] ?? '';
+if ( $axiom_blocks_item_bw ) {
+	$axiom_blocks_style_parts[] = '--ab-il-item-bs: ' . ( '' !== $axiom_blocks_item_bs ? $axiom_blocks_item_bs : 'solid' );
+} elseif ( '' !== $axiom_blocks_item_bs ) {
+	$axiom_blocks_style_parts[] = '--ab-il-item-bs: ' . $axiom_blocks_item_bs;
+}
+
+/* Item box background — flat color (legacy `itemBg`/`itemBgHover`, bgType empty)
+   is the fallback; gradient/image (bgType set) win. Mirrors getIconListVars(). */
+$axiom_blocks_item_bg = Background::value( $axiom_blocks_a, 'itemBg', 'itemBg' );
+if ( '' !== $axiom_blocks_item_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-il-item-bg: ' . $axiom_blocks_item_bg;
+}
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'itemBg', 'ab-il-item' )
+);
+$axiom_blocks_item_bg_hover = Background::value( $axiom_blocks_a, 'itemHover', 'itemBgHover' );
+if ( '' !== $axiom_blocks_item_bg_hover ) {
+	$axiom_blocks_style_parts[] = '--ab-il-item-bg-h: ' . $axiom_blocks_item_bg_hover;
+}
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'itemHover', 'ab-il-item-h' )
+);
 $axiom_blocks_wrapper_style = implode( '; ', $axiom_blocks_style_parts );
 $axiom_blocks_wrapper_style = Spacing::merge( $axiom_blocks_wrapper_style, $axiom_blocks_a );
 $axiom_blocks_wrapper_style = Typography::merge( $axiom_blocks_wrapper_style, $axiom_blocks_a );

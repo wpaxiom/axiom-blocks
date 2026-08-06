@@ -270,7 +270,10 @@ export function IconPicker( {
 				<div className="ab-icon-picker__manage">
 					<div className="ab-icon-picker__grid">
 						{ customMeta.map( ( i ) => (
-							<div key={ i.slug } className="ab-icon-picker__cell">
+							<div
+								key={ i.slug }
+								className="ab-icon-picker__cell"
+							>
 								<button
 									type="button"
 									title={ i.label }
@@ -331,7 +334,9 @@ export function IconPicker( {
 								type="text"
 								className="ab-icon-picker__add-name"
 								value={ nameText }
-								onChange={ ( e ) => setNameText( e.target.value ) }
+								onChange={ ( e ) =>
+									setNameText( e.target.value )
+								}
 								placeholder={ __(
 									'Name (optional)',
 									'axiom-blocks'
@@ -348,7 +353,7 @@ export function IconPicker( {
 						</div>
 						<p className="ab-icon-picker__add-help">
 							{ __(
-								'Paste an <svg>. Use currentColor for fills/strokes so the colour controls apply.',
+								'Paste an <svg>. Use currentColor for fills/strokes so the color controls apply.',
 								'axiom-blocks'
 							) }
 						</p>

@@ -3,14 +3,13 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	InnerBlocks,
-	InspectorControls,
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
-import {
-	ABSelectControl,
-	ABColorControl,
-} from '../../../components/ABControls';
+import { ABSelectControl } from '../../../components/ABControls';
+import { ABInspectorGroups } from '../../../components/ABInspectorGroups';
+import { getBackgroundVars } from '../../../components/BackgroundControl';
 import { BlockIcon } from '../../../blockIcons';
+import metadata from './block.json';
 
 const ALIGN_OPTIONS = [
 	{ label: __( 'Left', 'axiom-blocks' ), value: 'left' },
@@ -24,6 +23,20 @@ const VALIGN_OPTIONS = [
 	{ label: __( 'Bottom', 'axiom-blocks' ), value: 'bottom' },
 ];
 
+/* One wrapper part — the slide hosts InnerBlocks, so no typography (inner
+ * blocks own their text). Background is the full shared control (color /
+ * gradient / image + overlay); its color binds the shipped `bgColor` attr
+ * (default colorKey), so a plain color slide is unchanged. */
+const DESIGN = {
+	block: 'slide',
+	targets: [
+		{
+			noun: __( 'Slide', 'axiom-blocks' ),
+			background: { full: true },
+		},
+	],
+};
+
 export function getSlideClasses( attributes ) {
 	const { contentAlign, verticalAlign } = attributes;
 	return [
@@ -33,12 +46,22 @@ export function getSlideClasses( attributes ) {
 	];
 }
 
+/* Wrapper style: a slide with a background type renders via the shared
+ * --ab-slide-bg var (+ layer vars) consumed by style.scss; a plain color
+ * slide keeps the legacy inline `background-color` (no type ⇒ no var). */
+export function getSlideStyle( attributes ) {
+	if ( attributes.bgType ) {
+		return getBackgroundVars( attributes, { varPrefix: '--ab-slide' } );
+	}
+	return { backgroundColor: attributes.bgColor || undefined };
+}
+
 function SlideEdit( { attributes, setAttributes } ) {
-	const { contentAlign, verticalAlign, bgColor } = attributes;
+	const { contentAlign, verticalAlign } = attributes;
 
 	const blockProps = useBlockProps( {
 		className: getSlideClasses( attributes ).join( ' ' ),
-		style: { backgroundColor: bgColor || undefined },
+		style: getSlideStyle( attributes ),
 	} );
 
 	const innerBlocksProps = useInnerBlocksProps(
@@ -57,29 +80,38 @@ function SlideEdit( { attributes, setAttributes } ) {
 		}
 	);
 
+	const leading = (
+		<PanelBody
+			title={ __( 'Slide', 'axiom-blocks' ) }
+			initialOpen={ true }
+		>
+			<ABSelectControl
+				label={ __( 'Content alignment', 'axiom-blocks' ) }
+				value={ contentAlign || 'center' }
+				options={ ALIGN_OPTIONS }
+				onChange={ ( v ) =>
+					setAttributes( { contentAlign: v } )
+				}
+			/>
+			<ABSelectControl
+				label={ __( 'Vertical alignment', 'axiom-blocks' ) }
+				value={ verticalAlign || 'center' }
+				options={ VALIGN_OPTIONS }
+				onChange={ ( v ) =>
+					setAttributes( { verticalAlign: v } )
+				}
+			/>
+		</PanelBody>
+	);
+
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody title={ __( 'Slide', 'axiom-blocks' ) } initialOpen={ true }>
-					<ABSelectControl
-						label={ __( 'Content alignment', 'axiom-blocks' ) }
-						value={ contentAlign || 'center' }
-						options={ ALIGN_OPTIONS }
-						onChange={ ( v ) => setAttributes( { contentAlign: v } ) }
-					/>
-					<ABSelectControl
-						label={ __( 'Vertical alignment', 'axiom-blocks' ) }
-						value={ verticalAlign || 'center' }
-						options={ VALIGN_OPTIONS }
-						onChange={ ( v ) => setAttributes( { verticalAlign: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Background', 'axiom-blocks' ) }
-						color={ bgColor }
-						onChange={ ( v ) => setAttributes( { bgColor: v } ) }
-					/>
-				</PanelBody>
-			</InspectorControls>
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ DESIGN }
+				leading={ leading }
+			/>
 
 			<div { ...blockProps }>
 				<div { ...innerBlocksProps } />
@@ -101,7 +133,7 @@ export const Slide = {
 		save: ( { attributes } ) => {
 			const blockProps = useBlockProps.save( {
 				className: getSlideClasses( attributes ).join( ' ' ),
-				style: { backgroundColor: attributes.bgColor || undefined },
+				style: getSlideStyle( attributes ),
 			} );
 			return (
 				<div { ...blockProps }>
@@ -111,5 +143,26 @@ export const Slide = {
 				</div>
 			);
 		},
+		deprecated: [
+			{
+				attributes: metadata.attributes,
+				supports: metadata.supports,
+				save: ( { attributes } ) => {
+					const blockProps = useBlockProps.save( {
+						className: getSlideClasses( attributes ).join( ' ' ),
+						style: {
+							backgroundColor: attributes.bgColor || undefined,
+						},
+					} );
+					return (
+						<div { ...blockProps }>
+							<div className="ab-slide__content">
+								<InnerBlocks.Content />
+							</div>
+						</div>
+					);
+				},
+			},
+		],
 	},
 };

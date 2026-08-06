@@ -1,12 +1,13 @@
 /**
- * AxiomColorPicker — our-scheme colour picker.
+ * AxiomColorPicker — our-scheme color picker.
  *
  * Ports the BlockSuite Design System "Color Picker" (colorpicker/picker.jsx +
  * picker.css) into a functional control: HSV canvas + hue/alpha sliders,
- * segmented Hex/RGB/HSL, theme palette, recent colours, eyedropper, clear.
+ * segmented Hex/RGB/HSL, theme palette, recent colors, eyedropper, clear.
  * HSV is the internal source of truth (so greyscale drags don't lose hue);
  * colord handles parsing the incoming value string and formatting output —
- * hex when opaque, rgba() when translucent. Used inside ABColorControl.
+ * always hex (8-digit when translucent; rgba() gets stripped by kses on the
+ * frontend). Used inside ABColorControl.
  */
 
 import { __ } from '@wordpress/i18n';
@@ -17,7 +18,7 @@ const RECENTS_KEY = 'axiomBlocksRecentColors';
 const FALLBACK_HSV = { h: 262, s: 0.76, v: 0.93 };
 const SEG = [ 'HEX', 'RGB', 'HSL' ];
 
-/* ── colour math (from the design) ───────────────────────────────────────── */
+/* ── color math (from the design) ───────────────────────────────────────── */
 function hsvToRgb( h, s, v ) {
 	h = ( ( h % 360 ) + 360 ) % 360;
 	const c = v * s;
@@ -223,16 +224,12 @@ export function AxiomColorPicker( { value, onChange, colors = [] } ) {
 	const hueRgb = hsvToRgb( hsv.h, 1, 1 );
 	const derivedHex = colord( { r: rr, g: gg, b: bb } ).toHex();
 
-	/* Canonical output is always HEX — the tabs are just equivalent views of the
-	 * same colour. Alpha can't live in a 6-digit hex, so a translucent colour
-	 * falls back to rgba() (the only lossless CSS form here). */
+	/* Canonical output is always HEX (8-digit when translucent) — never
+	 * rgba(): safecss_filter_attr strips any inline-style value containing
+	 * parens it doesn't whitelist, so rgba() dies on the frontend. */
 	const emit = ( nextHsv, nextA ) => {
 		const [ r, g, b ] = hsvToRgb( nextHsv.h, nextHsv.s, nextHsv.v );
-		const out =
-			nextA < 1
-				? colord( { r, g, b, a: nextA } ).toRgbString()
-				: colord( { r, g, b } ).toHex();
-		onChange( out );
+		onChange( colord( { r, g, b, a: nextA } ).toHex() );
 	};
 
 	/* Re-sync internal HSV when the value changes from outside (theme swatch,
@@ -416,18 +413,66 @@ export function AxiomColorPicker( { value, onChange, colors = [] } ) {
 				) }
 				{ mode === 'RGB' && (
 					<>
-						<Field label="R" value={ rr } min={ 0 } max={ 255 } onCommit={ ( v ) => onRgbField( 'r', v ) } />
-						<Field label="G" value={ gg } min={ 0 } max={ 255 } onCommit={ ( v ) => onRgbField( 'g', v ) } />
-						<Field label="B" value={ bb } min={ 0 } max={ 255 } onCommit={ ( v ) => onRgbField( 'b', v ) } />
-						<Field label="A%" value={ alphaPct } min={ 0 } max={ 100 } onCommit={ ( v ) => onAlphaField( v ) } />
+						<Field
+							label="R"
+							value={ rr }
+							min={ 0 }
+							max={ 255 }
+							onCommit={ ( v ) => onRgbField( 'r', v ) }
+						/>
+						<Field
+							label="G"
+							value={ gg }
+							min={ 0 }
+							max={ 255 }
+							onCommit={ ( v ) => onRgbField( 'g', v ) }
+						/>
+						<Field
+							label="B"
+							value={ bb }
+							min={ 0 }
+							max={ 255 }
+							onCommit={ ( v ) => onRgbField( 'b', v ) }
+						/>
+						<Field
+							label="A%"
+							value={ alphaPct }
+							min={ 0 }
+							max={ 100 }
+							onCommit={ ( v ) => onAlphaField( v ) }
+						/>
 					</>
 				) }
 				{ mode === 'HSL' && (
 					<>
-						<Field label="H" value={ hsl.h } min={ 0 } max={ 360 } onCommit={ ( v ) => onHslField( 'h', v, 360 ) } />
-						<Field label="S%" value={ hsl.s } min={ 0 } max={ 100 } onCommit={ ( v ) => onHslField( 's', v, 100 ) } />
-						<Field label="L%" value={ hsl.l } min={ 0 } max={ 100 } onCommit={ ( v ) => onHslField( 'l', v, 100 ) } />
-						<Field label="A%" value={ alphaPct } min={ 0 } max={ 100 } onCommit={ ( v ) => onAlphaField( v ) } />
+						<Field
+							label="H"
+							value={ hsl.h }
+							min={ 0 }
+							max={ 360 }
+							onCommit={ ( v ) => onHslField( 'h', v, 360 ) }
+						/>
+						<Field
+							label="S%"
+							value={ hsl.s }
+							min={ 0 }
+							max={ 100 }
+							onCommit={ ( v ) => onHslField( 's', v, 100 ) }
+						/>
+						<Field
+							label="L%"
+							value={ hsl.l }
+							min={ 0 }
+							max={ 100 }
+							onCommit={ ( v ) => onHslField( 'l', v, 100 ) }
+						/>
+						<Field
+							label="A%"
+							value={ alphaPct }
+							min={ 0 }
+							max={ 100 }
+							onCommit={ ( v ) => onAlphaField( v ) }
+						/>
 					</>
 				) }
 			</div>
@@ -476,7 +521,8 @@ export function AxiomColorPicker( { value, onChange, colors = [] } ) {
 					<div className="axcp-swatches">
 						{ recents.map( ( c ) => {
 							const translucent =
-								colord( c ).isValid() && colord( c ).alpha() < 1;
+								colord( c ).isValid() &&
+								colord( c ).alpha() < 1;
 							const selected =
 								!! value &&
 								colord( value ).toHex() === colord( c ).toHex();

@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AxiomBlocks\Blocks\AllowedHtml;
+use AxiomBlocks\Blocks\Background;
 use AxiomBlocks\Blocks\Spacing;
 
 $axiom_blocks_a = $attributes ?? array();
@@ -40,29 +41,40 @@ $axiom_blocks_readmore   = ! empty( $axiom_blocks_a['readMore'] );
 $axiom_blocks_var_map     = array(
 	'--ab-tst-cols'         => 'columns',
 	'--ab-tst-gap'          => 'gap',
-	'--ab-tst-card-bg'      => 'cardBg',
 	'--ab-tst-card-bc'      => 'cardBorderColor',
 	'--ab-tst-card-bw'      => 'cardBorderWidth',
 	'--ab-tst-card-radius'  => 'cardRadius',
+	'--ab-tst-card-gap'     => 'cardGap',
 	'--ab-tst-card-pt'      => 'cardPaddingTop',
 	'--ab-tst-card-pr'      => 'cardPaddingRight',
 	'--ab-tst-card-pb'      => 'cardPaddingBottom',
 	'--ab-tst-card-pl'      => 'cardPaddingLeft',
 	'--ab-tst-avatar-size'  => 'avatarSize',
+	'--ab-tst-avatar-bc'    => 'avatarBorderColor',
+	'--ab-tst-avatar-bw-top'    => 'avatarBorderTopWidth',
+	'--ab-tst-avatar-bw-right'  => 'avatarBorderRightWidth',
+	'--ab-tst-avatar-bw-bottom' => 'avatarBorderBottomWidth',
+	'--ab-tst-avatar-bw-left'   => 'avatarBorderLeftWidth',
+	'--ab-tst-mono-bg'      => 'monoBg',
+	'--ab-tst-mono-color'   => 'monoColor',
 	'--ab-tst-rating'       => 'ratingColor',
 	'--ab-tst-quote-icon'   => 'quoteIconColor',
+	'--ab-tst-nav'          => 'navColor',
 	'--ab-tst-clamp'        => 'readMoreLines',
 	'--ab-tst-marquee-time' => 'marqueeSpeed',
 	'--ab-tst-name-color'   => 'nameColor',
 	'--ab-tst-role-color'   => 'roleColor',
 	'--ab-tst-comp-color'   => 'companyColor',
 	'--ab-tst-quote-color'  => 'quoteColor',
+	'--ab-tst-card-shadow'   => 'cardShadowCustom',
+	'--ab-tst-card-shadow-h' => 'cardShadowCustomHover',
 );
 $axiom_blocks_typo_groups = array(
 	'name'    => 'name',
 	'role'    => 'role',
 	'comp'    => 'company',
 	'quote'   => 'quote',
+	'mono'    => 'mono',
 );
 $axiom_blocks_typo_props = array(
 	'ff' => 'FontFamily',
@@ -86,6 +98,102 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 		$axiom_blocks_style_parts[] = $axiom_blocks_css_var . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
 	}
 }
+
+/* Card background — flat color (legacy `cardBg`, cardBgType empty) is the
+   fallback; gradient/image (cardBgType set) win. Mirrors getTestimonialsVars(). */
+$axiom_blocks_card_bg = Background::value( $axiom_blocks_a, 'card', 'cardBg' );
+if ( '' !== $axiom_blocks_card_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-tst-card-bg: ' . $axiom_blocks_card_bg;
+}
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'card', 'ab-tst-card' )
+);
+$axiom_blocks_card_bg_hover = Background::value( $axiom_blocks_a, 'cardHover', 'cardBgHover' );
+if ( '' !== $axiom_blocks_card_bg_hover ) {
+	$axiom_blocks_style_parts[] = '--ab-tst-card-bg-h: ' . $axiom_blocks_card_bg_hover;
+}
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'cardHover', 'ab-tst-card-h' )
+);
+
+/* Card border — per-side widths fall back to the legacy single `cardBorderWidth`;
+   style + color are single-value. */
+$axiom_blocks_card_bw_map = array(
+	'top'    => 'cardBorderTopWidth',
+	'right'  => 'cardBorderRightWidth',
+	'bottom' => 'cardBorderBottomWidth',
+	'left'   => 'cardBorderLeftWidth',
+);
+$axiom_blocks_card_bw_fallback = $axiom_blocks_a['cardBorderWidth'] ?? '';
+$axiom_blocks_any_card_bw      = false;
+foreach ( $axiom_blocks_card_bw_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_card_bw_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_any_card_bw     = true;
+		$axiom_blocks_style_parts[] = '--ab-tst-card-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_val;
+	}
+}
+$axiom_blocks_card_border_style = $axiom_blocks_a['borderStyle'] ?? '';
+if ( $axiom_blocks_any_card_bw ) {
+	$axiom_blocks_style_parts[] = '--ab-tst-card-bs: ' . ( '' !== $axiom_blocks_card_border_style ? $axiom_blocks_card_border_style : 'solid' );
+} elseif ( '' !== $axiom_blocks_card_border_style ) {
+	$axiom_blocks_style_parts[] = '--ab-tst-card-bs: ' . $axiom_blocks_card_border_style;
+}
+
+/* Card radius — per-corner falls back to the legacy single `cardRadius`. */
+$axiom_blocks_card_radius_map = array(
+	'tl' => 'cardRadiusTopLeft',
+	'tr' => 'cardRadiusTopRight',
+	'br' => 'cardRadiusBottomRight',
+	'bl' => 'cardRadiusBottomLeft',
+);
+$axiom_blocks_card_radius_fallback = $axiom_blocks_a['cardRadius'] ?? '';
+foreach ( $axiom_blocks_card_radius_map as $axiom_blocks_corner => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_card_radius_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_style_parts[] = '--ab-tst-card-radius-' . $axiom_blocks_corner . ': ' . $axiom_blocks_val;
+	}
+}
+
+/* Avatar border — per-side widths; style + color single-value. Unset ⇒ no ring
+   (box-sizing keeps the ring inside the size). */
+$axiom_blocks_avatar_bw_map = array(
+	'top'    => 'avatarBorderTopWidth',
+	'right'  => 'avatarBorderRightWidth',
+	'bottom' => 'avatarBorderBottomWidth',
+	'left'   => 'avatarBorderLeftWidth',
+);
+$axiom_blocks_any_avatar_bw = false;
+foreach ( $axiom_blocks_avatar_bw_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_any_avatar_bw   = true;
+		$axiom_blocks_style_parts[] = '--ab-tst-avatar-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+if ( $axiom_blocks_any_avatar_bw ) {
+	$axiom_blocks_style_parts[] = '--ab-tst-avatar-bs: ' . ( '' !== (string) ( $axiom_blocks_a['avatarBorderStyle'] ?? '' ) ? $axiom_blocks_a['avatarBorderStyle'] : 'solid' );
+}
+
+/* Card min-height is responsive — the desktop value is inline-only (unset ⇒
+   auto), and ResponsiveProps adds the per-device media rules. */
+if ( ! empty( $axiom_blocks_a['cardMinHeight'] ) ) {
+	$axiom_blocks_style_parts[] = '--ab-tst-card-minh: ' . $axiom_blocks_a['cardMinHeight'];
+}
+
+/* Hover lift — stored negative (upward); 0/unset ⇒ no transform. */
+$axiom_blocks_lift = (int) ( $axiom_blocks_a['hoverLift'] ?? 0 );
+if ( $axiom_blocks_lift > 0 ) {
+	$axiom_blocks_style_parts[] = '--ab-tst-lift: -' . $axiom_blocks_lift . 'px';
+}
+
 $axiom_blocks_wrapper_style = implode( '; ', $axiom_blocks_style_parts );
 $axiom_blocks_wrapper_style = Spacing::merge( $axiom_blocks_wrapper_style, $axiom_blocks_a );
 
@@ -233,7 +341,15 @@ $axiom_blocks_schema   = array(
 	'review'          => $axiom_blocks_reviews,
 );
 
-wp_print_inline_script_tag(
-	(string) wp_json_encode( $axiom_blocks_schema ),
-	array( 'type' => 'application/ld+json' )
+// Print at page level, not inside the block's content, so the schema survives
+// when these testimonials are nested inside a wrapper block (whose kses would
+// otherwise strip the <script> from $content).
+add_action(
+	'wp_footer',
+	static function () use ( $axiom_blocks_schema ) {
+		wp_print_inline_script_tag(
+			(string) wp_json_encode( $axiom_blocks_schema ),
+			array( 'type' => 'application/ld+json' )
+		);
+	}
 );

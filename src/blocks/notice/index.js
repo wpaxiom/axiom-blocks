@@ -1,29 +1,21 @@
 import { __ } from '@wordpress/i18n';
-import {
-	useBlockProps,
-	InspectorControls,
-	RichText,
-} from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
-import {
-	ABSelectControl,
-	ABColorControl,
-	ABToggleControl,
-	ABRangeControl,
-	ABSubAccordion,
-} from '../../components/ABControls';
-import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
-import {
-	TypographyPanel,
-	useTypographyStyle,
-} from '../../components/TypographyPanel';
+import { ABSelectControl, ABToggleControl } from '../../components/ABControls';
+import { useSpacingStyle } from '../../components/SpacingPanel';
+import { useTypographyStyle } from '../../components/TypographyPanel';
+import { ABInspectorGroups } from '../../components/ABInspectorGroups';
+import { useDeviceType } from '../../components/responsive';
+import { responsiveVarValue } from '../../components/responsiveProps';
 import { IconControl } from '../../components/IconControl';
 import { ICON_LIBRARY } from '../../components/iconLibrary';
 import { useIconNode } from '../../components/useCustomIcons';
-import { useDeviceType } from '../../components/responsive';
-import { ABResponsive } from '../../components/ABResponsive';
-import { responsiveVarValue } from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
+import {
+	TEXT_COLOR_FORMAT,
+	HIGHLIGHT_FORMAT,
+	FONT_WEIGHT_FORMAT,
+} from '../advanced-heading/format';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
@@ -38,44 +30,124 @@ const TYPE_ICON = {
 	error: 'circle-x',
 };
 
-const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
-const fromPx = ( v, fallback ) =>
-	v === '' || v == null ? fallback : parseInt( v, 10 ) || 0;
-
 export function getNoticeVars( attributes ) {
-	const { bgColor, textColor, accentColor, borderRadius, iconColor, iconSize } =
-		attributes;
+	const {
+		bgColor,
+		textColor,
+		accentColor,
+		borderRadius,
+		iconColor,
+		iconSize,
+		radiusTopLeft,
+		radiusTopRight,
+		radiusBottomRight,
+		radiusBottomLeft,
+		noticeShadow,
+		titleColor,
+	} = attributes;
 	return {
 		'--ab-notice-bg': bgColor || undefined,
 		'--ab-notice-color': textColor || undefined,
 		'--ab-notice-accent': accentColor || undefined,
-		'--ab-notice-radius': borderRadius || undefined,
 		'--ab-notice-icon': iconColor || undefined,
 		'--ab-notice-icon-size': iconSize || undefined,
+		// Radius — per-corner falls back to the legacy single `borderRadius`.
+		'--ab-notice-radius-tl': radiusTopLeft || borderRadius || undefined,
+		'--ab-notice-radius-tr': radiusTopRight || borderRadius || undefined,
+		'--ab-notice-radius-br': radiusBottomRight || borderRadius || undefined,
+		'--ab-notice-radius-bl': radiusBottomLeft || borderRadius || undefined,
+		'--ab-notice-radius': borderRadius || undefined,
+		'--ab-notice-shadow': noticeShadow || undefined,
+		// Title color is independent and additive — CSS falls back to the shared
+		// text color (`--ab-notice-title-color, var(--ab-notice-color)`).
+		'--ab-notice-title-color': titleColor || undefined,
 	};
 }
+
+const NOTICE_RADIUS = [
+	'radiusTopLeft',
+	'radiusTopRight',
+	'radiusBottomRight',
+	'radiusBottomLeft',
+];
+
+/* Anatomy-as-declaration — the part-first (Option C) Styles UI is rendered from
+ * this config by ABInspectorGroups/TargetSection. Notice is a STATIC, non-
+ * interactive block ⇒ no states ever. The Card part is a box (background + radius
+ * + shadow + max-width); the Accent part is the type's left bar / border tint;
+ * Title + Message are text parts (color + typography). save() is static
+ * (RichText) + nullSaveDeprecation, so every new attr is additive — old saved
+ * blocks stay byte-identical. */
+const DESIGN = {
+	block: 'notice',
+	targets: [
+		{
+			noun: __( 'Card', 'axiom-blocks' ),
+			background: { bind: 'bgColor' },
+			radius: {
+				keys: NOTICE_RADIUS,
+				legacyRadius: 'borderRadius',
+				max: 32,
+			},
+			shadow: { bind: 'noticeShadow' },
+			size: {
+				bind: 'maxWidth',
+				label: __( 'Max width', 'axiom-blocks' ),
+				responsive: true,
+			},
+		},
+		{
+			noun: __( 'Accent', 'axiom-blocks' ),
+			colors: [
+				{ label: __( 'Color', 'axiom-blocks' ), bind: 'accentColor' },
+			],
+		},
+		{
+			noun: __( 'Icon', 'axiom-blocks' ),
+			colors: [
+				{ label: __( 'Color', 'axiom-blocks' ), bind: 'iconColor' },
+			],
+			ranges: [
+				{
+					bind: 'iconSize',
+					label: __( 'Size', 'axiom-blocks' ),
+					min: 12,
+					max: 48,
+					default: 22,
+					responsive: true,
+				},
+			],
+		},
+		{
+			noun: __( 'Title', 'axiom-blocks' ),
+			colors: [
+				{ label: __( 'Text', 'axiom-blocks' ), bind: 'titleColor' },
+			],
+			typography: 'title',
+		},
+		{
+			noun: __( 'Message', 'axiom-blocks' ),
+			colors: [
+				{ label: __( 'Text', 'axiom-blocks' ), bind: 'textColor' },
+			],
+			typography: 'content',
+		},
+	],
+};
 
 function NoticeEdit( { attributes, setAttributes } ) {
 	if ( ! isBlockEnabled( 'notice' ) ) {
 		return <DisabledBlockMessage blockName="Notice / Alert" />;
 	}
 
-	const {
-		noticeType,
-		title,
-		message,
-		showIcon,
-		iconSlug,
-		iconColor,
-		dismissible,
-		bgColor,
-		textColor,
-		accentColor,
-		borderRadius,
-	} = attributes;
+	const { noticeType, title, message, showIcon, iconSlug, dismissible } =
+		attributes;
 
 	const activeIcon = iconSlug || TYPE_ICON[ noticeType ] || 'info';
 	const resolveIcon = useIconNode();
+
+	const titleTypoStyle = useTypographyStyle( attributes, 'title' );
+	const contentTypoStyle = useTypographyStyle( attributes, 'content' );
 
 	const device = useDeviceType();
 	const blockProps = useBlockProps( {
@@ -92,189 +164,97 @@ function NoticeEdit( { attributes, setAttributes } ) {
 				'iconSize',
 				device
 			),
+			// Max-width is inline-only (content-slider / info-box pattern): unset
+			// ⇒ inherits the layout width; ResponsiveProps adds the media rules.
+			maxWidth: responsiveVarValue( attributes, 'maxWidth', device ),
 		},
 	} );
 
-	const titleTypoStyle = useTypographyStyle( attributes, 'title' );
-	const contentTypoStyle = useTypographyStyle( attributes, 'content' );
+	const leading = (
+		<>
+			<PanelBody title={ __( 'Type', 'axiom-blocks' ) } initialOpen={ true }>
+				<ABSelectControl
+					label={ __( 'Notice type', 'axiom-blocks' ) }
+					value={ noticeType }
+					options={ [
+						{
+							label: __( 'Info', 'axiom-blocks' ),
+							value: 'info',
+						},
+						{
+							label: __( 'Success', 'axiom-blocks' ),
+							value: 'success',
+						},
+						{
+							label: __( 'Warning', 'axiom-blocks' ),
+							value: 'warning',
+						},
+						{
+							label: __( 'Error', 'axiom-blocks' ),
+							value: 'error',
+						},
+					] }
+					onChange={ ( v ) => setAttributes( { noticeType: v } ) }
+				/>
+				<ABToggleControl
+					label={ __( 'Dismissible', 'axiom-blocks' ) }
+					help={ __(
+						'Show a close button on the front end.',
+						'axiom-blocks'
+					) }
+					checked={ !! dismissible }
+					onChange={ ( v ) => setAttributes( { dismissible: v } ) }
+				/>
+			</PanelBody>
+
+			<PanelBody
+				title={ __( 'Icon', 'axiom-blocks' ) }
+				initialOpen={ false }
+			>
+				<ABToggleControl
+					label={ __( 'Show icon', 'axiom-blocks' ) }
+					checked={ !! showIcon }
+					onChange={ ( v ) => setAttributes( { showIcon: v } ) }
+				/>
+				{ showIcon && (
+					<>
+						<IconControl
+							value={ activeIcon }
+							onChange={ ( v ) =>
+								setAttributes( { iconSlug: v } )
+							}
+						/>
+						{ iconSlug && (
+							<ABToggleControl
+								label={ __(
+									'Use default icon for type',
+									'axiom-blocks'
+								) }
+								checked={ false }
+								onChange={ () =>
+									setAttributes( { iconSlug: '' } )
+								}
+							/>
+						) }
+					</>
+				) }
+			</PanelBody>
+		</>
+	);
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Type', 'axiom-blocks' ) }
-					initialOpen={ true }
-				>
-					<ABSelectControl
-						label={ __( 'Notice type', 'axiom-blocks' ) }
-						value={ noticeType }
-						options={ [
-							{
-								label: __( 'Info', 'axiom-blocks' ),
-								value: 'info',
-							},
-							{
-								label: __( 'Success', 'axiom-blocks' ),
-								value: 'success',
-							},
-							{
-								label: __( 'Warning', 'axiom-blocks' ),
-								value: 'warning',
-							},
-							{
-								label: __( 'Error', 'axiom-blocks' ),
-								value: 'error',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { noticeType: v } )
-						}
-					/>
-					<ABToggleControl
-						label={ __( 'Dismissible', 'axiom-blocks' ) }
-						help={ __(
-							'Show a close button on the front end.',
-							'axiom-blocks'
-						) }
-						checked={ !! dismissible }
-						onChange={ ( v ) =>
-							setAttributes( { dismissible: v } )
-						}
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Icon', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABToggleControl
-						label={ __( 'Show icon', 'axiom-blocks' ) }
-						checked={ !! showIcon }
-						onChange={ ( v ) => setAttributes( { showIcon: v } ) }
-					/>
-					{ showIcon && (
-						<>
-							<IconControl
-								value={ activeIcon }
-								onChange={ ( v ) =>
-									setAttributes( { iconSlug: v } )
-								}
-							/>
-							{ iconSlug && (
-								<ABToggleControl
-									label={ __(
-										'Use default icon for type',
-										'axiom-blocks'
-									) }
-									checked={ false }
-									onChange={ () =>
-										setAttributes( { iconSlug: '' } )
-									}
-								/>
-							) }
-							<ABResponsive
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								attrKey="iconSize"
-							>
-								{ ( { value, setValue, inherited } ) => (
-									<ABRangeControl
-										label={ __( 'Icon size', 'axiom-blocks' ) }
-										value={ fromPx(
-											value === '' ? inherited : value,
-											22
-										) }
-										onChange={ ( v ) => setValue( toPx( v ) ) }
-										min={ 12 }
-										max={ 48 }
-										step={ 1 }
-										unit="px"
-									/>
-								) }
-							</ABResponsive>
-							<ABColorControl
-								label={ __( 'Icon colour', 'axiom-blocks' ) }
-								color={ iconColor }
-								onChange={ ( v ) =>
-									setAttributes( { iconColor: v } )
-								}
-							/>
-						</>
-					) }
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Colours', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABColorControl
-						label={ __( 'Background', 'axiom-blocks' ) }
-						color={ bgColor }
-						onChange={ ( v ) => setAttributes( { bgColor: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Text', 'axiom-blocks' ) }
-						color={ textColor }
-						onChange={ ( v ) => setAttributes( { textColor: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Accent / border', 'axiom-blocks' ) }
-						color={ accentColor }
-						onChange={ ( v ) =>
-							setAttributes( { accentColor: v } )
-						}
-					/>
-					<ABRangeControl
-						label={ __( 'Corner radius', 'axiom-blocks' ) }
-						value={ fromPx( borderRadius, 8 ) }
-						onChange={ ( v ) =>
-							setAttributes( { borderRadius: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 32 }
-						step={ 1 }
-						unit="px"
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Typography', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<div className="ab-sub-acc-list">
-						<ABSubAccordion title={ __( 'Title', 'axiom-blocks' ) }>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="title"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-						<ABSubAccordion
-							title={ __( 'Message', 'axiom-blocks' ) }
-						>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="content"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-					</div>
-				</PanelBody>
-
-				<SpacingPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-				/>
-			</InspectorControls>
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ DESIGN }
+				leading={ leading }
+			/>
 
 			<div { ...blockProps }>
 				{ showIcon && (
 					<span className="ab-notice__icon" contentEditable={ false }>
-						{ resolveIcon( activeIcon ) || ICON_LIBRARY[ 'info' ] }
+						{ resolveIcon( activeIcon ) || ICON_LIBRARY.info }
 					</span>
 				) }
 				<div className="ab-notice__content">
@@ -300,6 +280,9 @@ function NoticeEdit( { attributes, setAttributes } ) {
 							'core/bold',
 							'core/italic',
 							'core/link',
+							TEXT_COLOR_FORMAT,
+							HIGHLIGHT_FORMAT,
+							FONT_WEIGHT_FORMAT,
 						] }
 						style={ contentTypoStyle }
 					/>
@@ -310,7 +293,7 @@ function NoticeEdit( { attributes, setAttributes } ) {
 						aria-hidden="true"
 						contentEditable={ false }
 					>
-						{ ICON_LIBRARY[ 'x' ] }
+						{ ICON_LIBRARY.x }
 					</span>
 				) }
 			</div>

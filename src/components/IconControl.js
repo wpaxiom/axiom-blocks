@@ -32,7 +32,8 @@ export function IconControl( {
 	custom = true,
 } ) {
 	const { icons } = useCustomIcons();
-	const isCustomValue = typeof value === 'string' && value.startsWith( 'custom:' );
+	const isCustomValue =
+		typeof value === 'string' && value.startsWith( 'custom:' );
 	const customIcon = isCustomValue
 		? icons.find( ( i ) => i.id === value )
 		: null;
@@ -52,8 +53,7 @@ export function IconControl( {
 		name = customIcon.label;
 	} else if ( activeSlug ) {
 		glyph = library[ activeSlug ];
-		name =
-			meta.find( ( i ) => i.slug === activeSlug )?.label || activeSlug;
+		name = meta.find( ( i ) => i.slug === activeSlug )?.label || activeSlug;
 	}
 
 	return (

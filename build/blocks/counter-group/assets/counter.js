@@ -16,27 +16,23 @@
 		);
 	}
 
-	var EASING = {
-		linear: function ( t ) {
+	const EASING = {
+		linear( t ) {
 			return t;
 		},
-		'ease-out': function ( t ) {
+		'ease-out'( t ) {
 			return 1 - Math.pow( 1 - t, 3 );
 		},
-		'ease-in-out': function ( t ) {
-			return t < 0.5
-				? 4 * t * t * t
-				: 1 - Math.pow( -2 * t + 2, 3 ) / 2;
+		'ease-in-out'( t ) {
+			return t < 0.5 ? 4 * t * t * t : 1 - Math.pow( -2 * t + 2, 3 ) / 2;
 		},
-		ease: function ( t ) {
-			return t < 0.5
-				? 2 * t * t
-				: 1 - Math.pow( -2 * t + 2, 2 ) / 2;
+		ease( t ) {
+			return t < 0.5 ? 2 * t * t : 1 - Math.pow( -2 * t + 2, 2 ) / 2;
 		},
 	};
 
 	function formatNumber( value, decimals, thousandsSep, decimalSep ) {
-		var parts = value.toFixed( decimals ).split( '.' );
+		const parts = value.toFixed( decimals ).split( '.' );
 		if ( thousandsSep ) {
 			parts[ 0 ] = parts[ 0 ].replace(
 				/\B(?=(\d{3})+(?!\d))/g,
@@ -49,13 +45,13 @@
 	}
 
 	function animateNumber( el, duration, easing, thousandsSep, decimalSep ) {
-		var start = parseFloat( el.getAttribute( 'data-start' ) ) || 0;
-		var end = parseFloat( el.getAttribute( 'data-end' ) ) || 0;
-		var decimals =
+		const start = parseFloat( el.getAttribute( 'data-start' ) ) || 0;
+		const end = parseFloat( el.getAttribute( 'data-end' ) ) || 0;
+		const decimals =
 			parseInt( el.getAttribute( 'data-decimals' ), 10 ) || 0;
-		var prefix = el.getAttribute( 'data-prefix' ) || '';
-		var suffix = el.getAttribute( 'data-suffix' ) || '';
-		var ease = EASING[ easing ] || EASING[ 'ease-out' ];
+		const prefix = el.getAttribute( 'data-prefix' ) || '';
+		const suffix = el.getAttribute( 'data-suffix' ) || '';
+		const ease = EASING[ easing ] || EASING[ 'ease-out' ];
 
 		function paint( value ) {
 			el.textContent =
@@ -64,18 +60,22 @@
 				suffix;
 		}
 
-		if ( prefersReducedMotion() || duration <= 0 || ! window.requestAnimationFrame ) {
+		if (
+			prefersReducedMotion() ||
+			duration <= 0 ||
+			! window.requestAnimationFrame
+		) {
 			paint( end );
 			return;
 		}
 
-		var startTime = null;
+		let startTime = null;
 		function step( now ) {
 			if ( startTime === null ) {
 				startTime = now;
 			}
-			var elapsed = now - startTime;
-			var t = Math.min( 1, elapsed / duration );
+			const elapsed = now - startTime;
+			const t = Math.min( 1, elapsed / duration );
 			paint( start + ( end - start ) * ease( t ) );
 			if ( t < 1 ) {
 				window.requestAnimationFrame( step );
@@ -85,14 +85,14 @@
 	}
 
 	function runGroup( group ) {
-		var duration = parseInt( group.getAttribute( 'data-duration' ), 10 );
+		let duration = parseInt( group.getAttribute( 'data-duration' ), 10 );
 		if ( isNaN( duration ) ) {
 			duration = 2000;
 		}
-		var easing = group.getAttribute( 'data-easing' ) || 'ease-out';
-		var thousandsSep = group.getAttribute( 'data-thousands-sep' ) || '';
-		var decimalSep = group.getAttribute( 'data-decimal-sep' ) || '.';
-		var numbers = group.querySelectorAll( '.ab-counter__number' );
+		const easing = group.getAttribute( 'data-easing' ) || 'ease-out';
+		const thousandsSep = group.getAttribute( 'data-thousands-sep' ) || '';
+		const decimalSep = group.getAttribute( 'data-decimal-sep' ) || '.';
+		const numbers = group.querySelectorAll( '.ab-counter__number' );
 		Array.prototype.forEach.call( numbers, function ( el ) {
 			animateNumber( el, duration, easing, thousandsSep, decimalSep );
 		} );
@@ -124,9 +124,7 @@
 	}
 
 	function initAll() {
-		document
-			.querySelectorAll( '.ab-counter-group' )
-			.forEach( initGroup );
+		document.querySelectorAll( '.ab-counter-group' ).forEach( initGroup );
 	}
 
 	if ( document.readyState === 'loading' ) {

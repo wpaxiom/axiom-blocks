@@ -4,6 +4,13 @@
  * authoritative value (--ab-ibox-gap); we zero the direct children's outer
  * margins so block defaults don't fight it. Dynamic values arrive as CSS custom
  * properties from render.php / the editor.
+ *
+ * The card box is var-driven: per-side border widths + per-corner radii fall
+ * back to the legacy single-value vars (--ab-ibox-bw / --ab-ibox-radius, all old
+ * blocks set only those), then the shipped defaults (borderless, 12px radius).
+ * Max-width is inline-only (render.php / edit) so an unset card inherits the
+ * layout width — a static `max-width: var(…, none)` here would beat core's
+ * zero-specificity constrained-width rule and render every card full-width.
  */
 .ab-ibox {
 	--ab-ibox-gap: 16px;
@@ -12,17 +19,61 @@
 	--ab-ibox-bw: 0px;
 	--ab-ibox-radius: 12px;
 
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	gap: var(--ab-ibox-gap);
 	padding: 24px;
 	background: var(--ab-ibox-bg);
-	border: var(--ab-ibox-bw) solid var(--ab-ibox-bc);
-	border-radius: var(--ab-ibox-radius);
+	background-attachment: var(--ab-ibox-attach, scroll);
+	border-style: var(--ab-ibox-bs, solid);
+	border-color: var(--ab-ibox-bc, transparent);
+	border-top-width: var(--ab-ibox-bw-top, var(--ab-ibox-bw, 0));
+	border-right-width: var(--ab-ibox-bw-right, var(--ab-ibox-bw, 0));
+	border-bottom-width: var(--ab-ibox-bw-bottom, var(--ab-ibox-bw, 0));
+	border-left-width: var(--ab-ibox-bw-left, var(--ab-ibox-bw, 0));
+	border-top-left-radius: var(--ab-ibox-radius-tl, var(--ab-ibox-radius, 12px));
+	border-top-right-radius: var(--ab-ibox-radius-tr, var(--ab-ibox-radius, 12px));
+	border-bottom-right-radius: var(--ab-ibox-radius-br, var(--ab-ibox-radius, 12px));
+	border-bottom-left-radius: var(--ab-ibox-radius-bl, var(--ab-ibox-radius, 12px));
+	box-shadow: var(--ab-ibox-shadow, none);
+	width: var(--ab-ibox-w, auto);
+	min-height: var(--ab-ibox-mh, auto);
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		box-shadow 0.2s ease,
+		transform 0.2s ease;
 }
 
-/* The gap owns the spacing — drop default block margins on direct children. */
+/* Card hover (the Sable gap) — background + shadow fall back to the normal
+ * values (no change when unset); lift is stored negative (upward), unset ⇒ 0. */
+.ab-ibox:hover {
+	background: var(--ab-ibox-bg-h, var(--ab-ibox-bg, transparent));
+	box-shadow: var(--ab-ibox-shadow-h, var(--ab-ibox-shadow, none));
+	transform: translateY(var(--ab-ibox-lift, 0));
+}
+
+/* Rich overlay as a pseudo-element so the inner-block DOM isn't disturbed.
+ * `background` (not `background-color`) so a gradient string also works;
+ * border-radius inherits the card's corners. */
+.ab-ibox::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: var(--ab-ibox-overlay-bg, transparent);
+	opacity: var(--ab-ibox-overlay-opacity, 0);
+	mix-blend-mode: var(--ab-ibox-overlay-blend, normal);
+	border-radius: inherit;
+	pointer-events: none;
+	z-index: 0;
+}
+
+/* The gap owns the spacing — drop default block margins on direct children —
+ * and lift them above the overlay layer. */
 .ab-ibox > * {
+	position: relative;
+	z-index: 1;
 	margin-top: 0;
 	margin-bottom: 0;
 }
@@ -66,35 +117,16 @@
 	align-items: flex-end;
 }
 
-/* ── Predefined block styles (Styles panel) ─────────────────────────────── */
-/* These set the CSS custom properties, so anything the user picks in the Box
- * panel (inline vars) still overrides the preset. */
-.ab-ibox.is-style-bordered {
-	--ab-ibox-bc: #e5e7eb;
-	--ab-ibox-bw: 1px;
-}
-
-.ab-ibox.is-style-card {
-	--ab-ibox-bg: #ffffff;
-	--ab-ibox-radius: 16px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
-}
-
-.ab-ibox.is-style-accent {
-	--ab-ibox-bg: #faf5ff;
-	--ab-ibox-radius: 12px;
-	border-left: 4px solid #7c3aed;
-}
-
 /* ── Shadow presets ─────────────────────────────────────────────────────── */
+/* Vars (not direct box-shadow) so a custom inline --ab-ibox-shadow wins. */
 .ab-ibox.has-shadow-sm {
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+	--ab-ibox-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .ab-ibox.has-shadow-md {
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+	--ab-ibox-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
 }
 
 .ab-ibox.has-shadow-lg {
-	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+	--ab-ibox-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
 }

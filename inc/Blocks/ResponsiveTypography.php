@@ -45,7 +45,11 @@ class ResponsiveTypography {
 			'sub'     => '.ab-ah__sub',
 		),
 		'axiom-blocks/advanced-button'  => array(
-			'' => '.ab-adv-btn',
+			// Main text typography renders inline on `.ab-adv-btn__text`, so the
+			// per-device override must target that element (a rule on the parent
+			// `.ab-adv-btn` can't override the child's own inline font-size).
+			''           => '.ab-adv-btn__text',
+			'subCaption' => '.ab-adv-btn__sub',
 		),
 		'axiom-blocks/copy-to-clipboard' => array(
 			'' => '.axiom-blocks-copy-to-clipboard__button',
@@ -56,6 +60,18 @@ class ResponsiveTypography {
 		),
 		'axiom-blocks/pricing-table'    => array(
 			'heading' => '.axiom-blocks-pricing-table__heading',
+			// Plan-component typography is set on the table and targets that
+			// component inside every plan card. Price targets the number, not
+			// the container: the amount and the period each carry their own
+			// shipped size, so the container can't drive them.
+			'name'    => '.ab-pt-plan__name',
+			'price'    => '.ab-pt-plan__amount',
+			'currency' => '.ab-pt-plan__currency',
+			'period'   => '.ab-pt-plan__period',
+			'badge'    => '.ab-pt-plan__badge',
+			'desc'    => '.ab-pt-plan__desc',
+			'feature' => '.ab-pt-feat__text',
+			'cta'     => '.ab-pt-plan__cta',
 		),
 		'axiom-blocks/pricing-plan'     => array(
 			'name'    => '.ab-pt-plan__name',
@@ -94,6 +110,17 @@ class ResponsiveTypography {
 			'role'    => '.ab-testimonial__author-line',
 			'company' => '.ab-testimonial__company',
 			'quote'   => '.ab-testimonial__quote',
+			'mono'    => '.ab-testimonial__initials',
+		),
+		'axiom-blocks/before-after-slider' => array(
+			'label' => '.axiom-blocks-bas__label',
+		),
+		'axiom-blocks/free-shipping-progress' => array(
+			'message' => '.axiom-blocks-fsp__msg',
+		),
+		'axiom-blocks/table-of-contents' => array(
+			'title'   => '.ab-toc__title',
+			'content' => '.ab-toc__list',
 		),
 	);
 

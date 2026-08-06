@@ -5,10 +5,7 @@ import {
 	RichText,
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
-import {
-	ABTextControl,
-	ABRangeControl,
-} from '../../../components/ABControls';
+import { ABTextControl, ABRangeControl } from '../../../components/ABControls';
 import { IconControl } from '../../../components/IconControl';
 import { useIconNode } from '../../../components/useCustomIcons';
 import { BlockIcon } from '../../../blockIcons';
@@ -57,9 +54,7 @@ function CounterEdit( { attributes, setAttributes, context } ) {
 						label={ __( 'Start value', 'axiom-blocks' ) }
 						type="number"
 						value={ startValue }
-						onChange={ ( v ) =>
-							setAttributes( { startValue: v } )
-						}
+						onChange={ ( v ) => setAttributes( { startValue: v } ) }
 					/>
 					<ABTextControl
 						label={ __( 'End value', 'axiom-blocks' ) }
@@ -98,15 +93,13 @@ function CounterEdit( { attributes, setAttributes, context } ) {
 				>
 					<IconControl
 						value={ iconSlug }
-						onChange={ ( v ) =>
-							setAttributes( { iconSlug: v } )
-						}
+						onChange={ ( v ) => setAttributes( { iconSlug: v } ) }
 						clearable
 					/>
 					<div className="ab-ctrl ab-block-note">
 						<p className="ab-ctrl__help">
 							{ __(
-								'Icon size and colour, number/label styling, layout and animation are set on the parent Counter block.',
+								'Icon size and color, number/label styling, layout and animation are set on the parent Counter block.',
 								'axiom-blocks'
 							) }
 						</p>
@@ -152,12 +145,22 @@ export const Counter = {
 		edit: CounterEdit,
 		save: ( { attributes } ) => {
 			const { endValue, prefix, suffix, label } = attributes;
-			const blockProps = useBlockProps.save( { className: 'ab-counter' } );
+			const blockProps = useBlockProps.save( {
+				className: 'ab-counter',
+			} );
 			return (
 				<div { ...blockProps }>
-					<span className="ab-counter__number">{ prefix }{ endValue }{ suffix }</span>
+					<span className="ab-counter__number">
+						{ prefix }
+						{ endValue }
+						{ suffix }
+					</span>
 					{ label && (
-						<RichText.Content tagName="div" className="ab-counter__label" value={ label } />
+						<RichText.Content
+							tagName="div"
+							className="ab-counter__label"
+							value={ label }
+						/>
 					) }
 				</div>
 			);

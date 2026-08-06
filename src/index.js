@@ -46,6 +46,21 @@ import { FreeShippingProgress } from './blocks/free-shipping-progress';
 import './style.scss';
 import './editor.scss';
 
+// Universal editor wiring: hide-on-device control on every Axiom block.
+import './deviceVisibility';
+
+// Universal editor wiring: hover lift + transition on every Axiom block.
+import './interactions';
+
+// Universal editor wiring: position / z-index / offsets on every Axiom block.
+import './position';
+
+// Universal editor wiring: scroll-in entrance animation on every Axiom block.
+import './entrance';
+
+// Universal editor wiring: per-child flex/grid order (L6 reorder).
+import './childOrder';
+
 /**
  * Inject responsive spacing attributes (*Tablet / *Mobile) into every Axiom block
  * that has spacing, client-side — mirrors the PHP register_block_type_args filter
@@ -90,7 +105,10 @@ addFilter(
 	'blocks.registerBlockType',
 	'axiom-blocks/responsive-typography-attrs',
 	( blockSettings, name ) => {
-		const extra = responsiveTypographyAttrs( name, blockSettings.attributes );
+		const extra = responsiveTypographyAttrs(
+			name,
+			blockSettings.attributes
+		);
 		if ( ! Object.keys( extra ).length ) {
 			return blockSettings;
 		}

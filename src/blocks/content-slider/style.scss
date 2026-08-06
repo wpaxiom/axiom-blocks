@@ -7,6 +7,9 @@
 
 .ab-slider {
 	position: relative;
+	// Max width is inline-only (render.php / editor emit `max-width` when set)
+	// so an unset value inherits the layout width — a static `var(…, none)`
+	// fallback here would force full width on every non-aligned slider.
 
 	// The view-script sets tabindex="0" for keyboard nav; the browser's default
 	// focus outline then wraps the whole slider on click and looks like a stuck
@@ -43,15 +46,42 @@
 	min-width: 0;
 	min-height: var(--ab-slider-height);
 	overflow: hidden;
-	border-radius: var(--ab-slider-radius, 0);
-	border-style: solid;
+	border-radius: var(--ab-slider-radius-tl, var(--ab-slider-radius, 0))
+		var(--ab-slider-radius-tr, var(--ab-slider-radius, 0))
+		var(--ab-slider-radius-br, var(--ab-slider-radius, 0))
+		var(--ab-slider-radius-bl, var(--ab-slider-radius, 0));
+	border-style: var(--ab-slider-bs, solid);
 	// Var names intentionally avoid the substring "border-width": core's
 	// `html :where([style*=border-width]){border-style:solid}` matches inline
 	// custom-property names and would force a border on the wrapper otherwise.
-	border-width: var(--ab-slider-bw, 0);
+	border-top-width: var(--ab-slider-bw-top, var(--ab-slider-bw, 0));
+	border-right-width: var(--ab-slider-bw-right, var(--ab-slider-bw, 0));
+	border-bottom-width: var(--ab-slider-bw-bottom, var(--ab-slider-bw, 0));
+	border-left-width: var(--ab-slider-bw-left, var(--ab-slider-bw, 0));
 	border-color: var(--ab-slider-bc, transparent);
+	box-shadow: var(--ab-slider-shadow, none);
+	// Shared BackgroundControl var (gradient/image/overlay slides); a plain
+	// color slide keeps its legacy inline `background-color` (no var set).
+	background: var(--ab-slide-bg, transparent);
+	background-attachment: var(--ab-slide-attach, scroll);
+
+	// Overlay layer (gradient/opacity/blend) — a separate ::after so it sits
+	// above the background but below the content. Only rendered when the
+	// render.php layer vars are present.
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: var(--ab-slide-overlay-bg, transparent);
+		opacity: var(--ab-slide-overlay-opacity, 0);
+		mix-blend-mode: var(--ab-slide-overlay-blend, normal);
+		pointer-events: none;
+		z-index: 0;
+	}
 
 	&__content {
+		position: relative;
+		z-index: 1;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -174,14 +204,18 @@
 	height: 40px;
 	padding: 0;
 	border: 0;
-	border-radius: 50%;
+	border-radius: var(--ab-slider-arrow-radius-tl, 50%)
+		var(--ab-slider-arrow-radius-tr, 50%)
+		var(--ab-slider-arrow-radius-br, 50%)
+		var(--ab-slider-arrow-radius-bl, 50%);
 	cursor: pointer;
 	color: var(--ab-slider-arrow-color, #ffffff);
 	background: var(--ab-slider-arrow-bg, rgba(17, 17, 17, 0.55));
-	transition: background 0.2s ease, opacity 0.2s ease;
+	transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 
 	&:hover {
-		background: var(--ab-slider-arrow-bg, rgba(17, 17, 17, 0.8));
+		color: var(--ab-slider-arrow-color-hover, var(--ab-slider-arrow-color, #ffffff));
+		background: var(--ab-slider-arrow-bg-hover, var(--ab-slider-arrow-bg, rgba(17, 17, 17, 0.8)));
 	}
 
 	&:disabled {
@@ -273,10 +307,11 @@
 	cursor: pointer;
 	color: var(--ab-slider-arrow-color, #ffffff);
 	background: var(--ab-slider-arrow-bg, rgba(17, 17, 17, 0.55));
-	transition: background 0.2s ease;
+	transition: background 0.2s ease, color 0.2s ease;
 
 	&:hover {
-		background: var(--ab-slider-arrow-bg, rgba(17, 17, 17, 0.8));
+		color: var(--ab-slider-arrow-color-hover, var(--ab-slider-arrow-color, #ffffff));
+		background: var(--ab-slider-arrow-bg-hover, var(--ab-slider-arrow-bg, rgba(17, 17, 17, 0.8)));
 	}
 
 	svg {

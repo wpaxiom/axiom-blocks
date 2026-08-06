@@ -36,7 +36,7 @@
 		}
 		notice.dataset.abNoticeReady = '1';
 
-		var button = notice.querySelector( ':scope > .ab-notice__dismiss' );
+		const button = notice.querySelector( ':scope > .ab-notice__dismiss' );
 		if ( ! button ) {
 			return;
 		}

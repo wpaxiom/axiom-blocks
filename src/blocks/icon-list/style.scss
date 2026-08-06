@@ -46,6 +46,30 @@
 	align-items: center;
 	gap: var(--ab-il-gap, 10px);
 	margin: 0;
+	// Item box (the Sable chip) — every var falls back to "no box" (no padding,
+	// transparent, borderless, square) so an untouched item is a plain row.
+	padding-top: var(--ab-il-item-pt, 0);
+	padding-right: var(--ab-il-item-pr, 0);
+	padding-bottom: var(--ab-il-item-pb, 0);
+	padding-left: var(--ab-il-item-pl, 0);
+	background: var(--ab-il-item-bg, transparent);
+	border-style: var(--ab-il-item-bs, solid);
+	border-color: var(--ab-il-item-bc, transparent);
+	border-top-width: var(--ab-il-item-bw-top, 0);
+	border-right-width: var(--ab-il-item-bw-right, 0);
+	border-bottom-width: var(--ab-il-item-bw-bottom, 0);
+	border-left-width: var(--ab-il-item-bw-left, 0);
+	border-top-left-radius: var(--ab-il-item-radius-tl, 0);
+	border-top-right-radius: var(--ab-il-item-radius-tr, 0);
+	border-bottom-right-radius: var(--ab-il-item-radius-br, 0);
+	border-bottom-left-radius: var(--ab-il-item-radius-bl, 0);
+	transition:
+		background-color 0.15s ease,
+		border-color 0.15s ease;
+
+	&:hover {
+		background: var(--ab-il-item-bg-h, var(--ab-il-item-bg, transparent));
+	}
 }
 
 .ab-icon-list__link {
@@ -103,6 +127,6 @@
 
 	.ab-icon-list__item:not(:last-child) {
 		padding-bottom: var(--ab-il-row-gap, 12px);
-		border-bottom: 1px solid var(--ab-il-divider, rgba(0, 0, 0, 0.1));
+		border-bottom: var(--ab-il-divider-thickness, 1px) solid var(--ab-il-divider, rgba(0, 0, 0, 0.1));
 	}
 }

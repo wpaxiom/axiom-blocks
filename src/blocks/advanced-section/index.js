@@ -1,56 +1,128 @@
 import { __ } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import {
 	useBlockProps,
 	useInnerBlocksProps,
-	InspectorControls,
 	InnerBlocks,
-	MediaUpload,
-	MediaUploadCheck,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { PanelBody, FocalPointPicker } from '@wordpress/components';
-import {
-	ABRangeControl,
-	ABSelectControl,
-	ABColorControl,
-	ABToggleControl,
-} from '../../components/ABControls';
-import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
+import { PanelBody } from '@wordpress/components';
+import { ABRangeControl, ABSelectControl } from '../../components/ABControls';
+import { useSpacingStyle } from '../../components/SpacingPanel';
 import { ABResponsive } from '../../components/ABResponsive';
 import { useDeviceType, resolveResponsive } from '../../components/responsive';
+import { ABInspectorGroups } from '../../components/ABInspectorGroups';
+import { getBackgroundVars } from '../../components/BackgroundControl';
+import { responsiveVarValue } from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
 
-const BACKGROUND_TYPES = [
-	{ label: 'Color', value: 'color' },
-	{ label: 'Gradient', value: 'gradient' },
-	{ label: 'Image', value: 'image' },
+const SEC_BW_KEYS = [
+	'borderTopWidth',
+	'borderRightWidth',
+	'borderBottomWidth',
+	'borderLeftWidth',
+];
+const SEC_RADIUS_KEYS = [
+	'radiusTopLeft',
+	'radiusTopRight',
+	'radiusBottomRight',
+	'radiusBottomLeft',
 ];
 
-const POSITIONS = [
-	{ label: 'Top left', value: 'left top' },
-	{ label: 'Top center', value: 'center top' },
-	{ label: 'Top right', value: 'right top' },
-	{ label: 'Center left', value: 'left center' },
-	{ label: 'Center', value: 'center center' },
-	{ label: 'Center right', value: 'right center' },
-	{ label: 'Bottom left', value: 'left bottom' },
-	{ label: 'Bottom center', value: 'center bottom' },
-	{ label: 'Bottom right', value: 'right bottom' },
+const DESIGN = {
+	block: 'sec',
+	targets: [
+		{
+			// Wrapper part — hosts InnerBlocks; no typography (wrapper rule).
+			noun: __( 'Container', 'axiom-blocks' ),
+			background: { full: true },
+			border: {
+				widthKeys: SEC_BW_KEYS,
+				legacyWidth: 'borderWidth',
+				styleKey: 'borderStyle',
+				colorKey: 'borderColor',
+				max: 20,
+			},
+			radius: {
+				keys: SEC_RADIUS_KEYS,
+				legacyRadius: 'borderRadius',
+				max: 64,
+			},
+			shadow: { bind: 'sectionShadow' },
+			size: {
+				panel: true,
+				label: __( 'Size', 'axiom-blocks' ),
+			},
+		},
+	],
+};
+
+/* ── Layout engine (L6) — additive; 'constrained' = the shipped behaviour ──── */
+const LAYOUT_TYPES = [
+	{ label: 'Constrained', value: 'constrained' },
+	{ label: 'Flex', value: 'flex' },
+	{ label: 'Grid', value: 'grid' },
+];
+const FLEX_DIRECTIONS = [
+	{ label: 'Row', value: 'row' },
+	{ label: 'Column', value: 'column' },
+];
+const FLEX_WRAPS = [
+	{ label: 'Wrap', value: 'wrap' },
+	{ label: 'No wrap', value: 'nowrap' },
+];
+const JUSTIFY_OPTIONS = [
+	{ label: 'Start', value: 'flex-start' },
+	{ label: 'Center', value: 'center' },
+	{ label: 'End', value: 'flex-end' },
+	{ label: 'Space between', value: 'space-between' },
+	{ label: 'Space around', value: 'space-around' },
+];
+const ALIGN_OPTIONS = [
+	{ label: 'Start', value: 'flex-start' },
+	{ label: 'Center', value: 'center' },
+	{ label: 'End', value: 'flex-end' },
+	{ label: 'Stretch', value: 'stretch' },
 ];
 
-const BLEND_MODES = [
-	{ label: 'Normal', value: 'normal' },
-	{ label: 'Multiply', value: 'multiply' },
-	{ label: 'Screen', value: 'screen' },
-	{ label: 'Overlay', value: 'overlay' },
-	{ label: 'Darken', value: 'darken' },
-	{ label: 'Lighten', value: 'lighten' },
-];
+function layoutClass( a ) {
+	if ( a.layoutType === 'flex' ) {
+		return 'axiom-blocks-section--layout-flex';
+	}
+	if ( a.layoutType === 'grid' ) {
+		return 'axiom-blocks-section--layout-grid';
+	}
+	return '';
+}
+
+function buildLayoutStyle( a, device ) {
+	// Resolve gap/columns for the active preview device (responsive 2-up).
+	const gap = resolveResponsive( a, 'layoutGap', device ) || '0';
+	if ( a.layoutType === 'flex' ) {
+		return {
+			'--ab-sec-fd': a.flexDirection || 'row',
+			'--ab-sec-fw': a.flexWrap || 'wrap',
+			'--ab-sec-jc': a.flexJustify || 'center',
+			'--ab-sec-ai': a.flexAlign || 'center',
+			'--ab-sec-gap': gap,
+		};
+	}
+	if ( a.layoutType === 'grid' ) {
+		const cols =
+			resolveResponsive( a, 'gridColumns', device ) || a.gridColumns || 3;
+		return {
+			'--ab-sec-cols': cols,
+			'--ab-sec-ai': a.flexAlign || 'stretch',
+			'--ab-sec-gap': gap,
+		};
+	}
+	return {};
+}
 
 /* ── Length helpers (number + unit) ─────────────────────────────────────── */
 const LENGTH_UNITS = [
@@ -71,90 +143,58 @@ function parseLength( str ) {
 	return { num: parseFloat( m[ 1 ] ) || 0, unit: m[ 2 ] || 'px' };
 }
 
-/* ── Background gradient builder (supports optional 3rd stop) ────────────── */
-function buildGradientString( a ) {
-	const stops = a.gradientUseMidStop
-		? `${ a.gradientFromColor } ${ a.gradientFromStop ?? 0 }%, ${
-				a.gradientMidColor
-		  } ${ a.gradientMidStop ?? 50 }%, ${ a.gradientToColor } ${
-				a.gradientToStop ?? 100
-		  }%`
-		: `${ a.gradientFromColor } ${ a.gradientFromStop ?? 0 }%, ${
-				a.gradientToColor
-		  } ${ a.gradientToStop ?? 100 }%`;
-	return a.gradientType === 'radial'
-		? `radial-gradient(circle, ${ stops })`
-		: `linear-gradient(${ a.gradientAngle }deg, ${ stops })`;
-}
-
-function buildBackgroundStyle( a ) {
-	switch ( a.backgroundType ) {
-		case 'gradient':
-			return { background: buildGradientString( a ) };
-		case 'image':
-			if ( ! a.backgroundImage?.url ) return {};
-			return {
-				backgroundImage: `url('${ a.backgroundImage.url }')`,
-				backgroundSize: a.backgroundSize,
-				backgroundPosition: a.backgroundPosition,
-				backgroundRepeat: a.backgroundRepeat,
-				backgroundAttachment: a.backgroundAttachment,
-			};
-		case 'color':
-		default:
-			return a.backgroundColor
-				? { backgroundColor: a.backgroundColor }
-				: {};
-	}
-}
-
-function hasBackground( a ) {
-	if ( a.backgroundType === 'gradient' ) {
-		return true;
-	}
-	if ( a.backgroundType === 'image' && a.backgroundImage?.url ) {
-		return true;
-	}
-	if ( a.backgroundType === 'color' && a.backgroundColor ) {
-		return true;
-	}
-	return false;
-}
-
-/* ── Overlay background (color or gradient) ──────────────────────────────── */
-function buildOverlayBackground( a ) {
-	if ( a.overlayType === 'gradient' ) {
-		const stops = `${ a.overlayGradientFromColor } 0%, ${ a.overlayGradientToColor } 100%`;
-		return a.overlayGradientType === 'radial'
-			? `radial-gradient(circle, ${ stops })`
-			: `linear-gradient(${ a.overlayGradientAngle }deg, ${ stops })`;
-	}
-	return a.overlayColor || 'transparent';
-}
-
-/* ── Background position ↔ focal point ───────────────────────────────────── */
-const POS_KEYWORDS = { left: 0, center: 0.5, right: 1, top: 0, bottom: 1 };
-
-function positionToFocalPoint( pos ) {
-	if ( ! pos ) return { x: 0.5, y: 0.5 };
-	const parts = String( pos ).trim().split( /\s+/ );
-	const [ a, b ] = parts.length === 2 ? parts : [ 'center', 'center' ];
-	const toFraction = ( v ) => {
-		if ( typeof v === 'string' && v.endsWith( '%' ) )
-			return Math.max( 0, Math.min( 1, parseFloat( v ) / 100 ) );
-		return POS_KEYWORDS[ v ] ?? 0.5;
-	};
-	return { x: toFraction( a ), y: toFraction( b ) };
-}
-
-function focalPointToPosition( { x, y } ) {
-	const px = ( Math.max( 0, Math.min( 1, x ) ) * 100 ).toFixed( 1 );
-	const py = ( Math.max( 0, Math.min( 1, y ) ) * 100 ).toFixed( 1 );
-	return `${ px }% ${ py }%`;
-}
-
 const V_ALIGN_MAP = { top: 'flex-start', center: 'center', bottom: 'flex-end' };
 const H_ALIGN_MAP = { left: 'flex-start', center: 'center', right: 'flex-end' };
+
+/* ── CSS custom properties (editor) ──────────────────────────────────────── */
+export function getSectionVars( attributes ) {
+	const { borderStyle, borderWidth, borderColor, borderRadius, sectionShadow } =
+		attributes;
+
+	const vars = {};
+
+	if ( borderStyle && borderStyle !== 'none' ) {
+		vars[ '--ab-sec-bs' ] = borderStyle;
+	}
+	if ( borderColor ) {
+		vars[ '--ab-sec-bc' ] = borderColor;
+	}
+	if ( borderWidth > 0 ) {
+		vars[ '--ab-sec-bw' ] = `${ borderWidth }px`;
+	}
+	if ( borderRadius > 0 ) {
+		vars[ '--ab-sec-radius' ] = `${ borderRadius }px`;
+	}
+
+	const bwFallback = borderWidth > 0 ? `${ borderWidth }px` : undefined;
+	[ 'top', 'right', 'bottom', 'left' ].forEach( ( side ) => {
+		const key =
+			'border' + side.charAt( 0 ).toUpperCase() + side.slice( 1 ) + 'Width';
+		const val = attributes[ key ] || bwFallback;
+		if ( val ) {
+			vars[ `--ab-sec-bw-${ side }` ] = val;
+		}
+	} );
+
+	const rFallback = borderRadius > 0 ? `${ borderRadius }px` : undefined;
+	[
+		[ 'tl', 'radiusTopLeft' ],
+		[ 'tr', 'radiusTopRight' ],
+		[ 'br', 'radiusBottomRight' ],
+		[ 'bl', 'radiusBottomLeft' ],
+	].forEach( ( [ corner, key ] ) => {
+		const val = attributes[ key ] || rFallback;
+		if ( val ) {
+			vars[ `--ab-sec-radius-${ corner }` ] = val;
+		}
+	} );
+
+	if ( sectionShadow ) {
+		vars[ '--ab-sec-shadow' ] = sectionShadow;
+	}
+
+	return vars;
+}
 
 /* ── Inline length control: range + unit segment ─────────────────────────── */
 function LengthControl( { label, value, onChange, help, min = 0 } ) {
@@ -181,47 +221,62 @@ function LengthControl( { label, value, onChange, help, min = 0 } ) {
 }
 
 function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
-	// Check if this block is enabled
-	// Show disabled message if block is not enabled
 	if ( ! isBlockEnabled( 'advanced-section' ) ) {
 		return <DisabledBlockMessage blockName="Advanced Section" />;
 	}
 
 	const {
-		backgroundType,
-		backgroundColor,
-		gradientType,
-		gradientAngle,
-		gradientFromColor,
-		gradientToColor,
-		gradientUseMidStop,
-		gradientMidColor,
-		gradientFromStop,
-		gradientMidStop,
-		gradientToStop,
-		backgroundImage,
-		backgroundSize,
-		backgroundPosition,
-		backgroundRepeat,
-		backgroundAttachment,
-		enableParallax,
-		parallaxSpeed,
-		overlayType,
-		overlayColor,
-		overlayGradientType,
-		overlayGradientAngle,
-		overlayGradientFromColor,
-		overlayGradientToColor,
-		overlayOpacity,
-		overlayBlendMode,
+		minHeight,
+		minHeightTablet,
 		mobileMinHeight,
 		verticalAlign,
 		horizontalAlign,
-		borderStyle,
-		borderWidth,
-		borderColor,
-		borderRadius,
+		contentAlign,
+		layoutType,
+		flexDirection,
+		flexWrap,
+		flexJustify,
+		flexAlign,
+		gridColumns,
+		layoutGap,
+		layoutStackAt,
+		bgType,
+		bgImage,
+		bgParallax,
+		bgParallaxSpeed,
 	} = attributes;
+
+	// One-time migration: dynamic blocks never trigger `deprecated` (the saved
+	// inner-blocks content always matches), so old bespoke background attrs are
+	// converted here on mount. Gate on a real legacy value (not the 'color'
+	// default that every new block carries) so new blocks aren't touched; runs
+	// once per instance and clears the legacy attrs so it doesn't repeat.
+	useEffect( () => {
+		const hasLegacy =
+			!! attributes.backgroundColor ||
+			!! attributes.backgroundImage?.url ||
+			( attributes.backgroundType === 'gradient' &&
+				!! attributes.gradientFromColor ) ||
+			!! attributes.overlayColor ||
+			attributes.overlayType === 'gradient' ||
+			!! attributes.enableParallax;
+		if ( attributes.bgType || ! hasLegacy ) {
+			return;
+		}
+		setAttributes( {
+			...migrateLegacyBackground( attributes ),
+			backgroundType: '',
+			backgroundColor: '',
+			backgroundImage: null,
+			enableParallax: false,
+			overlayColor: '',
+			overlayType: 'color',
+			overlayGradientFromColor: '#000000',
+			overlayGradientToColor: 'rgba(0,0,0,0)',
+			overlayBlendMode: 'normal',
+		} );
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [] );
 
 	const hasInnerBlocks = useSelect(
 		( select ) => {
@@ -232,51 +287,46 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 		[ clientId ]
 	);
 
-	const bgStyle = buildBackgroundStyle( attributes );
-	const overlayBg = buildOverlayBackground( attributes );
-
 	// Preview the active device's min-height (legacy mobileMinHeight folds in as
 	// the Tablet override, mirroring the frontend cascade).
 	const device = useDeviceType();
+
+	// Vertical alignment is justify-content, which distributes leftover height.
+	// With no min-height the section is exactly as tall as its content, so the
+	// control silently does nothing — say so rather than let it look broken.
+	const hasRoomToAlignVertically =
+		!! minHeight && 'auto' !== minHeight && '0' !== parseFloat( minHeight );
+
 	const resolvedMinHeight =
 		resolveResponsive(
-			mobileMinHeight && ! attributes.minHeightTablet
+			mobileMinHeight && ! minHeightTablet
 				? { ...attributes, minHeightTablet: mobileMinHeight }
 				: attributes,
 			'minHeight',
 			device
 		) || '400px';
 
-	const borderInline =
-		borderStyle && borderStyle !== 'none' && borderWidth > 0
-			? {
-					borderStyle,
-					borderWidth: `${ borderWidth }px`,
-					borderColor: borderColor || '#000000',
-			  }
-			: {};
-
-	const isParallax =
-		!! enableParallax && backgroundType === 'image' && backgroundImage?.url;
+	const isParallax = !! bgParallax && bgType === 'image' && bgImage?.url;
 
 	// When parallax is on, the bg-image moves to a ::before pseudo (so it can
 	// be transformed without disturbing inner blocks). Surface size/position/
 	// repeat as CSS vars; the wrapper's own background-image is suppressed.
 	const parallaxStyle = isParallax
 		? {
-				'--ab-bg-image': `url('${ backgroundImage.url }')`,
-				'--ab-bg-size': backgroundSize || 'cover',
-				'--ab-bg-position': backgroundPosition || 'center center',
-				'--ab-bg-repeat': backgroundRepeat || 'no-repeat',
+				'--ab-bg-image': `url('${ bgImage.url }')`,
+				'--ab-bg-size': attributes.bgImageSize || 'cover',
+				'--ab-bg-position': attributes.bgImagePosition || 'center center',
+				'--ab-bg-repeat': attributes.bgImageRepeat || 'no-repeat',
 		  }
 		: {};
 
 	const blockProps = useBlockProps( {
 		className: [
 			'axiom-blocks-section',
-			`axiom-blocks-section--${ backgroundType }`,
+			`axiom-blocks-section--${ bgType || 'none' }`,
 			`is-h-${ horizontalAlign }`,
 			`is-v-${ verticalAlign }`,
+			layoutClass( attributes ),
 			isParallax ? 'has-parallax' : '',
 		]
 			.filter( Boolean )
@@ -284,15 +334,14 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 		...( isParallax
 			? {
 					'data-parallax-speed': (
-						( parallaxSpeed || 0 ) / 100
+						( bgParallaxSpeed || 0 ) / 100
 					).toFixed( 2 ),
 			  }
 			: {} ),
 		style: {
-			...bgStyle,
+			...getBackgroundVars( attributes, { varPrefix: '--ab-sec' } ),
 			...parallaxStyle,
-			...borderInline,
-			borderRadius: borderRadius ? `${ borderRadius }px` : undefined,
+			...getSectionVars( attributes ),
 			// Device-resolved so the canvas reflects the active preview device.
 			'--axiom-blocks-section-min-h': resolvedMinHeight,
 			minHeight: 'var(--axiom-blocks-section-min-h, 400px)',
@@ -300,11 +349,15 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 				V_ALIGN_MAP[ verticalAlign ] || 'center',
 			'--axiom-blocks-section-align':
 				H_ALIGN_MAP[ horizontalAlign ] || 'center',
-			'--axiom-blocks-section-overlay-bg': overlayBg,
-			'--axiom-blocks-section-overlay-opacity':
-				( overlayOpacity || 0 ) / 100,
-			'--axiom-blocks-section-overlay-blend': overlayBlendMode,
+			// align-items can only move a child narrower than the section, so
+			// full-width children ignore it. contentAlign carries the same
+			// choice through as text-align, which descendants inherit. Empty on
+			// blocks saved before this shipped, so their rendering is unchanged.
+			...( contentAlign ? { '--ab-sec-ta': contentAlign } : {} ),
+			...buildLayoutStyle( attributes, device ),
 			...useSpacingStyle( attributes ),
+			'--ab-sec-w': responsiveVarValue( attributes, 'width', device ),
+			'--ab-sec-mw': responsiveVarValue( attributes, 'maxWidth', device ),
 		},
 	} );
 
@@ -313,718 +366,224 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Background', 'axiom-blocks' ) }
-					initialOpen={ true }
-				>
-					<ABSelectControl
-						label={ __( 'Type', 'axiom-blocks' ) }
-						value={ backgroundType }
-						options={ BACKGROUND_TYPES }
-						onChange={ ( v ) =>
-							setAttributes( { backgroundType: v } )
-						}
-					/>
-
-					{ backgroundType === 'color' && (
-						<ABColorControl
-							label={ __( 'Color', 'axiom-blocks' ) }
-							color={ backgroundColor || '#ffffff' }
-							onChange={ ( c ) =>
-								setAttributes( { backgroundColor: c } )
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ DESIGN }
+				leading={
+					<PanelBody
+						title={ __( 'Layout', 'axiom-blocks' ) }
+						initialOpen={ true }
+					>
+						<ABSelectControl
+							label={ __( 'Layout', 'axiom-blocks' ) }
+							value={ layoutType || 'constrained' }
+							options={ LAYOUT_TYPES }
+							onChange={ ( v ) =>
+								setAttributes( { layoutType: v } )
 							}
+							help={ __(
+								'Constrained = content width (default). Flex / Grid arrange direct children.',
+								'axiom-blocks'
+							) }
 						/>
-					) }
-
-					{ backgroundType === 'gradient' && (
-						<>
-							<ABSelectControl
-								label={ __( 'Gradient type', 'axiom-blocks' ) }
-								value={ gradientType }
-								options={ [
-									{
-										label: __( 'Linear', 'axiom-blocks' ),
-										value: 'linear',
-									},
-									{
-										label: __( 'Radial', 'axiom-blocks' ),
-										value: 'radial',
-									},
-								] }
-								onChange={ ( v ) =>
-									setAttributes( { gradientType: v } )
-								}
-							/>
-							{ gradientType === 'linear' && (
-								<ABRangeControl
-									label={ __( 'Angle', 'axiom-blocks' ) }
-									value={ gradientAngle }
-									onChange={ ( v ) =>
-										setAttributes( {
-											gradientAngle: v ?? 0,
-										} )
-									}
-									min={ 0 }
-									max={ 360 }
-									step={ 1 }
-									unit="°"
-								/>
-							) }
-							<ABColorControl
-								label={ __( 'From', 'axiom-blocks' ) }
-								color={ gradientFromColor }
-								defaultColor="#4f46e5"
-								onChange={ ( c ) =>
-									setAttributes( { gradientFromColor: c } )
-								}
-							/>
-							<ABRangeControl
-								label={ __( 'From stop', 'axiom-blocks' ) }
-								value={ gradientFromStop ?? 0 }
-								onChange={ ( v ) =>
-									setAttributes( {
-										gradientFromStop: v ?? 0,
-									} )
-								}
-								min={ 0 }
-								max={ 100 }
-								step={ 1 }
-								unit="%"
-							/>
-							<ABToggleControl
-								label={ __( 'Use mid color', 'axiom-blocks' ) }
-								checked={ !! gradientUseMidStop }
-								onChange={ ( v ) =>
-									setAttributes( { gradientUseMidStop: v } )
-								}
-							/>
-							{ gradientUseMidStop && (
-								<>
-									<ABColorControl
-										label={ __( 'Mid', 'axiom-blocks' ) }
-										color={ gradientMidColor }
-										defaultColor="#9333ea"
-										onChange={ ( c ) =>
-											setAttributes( {
-												gradientMidColor: c,
-											} )
-										}
-									/>
-									<ABRangeControl
-										label={ __(
-											'Mid stop',
-											'axiom-blocks'
-										) }
-										value={ gradientMidStop ?? 50 }
-										onChange={ ( v ) =>
-											setAttributes( {
-												gradientMidStop: v ?? 50,
-											} )
-										}
-										min={ 0 }
-										max={ 100 }
-										step={ 1 }
-										unit="%"
-									/>
-								</>
-							) }
-							<ABColorControl
-								label={ __( 'To', 'axiom-blocks' ) }
-								color={ gradientToColor }
-								defaultColor="#ec4899"
-								onChange={ ( c ) =>
-									setAttributes( { gradientToColor: c } )
-								}
-							/>
-							<ABRangeControl
-								label={ __( 'To stop', 'axiom-blocks' ) }
-								value={ gradientToStop ?? 100 }
-								onChange={ ( v ) =>
-									setAttributes( {
-										gradientToStop: v ?? 100,
-									} )
-								}
-								min={ 0 }
-								max={ 100 }
-								step={ 1 }
-								unit="%"
-							/>
-						</>
-					) }
-
-					{ backgroundType === 'image' && (
-						<>
-							<MediaUploadCheck>
-								<MediaUpload
-									onSelect={ ( media ) =>
-										setAttributes( {
-											backgroundImage: {
-												id: media.id,
-												url: media.url,
-											},
-										} )
-									}
-									allowedTypes={ [ 'image' ] }
-									value={ backgroundImage?.id }
-									render={ ( { open } ) => (
-										<div className="axiom-blocks-media-control">
-											{ backgroundImage?.url && (
-												<img
-													src={ backgroundImage.url }
-													alt=""
-													className="axiom-blocks-media-control__preview"
-												/>
-											) }
-											<div className="ab-btn-row axiom-blocks-media-control__buttons">
-												<button
-													type="button"
-													className="ab-btn ab-btn--secondary"
-													onClick={ open }
-												>
-													{ backgroundImage
-														? __(
-																'Replace',
-																'axiom-blocks'
-														  )
-														: __(
-																'Select image',
-																'axiom-blocks'
-														  ) }
-												</button>
-												{ backgroundImage && (
-													<button
-														type="button"
-														className="ab-btn ab-btn--danger"
-														onClick={ () =>
-															setAttributes( {
-																backgroundImage:
-																	null,
-															} )
-														}
-													>
-														{ __(
-															'Remove',
-															'axiom-blocks'
-														) }
-													</button>
-												) }
-											</div>
-										</div>
-									) }
-								/>
-							</MediaUploadCheck>
-							{ backgroundImage && (
-								<>
-									<ABSelectControl
-										label={ __( 'Size', 'axiom-blocks' ) }
-										value={ backgroundSize }
-										options={ [
-											{
-												label: __(
-													'Cover',
-													'axiom-blocks'
-												),
-												value: 'cover',
-											},
-											{
-												label: __(
-													'Contain',
-													'axiom-blocks'
-												),
-												value: 'contain',
-											},
-											{
-												label: __(
-													'Auto',
-													'axiom-blocks'
-												),
-												value: 'auto',
-											},
-										] }
-										onChange={ ( v ) =>
-											setAttributes( {
-												backgroundSize: v,
-											} )
-										}
-									/>
-									<div className="ab-ctrl">
-										<div className="ab-ctrl__label">
-											{ __(
-												'Focal point',
-												'axiom-blocks'
-											) }
-										</div>
-										<FocalPointPicker
-											url={ backgroundImage.url }
-											value={ positionToFocalPoint(
-												backgroundPosition
-											) }
-											onChange={ ( fp ) =>
-												setAttributes( {
-													backgroundPosition:
-														focalPointToPosition(
-															fp
-														),
-												} )
-											}
-											__nextHasNoMarginBottom
-										/>
-										<ABRangeControl
-											label={ __( 'Left', 'axiom-blocks' ) }
-											value={ Math.round(
-												positionToFocalPoint(
-													backgroundPosition
-												).x * 100
-											) }
-											onChange={ ( v ) =>
-												setAttributes( {
-													backgroundPosition:
-														focalPointToPosition( {
-															x: ( v ?? 50 ) / 100,
-															y: positionToFocalPoint(
-																backgroundPosition
-															).y,
-														} ),
-												} )
-											}
-											min={ 0 }
-											max={ 100 }
-											step={ 1 }
-											unit="%"
-										/>
-										<ABRangeControl
-											label={ __( 'Top', 'axiom-blocks' ) }
-											value={ Math.round(
-												positionToFocalPoint(
-													backgroundPosition
-												).y * 100
-											) }
-											onChange={ ( v ) =>
-												setAttributes( {
-													backgroundPosition:
-														focalPointToPosition( {
-															x: positionToFocalPoint(
-																backgroundPosition
-															).x,
-															y: ( v ?? 50 ) / 100,
-														} ),
-												} )
-											}
-											min={ 0 }
-											max={ 100 }
-											step={ 1 }
-											unit="%"
-										/>
-										<ABSelectControl
-											label={ __(
-												'Or use a preset',
-												'axiom-blocks'
-											) }
-											value={
-												POSITIONS.find(
-													( p ) =>
-														p.value ===
-														backgroundPosition
-												)
-													? backgroundPosition
-													: ''
-											}
-											options={ [
-												{
-													label: __(
-														'— Custom —',
-														'axiom-blocks'
-													),
-													value: '',
-												},
-												...POSITIONS,
-											] }
-											onChange={ ( v ) =>
-												v &&
-												setAttributes( {
-													backgroundPosition: v,
-												} )
-											}
-										/>
-									</div>
-									<ABSelectControl
-										label={ __( 'Repeat', 'axiom-blocks' ) }
-										value={ backgroundRepeat }
-										options={ [
-											{
-												label: __(
-													'No repeat',
-													'axiom-blocks'
-												),
-												value: 'no-repeat',
-											},
-											{
-												label: __(
-													'Repeat',
-													'axiom-blocks'
-												),
-												value: 'repeat',
-											},
-											{
-												label: __(
-													'Repeat X',
-													'axiom-blocks'
-												),
-												value: 'repeat-x',
-											},
-											{
-												label: __(
-													'Repeat Y',
-													'axiom-blocks'
-												),
-												value: 'repeat-y',
-											},
-										] }
-										onChange={ ( v ) =>
-											setAttributes( {
-												backgroundRepeat: v,
-											} )
-										}
-									/>
-									{ ! enableParallax && (
-										<ABSelectControl
-											label={ __(
-												'Attachment',
-												'axiom-blocks'
-											) }
-											value={ backgroundAttachment }
-											options={ [
-												{
-													label: __(
-														'Scroll',
-														'axiom-blocks'
-													),
-													value: 'scroll',
-												},
-												{
-													label: __(
-														'Fixed',
-														'axiom-blocks'
-													),
-													value: 'fixed',
-												},
-											] }
-											onChange={ ( v ) =>
-												setAttributes( {
-													backgroundAttachment: v,
-												} )
-											}
-										/>
-									) }
-									<ABToggleControl
-										label={ __(
-											'Parallax',
-											'axiom-blocks'
-										) }
-										checked={ !! enableParallax }
-										onChange={ ( v ) =>
-											setAttributes( {
-												enableParallax: v,
-											} )
-										}
-										help={ __(
-											'Smooth scroll-based parallax (frontend only).',
-											'axiom-blocks'
-										) }
-									/>
-									{ enableParallax && (
-										<ABRangeControl
-											label={ __(
-												'Parallax speed',
-												'axiom-blocks'
-											) }
-											value={ parallaxSpeed }
-											onChange={ ( v ) =>
-												setAttributes( {
-													parallaxSpeed: Math.max(
-														0,
-														Math.min( 100, v ?? 0 )
-													),
-												} )
-											}
-											min={ 0 }
-											max={ 100 }
-											step={ 1 }
-											unit="%"
-										/>
-									) }
-								</>
-							) }
-						</>
-					) }
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Overlay', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABSelectControl
-						label={ __( 'Type', 'axiom-blocks' ) }
-						value={ overlayType }
-						options={ [
-							{
-								label: __( 'Color', 'axiom-blocks' ),
-								value: 'color',
-							},
-							{
-								label: __( 'Gradient', 'axiom-blocks' ),
-								value: 'gradient',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { overlayType: v } )
-						}
-					/>
-
-					{ overlayType === 'color' && (
-						<ABColorControl
-							label={ __( 'Color', 'axiom-blocks' ) }
-							color={ overlayColor || '#000000' }
-							onChange={ ( c ) =>
-								setAttributes( { overlayColor: c } )
-							}
-						/>
-					) }
-
-					{ overlayType === 'gradient' && (
-						<>
-							<ABSelectControl
-								label={ __( 'Gradient type', 'axiom-blocks' ) }
-								value={ overlayGradientType }
-								options={ [
-									{
-										label: __( 'Linear', 'axiom-blocks' ),
-										value: 'linear',
-									},
-									{
-										label: __( 'Radial', 'axiom-blocks' ),
-										value: 'radial',
-									},
-								] }
-								onChange={ ( v ) =>
-									setAttributes( { overlayGradientType: v } )
-								}
-							/>
-							{ overlayGradientType === 'linear' && (
-								<ABRangeControl
-									label={ __( 'Angle', 'axiom-blocks' ) }
-									value={ overlayGradientAngle }
-									onChange={ ( v ) =>
-										setAttributes( {
-											overlayGradientAngle: v ?? 0,
-										} )
-									}
-									min={ 0 }
-									max={ 360 }
-									step={ 1 }
-									unit="°"
-								/>
-							) }
-							<ABColorControl
-								label={ __( 'From', 'axiom-blocks' ) }
-								color={ overlayGradientFromColor }
-								defaultColor="#000000"
-								onChange={ ( c ) =>
-									setAttributes( {
-										overlayGradientFromColor: c,
-									} )
-								}
-							/>
-							<ABColorControl
-								label={ __( 'To', 'axiom-blocks' ) }
-								color={ overlayGradientToColor }
-								onChange={ ( c ) =>
-									setAttributes( {
-										overlayGradientToColor: c,
-									} )
-								}
-							/>
-						</>
-					) }
-
-					{ ( overlayOpacity > 0 ||
-						overlayColor ||
-						overlayType === 'gradient' ) && (
-						<button
-							type="button"
-							className="ab-btn ab-btn--danger axiom-blocks-remove-overlay-btn"
-							onClick={ () =>
-								setAttributes( {
-									overlayType: 'color',
-									overlayColor: '',
-									overlayOpacity: 0,
-								} )
-							}
+						<ABResponsive
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+							attrKey="minHeight"
 						>
-							{ __( 'Remove overlay', 'axiom-blocks' ) }
-						</button>
-					) }
-					<ABRangeControl
-						label={ __( 'Opacity', 'axiom-blocks' ) }
-						value={ overlayOpacity }
-						onChange={ ( v ) =>
-							setAttributes( { overlayOpacity: v ?? 0 } )
-						}
-						min={ 0 }
-						max={ 100 }
-						step={ 1 }
-						unit="%"
-					/>
-					<ABSelectControl
-						label={ __( 'Blend mode', 'axiom-blocks' ) }
-						value={ overlayBlendMode }
-						options={ BLEND_MODES }
-						onChange={ ( v ) =>
-							setAttributes( { overlayBlendMode: v } )
-						}
-					/>
-				</PanelBody>
+							{ ( { value, setValue, inherited } ) => (
+								<LengthControl
+									label={ __( 'Min height', 'axiom-blocks' ) }
+									value={ value === '' ? inherited : value }
+									onChange={ setValue }
+								/>
+							) }
+						</ABResponsive>
 
-				<PanelBody
-					title={ __( 'Border', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABSelectControl
-						label={ __( 'Style', 'axiom-blocks' ) }
-						value={ borderStyle }
-						options={ [
-							{
-								label: __( 'None', 'axiom-blocks' ),
-								value: 'none',
-							},
-							{
-								label: __( 'Solid', 'axiom-blocks' ),
-								value: 'solid',
-							},
-							{
-								label: __( 'Dashed', 'axiom-blocks' ),
-								value: 'dashed',
-							},
-							{
-								label: __( 'Dotted', 'axiom-blocks' ),
-								value: 'dotted',
-							},
-							{
-								label: __( 'Double', 'axiom-blocks' ),
-								value: 'double',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { borderStyle: v } )
-						}
-					/>
-					{ borderStyle && borderStyle !== 'none' && (
-						<>
+						{ ( layoutType || 'constrained' ) === 'constrained' && (
+							<>
+								<ABSelectControl
+									help={
+										hasRoomToAlignVertically
+											? undefined
+											: __(
+													'Set a min height — with none, the section is exactly as tall as its content and there is no space to move it in.',
+													'axiom-blocks'
+											  )
+									}
+									label={ __( 'Vertical', 'axiom-blocks' ) }
+									value={ verticalAlign }
+									options={ [
+										{
+											label: __( 'Top', 'axiom-blocks' ),
+											value: 'top',
+										},
+										{
+											label: __( 'Center', 'axiom-blocks' ),
+											value: 'center',
+										},
+										{
+											label: __( 'Bottom', 'axiom-blocks' ),
+											value: 'bottom',
+										},
+									] }
+									onChange={ ( v ) =>
+										setAttributes( { verticalAlign: v } )
+									}
+								/>
+								<ABSelectControl
+									label={ __( 'Horizontal', 'axiom-blocks' ) }
+									value={ horizontalAlign }
+									options={ [
+										{
+											label: __( 'Left', 'axiom-blocks' ),
+											value: 'left',
+										},
+										{
+											label: __( 'Center', 'axiom-blocks' ),
+											value: 'center',
+										},
+										{
+											label: __( 'Right', 'axiom-blocks' ),
+											value: 'right',
+										},
+									] }
+									onChange={ ( v ) =>
+										setAttributes( {
+											horizontalAlign: v,
+											contentAlign: v,
+										} )
+									}
+								/>
+							</>
+						) }
+
+						{ layoutType === 'flex' && (
+							<>
+								<ABSelectControl
+									label={ __( 'Direction', 'axiom-blocks' ) }
+									value={ flexDirection || 'row' }
+									options={ FLEX_DIRECTIONS }
+									onChange={ ( v ) =>
+										setAttributes( { flexDirection: v } )
+									}
+								/>
+								<ABSelectControl
+									label={ __( 'Wrap', 'axiom-blocks' ) }
+									value={ flexWrap || 'wrap' }
+									options={ FLEX_WRAPS }
+									onChange={ ( v ) =>
+										setAttributes( { flexWrap: v } )
+									}
+								/>
+								<ABSelectControl
+									label={ __( 'Justify', 'axiom-blocks' ) }
+									value={ flexJustify || 'center' }
+									options={ JUSTIFY_OPTIONS }
+									onChange={ ( v ) =>
+										setAttributes( { flexJustify: v } )
+									}
+								/>
+								<ABSelectControl
+									label={ __( 'Align', 'axiom-blocks' ) }
+									value={ flexAlign || 'center' }
+									options={ ALIGN_OPTIONS }
+									onChange={ ( v ) =>
+										setAttributes( { flexAlign: v } )
+									}
+								/>
+								<ABResponsive
+									attributes={ attributes }
+									setAttributes={ setAttributes }
+									attrKey="layoutGap"
+								>
+									{ ( { value, setValue, inherited } ) => (
+										<LengthControl
+											label={ __( 'Gap', 'axiom-blocks' ) }
+											value={
+												value === '' ? inherited : value
+											}
+											onChange={ setValue }
+										/>
+									) }
+								</ABResponsive>
+							</>
+						) }
+
+						{ layoutType === 'grid' && (
+							<>
+								<ABResponsive
+									attributes={ attributes }
+									setAttributes={ setAttributes }
+									attrKey="gridColumns"
+								>
+									{ ( { value, setValue, inherited } ) => (
+										<ABRangeControl
+											label={ __( 'Columns', 'axiom-blocks' ) }
+											value={
+												value === '' || value == null
+													? inherited || 3
+													: value
+											}
+											onChange={ ( v ) => setValue( v ?? 1 ) }
+											min={ 1 }
+											max={ 6 }
+											step={ 1 }
+											unit=""
+										/>
+									) }
+								</ABResponsive>
+								<ABSelectControl
+									label={ __( 'Align items', 'axiom-blocks' ) }
+									value={ flexAlign || 'stretch' }
+									options={ ALIGN_OPTIONS }
+									onChange={ ( v ) =>
+										setAttributes( { flexAlign: v } )
+									}
+								/>
+								<ABResponsive
+									attributes={ attributes }
+									setAttributes={ setAttributes }
+									attrKey="layoutGap"
+								>
+									{ ( { value, setValue, inherited } ) => (
+										<LengthControl
+											label={ __( 'Gap', 'axiom-blocks' ) }
+											value={
+												value === '' ? inherited : value
+											}
+											onChange={ setValue }
+										/>
+									) }
+								</ABResponsive>
+							</>
+						) }
+
+						{ ( layoutType === 'flex' ||
+							layoutType === 'grid' ) && (
 							<ABRangeControl
-								label={ __( 'Width', 'axiom-blocks' ) }
-								value={ borderWidth }
+								label={ __( 'Stack below', 'axiom-blocks' ) }
+								help={ __(
+									'Collapse to a single stacked column below this screen width. 0 = never.',
+									'axiom-blocks'
+								) }
+								value={ layoutStackAt ?? 0 }
 								onChange={ ( v ) =>
-									setAttributes( { borderWidth: v ?? 0 } )
+									setAttributes( { layoutStackAt: v ?? 0 } )
 								}
 								min={ 0 }
-								max={ 20 }
-								step={ 1 }
+								max={ 1200 }
+								step={ 10 }
 								unit="px"
 							/>
-							<ABColorControl
-								label={ __( 'Color', 'axiom-blocks' ) }
-								color={ borderColor || '#000000' }
-								defaultColor="#000000"
-								onChange={ ( c ) =>
-									setAttributes( { borderColor: c } )
-								}
-							/>
-						</>
-					) }
-					<ABRangeControl
-						label={ __( 'Border radius', 'axiom-blocks' ) }
-						value={ borderRadius }
-						onChange={ ( v ) =>
-							setAttributes( { borderRadius: v ?? 0 } )
-						}
-						min={ 0 }
-						max={ 64 }
-						step={ 1 }
-						unit="px"
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Layout', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="minHeight"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<LengthControl
-								label={ __( 'Min height', 'axiom-blocks' ) }
-								value={ value === '' ? inherited : value }
-								onChange={ setValue }
-							/>
 						) }
-					</ABResponsive>
-					<ABSelectControl
-						label={ __( 'Vertical', 'axiom-blocks' ) }
-						value={ verticalAlign }
-						options={ [
-							{
-								label: __( 'Top', 'axiom-blocks' ),
-								value: 'top',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Bottom', 'axiom-blocks' ),
-								value: 'bottom',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { verticalAlign: v } )
-						}
-					/>
-					<ABSelectControl
-						label={ __( 'Horizontal', 'axiom-blocks' ) }
-						value={ horizontalAlign }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { horizontalAlign: v } )
-						}
-					/>
-				</PanelBody>
-
-				<SpacingPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-					responsive
-				/>
-			</InspectorControls>
+					</PanelBody>
+				}
+			/>
 
 			<div { ...wrapperProps }>
-				{ ! hasInnerBlocks && ! hasBackground( attributes ) && (
+				{ ! hasInnerBlocks && ! bgType && (
 					<div className="axiom-blocks-section__placeholder">
 						<p>
 							{ __(
@@ -1038,6 +597,53 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 			</div>
 		</>
 	);
+}
+
+/* ── Legacy background migration (v1 bespoke attrs → BackgroundControl) ──────
+ * Old posts stored backgroundType, backgroundColor, gradient*, overlay*, etc.
+ * Maps them onto the shared bgType/bgColor/bgGradStops/bgOverlay* schema. Used
+ * by the mount-time useEffect (dynamic blocks never trigger `deprecated`). */
+function migrateLegacyBackground( a ) {
+	const stops = [];
+	if ( a.backgroundType === 'gradient' ) {
+		stops.push( {
+			color: a.gradientFromColor,
+			position: a.gradientFromStop ?? 0,
+		} );
+		if ( a.gradientUseMidStop ) {
+			stops.push( {
+				color: a.gradientMidColor,
+				position: a.gradientMidStop ?? 50,
+			} );
+		}
+		stops.push( {
+			color: a.gradientToColor,
+			position: a.gradientToStop ?? 100,
+		} );
+	}
+
+	return {
+		bgType: a.backgroundType || '',
+		bgColor: a.backgroundColor || '',
+		bgGradType: a.gradientType || 'linear',
+		bgGradAngle: a.gradientAngle ?? 90,
+		bgGradStops: stops,
+		bgImage: a.backgroundImage || null,
+		bgImageSize: a.backgroundSize || 'cover',
+		bgImagePosition: a.backgroundPosition || 'center center',
+		bgImageRepeat: a.backgroundRepeat || 'no-repeat',
+		bgImageAttachment: a.backgroundAttachment || 'scroll',
+		bgParallax: !! a.enableParallax,
+		bgParallaxSpeed: a.parallaxSpeed ?? 30,
+		bgOverlay: a.overlayColor || '',
+		bgOverlayType: a.overlayType || 'color',
+		bgOverlayGradType: a.overlayGradientType || 'linear',
+		bgOverlayGradAngle: a.overlayGradientAngle ?? 180,
+		bgOverlayGradFrom: a.overlayGradientFromColor || '#000000',
+		bgOverlayGradTo: a.overlayGradientToColor || 'rgba(0,0,0,0)',
+		bgOverlayOpacity: a.overlayOpacity ?? 0,
+		bgOverlayBlend: a.overlayBlendMode || 'normal',
+	};
 }
 
 export const AdvancedSection = {

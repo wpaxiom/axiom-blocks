@@ -31,7 +31,10 @@
 	border: 0;
 	border-radius: 5px;
 	background: transparent;
-	color: inherit;
+	// Use the icon color var (not `inherit`) — the button doubles as the
+	// frontend's `.ab-icon-list__icon`, so it must honour the same var or the
+	// Styles ▸ Icon color control looks dead in the canvas.
+	color: var(--ab-il-icon-color, currentColor);
 	cursor: pointer;
 	transition: background 0.12s, box-shadow 0.12s;
 

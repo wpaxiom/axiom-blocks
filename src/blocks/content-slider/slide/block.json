@@ -12,7 +12,27 @@
 	"attributes": {
 		"contentAlign":  { "type": "string", "default": "center" },
 		"verticalAlign": { "type": "string", "default": "center" },
-		"bgColor":       { "type": "string", "default": "" }
+		"bgColor":       { "type": "string", "default": "" },
+
+		"bgType":             { "type": "string",  "default": "" },
+		"bgGradType":         { "type": "string",  "default": "linear" },
+		"bgGradAngle":        { "type": "number",  "default": 90 },
+		"bgGradStops":        { "type": "array",   "default": [] },
+		"bgImage":            { "type": "object",  "default": null },
+		"bgImageSize":        { "type": "string",  "default": "cover" },
+		"bgImagePosition":    { "type": "string",  "default": "center center" },
+		"bgImageRepeat":      { "type": "string",  "default": "no-repeat" },
+		"bgImageAttachment":  { "type": "string",  "default": "scroll" },
+		"bgParallax":         { "type": "boolean", "default": false },
+		"bgParallaxSpeed":    { "type": "number",  "default": 30 },
+		"bgOverlay":          { "type": "string",  "default": "" },
+		"bgOverlayType":      { "type": "string",  "default": "color" },
+		"bgOverlayGradType":  { "type": "string",  "default": "linear" },
+		"bgOverlayGradAngle": { "type": "number",  "default": 180 },
+		"bgOverlayGradFrom":  { "type": "string",  "default": "#000000" },
+		"bgOverlayGradTo":    { "type": "string",  "default": "rgba(0,0,0,0)" },
+		"bgOverlayOpacity":   { "type": "number",  "default": 0 },
+		"bgOverlayBlend":     { "type": "string",  "default": "normal" }
 	},
 	"usesContext": ["axiom-blocks/sliderEffect"],
 	"supports": {

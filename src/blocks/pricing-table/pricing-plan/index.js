@@ -10,15 +10,8 @@ import { PanelBody, ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import { useState, useRef, useEffect } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
 import { link as linkIcon, linkOff as unlinkIcon } from '@wordpress/icons';
-import {
-	ABTextControl,
-	ABToggleControl,
-	ABSubAccordion,
-} from '../../../components/ABControls';
-import {
-	TypographyPanel,
-	useTypographyStyle,
-} from '../../../components/TypographyPanel';
+import { ABTextControl, ABToggleControl } from '../../../components/ABControls';
+import { useTypographyStyle } from '../../../components/TypographyPanel';
 import { BlockIcon } from '../../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -113,6 +106,14 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 
 	const featureIconStyle =
 		context[ 'axiom-blocks/featureIconStyle' ] || 'check';
+
+	// Mirrors render.php: the table drives currency/period visibility, and a plan
+	// explicitly switched off before the setting moved up stays off.
+	const showCurrencyNow =
+		context[ 'axiom-blocks/showCurrency' ] !== false &&
+		showCurrency !== false;
+	const showPeriodNow =
+		context[ 'axiom-blocks/showPeriod' ] !== false && showPeriod !== false;
 	const hasLink = !! ( ctaUrl && ctaUrl !== '#' );
 
 	/* ── Inline link UI: a normal positioned <div>, no Popover (avoids iframe quirks) ── */
@@ -234,27 +235,19 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 				</PanelBody>
 
 				<PanelBody
-					title={ __( 'Price display', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABToggleControl
-						label={ __( 'Show currency', 'axiom-blocks' ) }
-						checked={ showCurrency !== false }
-						onChange={ ( v ) =>
-							setAttributes( { showCurrency: v } )
-						}
-					/>
-					<ABToggleControl
-						label={ __( 'Show period', 'axiom-blocks' ) }
-						checked={ showPeriod !== false }
-						onChange={ ( v ) => setAttributes( { showPeriod: v } ) }
-					/>
-				</PanelBody>
-
-				<PanelBody
 					title={ __( 'Call to action', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
+					<ABTextControl
+						label={ __( 'Button label', 'axiom-blocks' ) }
+						value={ ctaLabel }
+						onChange={ ( v ) => setAttributes( { ctaLabel: v } ) }
+						placeholder={ __( 'e.g. Get started', 'axiom-blocks' ) }
+						help={ __(
+							'Leave empty to hide the button.',
+							'axiom-blocks'
+						) }
+					/>
 					<ABTextControl
 						label={ __( 'Button URL', 'axiom-blocks' ) }
 						value={ ctaUrl }
@@ -269,66 +262,14 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 					/>
 				</PanelBody>
 
-				<PanelBody
-					title={ __( 'Typography', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<div className="ab-sub-acc-list">
-						<ABSubAccordion
-							title={ __( 'Plan name', 'axiom-blocks' ) }
-						>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="name"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-						<ABSubAccordion title={ __( 'Price', 'axiom-blocks' ) }>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="price"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-						<ABSubAccordion
-							title={ __( 'Description', 'axiom-blocks' ) }
-						>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="desc"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-						<ABSubAccordion
-							title={ __( 'Features', 'axiom-blocks' ) }
-						>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="feature"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-						<ABSubAccordion
-							title={ __( 'Button', 'axiom-blocks' ) }
-						>
-							<TypographyPanel
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								prefix="cta"
-								unwrapped
-								responsive
-							/>
-						</ABSubAccordion>
-					</div>
-				</PanelBody>
+				<div className="ab-ctrl ab-block-note">
+					<p className="ab-ctrl__help">
+						{ __(
+							'Card style and the plan name / price / description / features / button typography are set on the parent Pricing Table block, for every plan at once.',
+							'axiom-blocks'
+						) }
+					</p>
+				</div>
 			</InspectorControls>
 
 			<article { ...blockProps }>
@@ -343,7 +284,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 					style={ nameStyle }
 				/>
 				<div className="ab-pt-plan__price" style={ priceStyle }>
-					{ showCurrency !== false && (
+					{ showCurrencyNow && (
 						<RichText
 							tagName="span"
 							className="ab-pt-plan__currency"
@@ -363,7 +304,7 @@ function PricingPlanEdit( { attributes, setAttributes, context, isSelected } ) {
 						placeholder="0"
 						allowedFormats={ [] }
 					/>
-					{ showPeriod !== false && (
+					{ showPeriodNow && (
 						<RichText
 							tagName="span"
 							className="ab-pt-plan__period"
@@ -595,34 +536,68 @@ export const PricingPlan = {
 						<div className="ab-pt-plan__badge">{ badge }</div>
 					) }
 					{ name && (
-						<RichText.Content tagName="h3" className="ab-pt-plan__name" value={ name } />
+						<RichText.Content
+							tagName="h3"
+							className="ab-pt-plan__name"
+							value={ name }
+						/>
 					) }
 					<div className="ab-pt-plan__price">
 						{ showCurrency !== false && currency && (
-							<span className="ab-pt-plan__currency">{ currency }</span>
+							<span className="ab-pt-plan__currency">
+								{ currency }
+							</span>
 						) }
 						{ price && (
-							<span className="ab-pt-plan__amount">{ price }</span>
+							<span className="ab-pt-plan__amount">
+								{ price }
+							</span>
 						) }
 						{ showPeriod !== false && period && (
-							<span className="ab-pt-plan__period">{ period }</span>
+							<span className="ab-pt-plan__period">
+								{ period }
+							</span>
 						) }
 					</div>
 					{ description && (
-						<RichText.Content tagName="p" className="ab-pt-plan__desc" value={ description } />
+						<RichText.Content
+							tagName="p"
+							className="ab-pt-plan__desc"
+							value={ description }
+						/>
 					) }
 					{ list.length > 0 && (
 						<ul className="ab-pt-plan__features">
 							{ list.map( ( f ) => (
-								<li key={ f.id } className={ `ab-pt-feat${ f.included ? ' is-included' : ' is-excluded' }` }>
-									<RichText.Content tagName="span" className="ab-pt-feat__text" value={ f.text } />
+								<li
+									key={ f.id }
+									className={ `ab-pt-feat${
+										f.included
+											? ' is-included'
+											: ' is-excluded'
+									}` }
+								>
+									<RichText.Content
+										tagName="span"
+										className="ab-pt-feat__text"
+										value={ f.text }
+									/>
 								</li>
 							) ) }
 						</ul>
 					) }
 					{ ctaLabel && (
 						<div className="ab-pt-plan__cta-area">
-							<a className="ab-pt-plan__cta" href={ ctaUrl || '#' } target={ ctaNewTab ? '_blank' : undefined } rel={ ctaNewTab ? 'noopener noreferrer' : undefined }>
+							<a
+								className="ab-pt-plan__cta"
+								href={ ctaUrl || '#' }
+								target={ ctaNewTab ? '_blank' : undefined }
+								rel={
+									ctaNewTab
+										? 'noopener noreferrer'
+										: undefined
+								}
+							>
 								{ ctaLabel }
 							</a>
 						</div>

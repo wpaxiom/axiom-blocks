@@ -1,6 +1,9 @@
 /**
  * Before/After Slider — frontend behaviour.
- * Pointer + touch drag, click-to-jump, keyboard navigation.
+ *
+ * Supports horizontal (left/right) and vertical (top/bottom) splits, and two
+ * interactions: drag (press + pull; a click jumps the handle) and hover (the
+ * handle follows the pointer without pressing). Keyboard navigation on focus.
  */
 ( function () {
 	'use strict';
@@ -12,6 +15,9 @@
 		const frame = wrapper.querySelector( '.axiom-blocks-bas__frame' );
 		if ( ! frame ) return;
 
+		const vertical = frame.classList.contains( 'is-vertical' );
+		const hover = frame.classList.contains( 'is-hover' );
+
 		let dragging = false;
 
 		function setPosition( pct ) {
@@ -22,39 +28,46 @@
 
 		function positionFromEvent( e ) {
 			const rect = frame.getBoundingClientRect();
-			const clientX =
-				e.touches && e.touches[ 0 ]
-					? e.touches[ 0 ].clientX
-					: e.clientX;
-			const pct = ( ( clientX - rect.left ) / rect.width ) * 100;
+			const touch = e.touches && e.touches[ 0 ];
+			const clientX = touch ? touch.clientX : e.clientX;
+			const clientY = touch ? touch.clientY : e.clientY;
+			const pct = vertical
+				? ( ( clientY - rect.top ) / rect.height ) * 100
+				: ( ( clientX - rect.left ) / rect.width ) * 100;
 			setPosition( pct );
 		}
 
-		function onDown( e ) {
-			dragging = true;
-			frame.classList.add( 'is-dragging' );
-			positionFromEvent( e );
-			if ( e.cancelable ) e.preventDefault();
-		}
+		if ( hover ) {
+			// Hover — the handle tracks the pointer while it is over the frame.
+			frame.addEventListener( 'pointermove', positionFromEvent );
+		} else {
+			// Drag — press and pull; a plain click jumps the handle.
+			function onDown( e ) {
+				dragging = true;
+				frame.classList.add( 'is-dragging' );
+				positionFromEvent( e );
+				if ( e.cancelable ) e.preventDefault();
+			}
 
-		function onMove( e ) {
-			if ( ! dragging ) return;
-			positionFromEvent( e );
-			if ( e.cancelable ) e.preventDefault();
-		}
+			function onMove( e ) {
+				if ( ! dragging ) return;
+				positionFromEvent( e );
+				if ( e.cancelable ) e.preventDefault();
+			}
 
-		function onUp() {
-			dragging = false;
-			frame.classList.remove( 'is-dragging' );
-		}
+			function onUp() {
+				dragging = false;
+				frame.classList.remove( 'is-dragging' );
+			}
 
-		frame.addEventListener( 'mousedown', onDown );
-		frame.addEventListener( 'touchstart', onDown, { passive: false } );
-		window.addEventListener( 'mousemove', onMove );
-		window.addEventListener( 'touchmove', onMove, { passive: false } );
-		window.addEventListener( 'mouseup', onUp );
-		window.addEventListener( 'touchend', onUp );
-		window.addEventListener( 'touchcancel', onUp );
+			frame.addEventListener( 'mousedown', onDown );
+			frame.addEventListener( 'touchstart', onDown, { passive: false } );
+			window.addEventListener( 'mousemove', onMove );
+			window.addEventListener( 'touchmove', onMove, { passive: false } );
+			window.addEventListener( 'mouseup', onUp );
+			window.addEventListener( 'touchend', onUp );
+			window.addEventListener( 'touchcancel', onUp );
+		}
 
 		// Keyboard navigation when the frame has focus.
 		frame.addEventListener( 'keydown', function ( e ) {
@@ -64,9 +77,11 @@
 			let next = current;
 			switch ( e.key ) {
 				case 'ArrowLeft':
+				case 'ArrowUp':
 					next = current - 2;
 					break;
 				case 'ArrowRight':
+				case 'ArrowDown':
 					next = current + 2;
 					break;
 				case 'Home':

@@ -1597,7 +1597,7 @@ export const ICON_META = [
 		slug: 'palette',
 		label: __( 'Palette', 'axiom-blocks' ),
 		category: 'misc',
-		keywords: 'palette colour art design',
+		keywords: 'palette color art design',
 	},
 	{
 		slug: 'coffee',

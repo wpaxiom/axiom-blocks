@@ -6,6 +6,10 @@
  * (theme.json contentSize / wideSize + the Inner blocks use content width
  *  toggle) applies to our direct children correctly.
  *
+ * Background + overlay use the shared Background builder (BackgroundControl).
+ * A fallback reads the legacy bespoke attrs (backgroundType, gradient*, overlay*)
+ * for posts saved before the migration ran.
+ *
  * @package AxiomBlocks
  * @var array  $attributes Block attributes.
  * @var string $content    Rendered inner blocks.
@@ -17,53 +21,122 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use AxiomBlocks\Blocks\Spacing;
 use AxiomBlocks\Blocks\Responsive;
+use AxiomBlocks\Blocks\AllowedHtml;
+use AxiomBlocks\Blocks\Background;
 use AxiomBlocks\Frontend\ResponsiveStyles;
 
-$axiom_blocks_bg_type         = $attributes['backgroundType'] ?? 'color';
-$axiom_blocks_bg_color        = $attributes['backgroundColor'] ?? '';
-$axiom_blocks_grad_type       = $attributes['gradientType'] ?? 'linear';
-$axiom_blocks_grad_angle      = (int) ( $attributes['gradientAngle'] ?? 135 );
-$axiom_blocks_grad_from       = $attributes['gradientFromColor'] ?? '#4f46e5';
-$axiom_blocks_grad_to         = $attributes['gradientToColor'] ?? '#ec4899';
-$axiom_blocks_grad_use_mid    = ! empty( $attributes['gradientUseMidStop'] );
-$axiom_blocks_grad_mid        = $attributes['gradientMidColor'] ?? '#9333ea';
-$axiom_blocks_grad_from_s     = (int) ( $attributes['gradientFromStop'] ?? 0 );
-$axiom_blocks_grad_mid_s      = (int) ( $attributes['gradientMidStop'] ?? 50 );
-$axiom_blocks_grad_to_s       = (int) ( $attributes['gradientToStop'] ?? 100 );
-$axiom_blocks_bg_image        = $attributes['backgroundImage'] ?? null;
-$axiom_blocks_bg_size         = $attributes['backgroundSize'] ?? 'cover';
-$axiom_blocks_bg_position     = $attributes['backgroundPosition'] ?? 'center center';
-$axiom_blocks_bg_repeat       = $attributes['backgroundRepeat'] ?? 'no-repeat';
-$axiom_blocks_bg_attachment   = $attributes['backgroundAttachment'] ?? 'scroll';
-$axiom_blocks_enable_parallax = ! empty( $attributes['enableParallax'] );
-$axiom_blocks_parallax_speed  = max( 0, min( 100, (int) ( $attributes['parallaxSpeed'] ?? 30 ) ) );
+// ── Background (shared BackgroundControl schema, with legacy fallback) ─────
+$axiom_blocks_bg_type = $attributes['bgType'] ?? '';
 
-$axiom_blocks_overlay_type  = $attributes['overlayType'] ?? 'color';
-$axiom_blocks_overlay_color = $attributes['overlayColor'] ?? '';
-$axiom_blocks_ov_grad_type  = $attributes['overlayGradientType'] ?? 'linear';
-$axiom_blocks_ov_grad_angle = (int) ( $attributes['overlayGradientAngle'] ?? 180 );
-$axiom_blocks_ov_grad_from  = $attributes['overlayGradientFromColor'] ?? '#000000';
-$axiom_blocks_ov_grad_to    = $attributes['overlayGradientToColor'] ?? 'rgba(0,0,0,0)';
-$axiom_blocks_overlay_op    = max( 0, min( 100, (int) ( $attributes['overlayOpacity'] ?? 0 ) ) ) / 100;
-$axiom_blocks_overlay_blend = $attributes['overlayBlendMode'] ?? 'normal';
+// Legacy fallback: posts saved before the migration still carry the old attrs.
+if ( '' === $axiom_blocks_bg_type && ! empty( $attributes['backgroundType'] ) ) {
+	$axiom_blocks_legacy = $attributes;
+	$axiom_blocks_legacy['bgType']            = $axiom_blocks_legacy['backgroundType'] ?? '';
+	$axiom_blocks_legacy['bgColor']           = $axiom_blocks_legacy['backgroundColor'] ?? '';
+	$axiom_blocks_legacy['bgGradType']        = $axiom_blocks_legacy['gradientType'] ?? 'linear';
+	$axiom_blocks_legacy['bgGradAngle']       = $axiom_blocks_legacy['gradientAngle'] ?? 90;
+	$axiom_blocks_legacy['bgImage']           = $axiom_blocks_legacy['backgroundImage'] ?? null;
+	$axiom_blocks_legacy['bgImageSize']       = $axiom_blocks_legacy['backgroundSize'] ?? 'cover';
+	$axiom_blocks_legacy['bgImagePosition']   = $axiom_blocks_legacy['backgroundPosition'] ?? 'center center';
+	$axiom_blocks_legacy['bgImageRepeat']     = $axiom_blocks_legacy['backgroundRepeat'] ?? 'no-repeat';
+	$axiom_blocks_legacy['bgImageAttachment'] = $axiom_blocks_legacy['backgroundAttachment'] ?? 'scroll';
+	$axiom_blocks_legacy['bgParallax']        = ! empty( $axiom_blocks_legacy['enableParallax'] );
+	$axiom_blocks_legacy['bgParallaxSpeed']   = $axiom_blocks_legacy['parallaxSpeed'] ?? 30;
+	$axiom_blocks_legacy['bgOverlay']         = $axiom_blocks_legacy['overlayColor'] ?? '';
+	$axiom_blocks_legacy['bgOverlayType']     = $axiom_blocks_legacy['overlayType'] ?? 'color';
+	$axiom_blocks_legacy['bgOverlayGradType'] = $axiom_blocks_legacy['overlayGradientType'] ?? 'linear';
+	$axiom_blocks_legacy['bgOverlayGradAngle'] = $axiom_blocks_legacy['overlayGradientAngle'] ?? 180;
+	$axiom_blocks_legacy['bgOverlayGradFrom'] = $axiom_blocks_legacy['overlayGradientFromColor'] ?? '#000000';
+	$axiom_blocks_legacy['bgOverlayGradTo']   = $axiom_blocks_legacy['overlayGradientToColor'] ?? 'rgba(0,0,0,0)';
+	$axiom_blocks_legacy['bgOverlayOpacity']  = $axiom_blocks_legacy['overlayOpacity'] ?? 0;
+	$axiom_blocks_legacy['bgOverlayBlend']    = $axiom_blocks_legacy['overlayBlendMode'] ?? 'normal';
 
-if ( 'gradient' === $axiom_blocks_overlay_type ) {
-	$axiom_blocks_overlay_bg = 'radial' === $axiom_blocks_ov_grad_type
-		? sprintf( 'radial-gradient(circle, %s 0%%, %s 100%%)', $axiom_blocks_ov_grad_from, $axiom_blocks_ov_grad_to )
-		: sprintf( 'linear-gradient(%ddeg, %s 0%%, %s 100%%)', $axiom_blocks_ov_grad_angle, $axiom_blocks_ov_grad_from, $axiom_blocks_ov_grad_to );
-} else {
-	$axiom_blocks_overlay_bg = '' !== $axiom_blocks_overlay_color ? $axiom_blocks_overlay_color : 'transparent';
+	// Rebuild gradient stops from the legacy discrete attrs.
+	$axiom_blocks_stops = array();
+	if ( 'gradient' === $axiom_blocks_legacy['bgType'] ) {
+		$axiom_blocks_stops[] = array(
+			'color'    => $axiom_blocks_legacy['gradientFromColor'] ?? '#4f46e5',
+			'position' => $axiom_blocks_legacy['gradientFromStop'] ?? 0,
+		);
+		if ( ! empty( $axiom_blocks_legacy['gradientUseMidStop'] ) ) {
+			$axiom_blocks_stops[] = array(
+				'color'    => $axiom_blocks_legacy['gradientMidColor'] ?? '#9333ea',
+				'position' => $axiom_blocks_legacy['gradientMidStop'] ?? 50,
+			);
+		}
+		$axiom_blocks_stops[] = array(
+			'color'    => $axiom_blocks_legacy['gradientToColor'] ?? '#ec4899',
+			'position' => $axiom_blocks_legacy['gradientToStop'] ?? 100,
+		);
+	}
+	$axiom_blocks_legacy['bgGradStops'] = $axiom_blocks_stops;
+
+	$attributes = $axiom_blocks_legacy;
+	$axiom_blocks_bg_type = $attributes['bgType'];
 }
 
-$axiom_blocks_min_height        = $attributes['minHeight'] ?? '400px';
-$axiom_blocks_mobile_min_height = $attributes['mobileMinHeight'] ?? '';
-$axiom_blocks_v_align           = $attributes['verticalAlign'] ?? 'center';
-$axiom_blocks_h_align           = $attributes['horizontalAlign'] ?? 'center';
+$axiom_blocks_bg_parts = array();
 
+$axiom_blocks_bg_value = Background::value( $attributes, '', 'bgColor' );
+if ( '' !== $axiom_blocks_bg_value ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-bg: ' . $axiom_blocks_bg_value;
+}
+foreach ( Background::layer_vars( $attributes, '', 'ab-sec' ) as $axiom_blocks_var ) {
+	$axiom_blocks_bg_parts[] = $axiom_blocks_var;
+}
+
+// ── Border / radius / shadow (design-system Container part) ────────────────
 $axiom_blocks_border_style  = $attributes['borderStyle'] ?? 'none';
 $axiom_blocks_border_width  = (int) ( $attributes['borderWidth'] ?? 0 );
 $axiom_blocks_border_color  = $attributes['borderColor'] ?? '#000000';
 $axiom_blocks_border_radius = (int) ( $attributes['borderRadius'] ?? 0 );
+
+if ( 'none' !== $axiom_blocks_border_style ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-bs: ' . esc_attr( $axiom_blocks_border_style );
+}
+if ( '' !== $axiom_blocks_border_color ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-bc: ' . esc_attr( $axiom_blocks_border_color );
+}
+if ( $axiom_blocks_border_width > 0 ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-bw: ' . (int) $axiom_blocks_border_width . 'px';
+}
+foreach ( array( 'top', 'right', 'bottom', 'left' ) as $axiom_blocks_side ) {
+	$axiom_blocks_val = $attributes[ 'border' . ucfirst( $axiom_blocks_side ) . 'Width' ] ?? '';
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_bg_parts[] = '--ab-sec-bw-' . $axiom_blocks_side . ': ' . esc_attr( $axiom_blocks_val );
+	}
+}
+if ( $axiom_blocks_border_radius > 0 ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-radius: ' . (int) $axiom_blocks_border_radius . 'px';
+}
+$axiom_blocks_radius_map = array(
+	'tl' => 'radiusTopLeft',
+	'tr' => 'radiusTopRight',
+	'br' => 'radiusBottomRight',
+	'bl' => 'radiusBottomLeft',
+);
+foreach ( $axiom_blocks_radius_map as $axiom_blocks_suffix => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $attributes[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_bg_parts[] = '--ab-sec-radius-' . $axiom_blocks_suffix . ': ' . esc_attr( $axiom_blocks_val );
+	}
+}
+if ( ! empty( $attributes['sectionShadow'] ) ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-shadow: ' . esc_attr( $attributes['sectionShadow'] );
+}
+
+// ── Size (L5) — desktop inline; Tablet/Mobile via ResponsiveProps ──────────
+foreach ( array( 'width' => '--ab-sec-w', 'maxWidth' => '--ab-sec-mw' ) as $axiom_blocks_size_key => $axiom_blocks_size_var ) {
+	if ( ! empty( $attributes[ $axiom_blocks_size_key ] ) ) {
+		$axiom_blocks_bg_parts[] = $axiom_blocks_size_var . ': ' . esc_attr( $attributes[ $axiom_blocks_size_key ] );
+	}
+}
+
+// ── Min-height + alignment ─────────────────────────────────────────────────
+$axiom_blocks_min_height        = $attributes['minHeight'] ?? '400px';
+$axiom_blocks_mobile_min_height = $attributes['mobileMinHeight'] ?? '';
+$axiom_blocks_v_align           = $attributes['verticalAlign'] ?? 'center';
+$axiom_blocks_h_align           = $attributes['horizontalAlign'] ?? 'center';
 
 $axiom_blocks_v_map = array(
 	'top'    => 'flex-start',
@@ -76,91 +149,73 @@ $axiom_blocks_h_map = array(
 	'right'  => 'flex-end',
 );
 
-// Background declarations.
-$axiom_blocks_bg_parts = array();
-switch ( $axiom_blocks_bg_type ) {
-	case 'gradient':
-		$axiom_blocks_stops = $axiom_blocks_grad_use_mid
-			? sprintf(
-				'%s %d%%, %s %d%%, %s %d%%',
-				esc_attr( $axiom_blocks_grad_from ),
-				$axiom_blocks_grad_from_s,
-				esc_attr( $axiom_blocks_grad_mid ),
-				$axiom_blocks_grad_mid_s,
-				esc_attr( $axiom_blocks_grad_to ),
-				$axiom_blocks_grad_to_s
-			)
-			: sprintf(
-				'%s %d%%, %s %d%%',
-				esc_attr( $axiom_blocks_grad_from ),
-				$axiom_blocks_grad_from_s,
-				esc_attr( $axiom_blocks_grad_to ),
-				$axiom_blocks_grad_to_s
-			);
-		if ( 'radial' === $axiom_blocks_grad_type ) {
-			$axiom_blocks_bg_parts[] = 'background: radial-gradient(circle, ' . $axiom_blocks_stops . ')';
-		} else {
-			$axiom_blocks_bg_parts[] = 'background: linear-gradient(' . (int) $axiom_blocks_grad_angle . 'deg, ' . $axiom_blocks_stops . ')';
-		}
-		break;
-	case 'image':
-		if ( ! empty( $axiom_blocks_bg_image['url'] ) ) {
-			$axiom_blocks_bg_parts[] = "background-image: url('" . esc_url( $axiom_blocks_bg_image['url'] ) . "')";
-			$axiom_blocks_bg_parts[] = 'background-size: ' . esc_attr( $axiom_blocks_bg_size );
-			$axiom_blocks_bg_parts[] = 'background-position: ' . esc_attr( $axiom_blocks_bg_position );
-			$axiom_blocks_bg_parts[] = 'background-repeat: ' . esc_attr( $axiom_blocks_bg_repeat );
-			$axiom_blocks_bg_parts[] = 'background-attachment: ' . esc_attr( $axiom_blocks_bg_attachment );
-		}
-		break;
-	case 'color':
-	default:
-		if ( $axiom_blocks_bg_color ) {
-			$axiom_blocks_bg_parts[] = 'background-color: ' . esc_attr( $axiom_blocks_bg_color );
-		}
-		break;
-}
-
-// Border (only emit declarations when actually applied).
-if ( 'none' !== $axiom_blocks_border_style && $axiom_blocks_border_width > 0 ) {
-	$axiom_blocks_bg_parts[] = 'border-style: ' . esc_attr( $axiom_blocks_border_style );
-	$axiom_blocks_bg_parts[] = 'border-width: ' . (int) $axiom_blocks_border_width . 'px';
-	$axiom_blocks_bg_parts[] = 'border-color: ' . esc_attr( $axiom_blocks_border_color );
-}
-if ( $axiom_blocks_border_radius > 0 ) {
-	$axiom_blocks_bg_parts[] = 'border-radius: ' . (int) $axiom_blocks_border_radius . 'px';
-}
-
-// Desktop min-height stays inline (back-compat); Tablet/Mobile overrides are
-// emitted as scoped media-query CSS below.
 $axiom_blocks_bg_parts[] = '--axiom-blocks-section-min-h: ' . esc_attr( $axiom_blocks_min_height );
 $axiom_blocks_bg_parts[] = 'min-height: var(--axiom-blocks-section-min-h, 400px)';
-
 $axiom_blocks_bg_parts[] = '--axiom-blocks-section-justify: ' . esc_attr( $axiom_blocks_v_map[ $axiom_blocks_v_align ] ?? 'center' );
 $axiom_blocks_bg_parts[] = '--axiom-blocks-section-align: ' . esc_attr( $axiom_blocks_h_map[ $axiom_blocks_h_align ] ?? 'center' );
-$axiom_blocks_bg_parts[] = '--axiom-blocks-section-overlay-bg: ' . esc_attr( $axiom_blocks_overlay_bg );
-$axiom_blocks_bg_parts[] = '--axiom-blocks-section-overlay-opacity: ' . esc_attr( (string) $axiom_blocks_overlay_op );
-$axiom_blocks_bg_parts[] = '--axiom-blocks-section-overlay-blend: ' . esc_attr( $axiom_blocks_overlay_blend );
 
-$axiom_blocks_is_parallax = $axiom_blocks_enable_parallax && 'image' === $axiom_blocks_bg_type && ! empty( $axiom_blocks_bg_image['url'] );
+// align-items only moves a child narrower than the section, so full-width
+// children ignore it. contentAlign carries the same choice through as
+// text-align, which descendants inherit. Empty on blocks saved before this
+// shipped, so their rendering is unchanged.
+$axiom_blocks_content_align = $attributes['contentAlign'] ?? '';
+if ( in_array( $axiom_blocks_content_align, array( 'left', 'center', 'right' ), true ) ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-ta: ' . $axiom_blocks_content_align;
+}
 
-// When parallax is on, suppress the wrapper bg-image and surface bg-* as CSS
-// vars so the ::before layer can paint and be transformed by parallax.js.
+// ── Layout engine (L6) ─────────────────────────────────────────────────────
+$axiom_blocks_layout_type = $attributes['layoutType'] ?? 'constrained';
+$axiom_blocks_layout_gap  = '' !== ( $attributes['layoutGap'] ?? '' ) ? $attributes['layoutGap'] : '0';
+if ( 'flex' === $axiom_blocks_layout_type ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-fd: ' . esc_attr( $attributes['flexDirection'] ?? 'row' );
+	$axiom_blocks_bg_parts[] = '--ab-sec-fw: ' . esc_attr( $attributes['flexWrap'] ?? 'wrap' );
+	$axiom_blocks_bg_parts[] = '--ab-sec-jc: ' . esc_attr( $attributes['flexJustify'] ?? 'center' );
+	$axiom_blocks_bg_parts[] = '--ab-sec-ai: ' . esc_attr( $attributes['flexAlign'] ?? 'center' );
+	$axiom_blocks_bg_parts[] = '--ab-sec-gap: ' . esc_attr( $axiom_blocks_layout_gap );
+} elseif ( 'grid' === $axiom_blocks_layout_type ) {
+	$axiom_blocks_bg_parts[] = '--ab-sec-cols: ' . (int) ( $attributes['gridColumns'] ?? 3 );
+	$axiom_blocks_bg_parts[] = '--ab-sec-ai: ' . esc_attr( $attributes['flexAlign'] ?? 'stretch' );
+	$axiom_blocks_bg_parts[] = '--ab-sec-gap: ' . esc_attr( $axiom_blocks_layout_gap );
+}
+
+// ── Parallax ───────────────────────────────────────────────────────────────
+$axiom_blocks_is_parallax = ! empty( $attributes['bgParallax'] )
+	&& 'image' === $axiom_blocks_bg_type
+	&& ! empty( $attributes['bgImage']['url'] );
+
 if ( $axiom_blocks_is_parallax ) {
 	$axiom_blocks_bg_parts[] = 'background-image: none';
-	$axiom_blocks_bg_parts[] = "--ab-bg-image: url('" . esc_url( $axiom_blocks_bg_image['url'] ) . "')";
-	$axiom_blocks_bg_parts[] = '--ab-bg-size: ' . esc_attr( $axiom_blocks_bg_size );
-	$axiom_blocks_bg_parts[] = '--ab-bg-position: ' . esc_attr( $axiom_blocks_bg_position );
-	$axiom_blocks_bg_parts[] = '--ab-bg-repeat: ' . esc_attr( $axiom_blocks_bg_repeat );
+	$axiom_blocks_bg_parts[] = "--ab-bg-image: url('" . esc_url( $attributes['bgImage']['url'] ) . "')";
+	$axiom_blocks_bg_parts[] = '--ab-bg-size: ' . esc_attr( $attributes['bgImageSize'] ?? 'cover' );
+	$axiom_blocks_bg_parts[] = '--ab-bg-position: ' . esc_attr( $attributes['bgImagePosition'] ?? 'center center' );
+	$axiom_blocks_bg_parts[] = '--ab-bg-repeat: ' . esc_attr( $attributes['bgImageRepeat'] ?? 'no-repeat' );
 }
 
 $axiom_blocks_wrapper_style = Spacing::merge( implode( '; ', $axiom_blocks_bg_parts ), $attributes );
 
 $axiom_blocks_wrapper_classes = array(
 	'axiom-blocks-section',
-	'axiom-blocks-section--' . $axiom_blocks_bg_type,
+	'axiom-blocks-section--' . ( $axiom_blocks_bg_type ?: 'none' ),
 	'is-h-' . $axiom_blocks_h_align,
 	'is-v-' . $axiom_blocks_v_align,
 );
+if ( 'flex' === $axiom_blocks_layout_type ) {
+	$axiom_blocks_wrapper_classes[] = 'axiom-blocks-section--layout-flex';
+} elseif ( 'grid' === $axiom_blocks_layout_type ) {
+	$axiom_blocks_wrapper_classes[] = 'axiom-blocks-section--layout-grid';
+}
+
+// Custom breakpoint (L6): below the chosen width, collapse to a single stacked
+// column. Scoped to this instance's class — no change to the global pipeline.
+$axiom_blocks_stack_at = (int) ( $attributes['layoutStackAt'] ?? 0 );
+if ( $axiom_blocks_stack_at > 0 && in_array( $axiom_blocks_layout_type, array( 'flex', 'grid' ), true ) ) {
+	$axiom_blocks_bp_class          = 'ab-secbp-' . substr( md5( $axiom_blocks_layout_type . '|' . $axiom_blocks_stack_at ), 0, 8 );
+	$axiom_blocks_wrapper_classes[] = $axiom_blocks_bp_class;
+	ResponsiveStyles::add(
+		'@media (max-width:' . $axiom_blocks_stack_at . 'px){.' . $axiom_blocks_bp_class
+		. '{grid-template-columns:1fr !important;flex-direction:column !important}}'
+	);
+}
 if ( $axiom_blocks_is_parallax ) {
 	$axiom_blocks_wrapper_classes[] = 'has-parallax';
 }
@@ -197,10 +252,11 @@ $axiom_blocks_style_attr         = safecss_filter_attr( implode( ';', $axiom_blo
 
 $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 
-$axiom_blocks_parallax_data = $axiom_blocks_is_parallax
+$axiom_blocks_parallax_speed = max( 0, min( 100, (int) ( $attributes['bgParallaxSpeed'] ?? 30 ) ) );
+$axiom_blocks_parallax_data  = $axiom_blocks_is_parallax
 	? number_format( $axiom_blocks_parallax_speed / 100, 2, '.', '' )
 	: '';
 ?>
 <div <?php echo '' !== $axiom_blocks_id_attr ? 'id="' . esc_attr( $axiom_blocks_id_attr ) . '" ' : ''; ?> class="<?php echo esc_attr( $axiom_blocks_class_attr ); ?>" <?php echo '' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : ''; ?> <?php echo '' !== $axiom_blocks_parallax_data ? ' data-parallax-speed="' . esc_attr( $axiom_blocks_parallax_data ) . '"' : ''; ?>>
-	<?php echo wp_kses_post( $content ); ?>
+	<?php echo wp_kses( $content, AllowedHtml::post_with_svg() ); ?>
 </div>

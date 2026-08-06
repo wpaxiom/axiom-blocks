@@ -1,22 +1,19 @@
 import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
-	InspectorControls,
 	RichText,
 } from '@wordpress/block-editor';
 import { PanelBody, Dropdown } from '@wordpress/components';
 import {
 	ABSelectControl,
-	ABColorControl,
 	ABToggleControl,
 	ABRangeControl,
 	ABTextControl,
 } from '../../components/ABControls';
-import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
-import {
-	TypographyPanel,
-	useTypographyStyle,
-} from '../../components/TypographyPanel';
+import { useSpacingStyle } from '../../components/SpacingPanel';
+import { useTypographyStyle } from '../../components/TypographyPanel';
+import { ABInspectorGroups } from '../../components/ABInspectorGroups';
+import { getBackgroundVars } from '../../components/BackgroundControl';
 import { useDeviceType } from '../../components/responsive';
 import { ABResponsive } from '../../components/ABResponsive';
 import { responsiveVarValue } from '../../components/responsiveProps';
@@ -31,11 +28,11 @@ import {
 import { nullSaveDeprecation } from '../../components/deprecations';
 import metadata from './block.json';
 
+const newId = () => `item-${ Math.random().toString( 36 ).slice( 2, 8 ) }`;
+
 const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
 const fromPx = ( v, fallback ) =>
 	v === '' || v == null ? fallback : parseInt( v, 10 ) || 0;
-
-const newId = () => `item-${ Math.random().toString( 36 ).slice( 2, 8 ) }`;
 
 /* Row reorder/remove handles — same look as the Pro data-table mini-actions. */
 const iconStroke = {
@@ -74,6 +71,113 @@ const IconPlus = () => (
 	</svg>
 );
 
+const IL_BW = [
+	'itemBorderTopWidth',
+	'itemBorderRightWidth',
+	'itemBorderBottomWidth',
+	'itemBorderLeftWidth',
+];
+const IL_RADIUS = [
+	'itemRadiusTopLeft',
+	'itemRadiusTopRight',
+	'itemRadiusBottomRight',
+	'itemRadiusBottomLeft',
+];
+
+/* Anatomy-as-declaration — the part-first (Option C) Styles UI is rendered from
+ * this config by ABInspectorGroups/TargetSection. The **Item** part is the Sable
+ * chip gap (per-item bg/border/radius/padding on `.ab-icon-list__item`, with a
+ * hover state). Link hover reuses the shipped `linkHoverColor`. save() is static
+ * + nullSaveDeprecation, and styling is wrapper-CSS-var driven (not per-<li>
+ * markup) ⇒ additive, no new deprecation. */
+const DESIGN = {
+	block: 'il',
+	targets: [
+		{
+			noun: __( 'Item', 'axiom-blocks' ),
+			states: [ 'hover' ],
+			colors: [
+				{
+					label: __( 'Text', 'axiom-blocks' ),
+					bind: 'textColor',
+				},
+			],
+			typography: [ { prefix: '' } ],
+			background: {
+				full: true,
+				prefix: 'itemBg',
+				colorKey: 'itemBg',
+				statePrefix: { hover: 'itemHover' },
+				stateColorKey: { hover: 'itemBgHover' },
+			},
+			border: {
+				widthKeys: IL_BW,
+				styleKey: 'itemBorderStyle',
+				colorKey: 'itemBorderColor',
+				max: 8,
+			},
+			radius: { keys: IL_RADIUS, max: 40 },
+			padding: { type: 'itemPadding' },
+		},
+		{
+			noun: __( 'Icon', 'axiom-blocks' ),
+			colors: [
+				{
+					label: __( 'Color', 'axiom-blocks' ),
+					bind: 'iconColor',
+				},
+			],
+			ranges: [
+				{
+					bind: 'iconSize',
+					label: __( 'Size', 'axiom-blocks' ),
+					min: 10,
+					max: 64,
+					default: 20,
+					responsive: true,
+				},
+				{
+					bind: 'gap',
+					label: __( 'Icon gap', 'axiom-blocks' ),
+					min: 0,
+					max: 40,
+					default: 10,
+					responsive: true,
+				},
+			],
+		},
+		{
+			noun: __( 'Link', 'axiom-blocks' ),
+			states: [ 'hover' ],
+			colors: [
+				{
+					label: __( 'Color', 'axiom-blocks' ),
+					bind: 'linkColor',
+					stateBind: { hover: 'linkHoverColor' },
+				},
+			],
+		},
+		{
+			noun: __( 'Divider', 'axiom-blocks' ),
+			colors: [
+				{
+					label: __( 'Color', 'axiom-blocks' ),
+					bind: 'dividerColor',
+				},
+			],
+			ranges: [
+				{
+					bind: 'dividerThickness',
+					label: __( 'Thickness', 'axiom-blocks' ),
+					min: 0,
+					max: 8,
+					default: 1,
+				},
+			],
+		},
+	],
+};
+
 export function getIconListVars( attributes ) {
 	const {
 		iconSize,
@@ -81,18 +185,69 @@ export function getIconListVars( attributes ) {
 		gap,
 		rowGap,
 		dividerColor,
+		dividerThickness,
 		textColor,
 		linkColor,
 		linkHoverColor,
+		itemBg,
+		itemBgHover,
+		itemBorderColor,
+		itemBorderStyle,
+		itemBorderTopWidth,
+		itemBorderRightWidth,
+		itemBorderBottomWidth,
+		itemBorderLeftWidth,
+		itemRadiusTopLeft,
+		itemRadiusTopRight,
+		itemRadiusBottomRight,
+		itemRadiusBottomLeft,
+		itemPaddingTop,
+		itemPaddingRight,
+		itemPaddingBottom,
+		itemPaddingLeft,
 	} = attributes;
+	const anyBw =
+		itemBorderTopWidth ||
+		itemBorderRightWidth ||
+		itemBorderBottomWidth ||
+		itemBorderLeftWidth;
 	return {
 		'--ab-il-icon-size': iconSize || undefined,
 		'--ab-il-icon-color': iconColor || undefined,
 		'--ab-il-gap': gap || undefined,
 		'--ab-il-row-gap': rowGap || undefined,
 		'--ab-il-divider': dividerColor || undefined,
+		'--ab-il-divider-thickness': dividerThickness || undefined,
 		'--ab-il-link': linkColor || undefined,
 		'--ab-il-link-h': linkHoverColor || undefined,
+		// Item box (the Sable chip) — flat color fallback, then gradient/image.
+		'--ab-il-item-bg': itemBg || undefined,
+		'--ab-il-item-bg-h': itemBgHover || undefined,
+		...getBackgroundVars( attributes, {
+			prefix: 'itemBg',
+			varPrefix: '--ab-il-item',
+			colorKey: 'itemBg',
+		} ),
+		...getBackgroundVars( attributes, {
+			prefix: 'itemHover',
+			varPrefix: '--ab-il-item-h',
+			varName: '--ab-il-item-bg-h',
+			colorKey: 'itemBgHover',
+		} ),
+		'--ab-il-item-bc': itemBorderColor || undefined,
+		'--ab-il-item-bs': anyBw ? itemBorderStyle || 'solid' : itemBorderStyle || undefined,
+		'--ab-il-item-bw-top': itemBorderTopWidth || undefined,
+		'--ab-il-item-bw-right': itemBorderRightWidth || undefined,
+		'--ab-il-item-bw-bottom': itemBorderBottomWidth || undefined,
+		'--ab-il-item-bw-left': itemBorderLeftWidth || undefined,
+		'--ab-il-item-radius-tl': itemRadiusTopLeft || undefined,
+		'--ab-il-item-radius-tr': itemRadiusTopRight || undefined,
+		'--ab-il-item-radius-br': itemRadiusBottomRight || undefined,
+		'--ab-il-item-radius-bl': itemRadiusBottomLeft || undefined,
+		'--ab-il-item-pt': itemPaddingTop || undefined,
+		'--ab-il-item-pr': itemPaddingRight || undefined,
+		'--ab-il-item-pb': itemPaddingBottom || undefined,
+		'--ab-il-item-pl': itemPaddingLeft || undefined,
 		color: textColor || undefined,
 	};
 }
@@ -120,14 +275,7 @@ function IconListEdit( { attributes, setAttributes } ) {
 		layout,
 		iconPosition,
 		itemsAlign,
-		iconColor,
-		gap,
-		rowGap,
 		showDivider,
-		dividerColor,
-		textColor,
-		linkColor,
-		linkHoverColor,
 	} = attributes;
 
 	const list = Array.isArray( items ) ? items : [];
@@ -176,200 +324,93 @@ function IconListEdit( { attributes, setAttributes } ) {
 		},
 	} );
 
+	const leading = (
+		<PanelBody title={ __( 'List', 'axiom-blocks' ) } initialOpen={ true }>
+			<ABSelectControl
+				label={ __( 'Layout', 'axiom-blocks' ) }
+				value={ layout }
+				options={ [
+					{
+						label: __( 'Vertical', 'axiom-blocks' ),
+						value: 'vertical',
+					},
+					{
+						label: __( 'Horizontal', 'axiom-blocks' ),
+						value: 'horizontal',
+					},
+				] }
+				onChange={ ( v ) => setAttributes( { layout: v } ) }
+			/>
+			<ABSelectControl
+				label={ __( 'Icon position', 'axiom-blocks' ) }
+				value={ iconPosition }
+				options={ [
+					{
+						label: __( 'Left', 'axiom-blocks' ),
+						value: 'left',
+					},
+					{
+						label: __( 'Right', 'axiom-blocks' ),
+						value: 'right',
+					},
+				] }
+				onChange={ ( v ) => setAttributes( { iconPosition: v } ) }
+			/>
+			<ABSelectControl
+				label={ __( 'Alignment', 'axiom-blocks' ) }
+				value={ itemsAlign }
+				options={ [
+					{
+						label: __( 'Left', 'axiom-blocks' ),
+						value: 'left',
+					},
+					{
+						label: __( 'Center', 'axiom-blocks' ),
+						value: 'center',
+					},
+					{
+						label: __( 'Right', 'axiom-blocks' ),
+						value: 'right',
+					},
+				] }
+				onChange={ ( v ) => setAttributes( { itemsAlign: v } ) }
+			/>
+			<ABResponsive
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				attrKey="rowGap"
+			>
+				{ ( { value, setValue, inherited } ) => (
+					<ABRangeControl
+						label={ __( 'Space between items', 'axiom-blocks' ) }
+						value={ fromPx(
+							value !== '' && value != null ? value : inherited,
+							12
+						) }
+						onChange={ ( v ) => setValue( toPx( v ) ) }
+						min={ 0 }
+						max={ 60 }
+						step={ 1 }
+						unit="px"
+					/>
+				) }
+			</ABResponsive>
+			<ABToggleControl
+				label={ __( 'Divider between items', 'axiom-blocks' ) }
+				checked={ !! showDivider }
+				onChange={ ( v ) => setAttributes( { showDivider: v } ) }
+			/>
+		</PanelBody>
+	);
+
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'List', 'axiom-blocks' ) }
-					initialOpen={ true }
-				>
-					<ABSelectControl
-						label={ __( 'Layout', 'axiom-blocks' ) }
-						value={ layout }
-						options={ [
-							{
-								label: __( 'Vertical', 'axiom-blocks' ),
-								value: 'vertical',
-							},
-							{
-								label: __( 'Horizontal', 'axiom-blocks' ),
-								value: 'horizontal',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { layout: v } ) }
-					/>
-					<ABSelectControl
-						label={ __( 'Icon position', 'axiom-blocks' ) }
-						value={ iconPosition }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { iconPosition: v } )
-						}
-					/>
-					<ABSelectControl
-						label={ __( 'Alignment', 'axiom-blocks' ) }
-						value={ itemsAlign }
-						options={ [
-							{
-								label: __( 'Left', 'axiom-blocks' ),
-								value: 'left',
-							},
-							{
-								label: __( 'Center', 'axiom-blocks' ),
-								value: 'center',
-							},
-							{
-								label: __( 'Right', 'axiom-blocks' ),
-								value: 'right',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { itemsAlign: v } ) }
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Icon', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="iconSize"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABRangeControl
-								label={ __( 'Size', 'axiom-blocks' ) }
-								value={ fromPx(
-									value === '' ? inherited : value,
-									20
-								) }
-								onChange={ ( v ) => setValue( toPx( v ) ) }
-								min={ 10 }
-								max={ 64 }
-								step={ 1 }
-								unit="px"
-							/>
-						) }
-					</ABResponsive>
-					<ABColorControl
-						label={ __( 'Colour', 'axiom-blocks' ) }
-						color={ iconColor }
-						onChange={ ( v ) => setAttributes( { iconColor: v } ) }
-					/>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="gap"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABRangeControl
-								label={ __( 'Icon gap', 'axiom-blocks' ) }
-								value={ fromPx(
-									value !== '' && value != null
-										? value
-										: inherited,
-									10
-								) }
-								onChange={ ( v ) => setValue( toPx( v ) ) }
-								min={ 0 }
-								max={ 40 }
-								step={ 1 }
-								unit="px"
-							/>
-						) }
-					</ABResponsive>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Spacing & divider', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="rowGap"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABRangeControl
-								label={ __(
-									'Space between items',
-									'axiom-blocks'
-								) }
-								value={ fromPx(
-									value !== '' && value != null
-										? value
-										: inherited,
-									12
-								) }
-								onChange={ ( v ) => setValue( toPx( v ) ) }
-								min={ 0 }
-								max={ 60 }
-								step={ 1 }
-								unit="px"
-							/>
-						) }
-					</ABResponsive>
-					<ABToggleControl
-						label={ __( 'Divider between items', 'axiom-blocks' ) }
-						checked={ !! showDivider }
-						onChange={ ( v ) =>
-							setAttributes( { showDivider: v } )
-						}
-					/>
-					{ showDivider && (
-						<ABColorControl
-							label={ __( 'Divider colour', 'axiom-blocks' ) }
-							color={ dividerColor }
-							onChange={ ( v ) =>
-								setAttributes( { dividerColor: v } )
-							}
-						/>
-					) }
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Colours', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABColorControl
-						label={ __( 'Text', 'axiom-blocks' ) }
-						color={ textColor }
-						onChange={ ( v ) => setAttributes( { textColor: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Link', 'axiom-blocks' ) }
-						color={ linkColor }
-						onChange={ ( v ) => setAttributes( { linkColor: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Link hover', 'axiom-blocks' ) }
-						color={ linkHoverColor }
-						onChange={ ( v ) =>
-							setAttributes( { linkHoverColor: v } )
-						}
-					/>
-				</PanelBody>
-
-				<TypographyPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-					responsive
-				/>
-
-				<SpacingPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-				/>
-			</InspectorControls>
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ DESIGN }
+				leading={ leading }
+			/>
 
 			<ul { ...blockProps }>
 				{ list.map( ( item, i ) => (
@@ -537,11 +578,22 @@ export const IconList = {
 					{ list.map( ( item ) => (
 						<li key={ item.id } className="ab-icon-list__item">
 							{ item.url ? (
-								<a className="ab-icon-list__link" href={ item.url }>
-									<RichText.Content tagName="span" className="ab-icon-list__text" value={ item.text } />
+								<a
+									className="ab-icon-list__link"
+									href={ item.url }
+								>
+									<RichText.Content
+										tagName="span"
+										className="ab-icon-list__text"
+										value={ item.text }
+									/>
 								</a>
 							) : (
-								<RichText.Content tagName="span" className="ab-icon-list__text" value={ item.text } />
+								<RichText.Content
+									tagName="span"
+									className="ab-icon-list__text"
+									value={ item.text }
+								/>
 							) }
 						</li>
 					) ) }

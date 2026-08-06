@@ -55,13 +55,29 @@
 	align-items: flex-end;
 }
 
-// Unit
+// Unit — the digit box. Background / border / radius / shadow / min-width arrive
+// as CSS vars set on the wrapper by render.php (mirrored by edit). Unset ⇒ shipped
+// defaults (#f0f0f0 bg, 8px radius, borderless, no shadow, 80px min-width), so old
+// saved timers render unchanged.
 .axiom-blocks-countdown__unit {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	min-width: 80px;
+	padding: 20px;
+	min-width: var(--ab-cd-digit-minw, 80px);
+	background: var(--ab-cd-digit-bg, #f0f0f0);
+	border-style: var(--ab-cd-bs, solid);
+	border-color: var(--ab-cd-bc, transparent);
+	border-top-width: var(--ab-cd-bw-top, 0);
+	border-right-width: var(--ab-cd-bw-right, 0);
+	border-bottom-width: var(--ab-cd-bw-bottom, 0);
+	border-left-width: var(--ab-cd-bw-left, 0);
+	border-top-left-radius: var(--ab-cd-radius-tl, var(--ab-cd-radius, 8px));
+	border-top-right-radius: var(--ab-cd-radius-tr, var(--ab-cd-radius, 8px));
+	border-bottom-right-radius: var(--ab-cd-radius-br, var(--ab-cd-radius, 8px));
+	border-bottom-left-radius: var(--ab-cd-radius-bl, var(--ab-cd-radius, 8px));
+	box-shadow: var(--ab-cd-shadow, none);
 	transition: transform 0.2s ease;
 }
 
@@ -74,6 +90,7 @@
 	font-weight: 700;
 	line-height: 1;
 	font-variant-numeric: tabular-nums;
+	color: var(--ab-cd-digit-color, #333333);
 	transition: color 0.3s ease;
 }
 
@@ -83,6 +100,7 @@
 	letter-spacing: 1px;
 	margin-top: 8px;
 	font-weight: 500;
+	color: var(--ab-cd-label-color, #666666);
 }
 
 // Expired state

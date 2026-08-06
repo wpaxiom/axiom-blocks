@@ -18,3 +18,26 @@
 	}
 }
 
+/* Dividers: the frontend excludes the last stat via `:not(:last-child)`, but in
+   the editor the block appender is the grid's last child, so that selector never
+   matches the real last counter and it wrongly gets a divider. The last counter
+   is always `:nth-last-child(2)` here (appender is last). Restore its card border
+   (not `0`) so it matches the frontend even when a card border + dividers combine.
+   The doubled `.ab-counter` bumps specificity above style.scss's divider rule so
+   this wins regardless of stylesheet load order. */
+.ab-counter-group.has-divider .ab-counter.ab-counter:nth-last-child(2) {
+	border-right-width: var(--ab-counter-card-bw-right, var(--ab-counter-card-bd-width, 0));
+	border-right-style: var(--ab-counter-card-bs, solid);
+	border-right-color: var(--ab-counter-card-bd-color, transparent);
+}
+
+.ab-counter-group.has-divider.is-stack-mobile .ab-counter.ab-counter:nth-last-child(2) {
+
+	@media (max-width: 600px) {
+		border-bottom-width: var(--ab-counter-card-bw-bottom, var(--ab-counter-card-bd-width, 0));
+		border-bottom-style: var(--ab-counter-card-bs, solid);
+		border-bottom-color: var(--ab-counter-card-bd-color, transparent);
+		padding-bottom: var(--ab-counter-card-pb, 0);
+	}
+}
+

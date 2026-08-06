@@ -32,6 +32,31 @@
         "showBorder":   { "type": "boolean", "default": false },
         "borderColor":  { "type": "string",  "default": "#e5e7eb" },
 
+        "cardBg":          { "type": "string", "default": "" },
+        "cardColorHover":  { "type": "string", "default": "" },
+        "cardShadow":      { "type": "string", "default": "" },
+        "cardShadowHover": { "type": "string", "default": "" },
+
+        "borderStyle":       { "type": "string", "default": "" },
+        "borderTopWidth":    { "type": "string", "default": "" },
+        "borderRightWidth":  { "type": "string", "default": "" },
+        "borderBottomWidth": { "type": "string", "default": "" },
+        "borderLeftWidth":   { "type": "string", "default": "" },
+
+        "cardRadiusTopLeft":     { "type": "string", "default": "" },
+        "cardRadiusTopRight":    { "type": "string", "default": "" },
+        "cardRadiusBottomRight": { "type": "string", "default": "" },
+        "cardRadiusBottomLeft":  { "type": "string", "default": "" },
+
+        "cardPaddingTop":    { "type": "string", "default": "" },
+        "cardPaddingRight":  { "type": "string", "default": "" },
+        "cardPaddingBottom": { "type": "string", "default": "" },
+        "cardPaddingLeft":   { "type": "string", "default": "" },
+        "cardGap":           { "type": "string", "default": "" },
+
+        "headingColor": { "type": "string", "default": "" },
+        "labelColor":   { "type": "string", "default": "" },
+
         "headingFontFamily":     { "type": "string", "default": "" },
         "headingFontWeight":     { "type": "string", "default": "" },
         "headingFontSize":       { "type": "string", "default": "" },
@@ -61,6 +86,7 @@
     },
     "supports": {
         "html": false,
+        "anchor": true,
         "align": ["wide", "full"]
     },
     "editorScript": "file:./index.js",

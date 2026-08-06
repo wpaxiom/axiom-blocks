@@ -32,7 +32,7 @@
 		body.style.height = '0px';
 		const anim = body.animate(
 			[ { height: '0px' }, { height: height + 'px' } ],
-			{ duration: duration, easing: 'ease' }
+			{ duration, easing: 'ease' }
 		);
 		anim.onfinish = function () {
 			body.style.height = '';

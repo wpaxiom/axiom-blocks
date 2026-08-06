@@ -25,8 +25,11 @@ if ( '' === trim( wp_strip_all_tags( $axiom_blocks_quote ) ) && '' === trim( $ax
 	return;
 }
 
-$axiom_blocks_avatar_url = (string) ( $axiom_blocks_a['avatarUrl'] ?? '' );
-$axiom_blocks_avatar_alt = (string) ( $axiom_blocks_a['avatarAlt'] ?? '' );
+$axiom_blocks_avatar_url   = (string) ( $axiom_blocks_a['avatarUrl'] ?? '' );
+$axiom_blocks_avatar_alt   = (string) ( $axiom_blocks_a['avatarAlt'] ?? '' );
+$axiom_blocks_use_initials = ! empty( $axiom_blocks_a['useInitials'] );
+$axiom_blocks_avatar_bg    = (string) ( $axiom_blocks_a['avatarBg'] ?? '' );
+$axiom_blocks_avatar_color = (string) ( $axiom_blocks_a['avatarColor'] ?? '' );
 $axiom_blocks_rating     = max( 0, min( 5, (float) ( $axiom_blocks_a['rating'] ?? 5 ) ) );
 $axiom_blocks_date_raw   = (string) ( $axiom_blocks_a['reviewDate'] ?? '' );
 $axiom_blocks_platform   = (string) ( $axiom_blocks_a['sourcePlatform'] ?? 'none' );
@@ -49,15 +52,40 @@ $axiom_blocks_rating_label = sprintf(
 );
 
 /* ── Avatar / initials fallback ────────────────────────────────────────────── */
-$axiom_blocks_initials = '';
-if ( '' === $axiom_blocks_avatar_url && '' !== trim( $axiom_blocks_name ) ) {
+$axiom_blocks_show_initials = ( $axiom_blocks_use_initials && '' !== trim( $axiom_blocks_name ) );
+$axiom_blocks_initials      = '';
+if ( $axiom_blocks_show_initials ) {
 	$axiom_blocks_parts = preg_split( '/\s+/', trim( $axiom_blocks_name ) );
 	foreach ( array_slice( $axiom_blocks_parts, 0, 2 ) as $axiom_blocks_part ) {
 		$axiom_blocks_initials .= mb_strtoupper( mb_substr( $axiom_blocks_part, 0, 1 ) );
 	}
 }
+/* Monogram cascade — this card's own colors are inline (they win), then the
+   block-level Monogram part's --ab-tst-mono-*, then the hue derived from the
+   name, which style.scss reads as the last fallback. */
 $axiom_blocks_hue        = abs( crc32( $axiom_blocks_name ) ) % 360;
-$axiom_blocks_init_style = 'background:hsl(' . $axiom_blocks_hue . ',55%,52%)';
+$axiom_blocks_init_parts = array(
+	'--ab-tst-mono-bg-auto:hsl(' . $axiom_blocks_hue . ',55%,52%)',
+);
+if ( '' !== $axiom_blocks_avatar_bg ) {
+	$axiom_blocks_init_parts[] = 'background:' . $axiom_blocks_avatar_bg;
+}
+if ( '' !== $axiom_blocks_avatar_color ) {
+	$axiom_blocks_init_parts[] = 'color:' . $axiom_blocks_avatar_color;
+}
+/* The retired per-card size/weight controls — still honoured for content saved
+   before the block-level Monogram part existed. */
+$axiom_blocks_mono_map = array(
+	'font-size'   => 'monoFontSize',
+	'font-weight' => 'monoFontWeight',
+);
+foreach ( $axiom_blocks_mono_map as $axiom_blocks_css => $axiom_blocks_key ) {
+	$axiom_blocks_mono_val = (string) ( $axiom_blocks_a[ $axiom_blocks_key ] ?? '' );
+	if ( '' !== $axiom_blocks_mono_val ) {
+		$axiom_blocks_init_parts[] = $axiom_blocks_css . ':' . $axiom_blocks_mono_val;
+	}
+}
+$axiom_blocks_init_style = safecss_filter_attr( implode( ';', $axiom_blocks_init_parts ) );
 
 /* ── Source / verified badge ───────────────────────────────────────────────── */
 $axiom_blocks_platform_names = array(
@@ -113,13 +141,16 @@ $axiom_blocks_class_attr = trim( implode( ' ', array_filter( $axiom_blocks_class
 	<?php endif; ?>
 
 	<div class="ab-testimonial__person">
-		<span class="ab-testimonial__avatar">
-			<?php if ( '' !== $axiom_blocks_avatar_url ) : ?>
-				<img src="<?php echo esc_url( $axiom_blocks_avatar_url ); ?>" alt="<?php echo esc_attr( '' !== $axiom_blocks_avatar_alt ? $axiom_blocks_avatar_alt : $axiom_blocks_name ); ?>" loading="lazy" />
-			<?php elseif ( '' !== $axiom_blocks_initials ) : ?>
-				<span class="ab-testimonial__initials" style="<?php echo esc_attr( $axiom_blocks_init_style ); ?>"><?php echo esc_html( $axiom_blocks_initials ); ?></span>
-			<?php endif; ?>
-		</span>
+		<?php $axiom_blocks_show_image = ( '' !== $axiom_blocks_avatar_url && ! $axiom_blocks_use_initials ); ?>
+		<?php if ( $axiom_blocks_show_image || '' !== $axiom_blocks_initials ) : ?>
+			<span class="ab-testimonial__avatar">
+				<?php if ( $axiom_blocks_show_image ) : ?>
+					<img src="<?php echo esc_url( $axiom_blocks_avatar_url ); ?>" alt="<?php echo esc_attr( '' !== $axiom_blocks_avatar_alt ? $axiom_blocks_avatar_alt : $axiom_blocks_name ); ?>" loading="lazy" />
+				<?php else : ?>
+					<span class="ab-testimonial__initials" style="<?php echo esc_attr( $axiom_blocks_init_style ); ?>"><?php echo esc_html( $axiom_blocks_initials ); ?></span>
+				<?php endif; ?>
+			</span>
+		<?php endif; ?>
 
 		<span class="ab-testimonial__identity">
 			<?php if ( '' !== trim( $axiom_blocks_name ) ) : ?>

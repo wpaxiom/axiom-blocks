@@ -19,11 +19,17 @@ use AxiomBlocks\Admin\Dashboard;
 use AxiomBlocks\Admin\Feedback;
 use AxiomBlocks\API\Routes;
 use AxiomBlocks\Blocks\Blocks;
+use AxiomBlocks\Blocks\DeviceVisibility;
+use AxiomBlocks\Blocks\Interactions;
+use AxiomBlocks\Blocks\Position;
+use AxiomBlocks\Blocks\Entrance;
+use AxiomBlocks\Blocks\ChildOrder;
 use AxiomBlocks\Blocks\Registry;
 use AxiomBlocks\Blocks\ResponsiveProps;
 use AxiomBlocks\Blocks\ResponsiveSpacing;
 use AxiomBlocks\Blocks\ResponsiveTypography;
 use AxiomBlocks\Frontend\Assets;
+use AxiomBlocks\Frontend\KsesColors;
 use AxiomBlocks\Frontend\ResponsiveStyles;
 use AxiomBlocks\Frontend\TableOfContents;
 
@@ -92,6 +98,9 @@ final class Plugin {
 		// Per-instance responsive CSS (printed in the footer via the styles API).
 		ResponsiveStyles::init();
 
+		// Let rgb()/rgba()/hsl()/hsla() attribute values survive safecss_filter_attr.
+		KsesColors::init();
+
 		// Central responsive spacing for every Axiom block that has spacing.
 		ResponsiveSpacing::init();
 
@@ -100,6 +109,21 @@ final class Plugin {
 
 		// Central responsive per-block controls (columns, …) via ABResponsive.
 		ResponsiveProps::init();
+
+		// Universal hide-on-device classes for every Axiom block.
+		DeviceVisibility::init();
+
+		// Universal hover lift + transition for every Axiom block.
+		Interactions::init();
+
+		// Universal position / z-index / offsets for every Axiom block.
+		Position::init();
+
+		// Universal scroll-in entrance animation for every Axiom block.
+		Entrance::init();
+
+		// Universal per-child flex/grid order (L6 reorder).
+		ChildOrder::init();
 
 		// Admin UI.
 		if ( is_admin() ) {

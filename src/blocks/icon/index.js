@@ -1,15 +1,18 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
-	ABSelectControl,
-	ABColorControl,
 	ABToggleControl,
 	ABRangeControl,
 	ABTextControl,
 } from '../../components/ABControls';
-import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
-import { useDeviceType, resolveResponsiveAttrs } from '../../components/responsive';
+import { useSpacingStyle } from '../../components/SpacingPanel';
+import { ABInspectorGroups } from '../../components/ABInspectorGroups';
+import { getBackgroundVars } from '../../components/BackgroundControl';
+import {
+	useDeviceType,
+	resolveResponsiveAttrs,
+} from '../../components/responsive';
 import { ABResponsive } from '../../components/ABResponsive';
 import {
 	responsiveAlignValue,
@@ -25,11 +28,84 @@ import {
 	isBlockEnabled,
 } from '../../components/DisabledBlockMessage';
 
-/* Slider helpers: attributes store px strings ('' = inherit the CSS default). */
-const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
-const fromPx = ( v, fallback ) =>
-	v === '' || v == null ? fallback : parseInt( v, 10 ) || 0;
+const ICON_BW = [
+	'borderTopWidth',
+	'borderRightWidth',
+	'borderBottomWidth',
+	'borderLeftWidth',
+];
+const SHAPE_RADIUS = [
+	'shapeRadiusTopLeft',
+	'shapeRadiusTopRight',
+	'shapeRadiusBottomRight',
+	'shapeRadiusBottomLeft',
+];
 
+/* Anatomy-as-declaration — the part-first (Option C) Styles UI is rendered from
+ * this config by ABInspectorGroups/TargetSection. The block ships iconHoverColor
+ * + bgHoverColor, so both parts are hover-ready (state pills), not P2. Every
+ * binding maps to a shipped or additive attribute; save() is dynamic (render.php)
+ * so no markup changes. */
+const DESIGN = {
+	block: 'icon',
+	targets: [
+		{
+			noun: __( 'Icon', 'axiom-blocks' ),
+			states: [ 'hover' ],
+			align: {
+				bind: 'iconAlign',
+				label: __( 'Alignment', 'axiom-blocks' ),
+				responsive: true,
+			},
+			colors: [
+				{
+					label: __( 'Color', 'axiom-blocks' ),
+					bind: 'iconColor',
+					stateBind: { hover: 'iconHoverColor' },
+				},
+			],
+			ranges: [
+				{
+					bind: 'iconSize',
+					label: __( 'Size', 'axiom-blocks' ),
+					min: 12,
+					max: 240,
+					default: 48,
+					responsive: true,
+				},
+			],
+		},
+		{
+			noun: __( 'Shape', 'axiom-blocks' ),
+			states: [ 'hover' ],
+			background: {
+				full: true,
+				prefix: 'shapeBg',
+				colorKey: 'bgColor',
+				statePrefix: { hover: 'bgHover' },
+				stateColorKey: { hover: 'bgHoverColor' },
+			},
+			border: {
+				widthKeys: ICON_BW,
+				legacyWidth: 'borderWidth',
+				styleKey: 'borderStyle',
+				colorKey: 'borderColor',
+				max: 10,
+			},
+			radius: { keys: SHAPE_RADIUS, legacyRadius: 'shapeRadius', max: 60 },
+			shadow: { bind: 'shapeShadow' },
+			padding: { type: 'shapePadding' },
+		},
+	],
+};
+
+/* CSS vars for the wrapper — consumed by style.scss (loaded in editor AND
+ * frontend) so the preview matches the render exactly. Flat background color
+ * (legacy `bgColor`/`bgHoverColor`, bgType empty) is emitted first so the editor
+ * matches the frontend's Background::value() fallback; gradient/image (bgType
+ * set) override it via getBackgroundVars below. Per-side border widths and
+ * per-corner radii fall back to the legacy single `borderWidth`/`shapeRadius` so
+ * old blocks preview the same as the frontend's render.php fallback. */
 export function getIconVars( attributes ) {
 	const {
 		iconSize,
@@ -39,23 +115,70 @@ export function getIconVars( attributes ) {
 		bgColor,
 		bgHoverColor,
 		shapePadding,
+		shapePaddingTop,
+		shapePaddingRight,
+		shapePaddingBottom,
+		shapePaddingLeft,
 		shapeRadius,
+		shapeRadiusTopLeft,
+		shapeRadiusTopRight,
+		shapeRadiusBottomRight,
+		shapeRadiusBottomLeft,
 		borderColor,
 		borderWidth,
 		borderStyle,
+		borderTopWidth,
+		borderRightWidth,
+		borderBottomWidth,
+		borderLeftWidth,
+		shapeShadow,
 	} = attributes;
+	const anyBw =
+		borderTopWidth ||
+		borderRightWidth ||
+		borderBottomWidth ||
+		borderLeftWidth ||
+		borderWidth;
 	return {
 		'--ab-icon-size': iconSize || undefined,
 		'--ab-icon-color': iconColor || undefined,
 		'--ab-icon-color-h': iconHoverColor || undefined,
 		'--ab-icon-rotate': rotation ? `${ rotation }deg` : undefined,
+		// Shape padding — per-side (Styles ▸ Shape) with the legacy single-value
+		// `shapePadding` kept for old blocks (style.scss falls back per side).
+		'--ab-icon-pad': shapePadding || undefined,
+		'--ab-icon-pad-top': shapePaddingTop || undefined,
+		'--ab-icon-pad-right': shapePaddingRight || undefined,
+		'--ab-icon-pad-bottom': shapePaddingBottom || undefined,
+		'--ab-icon-pad-left': shapePaddingLeft || undefined,
+		// Shape background — flat color fallback, then gradient/image override.
 		'--ab-icon-bg': bgColor || undefined,
 		'--ab-icon-bg-h': bgHoverColor || undefined,
-		'--ab-icon-pad': shapePadding || undefined,
-		'--ab-icon-radius': shapeRadius || undefined,
+		...getBackgroundVars( attributes, {
+			prefix: 'shapeBg',
+			varPrefix: '--ab-icon',
+			colorKey: 'bgColor',
+		} ),
+		...getBackgroundVars( attributes, {
+			prefix: 'bgHover',
+			varPrefix: '--ab-icon-h',
+			varName: '--ab-icon-bg-h',
+			colorKey: 'bgHoverColor',
+		} ),
+		// Border — per-side widths fall back to the legacy single `borderWidth`.
 		'--ab-icon-bc': borderColor || undefined,
-		'--ab-icon-bw': borderWidth || undefined,
-		'--ab-icon-bs': borderWidth ? borderStyle || 'solid' : undefined,
+		'--ab-icon-bs': anyBw ? borderStyle || 'solid' : borderStyle || undefined,
+		'--ab-icon-bw-top': borderTopWidth || borderWidth || undefined,
+		'--ab-icon-bw-right': borderRightWidth || borderWidth || undefined,
+		'--ab-icon-bw-bottom': borderBottomWidth || borderWidth || undefined,
+		'--ab-icon-bw-left': borderLeftWidth || borderWidth || undefined,
+		// Radius — per-corner falls back to the legacy single `shapeRadius`.
+		'--ab-icon-radius-tl': shapeRadiusTopLeft || shapeRadius || undefined,
+		'--ab-icon-radius-tr': shapeRadiusTopRight || shapeRadius || undefined,
+		'--ab-icon-radius-br': shapeRadiusBottomRight || shapeRadius || undefined,
+		'--ab-icon-radius-bl': shapeRadiusBottomLeft || shapeRadius || undefined,
+		'--ab-icon-radius': shapeRadius || undefined,
+		'--ab-icon-shadow': shapeShadow || undefined,
 	};
 }
 
@@ -67,18 +190,8 @@ function IconEdit( { attributes, setAttributes } ) {
 	const {
 		iconSlug,
 		iconLabel,
-		iconColor,
-		iconHoverColor,
 		rotation,
-		iconAlign,
 		shape,
-		bgColor,
-		bgHoverColor,
-		shapePadding,
-		shapeRadius,
-		borderColor,
-		borderWidth,
-		borderStyle,
 		url,
 		opensInNewTab,
 		relNoFollow,
@@ -86,7 +199,11 @@ function IconEdit( { attributes, setAttributes } ) {
 	} = attributes;
 
 	const device = useDeviceType();
-	const resolved = resolveResponsiveAttrs( attributes, [ 'iconAlign' ], device );
+	const resolved = resolveResponsiveAttrs(
+		attributes,
+		[ 'iconAlign' ],
+		device
+	);
 	const resolveIcon = useIconNode();
 	const blockProps = useBlockProps( {
 		className: `ab-icon ab-icon--align-${ resolved.iconAlign }`,
@@ -113,295 +230,89 @@ function IconEdit( { attributes, setAttributes } ) {
 		</span>
 	);
 
+	const leading = (
+		<>
+			<PanelBody
+				title={ __( 'Icon', 'axiom-blocks' ) }
+				initialOpen={ true }
+			>
+				<IconControl
+					label={ __( 'Icon', 'axiom-blocks' ) }
+					value={ iconSlug }
+					onChange={ ( v ) => setAttributes( { iconSlug: v } ) }
+					fallback="star"
+				/>
+				<ABTextControl
+					label={ __( 'Accessible label', 'axiom-blocks' ) }
+					value={ iconLabel }
+					onChange={ ( v ) => setAttributes( { iconLabel: v } ) }
+					help={ __(
+						'Describes the icon for screen readers. Leave empty for a purely decorative icon.',
+						'axiom-blocks'
+					) }
+				/>
+				<ABRangeControl
+					label={ __( 'Rotation', 'axiom-blocks' ) }
+					value={ rotation || 0 }
+					onChange={ ( v ) => setAttributes( { rotation: v } ) }
+					min={ 0 }
+					max={ 360 }
+					step={ 1 }
+					unit="°"
+				/>
+			</PanelBody>
+
+			<PanelBody
+				title={ __( 'Link', 'axiom-blocks' ) }
+				initialOpen={ false }
+			>
+				<ABTextControl
+					label={ __( 'URL', 'axiom-blocks' ) }
+					value={ url }
+					onChange={ ( v ) => setAttributes( { url: v } ) }
+					placeholder="https://"
+					type="url"
+				/>
+				{ url && (
+					<>
+						<ABToggleControl
+							label={ __(
+								'Open in new tab',
+								'axiom-blocks'
+							) }
+							checked={ !! opensInNewTab }
+							onChange={ ( v ) =>
+								setAttributes( { opensInNewTab: v } )
+							}
+						/>
+						<ABToggleControl
+							label={ __( 'No-follow', 'axiom-blocks' ) }
+							checked={ !! relNoFollow }
+							onChange={ ( v ) =>
+								setAttributes( { relNoFollow: v } )
+							}
+						/>
+						<ABToggleControl
+							label={ __( 'Sponsored', 'axiom-blocks' ) }
+							checked={ !! relSponsored }
+							onChange={ ( v ) =>
+								setAttributes( { relSponsored: v } )
+							}
+						/>
+					</>
+				) }
+			</PanelBody>
+		</>
+	);
+
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Icon', 'axiom-blocks' ) }
-					initialOpen={ true }
-				>
-					<IconControl
-						label={ __( 'Icon', 'axiom-blocks' ) }
-						value={ iconSlug }
-						onChange={ ( v ) =>
-							setAttributes( { iconSlug: v } )
-						}
-						fallback="star"
-					/>
-					<ABTextControl
-						label={ __( 'Accessible label', 'axiom-blocks' ) }
-						value={ iconLabel }
-						onChange={ ( v ) => setAttributes( { iconLabel: v } ) }
-						help={ __(
-							'Describes the icon for screen readers. Leave empty for a purely decorative icon.',
-							'axiom-blocks'
-						) }
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Style', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="iconSize"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABRangeControl
-								label={ __( 'Size', 'axiom-blocks' ) }
-								value={ fromPx(
-									value === '' ? inherited : value,
-									48
-								) }
-								onChange={ ( v ) => setValue( toPx( v ) ) }
-								min={ 12 }
-								max={ 240 }
-								step={ 1 }
-								unit="px"
-							/>
-						) }
-					</ABResponsive>
-					<ABRangeControl
-						label={ __( 'Rotation', 'axiom-blocks' ) }
-						value={ rotation || 0 }
-						onChange={ ( v ) => setAttributes( { rotation: v } ) }
-						min={ 0 }
-						max={ 360 }
-						step={ 1 }
-						unit="°"
-					/>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="iconAlign"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABSelectControl
-								label={ __( 'Alignment', 'axiom-blocks' ) }
-								value={
-									value !== '' && value != null
-										? value
-										: inherited ?? 'center'
-								}
-								options={ [
-									{
-										label: __( 'Left', 'axiom-blocks' ),
-										value: 'left',
-									},
-									{
-										label: __( 'Center', 'axiom-blocks' ),
-										value: 'center',
-									},
-									{
-										label: __( 'Right', 'axiom-blocks' ),
-										value: 'right',
-									},
-								] }
-								onChange={ setValue }
-							/>
-						) }
-					</ABResponsive>
-					<ABColorControl
-						label={ __( 'Colour', 'axiom-blocks' ) }
-						color={ iconColor }
-						onChange={ ( v ) => setAttributes( { iconColor: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Hover colour', 'axiom-blocks' ) }
-						color={ iconHoverColor }
-						onChange={ ( v ) =>
-							setAttributes( { iconHoverColor: v } )
-						}
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Shape & background', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABSelectControl
-						label={ __( 'Shape', 'axiom-blocks' ) }
-						value={ shape }
-						options={ [
-							{
-								label: __( 'None', 'axiom-blocks' ),
-								value: 'none',
-							},
-							{
-								label: __( 'Circle', 'axiom-blocks' ),
-								value: 'circle',
-							},
-							{
-								label: __( 'Square', 'axiom-blocks' ),
-								value: 'square',
-							},
-							{
-								label: __( 'Rounded', 'axiom-blocks' ),
-								value: 'rounded',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { shape: v } ) }
-					/>
-					{ shape !== 'none' && (
-						<>
-							<ABColorControl
-								label={ __( 'Background', 'axiom-blocks' ) }
-								color={ bgColor }
-								onChange={ ( v ) =>
-									setAttributes( { bgColor: v } )
-								}
-							/>
-							<ABColorControl
-								label={ __(
-									'Hover background',
-									'axiom-blocks'
-								) }
-								color={ bgHoverColor }
-								onChange={ ( v ) =>
-									setAttributes( { bgHoverColor: v } )
-								}
-							/>
-							<ABRangeControl
-								label={ __( 'Padding', 'axiom-blocks' ) }
-								value={ fromPx( shapePadding, 16 ) }
-								onChange={ ( v ) =>
-									setAttributes( { shapePadding: toPx( v ) } )
-								}
-								min={ 0 }
-								max={ 80 }
-								step={ 1 }
-								unit="px"
-							/>
-							{ shape === 'rounded' && (
-								<ABRangeControl
-									label={ __(
-										'Corner radius',
-										'axiom-blocks'
-									) }
-									value={ fromPx( shapeRadius, 12 ) }
-									onChange={ ( v ) =>
-										setAttributes( {
-											shapeRadius: toPx( v ),
-										} )
-									}
-									min={ 0 }
-									max={ 60 }
-									step={ 1 }
-									unit="px"
-								/>
-							) }
-							<ABRangeControl
-								label={ __( 'Border width', 'axiom-blocks' ) }
-								value={ fromPx( borderWidth, 0 ) }
-								onChange={ ( v ) =>
-									setAttributes( {
-										borderWidth: v ? toPx( v ) : '',
-									} )
-								}
-								min={ 0 }
-								max={ 10 }
-								step={ 1 }
-								unit="px"
-							/>
-							{ borderWidth && (
-								<>
-									<ABColorControl
-										label={ __(
-											'Border colour',
-											'axiom-blocks'
-										) }
-										color={ borderColor }
-										onChange={ ( v ) =>
-											setAttributes( { borderColor: v } )
-										}
-									/>
-									<ABSelectControl
-										label={ __(
-											'Border style',
-											'axiom-blocks'
-										) }
-										value={ borderStyle }
-										options={ [
-											{
-												label: __(
-													'Solid',
-													'axiom-blocks'
-												),
-												value: 'solid',
-											},
-											{
-												label: __(
-													'Dashed',
-													'axiom-blocks'
-												),
-												value: 'dashed',
-											},
-											{
-												label: __(
-													'Dotted',
-													'axiom-blocks'
-												),
-												value: 'dotted',
-											},
-										] }
-										onChange={ ( v ) =>
-											setAttributes( { borderStyle: v } )
-										}
-									/>
-								</>
-							) }
-						</>
-					) }
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Link', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABTextControl
-						label={ __( 'URL', 'axiom-blocks' ) }
-						value={ url }
-						onChange={ ( v ) => setAttributes( { url: v } ) }
-						placeholder="https://"
-						type="url"
-					/>
-					{ url && (
-						<>
-							<ABToggleControl
-								label={ __(
-									'Open in new tab',
-									'axiom-blocks'
-								) }
-								checked={ !! opensInNewTab }
-								onChange={ ( v ) =>
-									setAttributes( { opensInNewTab: v } )
-								}
-							/>
-							<ABToggleControl
-								label={ __( 'No-follow', 'axiom-blocks' ) }
-								checked={ !! relNoFollow }
-								onChange={ ( v ) =>
-									setAttributes( { relNoFollow: v } )
-								}
-							/>
-							<ABToggleControl
-								label={ __( 'Sponsored', 'axiom-blocks' ) }
-								checked={ !! relSponsored }
-								onChange={ ( v ) =>
-									setAttributes( { relSponsored: v } )
-								}
-							/>
-						</>
-					) }
-				</PanelBody>
-
-				<SpacingPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-				/>
-			</InspectorControls>
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ DESIGN }
+				leading={ leading }
+			/>
 
 			<div { ...blockProps }>
 				<span className={ `ab-icon__box ab-icon--${ shape }` }>
@@ -417,7 +328,7 @@ export const Icon = {
 	settings: {
 		title: __( 'Icon', 'axiom-blocks' ),
 		description: __(
-			'Pick an icon from the library, then style its size, colour, shape, and link.',
+			'Pick an icon from the library, then style its size, color, shape, and link.',
 			'axiom-blocks'
 		),
 		icon: <BlockIcon slug="icon" />,

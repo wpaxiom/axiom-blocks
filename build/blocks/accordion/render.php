@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use AxiomBlocks\Blocks\Icons;
 use AxiomBlocks\Blocks\AllowedHtml;
 use AxiomBlocks\Blocks\Spacing;
+use AxiomBlocks\Blocks\Background;
 
 $axiom_blocks_a     = $attributes ?? array();
 $axiom_blocks_items = $block->parsed_block['innerBlocks'] ?? array();
@@ -43,28 +44,60 @@ if ( ! in_array( $axiom_blocks_heading_tag, array( 'h2', 'h3', 'h4', 'h5', 'h6' 
 
 /* ── Wrapper CSS custom properties + spacing ──────────────────────────────── */
 $axiom_blocks_var_map     = array(
-	'--ab-acc-header-bg'           => 'headerBg',
 	'--ab-acc-header-color'        => 'headerColor',
-	'--ab-acc-active-header-bg'    => 'activeHeaderBg',
+	'--ab-acc-header-color-hover'  => 'headerColorHover',
 	'--ab-acc-active-header-color' => 'activeHeaderColor',
 	'--ab-acc-header-pt'           => 'headerPaddingTop',
 	'--ab-acc-header-pr'           => 'headerPaddingRight',
 	'--ab-acc-header-pb'           => 'headerPaddingBottom',
 	'--ab-acc-header-pl'           => 'headerPaddingLeft',
-	'--ab-acc-body-bg'             => 'bodyBg',
 	'--ab-acc-body-color'          => 'bodyColor',
 	'--ab-acc-body-pt'             => 'bodyPaddingTop',
 	'--ab-acc-body-pr'             => 'bodyPaddingRight',
 	'--ab-acc-body-pb'             => 'bodyPaddingBottom',
 	'--ab-acc-body-pl'             => 'bodyPaddingLeft',
+	'--ab-acc-body-bs'             => 'bodyBorderStyle',
+	'--ab-acc-body-bc'             => 'bodyBorderColor',
+	'--ab-acc-body-bw-top'         => 'bodyBorderTopWidth',
+	'--ab-acc-body-bw-right'       => 'bodyBorderRightWidth',
+	'--ab-acc-body-bw-bottom'      => 'bodyBorderBottomWidth',
+	'--ab-acc-body-bw-left'        => 'bodyBorderLeftWidth',
+	'--ab-acc-body-radius-tl'      => 'bodyRadiusTopLeft',
+	'--ab-acc-body-radius-tr'      => 'bodyRadiusTopRight',
+	'--ab-acc-body-radius-br'      => 'bodyRadiusBottomRight',
+	'--ab-acc-body-radius-bl'      => 'bodyRadiusBottomLeft',
 	'--ab-acc-border-color'        => 'borderColor',
 	'--ab-acc-border-width'        => 'borderWidth',
 	'--ab-acc-radius'              => 'borderRadius',
+	'--ab-acc-bs'                  => 'borderStyle',
+	'--ab-acc-bw-top'              => 'borderTopWidth',
+	'--ab-acc-bw-right'            => 'borderRightWidth',
+	'--ab-acc-bw-bottom'           => 'borderBottomWidth',
+	'--ab-acc-bw-left'             => 'borderLeftWidth',
+	'--ab-acc-radius-tl'           => 'radiusTopLeft',
+	'--ab-acc-radius-tr'           => 'radiusTopRight',
+	'--ab-acc-radius-br'           => 'radiusBottomRight',
+	'--ab-acc-radius-bl'           => 'radiusBottomLeft',
 	'--ab-acc-gap'                 => 'itemGap',
 	'--ab-acc-cont-bc'             => 'containerBorderColor',
 	'--ab-acc-cont-bw'             => 'containerBorderWidth',
 	'--ab-acc-cont-radius'         => 'containerBorderRadius',
+	'--ab-acc-cont-bs'             => 'containerBorderStyle',
+	'--ab-acc-cont-bw-top'         => 'containerBorderTopWidth',
+	'--ab-acc-cont-bw-right'       => 'containerBorderRightWidth',
+	'--ab-acc-cont-bw-bottom'      => 'containerBorderBottomWidth',
+	'--ab-acc-cont-bw-left'        => 'containerBorderLeftWidth',
+	'--ab-acc-cont-radius-tl'      => 'containerRadiusTopLeft',
+	'--ab-acc-cont-radius-tr'      => 'containerRadiusTopRight',
+	'--ab-acc-cont-radius-br'      => 'containerRadiusBottomRight',
+	'--ab-acc-cont-radius-bl'      => 'containerRadiusBottomLeft',
+	'--ab-acc-cont-shadow'         => 'containerShadow',
+	'--ab-acc-cont-maxw'           => 'containerMaxWidth',
+	'--ab-acc-item-shadow'         => 'itemShadow',
+	'--ab-acc-item-shadow-hover'   => 'itemShadowHover',
+	'--ab-acc-body-maxw'           => 'bodyMaxWidth',
 	'--ab-acc-icon-color'          => 'iconColor',
+	'--ab-acc-icon-color-active'   => 'iconColorActive',
 	'--ab-acc-icon-size'           => 'iconSize',
 	'--ab-acc-title-ff'            => 'headerFontFamily',
 	'--ab-acc-title-fw'            => 'headerFontWeight',
@@ -81,6 +114,38 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 		$axiom_blocks_style_parts[] = $axiom_blocks_css_var . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
 	}
 }
+
+/* Item background — full BackgroundControl (color / gradient / image); legacy
+   itemBg / itemBgHover stay the color attr. */
+$axiom_blocks_item_bg = Background::value( $axiom_blocks_a, 'item', 'itemBg' );
+if ( '' !== $axiom_blocks_item_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-acc-item-bg: ' . $axiom_blocks_item_bg;
+}
+$axiom_blocks_item_bg_hover = Background::value( $axiom_blocks_a, 'itemHover', 'itemBgHover' );
+if ( '' !== $axiom_blocks_item_bg_hover ) {
+	$axiom_blocks_style_parts[] = '--ab-acc-item-bg-hover: ' . $axiom_blocks_item_bg_hover;
+}
+
+/* Header background — full (color / gradient / image), Normal + Hover + Active. */
+$axiom_blocks_header_bg = Background::value( $axiom_blocks_a, 'header', 'headerBg' );
+if ( '' !== $axiom_blocks_header_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-acc-header-bg: ' . $axiom_blocks_header_bg;
+}
+$axiom_blocks_header_bg_hover = Background::value( $axiom_blocks_a, 'headerHover', 'headerBgHover' );
+if ( '' !== $axiom_blocks_header_bg_hover ) {
+	$axiom_blocks_style_parts[] = '--ab-acc-header-bg-hover: ' . $axiom_blocks_header_bg_hover;
+}
+$axiom_blocks_header_bg_active = Background::value( $axiom_blocks_a, 'headerActive', 'activeHeaderBg' );
+if ( '' !== $axiom_blocks_header_bg_active ) {
+	$axiom_blocks_style_parts[] = '--ab-acc-active-header-bg: ' . $axiom_blocks_header_bg_active;
+}
+
+/* Body background — full (color / gradient / image). */
+$axiom_blocks_body_bg = Background::value( $axiom_blocks_a, 'body', 'bodyBg' );
+if ( '' !== $axiom_blocks_body_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-acc-body-bg: ' . $axiom_blocks_body_bg;
+}
+
 $axiom_blocks_wrapper_style = implode( '; ', $axiom_blocks_style_parts );
 $axiom_blocks_wrapper_style = Spacing::merge( $axiom_blocks_wrapper_style, $axiom_blocks_a );
 
@@ -165,15 +230,22 @@ $axiom_blocks_id_attr            = $axiom_blocks_block_supports['id'] ?? '';
 </div>
 <?php
 if ( $axiom_blocks_faq && ! empty( $axiom_blocks_faq_entries ) ) {
-	wp_print_inline_script_tag(
-		(string) wp_json_encode(
-			array(
-				'@context'   => 'https://schema.org',
-				'@type'      => 'FAQPage',
-				'mainEntity' => $axiom_blocks_faq_entries,
-			)
-		),
-		array( 'type' => 'application/ld+json' )
+	$axiom_blocks_faq_schema = array(
+		'@context'   => 'https://schema.org',
+		'@type'      => 'FAQPage',
+		'mainEntity' => $axiom_blocks_faq_entries,
+	);
+	// Print at page level, not inside the block's content, so the schema
+	// survives when this accordion is nested inside a wrapper block (whose kses
+	// would otherwise strip the <script> from $content).
+	add_action(
+		'wp_footer',
+		static function () use ( $axiom_blocks_faq_schema ) {
+			wp_print_inline_script_tag(
+				(string) wp_json_encode( $axiom_blocks_faq_schema ),
+				array( 'type' => 'application/ld+json' )
+			);
+		}
 	);
 }
 

@@ -25,6 +25,8 @@ $axiom_blocks_before_label = $attributes['beforeLabel'] ?? 'Before';
 $axiom_blocks_after_label  = $attributes['afterLabel'] ?? 'After';
 $axiom_blocks_initial_pos  = max( 0, min( 100, (int) ( $attributes['initialPosition'] ?? 50 ) ) );
 $axiom_blocks_aspect_ratio = (string) ( $attributes['aspectRatio'] ?? 'auto' );
+$axiom_blocks_orientation  = 'vertical' === ( $attributes['orientation'] ?? 'horizontal' ) ? 'vertical' : 'horizontal';
+$axiom_blocks_interaction  = 'hover' === ( $attributes['interaction'] ?? 'drag' ) ? 'hover' : 'drag';
 $axiom_blocks_handle_color = (string) ( $attributes['handleColor'] ?? '#ffffff' );
 $axiom_blocks_line_color   = (string) ( $attributes['lineColor'] ?? '#ffffff' );
 
@@ -32,6 +34,45 @@ $axiom_blocks_line_color   = (string) ( $attributes['lineColor'] ?? '#ffffff' );
 if ( 'auto' !== $axiom_blocks_aspect_ratio && ! preg_match( '/^\d{1,3}\/\d{1,3}$/', $axiom_blocks_aspect_ratio ) ) {
 	$axiom_blocks_aspect_ratio = 'auto';
 }
+
+/* Design-system vars — emitted on the wrapper and inherited by __frame/__label
+   (mirrors getBasVars() in index.js). Desktop-only; Tablet/Mobile overrides
+   arrive via the central ResponsiveProps/ResponsiveTypography filters. */
+$axiom_blocks_var_map = array(
+	'--ab-bas-bs'              => 'borderStyle',
+	'--ab-bas-bc'              => 'borderColor',
+	'--ab-bas-bw-top'          => 'borderTopWidth',
+	'--ab-bas-bw-right'        => 'borderRightWidth',
+	'--ab-bas-bw-bottom'       => 'borderBottomWidth',
+	'--ab-bas-bw-left'         => 'borderLeftWidth',
+	'--ab-bas-radius-tl'       => 'radiusTopLeft',
+	'--ab-bas-radius-tr'       => 'radiusTopRight',
+	'--ab-bas-radius-br'       => 'radiusBottomRight',
+	'--ab-bas-radius-bl'       => 'radiusBottomLeft',
+	'--ab-bas-shadow'          => 'containerShadow',
+	'--ab-bas-maxw'            => 'maxWidth',
+	'--ab-bas-label-color'     => 'labelColor',
+	'--ab-bas-label-bg'        => 'labelBg',
+	'--ab-bas-label-radius-tl' => 'labelRadiusTopLeft',
+	'--ab-bas-label-radius-tr' => 'labelRadiusTopRight',
+	'--ab-bas-label-radius-br' => 'labelRadiusBottomRight',
+	'--ab-bas-label-radius-bl' => 'labelRadiusBottomLeft',
+	'--ab-bas-label-ff'        => 'labelFontFamily',
+	'--ab-bas-label-fw'        => 'labelFontWeight',
+	'--ab-bas-label-fs'        => 'labelFontSize',
+	'--ab-bas-label-lh'        => 'labelLineHeight',
+	'--ab-bas-label-ls'        => 'labelLetterSpacing',
+	'--ab-bas-label-tt'        => 'labelTextTransform',
+	'--ab-bas-label-td'        => 'labelTextDecoration',
+	'--ab-bas-label-ta'        => 'labelTextAlign',
+);
+$axiom_blocks_design_vars = array();
+foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
+	if ( ! empty( $attributes[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_design_vars[] = $axiom_blocks_css_var . ': ' . $attributes[ $axiom_blocks_attr_key ];
+	}
+}
+$axiom_blocks_design_style = implode( '; ', $axiom_blocks_design_vars );
 
 $axiom_blocks_frame_classes = array( 'axiom-blocks-bas__frame' );
 $axiom_blocks_frame_styles  = array(
@@ -44,6 +85,12 @@ if ( 'auto' !== $axiom_blocks_aspect_ratio ) {
 	$axiom_blocks_frame_styles[]  = 'aspect-ratio: ' . str_replace( '/', ' / ', $axiom_blocks_aspect_ratio );
 } else {
 	$axiom_blocks_frame_classes[] = 'is-aspect-auto';
+}
+if ( 'vertical' === $axiom_blocks_orientation ) {
+	$axiom_blocks_frame_classes[] = 'is-vertical';
+}
+if ( 'hover' === $axiom_blocks_interaction ) {
+	$axiom_blocks_frame_classes[] = 'is-hover';
 }
 $axiom_blocks_frame_class_attr = trim( implode( ' ', array_filter( $axiom_blocks_frame_classes ) ) );
 $axiom_blocks_frame_style_attr = safecss_filter_attr( implode( '; ', $axiom_blocks_frame_styles ) );
@@ -65,6 +112,7 @@ $axiom_blocks_style_parts = array_filter(
 	array(
 		rtrim( trim( $axiom_blocks_block_supports['style'] ?? '' ), ';' ),
 		rtrim( trim( $axiom_blocks_spacing_style ), ';' ),
+		rtrim( trim( $axiom_blocks_design_style ), ';' ),
 	)
 );
 $axiom_blocks_style_attr  = safecss_filter_attr( implode( ';', $axiom_blocks_style_parts ) );
@@ -79,6 +127,7 @@ $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 		aria-valuemin="0"
 		aria-valuemax="100"
 		aria-valuenow="<?php echo esc_attr( (string) $axiom_blocks_initial_pos ); ?>"
+		aria-orientation="<?php echo esc_attr( $axiom_blocks_orientation ); ?>"
 		aria-label="<?php esc_attr_e( 'Before / after image comparison', 'axiom-blocks' ); ?>"
 		tabindex="0"
 	>

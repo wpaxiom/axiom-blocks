@@ -22,11 +22,24 @@
 	&__frame {
 		position: relative;
 		width: 100%;
+		max-width: var(--ab-bas-maxw, none);
 		overflow: hidden;
 		user-select: none;
 		touch-action: none;
 		cursor: ew-resize;
 		outline: none;
+		box-sizing: border-box;
+		border-style: var(--ab-bas-bs, solid);
+		border-color: var(--ab-bas-bc, transparent);
+		border-top-width: var(--ab-bas-bw-top, 0);
+		border-right-width: var(--ab-bas-bw-right, 0);
+		border-bottom-width: var(--ab-bas-bw-bottom, 0);
+		border-left-width: var(--ab-bas-bw-left, 0);
+		border-radius: var(--ab-bas-radius-tl, 0)
+			var(--ab-bas-radius-tr, 0)
+			var(--ab-bas-radius-br, 0)
+			var(--ab-bas-radius-bl, 0);
+		box-shadow: var(--ab-bas-shadow, none);
 
 		&:focus-visible {
 			outline: 2px solid var(--wp--preset--color--primary, #4f46e5);
@@ -79,7 +92,7 @@
 		bottom: 0;
 		left: var(--slider-pos);
 		width: 2px;
-		background: var(--line-color);
+		background: var(--line-color, #fff);
 		transform: translateX(-50%);
 		pointer-events: none;
 	}
@@ -91,7 +104,7 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 50%;
-		background: var(--handle-color);
+		background: var(--handle-color, #fff);
 		color: #333;
 		transform: translate(-50%, -50%);
 		display: flex;
@@ -106,17 +119,70 @@
 		}
 	}
 
+	/* Hover interaction — the handle follows the pointer without pressing. */
+	&__frame.is-hover {
+		cursor: col-resize;
+	}
+
+	/* Vertical orientation — split top/bottom instead of left/right. */
+	&__frame.is-vertical {
+		cursor: ns-resize;
+
+		&.is-dragging {
+			cursor: grabbing;
+		}
+
+		&.is-hover {
+			cursor: row-resize;
+		}
+	}
+
+	&__frame.is-vertical &__img--before {
+		clip-path: polygon(0 0, 100% 0, 100% var(--slider-pos), 0 var(--slider-pos));
+	}
+
+	&__frame.is-vertical &__line {
+		top: var(--slider-pos);
+		bottom: auto;
+		left: 0;
+		right: 0;
+		width: auto;
+		height: 2px;
+		transform: translateY(-50%);
+	}
+
+	&__frame.is-vertical &__handle {
+		top: var(--slider-pos);
+		left: 50%;
+
+		svg {
+			transform: rotate(90deg);
+		}
+	}
+
+	&__frame.is-vertical &__label--after {
+		top: auto;
+		bottom: 12px;
+	}
+
 	&__label {
 		position: absolute;
 		top: 12px;
 		padding: 4px 10px;
-		font-size: 12px;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		background: rgba(0, 0, 0, 0.6);
-		color: #fff;
-		border-radius: 3px;
+		font-family: var(--ab-bas-label-ff);
+		font-size: var(--ab-bas-label-fs, 12px);
+		font-weight: var(--ab-bas-label-fw, 600);
+		line-height: var(--ab-bas-label-lh);
+		letter-spacing: var(--ab-bas-label-ls, 0.04em);
+		text-transform: var(--ab-bas-label-tt, uppercase);
+		text-decoration: var(--ab-bas-label-td);
+		text-align: var(--ab-bas-label-ta);
+		background: var(--ab-bas-label-bg, rgba(0, 0, 0, 0.6));
+		color: var(--ab-bas-label-color, #fff);
+		border-radius: var(--ab-bas-label-radius-tl, 3px)
+			var(--ab-bas-label-radius-tr, 3px)
+			var(--ab-bas-label-radius-br, 3px)
+			var(--ab-bas-label-radius-bl, 3px);
 		pointer-events: none;
 		z-index: 2;
 

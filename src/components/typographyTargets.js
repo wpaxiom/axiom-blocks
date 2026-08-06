@@ -13,10 +13,20 @@ import { resolveResponsive } from './responsive';
 
 export const TYPOGRAPHY_TARGETS = {
 	'axiom-blocks/advanced-heading': [ 'heading', 'sub' ],
-	'axiom-blocks/advanced-button': [ '' ],
+	'axiom-blocks/advanced-button': [ '', 'subCaption' ],
 	'axiom-blocks/copy-to-clipboard': [ '' ],
 	'axiom-blocks/icon-list': [ '' ],
-	'axiom-blocks/pricing-table': [ 'heading' ],
+	'axiom-blocks/pricing-table': [
+		'heading',
+		'name',
+		'price',
+		'currency',
+		'period',
+		'badge',
+		'desc',
+		'feature',
+		'cta',
+	],
 	'axiom-blocks/pricing-plan': [ 'name', 'price', 'desc', 'feature', 'cta' ],
 	'axiom-blocks/trust-badges': [ 'heading', 'label' ],
 	'axiom-blocks/countdown-timer': [ 'digit', 'label' ],
@@ -25,7 +35,10 @@ export const TYPOGRAPHY_TARGETS = {
 	'axiom-blocks/star-rating': [ 'meta' ],
 	'axiom-blocks/accordion': [ 'header' ],
 	'axiom-blocks/counter-group': [ 'number', 'label' ],
-	'axiom-blocks/testimonials': [ 'name', 'role', 'company', 'quote' ],
+	'axiom-blocks/testimonials': [ 'name', 'role', 'company', 'quote', 'mono' ],
+	'axiom-blocks/before-after-slider': [ 'label' ],
+	'axiom-blocks/free-shipping-progress': [ 'message' ],
+	'axiom-blocks/table-of-contents': [ 'title', 'content' ],
 };
 
 /** Typography base attribute suffixes — mirrors KEYS in TypographyPanel.js. */
@@ -41,7 +54,9 @@ const TYPOGRAPHY_SUFFIXES = [
 ];
 
 const prefixed = ( prefix, suffix ) =>
-	prefix ? `${ prefix }${ suffix[ 0 ].toUpperCase() }${ suffix.slice( 1 ) }` : suffix;
+	prefix
+		? `${ prefix }${ suffix[ 0 ].toUpperCase() }${ suffix.slice( 1 ) }`
+		: suffix;
 
 /**
  * Build the `{ key: { type, default } }` map of *Tablet / *Mobile typography

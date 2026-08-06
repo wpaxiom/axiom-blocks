@@ -74,7 +74,9 @@ const BLOCKS = [
 	{
 		id: 'accordion',
 		files: [ 'block.json', 'render.php', 'assets/accordion.js' ],
-		extras: [ [ 'accordion-item/block.json', 'accordion-item/block.json' ] ],
+		extras: [
+			[ 'accordion-item/block.json', 'accordion-item/block.json' ],
+		],
 	},
 	{
 		id: 'notice',

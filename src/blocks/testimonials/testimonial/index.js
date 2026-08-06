@@ -1,4 +1,5 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { dateI18n, getSettings } from '@wordpress/date';
 import {
 	useBlockProps,
 	InspectorControls,
@@ -12,6 +13,7 @@ import {
 	ABRangeControl,
 	ABToggleControl,
 	ABSelectControl,
+	ABColorControl,
 } from '../../../components/ABControls';
 import { BlockIcon } from '../../../blockIcons';
 import { HIGHLIGHT_FORMAT } from '../../advanced-heading/format';
@@ -24,10 +26,39 @@ const QUOTE_SVG = (
 	</svg>
 );
 
+/* The source row's shield-check — same path data as render.php. */
+const CHECK_SVG = (
+	<svg
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		aria-hidden="true"
+	>
+		<path d="M12 2 4 5v6c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5z" />
+		<path d="m9 12 2 2 4-4" />
+	</svg>
+);
+
+/* Mirrors $axiom_blocks_platform_names in render.php. */
+const PLATFORM_NAMES = {
+	google: 'Google',
+	trustpilot: 'Trustpilot',
+	g2: 'G2',
+	capterra: 'Capterra',
+};
+
 const StarRow = () => (
 	<>
 		{ Array.from( { length: 5 } ).map( ( _, i ) => (
-			<svg key={ i } viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+			<svg
+				key={ i }
+				viewBox="0 0 24 24"
+				fill="currentColor"
+				aria-hidden="true"
+			>
 				<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
 			</svg>
 		) ) }
@@ -43,6 +74,15 @@ function initialsOf( name ) {
 		.join( '' );
 }
 
+function hueOf( name ) {
+	let hash = 0;
+	const str = name || '';
+	for ( let i = 0; i < str.length; i++ ) {
+		hash = ( hash * 31 + str.charCodeAt( i ) ) >>> 0;
+	}
+	return hash % 360;
+}
+
 function TestimonialEdit( { attributes, setAttributes } ) {
 	const {
 		quote,
@@ -51,6 +91,11 @@ function TestimonialEdit( { attributes, setAttributes } ) {
 		company,
 		avatarUrl,
 		avatarAlt,
+		useInitials,
+		avatarBg,
+		avatarColor,
+		monoFontSize,
+		monoFontWeight,
 		rating,
 		reviewDate,
 		sourcePlatform,
@@ -62,6 +107,30 @@ function TestimonialEdit( { attributes, setAttributes } ) {
 
 	const blockProps = useBlockProps( { className: 'ab-testimonial' } );
 	const initials = initialsOf( name );
+	// Same precedence as render.php: the monogram replaces the photo, and an
+	// avatar with neither a usable image nor initials renders nothing at all.
+	const showInitials = useInitials && !! initials;
+	const showImage = !! avatarUrl && ! useInitials;
+
+	// Source row — mirrors render.php so the card is the same height here.
+	const platformLabel =
+		'custom' === sourcePlatform
+			? sourceLabel || ''
+			: PLATFORM_NAMES[ sourcePlatform ] || '';
+	const dateDisplay = reviewDate
+		? dateI18n( getSettings().formats.date, reviewDate )
+		: '';
+	// Monogram cascade — this card's own colors are inline (they win), then the
+	// block-level Monogram part's --ab-tst-mono-*, then the hue derived from the
+	// name. monoFontSize/monoFontWeight are the retired per-card controls: still
+	// honoured for content saved before the Monogram part existed.
+	const initialsStyle = {
+		'--ab-tst-mono-bg-auto': `hsl(${ hueOf( name ) },55%,52%)`,
+		background: avatarBg || undefined,
+		color: avatarColor || undefined,
+		fontSize: monoFontSize || undefined,
+		fontWeight: monoFontWeight || undefined,
+	};
 	const fillPercent = ( Math.max( 0, Math.min( 5, rating || 0 ) ) / 5 ) * 100;
 
 	return (
@@ -88,79 +157,121 @@ function TestimonialEdit( { attributes, setAttributes } ) {
 					title={ __( 'Avatar', 'axiom-blocks' ) }
 					initialOpen={ false }
 				>
-					<span className="ab-ctrl__label">
-						{ __( 'Image', 'axiom-blocks' ) }
-					</span>
-					{ avatarUrl && (
-						// eslint-disable-next-line jsx-a11y/alt-text
-						<img
-							className="ab-tst-avatar-preview"
-							src={ avatarUrl }
-							alt={ avatarAlt || name }
-						/>
-					) }
-					<MediaUploadCheck>
-						<MediaUpload
-							onSelect={ ( media ) =>
-								setAttributes( {
-									avatarUrl: media.url,
-									avatarId: media.id,
-									avatarAlt: media.alt || '',
-								} )
-							}
-							allowedTypes={ [ 'image' ] }
-							value={ attributes.avatarId }
-							render={ ( { open } ) => (
-								<div className="ab-btn-row ab-tst-avatar-buttons">
-									<button
-										type="button"
-										className="ab-btn ab-btn--secondary"
-										onClick={ open }
-									>
-										{ avatarUrl
-											? __( 'Replace', 'axiom-blocks' )
-											: __(
-													'Select image',
-													'axiom-blocks'
-											  ) }
-									</button>
-									{ avatarUrl && (
-										<button
-											type="button"
-											className="ab-btn ab-btn--danger"
-											onClick={ () =>
-												setAttributes( {
-													avatarUrl: '',
-													avatarId: 0,
-													avatarAlt: '',
-												} )
-											}
-										>
-											{ __( 'Remove', 'axiom-blocks' ) }
-										</button>
-									) }
-								</div>
-							) }
-						/>
-					</MediaUploadCheck>
-					{ ! avatarUrl && (
-						<div className="ab-ctrl ab-block-note">
-							<p className="ab-ctrl__help">
-								{ __(
-									'No image? A coloured monogram from the name is shown automatically.',
+					<ABToggleControl
+						label={ __( 'Show monogram', 'axiom-blocks' ) }
+						help={ __(
+							'Display a colored monogram from the name instead of a photo.',
+							'axiom-blocks'
+						) }
+						checked={ !! useInitials }
+						onChange={ ( v ) =>
+							setAttributes( { useInitials: v } )
+						}
+					/>
+					{ useInitials ? (
+						<>
+							<ABColorControl
+								label={ __( 'Background', 'axiom-blocks' ) }
+								help={ __(
+									'This card only. Leave empty for a color generated from the name, or set one for every card under Styles → Monogram on the parent Testimonials block.',
 									'axiom-blocks'
 								) }
-							</p>
-						</div>
-					) }
-					{ avatarUrl && (
-						<ABTextControl
-							label={ __( 'Alt text', 'axiom-blocks' ) }
-							value={ avatarAlt }
-							onChange={ ( v ) =>
-								setAttributes( { avatarAlt: v } )
-							}
-						/>
+								color={ avatarBg }
+								onChange={ ( v ) =>
+									setAttributes( { avatarBg: v } )
+								}
+							/>
+							<ABColorControl
+								label={ __( 'Text Color', 'axiom-blocks' ) }
+								color={ avatarColor }
+								onChange={ ( v ) =>
+									setAttributes( { avatarColor: v } )
+								}
+							/>
+						</>
+					) : (
+						<>
+							<span className="ab-ctrl__label">
+								{ __( 'Image', 'axiom-blocks' ) }
+							</span>
+							{ avatarUrl && (
+								// eslint-disable-next-line jsx-a11y/alt-text
+								<img
+									className="ab-tst-avatar-preview"
+									src={ avatarUrl }
+									alt={ avatarAlt || name }
+								/>
+							) }
+							<MediaUploadCheck>
+								<MediaUpload
+									onSelect={ ( media ) =>
+										setAttributes( {
+											avatarUrl: media.url,
+											avatarId: media.id,
+											avatarAlt: media.alt || '',
+										} )
+									}
+									allowedTypes={ [ 'image' ] }
+									value={ attributes.avatarId }
+									render={ ( { open } ) => (
+										<div className="ab-btn-row ab-tst-avatar-buttons">
+											<button
+												type="button"
+												className="ab-btn ab-btn--secondary"
+												onClick={ open }
+											>
+												{ avatarUrl
+													? __(
+															'Replace',
+															'axiom-blocks'
+													  )
+													: __(
+															'Select image',
+															'axiom-blocks'
+													  ) }
+											</button>
+											{ avatarUrl && (
+												<button
+													type="button"
+													className="ab-btn ab-btn--danger"
+													onClick={ () =>
+														setAttributes( {
+															avatarUrl: '',
+															avatarId: 0,
+															avatarAlt: '',
+														} )
+													}
+												>
+													{ __(
+														'Remove',
+														'axiom-blocks'
+													) }
+												</button>
+											) }
+										</div>
+									) }
+								/>
+							</MediaUploadCheck>
+							{ ! avatarUrl && (
+								<div className="ab-ctrl ab-block-note">
+									<p className="ab-ctrl__help">
+										{ __(
+											'No image? Turn on “Show monogram” above to display initials from the name.',
+											'axiom-blocks'
+										) }
+									</p>
+								</div>
+							) }
+							{ avatarUrl && (
+								<ABTextControl
+									label={ __( 'Alt text', 'axiom-blocks' ) }
+									value={ avatarAlt }
+									onChange={ ( v ) =>
+										setAttributes( { avatarAlt: v } )
+									}
+								/>
+							) }
+						</>
 					) }
 				</PanelBody>
 
@@ -207,9 +318,7 @@ function TestimonialEdit( { attributes, setAttributes } ) {
 						label={ __( 'Review date', 'axiom-blocks' ) }
 						type="date"
 						value={ reviewDate }
-						onChange={ ( v ) =>
-							setAttributes( { reviewDate: v } )
-						}
+						onChange={ ( v ) => setAttributes( { reviewDate: v } ) }
 					/>
 				</PanelBody>
 
@@ -236,7 +345,7 @@ function TestimonialEdit( { attributes, setAttributes } ) {
 					<div className="ab-ctrl ab-block-note">
 						<p className="ab-ctrl__help">
 							{ __(
-								'Layout, card style, avatar, colours and typography are set on the parent Testimonials block.',
+								'Layout, card style and the name / role / quote colors & typography are set on the parent Testimonials block.',
 								'axiom-blocks'
 							) }
 						</p>
@@ -271,7 +380,10 @@ function TestimonialEdit( { attributes, setAttributes } ) {
 					className="ab-testimonial__quote"
 					value={ quote }
 					onChange={ ( v ) => setAttributes( { quote: v } ) }
-					placeholder={ __( 'Write the testimonial…', 'axiom-blocks' ) }
+					placeholder={ __(
+						'Write the testimonial…',
+						'axiom-blocks'
+					) }
 					allowedFormats={ [
 						'core/bold',
 						'core/italic',
@@ -279,21 +391,27 @@ function TestimonialEdit( { attributes, setAttributes } ) {
 					] }
 				/>
 				<div className="ab-testimonial__person">
-					<span
-						className="ab-testimonial__avatar"
-						contentEditable={ false }
-					>
-						{ avatarUrl ? (
-							// eslint-disable-next-line jsx-a11y/alt-text
-							<img src={ avatarUrl } alt={ avatarAlt || name } />
-						) : (
-							initials && (
-								<span className="ab-testimonial__initials">
+					{ ( showImage || showInitials ) && (
+						<span
+							className="ab-testimonial__avatar"
+							contentEditable={ false }
+						>
+							{ showImage ? (
+								// eslint-disable-next-line jsx-a11y/alt-text
+								<img
+									src={ avatarUrl }
+									alt={ avatarAlt || name }
+								/>
+							) : (
+								<span
+									className="ab-testimonial__initials"
+									style={ initialsStyle }
+								>
 									{ initials }
 								</span>
-							)
-						) }
-					</span>
+							) }
+						</span>
+					) }
 					<span className="ab-testimonial__identity">
 						<RichText
 							tagName="span"
@@ -325,6 +443,33 @@ function TestimonialEdit( { attributes, setAttributes } ) {
 								allowedFormats={ [] }
 							/>
 						</span>
+						{ ( verified || platformLabel || dateDisplay ) && (
+							<span
+								className="ab-testimonial__source"
+								contentEditable={ false }
+							>
+								{ verified && (
+									<span className="ab-testimonial__verified">
+										{ CHECK_SVG }
+										{ __( 'Verified', 'axiom-blocks' ) }
+									</span>
+								) }
+								{ platformLabel && (
+									<span className="ab-testimonial__via">
+										{ sprintf(
+											/* translators: %s: review source platform name (e.g. Google) */
+											__( 'via %s', 'axiom-blocks' ),
+											platformLabel
+										) }
+									</span>
+								) }
+								{ dateDisplay && (
+									<time className="ab-testimonial__date">
+										{ dateDisplay }
+									</time>
+								) }
+							</span>
+						) }
 					</span>
 				</div>
 			</div>
@@ -343,19 +488,16 @@ export const Testimonial = {
 		icon: <BlockIcon slug="testimonial" />,
 		edit: TestimonialEdit,
 		save: ( { attributes } ) => {
-			const {
-				quote, name, role, company,
-				avatarUrl, avatarAlt,
-			} = attributes;
-			const blockProps = useBlockProps.save( { className: 'ab-testimonial' } );
+			const { quote, name, role, company, avatarUrl, avatarAlt } =
+				attributes;
+			const blockProps = useBlockProps.save( {
+				className: 'ab-testimonial',
+			} );
 			return (
 				<div { ...blockProps }>
 					{ quote && (
 						<blockquote className="ab-testimonial__quote">
-							<RichText.Content
-								tagName="p"
-								value={ quote }
-							/>
+							<RichText.Content tagName="p" value={ quote } />
 							{ ( name || role || company ) && (
 								<cite>
 									{ avatarUrl && (

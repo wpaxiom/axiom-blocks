@@ -2,17 +2,20 @@ import { __ } from '@wordpress/i18n';
 import {
 	useBlockProps,
 	useInnerBlocksProps,
-	InspectorControls,
 	InnerBlocks,
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
 	ABSelectControl,
-	ABColorControl,
 	ABRangeControl,
 } from '../../components/ABControls';
-import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
-import { useDeviceType, resolveResponsiveAttrs } from '../../components/responsive';
+import { useSpacingStyle } from '../../components/SpacingPanel';
+import { ABInspectorGroups } from '../../components/ABInspectorGroups';
+import { getBackgroundVars } from '../../components/BackgroundControl';
+import {
+	useDeviceType,
+	resolveResponsiveAttrs,
+} from '../../components/responsive';
 import { ABResponsive } from '../../components/ABResponsive';
 import {
 	responsiveVarValue,
@@ -46,19 +49,7 @@ const TEMPLATE = [
 	],
 ];
 
-/* Predefined block styles (the Styles panel). CSS lives in style.scss. */
-const STYLES = [
-	{
-		name: 'default',
-		label: __( 'Default', 'axiom-blocks' ),
-		isDefault: true,
-	},
-	{ name: 'bordered', label: __( 'Bordered', 'axiom-blocks' ) },
-	{ name: 'card', label: __( 'Card', 'axiom-blocks' ) },
-	{ name: 'accent', label: __( 'Accent', 'axiom-blocks' ) },
-];
-
-/* Inserter hover preview — also powers the Styles-panel thumbnails. */
+/* Inserter hover preview. */
 const EXAMPLE = {
 	attributes: { direction: 'column', contentAlign: 'center' },
 	innerBlocks: [
@@ -86,14 +77,133 @@ const EXAMPLE = {
 	],
 };
 
+const IBOX_BW = [
+	'borderTopWidth',
+	'borderRightWidth',
+	'borderBottomWidth',
+	'borderLeftWidth',
+];
+const IBOX_RADIUS = [
+	'radiusTopLeft',
+	'radiusTopRight',
+	'radiusBottomRight',
+	'radiusBottomLeft',
+];
+
+/* Anatomy-as-declaration — the part-first (Option C) Styles UI is rendered from
+ * this config by ABInspectorGroups/TargetSection. Info Box is a wrapper block
+ * (hosts InnerBlocks: icon + heading + text + button) ⇒ the Card part is a box
+ * ONLY, no typography (inner blocks own their text). Card hover (background +
+ * shadow + lift) is the Sable hover gap, built as P1 from new additive attrs —
+ * the block shipped no hover attrs of its own. save() is dynamic (render.php)
+ * so nothing changes in saved markup. */
+const DESIGN = {
+	block: 'ibox',
+	targets: [
+		{
+			noun: __( 'Card', 'axiom-blocks' ),
+			states: [ 'hover' ],
+			background: {
+				full: true,
+				prefix: 'card',
+				colorKey: 'bgColor',
+				overlay: true,
+				statePrefix: { hover: 'cardHover' },
+				stateColorKey: { hover: 'bgColorHover' },
+			},
+			border: {
+				widthKeys: IBOX_BW,
+				legacyWidth: 'borderWidth',
+				styleKey: 'borderStyle',
+				colorKey: 'borderColor',
+				max: 12,
+			},
+			radius: { keys: IBOX_RADIUS, legacyRadius: 'borderRadius', max: 48 },
+			shadow: { bind: 'boxShadowCustom' },
+			size: { panel: true, prefix: 'card', label: __( 'Size', 'axiom-blocks' ) },
+			ranges: [
+				{
+					bind: 'hoverLift',
+					label: __( 'Hover lift', 'axiom-blocks' ),
+					min: 0,
+					max: 24,
+					default: 0,
+				},
+			],
+		},
+	],
+};
+
+/* CSS vars for the wrapper — consumed by style.scss (loaded in editor AND
+ * frontend) so the preview matches the render exactly. Flat background color
+ * (legacy `bgColor`/`bgColorHover`, bgType empty) is emitted first so the editor
+ * matches the frontend's Background::value() fallback; gradient/image (bgType
+ * set) override it via getBackgroundVars. Per-side border widths and per-corner
+ * radii fall back to the legacy single `borderWidth`/`borderRadius` so old
+ * blocks preview the same as the frontend's render.php fallback. */
 export function getInfoBoxVars( attributes ) {
-	const { gap, bgColor, borderColor, borderWidth, borderRadius } = attributes;
+	const {
+		gap,
+		bgColor,
+		bgColorHover,
+		borderColor,
+		borderWidth,
+		borderStyle,
+		borderRadius,
+		borderTopWidth,
+		borderRightWidth,
+		borderBottomWidth,
+		borderLeftWidth,
+		radiusTopLeft,
+		radiusTopRight,
+		radiusBottomRight,
+		radiusBottomLeft,
+		boxShadowCustom,
+		boxShadowCustomHover,
+		hoverLift,
+	} = attributes;
+	const anyBw =
+		borderTopWidth ||
+		borderRightWidth ||
+		borderBottomWidth ||
+		borderLeftWidth ||
+		borderWidth;
+	const lift = parseInt( hoverLift, 10 ) || 0;
 	return {
 		'--ab-ibox-gap': gap || undefined,
+		// Card background — flat color fallback, then gradient/image override.
 		'--ab-ibox-bg': bgColor || undefined,
+		'--ab-ibox-bg-h': bgColorHover || undefined,
+		...getBackgroundVars( attributes, {
+			prefix: 'card',
+			varPrefix: '--ab-ibox',
+			colorKey: 'bgColor',
+		} ),
+		...getBackgroundVars( attributes, {
+			prefix: 'cardHover',
+			varPrefix: '--ab-ibox-h',
+			varName: '--ab-ibox-bg-h',
+			colorKey: 'bgColorHover',
+		} ),
+		// Border — per-side widths fall back to the legacy single `borderWidth`.
 		'--ab-ibox-bc': borderColor || undefined,
-		'--ab-ibox-bw': borderWidth || undefined,
+		'--ab-ibox-bs': anyBw ? borderStyle || 'solid' : borderStyle || undefined,
+		'--ab-ibox-bw-top': borderTopWidth || borderWidth || undefined,
+		'--ab-ibox-bw-right': borderRightWidth || borderWidth || undefined,
+		'--ab-ibox-bw-bottom': borderBottomWidth || borderWidth || undefined,
+		'--ab-ibox-bw-left': borderLeftWidth || borderWidth || undefined,
+		// Radius — per-corner falls back to the legacy single `borderRadius`.
+		'--ab-ibox-radius-tl': radiusTopLeft || borderRadius || undefined,
+		'--ab-ibox-radius-tr': radiusTopRight || borderRadius || undefined,
+		'--ab-ibox-radius-br': radiusBottomRight || borderRadius || undefined,
+		'--ab-ibox-radius-bl': radiusBottomLeft || borderRadius || undefined,
 		'--ab-ibox-radius': borderRadius || undefined,
+		// Shadow (L4) — custom wins over the preset classes (the presets set the
+		// same var at class level, so the inline value always beats them).
+		'--ab-ibox-shadow': boxShadowCustom || undefined,
+		'--ab-ibox-shadow-h': boxShadowCustomHover || undefined,
+		// Hover lift — stored negative (upward); unset ⇒ no transform.
+		'--ab-ibox-lift': lift > 0 ? `-${ lift }px` : undefined,
 	};
 }
 
@@ -102,19 +212,14 @@ function InfoBoxEdit( { attributes, setAttributes } ) {
 		return <DisabledBlockMessage blockName="Info Box" />;
 	}
 
-	const {
-		direction,
-		gap,
-		contentAlign,
-		boxShadow,
-		bgColor,
-		borderColor,
-		borderWidth,
-		borderRadius,
-	} = attributes;
+	const { direction, boxShadow } = attributes;
 
 	const device = useDeviceType();
-	const resolved = resolveResponsiveAttrs( attributes, [ 'contentAlign' ], device );
+	const resolved = resolveResponsiveAttrs(
+		attributes,
+		[ 'contentAlign' ],
+		device
+	);
 	const blockProps = useBlockProps( {
 		className: [
 			'ab-ibox',
@@ -126,6 +231,18 @@ function InfoBoxEdit( { attributes, setAttributes } ) {
 			...getInfoBoxVars( attributes ),
 			...useSpacingStyle( attributes ),
 			'--ab-ibox-gap': responsiveVarValue( attributes, 'gap', device ),
+			// Size (L5) — width/min-height as vars; max-width inline-only so an
+			// unset value inherits the layout width (core's constrained-width
+			// rule), not a static `none`. ResponsiveProps adds the media rules.
+			'--ab-ibox-w': responsiveVarValue( attributes, 'cardWidth', device ),
+			maxWidth:
+				responsiveVarValue( attributes, 'cardMaxWidth', device ) ||
+				undefined,
+			'--ab-ibox-mh': responsiveVarValue(
+				attributes,
+				'cardMinHeight',
+				device
+			),
 			alignItems: responsiveAlignValue(
 				attributes,
 				'contentAlign',
@@ -145,160 +262,89 @@ function InfoBoxEdit( { attributes, setAttributes } ) {
 		templateLock: false,
 	} );
 
+	const leading = (
+		<PanelBody title={ __( 'Layout', 'axiom-blocks' ) } initialOpen={ true }>
+			<ABSelectControl
+				label={ __( 'Direction', 'axiom-blocks' ) }
+				value={ direction }
+				options={ [
+					{
+						label: __( 'Stack (vertical)', 'axiom-blocks' ),
+						value: 'column',
+					},
+					{
+						label: __( 'Row (horizontal)', 'axiom-blocks' ),
+						value: 'row',
+					},
+				] }
+				onChange={ ( v ) => setAttributes( { direction: v } ) }
+			/>
+			<ABResponsive
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				attrKey="gap"
+			>
+				{ ( { value, setValue, inherited } ) => (
+					<ABRangeControl
+						label={ __( 'Gap between items', 'axiom-blocks' ) }
+						value={ fromPx(
+							value !== '' && value != null ? value : inherited,
+							16
+						) }
+						onChange={ ( v ) => setValue( toPx( v ) ) }
+						min={ 0 }
+						max={ 80 }
+						step={ 1 }
+						unit="px"
+						help={ __(
+							'Space between the icon, heading, text, and button.',
+							'axiom-blocks'
+						) }
+					/>
+				) }
+			</ABResponsive>
+			<ABResponsive
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				attrKey="contentAlign"
+			>
+				{ ( { value, setValue, inherited } ) => (
+					<ABSelectControl
+						label={ __( 'Alignment', 'axiom-blocks' ) }
+						value={
+							value !== '' && value != null
+								? value
+								: inherited ?? 'center'
+						}
+						options={ [
+							{
+								label: __( 'Left', 'axiom-blocks' ),
+								value: 'left',
+							},
+							{
+								label: __( 'Center', 'axiom-blocks' ),
+								value: 'center',
+							},
+							{
+								label: __( 'Right', 'axiom-blocks' ),
+								value: 'right',
+							},
+						] }
+						onChange={ setValue }
+					/>
+				) }
+			</ABResponsive>
+		</PanelBody>
+	);
+
 	return (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Layout', 'axiom-blocks' ) }
-					initialOpen={ true }
-				>
-					<ABSelectControl
-						label={ __( 'Direction', 'axiom-blocks' ) }
-						value={ direction }
-						options={ [
-							{
-								label: __( 'Stack (vertical)', 'axiom-blocks' ),
-								value: 'column',
-							},
-							{
-								label: __( 'Row (horizontal)', 'axiom-blocks' ),
-								value: 'row',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { direction: v } ) }
-					/>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="gap"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABRangeControl
-								label={ __(
-									'Gap between items',
-									'axiom-blocks'
-								) }
-								value={ fromPx(
-									value !== '' && value != null
-										? value
-										: inherited,
-									16
-								) }
-								onChange={ ( v ) => setValue( toPx( v ) ) }
-								min={ 0 }
-								max={ 80 }
-								step={ 1 }
-								unit="px"
-								help={ __(
-									'Space between the icon, heading, text, and button.',
-									'axiom-blocks'
-								) }
-							/>
-						) }
-					</ABResponsive>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="contentAlign"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABSelectControl
-								label={ __( 'Alignment', 'axiom-blocks' ) }
-								value={
-									value !== '' && value != null
-										? value
-										: inherited ?? 'center'
-								}
-								options={ [
-									{
-										label: __( 'Left', 'axiom-blocks' ),
-										value: 'left',
-									},
-									{
-										label: __( 'Center', 'axiom-blocks' ),
-										value: 'center',
-									},
-									{
-										label: __( 'Right', 'axiom-blocks' ),
-										value: 'right',
-									},
-								] }
-								onChange={ setValue }
-							/>
-						) }
-					</ABResponsive>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Box', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABColorControl
-						label={ __( 'Background', 'axiom-blocks' ) }
-						color={ bgColor }
-						onChange={ ( v ) => setAttributes( { bgColor: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Border colour', 'axiom-blocks' ) }
-						color={ borderColor }
-						onChange={ ( v ) =>
-							setAttributes( { borderColor: v } )
-						}
-					/>
-					<ABRangeControl
-						label={ __( 'Border width', 'axiom-blocks' ) }
-						value={ fromPx( borderWidth, 0 ) }
-						onChange={ ( v ) =>
-							setAttributes( { borderWidth: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 12 }
-						step={ 1 }
-						unit="px"
-					/>
-					<ABRangeControl
-						label={ __( 'Corner radius', 'axiom-blocks' ) }
-						value={ fromPx( borderRadius, 12 ) }
-						onChange={ ( v ) =>
-							setAttributes( { borderRadius: toPx( v ) } )
-						}
-						min={ 0 }
-						max={ 48 }
-						step={ 1 }
-						unit="px"
-					/>
-					<ABSelectControl
-						label={ __( 'Shadow', 'axiom-blocks' ) }
-						value={ boxShadow }
-						options={ [
-							{
-								label: __( 'None', 'axiom-blocks' ),
-								value: 'none',
-							},
-							{
-								label: __( 'Small', 'axiom-blocks' ),
-								value: 'sm',
-							},
-							{
-								label: __( 'Medium', 'axiom-blocks' ),
-								value: 'md',
-							},
-							{
-								label: __( 'Large', 'axiom-blocks' ),
-								value: 'lg',
-							},
-						] }
-						onChange={ ( v ) =>
-							setAttributes( { boxShadow: v } )
-						}
-					/>
-				</PanelBody>
-
-				<SpacingPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-				/>
-			</InspectorControls>
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ DESIGN }
+				leading={ leading }
+			/>
 
 			<div { ...innerBlocksProps } />
 		</>
@@ -315,7 +361,6 @@ export const InfoBox = {
 		),
 		icon: <BlockIcon slug="info-box" />,
 		example: EXAMPLE,
-		styles: STYLES,
 		edit: InfoBoxEdit,
 		save: () => <InnerBlocks.Content />,
 	},

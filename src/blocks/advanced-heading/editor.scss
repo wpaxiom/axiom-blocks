@@ -13,3 +13,9 @@
 		min-height: 1em;
 	}
 }
+
+// Per-run Text Color format popover (portals to <body>, so kept global).
+.ab-ah-color-popover__inner {
+	padding: 8px 10px;
+	min-width: 220px;
+}

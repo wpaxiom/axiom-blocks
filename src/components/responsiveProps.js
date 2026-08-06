@@ -100,28 +100,50 @@ export const ALIGN_FLEX_MAP = {
 };
 
 export const RESPONSIVE_PROPS = {
+	'axiom-blocks/advanced-section': [
+		{ key: 'gridColumns', type: 'number' },
+		{ key: 'layoutGap', type: 'string' },
+		{ key: 'width', type: 'string' },
+		{ key: 'maxWidth', type: 'string' },
+	],
 	'axiom-blocks/counter-group': [
 		{ key: 'columns', type: 'number' },
 		{ key: 'gap', type: 'string' },
 		{ key: 'iconSize', type: 'string' },
+		{ key: 'cardMinHeight', type: 'string' },
 	],
 	'axiom-blocks/pricing-table': [
 		{ key: 'columns', type: 'number' },
 		{ key: 'gap', type: 'number' },
+		{ key: 'cardMinHeight', type: 'string' },
+		{ key: 'cardGap', type: 'string' },
+		{ key: 'featureGap', type: 'string' },
+		{ key: 'featIconSize', type: 'string' },
 	],
+	'axiom-blocks/shape-divider': [ { key: 'height', type: 'string' } ],
 	'axiom-blocks/testimonials': [
 		{ key: 'columns', type: 'number' },
 		{ key: 'gap', type: 'string' },
+		{ key: 'cardGap', type: 'string' },
+		{ key: 'avatarSize', type: 'string' },
+		{ key: 'cardMinHeight', type: 'string' },
 	],
 	'axiom-blocks/trust-badges': [
 		{ key: 'columns', type: 'number' },
 		{ key: 'gap', type: 'number' },
 		{ key: 'alignment', type: 'string' },
 		{ key: 'headingAlign', type: 'string' },
+		{ key: 'cardPaddingTop', type: 'string' },
+		{ key: 'cardPaddingRight', type: 'string' },
+		{ key: 'cardPaddingBottom', type: 'string' },
+		{ key: 'cardPaddingLeft', type: 'string' },
+		{ key: 'cardGap', type: 'string' },
 	],
 	'axiom-blocks/accordion': [
 		{ key: 'itemGap', type: 'string' },
 		{ key: 'iconSize', type: 'string' },
+		{ key: 'containerMaxWidth', type: 'string' },
+		{ key: 'bodyMaxWidth', type: 'string' },
 	],
 	'axiom-blocks/icon-list': [
 		{ key: 'gap', type: 'string' },
@@ -131,6 +153,9 @@ export const RESPONSIVE_PROPS = {
 	'axiom-blocks/info-box': [
 		{ key: 'gap', type: 'string' },
 		{ key: 'contentAlign', type: 'string' },
+		{ key: 'cardWidth', type: 'string' },
+		{ key: 'cardMaxWidth', type: 'string' },
+		{ key: 'cardMinHeight', type: 'string' },
 	],
 	'axiom-blocks/button-group': [
 		{ key: 'gap', type: 'number' },
@@ -139,10 +164,21 @@ export const RESPONSIVE_PROPS = {
 	'axiom-blocks/tabs': [
 		{ key: 'contentGap', type: 'number' },
 		{ key: 'tabAlignment', type: 'string' },
+		{ key: 'tabGap', type: 'string' },
+		{ key: 'tabIconGap', type: 'string' },
+		{ key: 'barPaddingTop', type: 'string' },
+		{ key: 'barPaddingRight', type: 'string' },
+		{ key: 'barPaddingBottom', type: 'string' },
+		{ key: 'barPaddingLeft', type: 'string' },
+		{ key: 'panelPaddingTop', type: 'string' },
+		{ key: 'panelPaddingRight', type: 'string' },
+		{ key: 'panelPaddingBottom', type: 'string' },
+		{ key: 'panelPaddingLeft', type: 'string' },
 	],
 	'axiom-blocks/countdown-timer': [
 		{ key: 'gap', type: 'string' },
 		{ key: 'alignment', type: 'string' },
+		{ key: 'digitMinWidth', type: 'string' },
 	],
 	'axiom-blocks/star-rating': [
 		{ key: 'alignment', type: 'string' },
@@ -153,13 +189,25 @@ export const RESPONSIVE_PROPS = {
 		{ key: 'iconSize', type: 'string' },
 	],
 	'axiom-blocks/copy-to-clipboard': [ { key: 'alignment', type: 'string' } ],
-	'axiom-blocks/notice': [ { key: 'iconSize', type: 'string' } ],
+	'axiom-blocks/notice': [
+		{ key: 'iconSize', type: 'string' },
+		{ key: 'maxWidth', type: 'string' },
+	],
 	'axiom-blocks/advanced-button': [ { key: 'iconSize', type: 'string' } ],
 	'axiom-blocks/advanced-heading': [
 		{ key: 'accentAlign', type: 'string' },
 		{ key: 'accentWidth', type: 'string' },
 		{ key: 'accentThickness', type: 'string' },
+		{ key: 'headingSubGap', type: 'string' },
+		{ key: 'headingMaxWidth', type: 'string' },
 	],
+	'axiom-blocks/before-after-slider': [ { key: 'maxWidth', type: 'string' } ],
+	'axiom-blocks/content-slider': [ { key: 'maxWidth', type: 'string' } ],
+	'axiom-blocks/free-shipping-progress': [
+		{ key: 'barHeight', type: 'string' },
+		{ key: 'maxWidth', type: 'string' },
+	],
+	'axiom-blocks/table-of-contents': [ { key: 'maxWidth', type: 'string' } ],
 };
 
 /**

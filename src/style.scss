@@ -28,3 +28,114 @@
 @import "blocks/table-of-contents/style";
 @import "blocks/trust-badges/style";
 @import "blocks/free-shipping-progress/style";
+
+// Universal hide-on-device (ABDeviceVisibility). The classes are added at render
+// by inc/Blocks/DeviceVisibility.php; all-false ⇒ no class ⇒ no effect.
+.ab-hide-desktop {
+
+	@media screen and (min-width: 1025px) {
+		display: none !important;
+	}
+}
+
+.ab-hide-tablet {
+
+	@media screen and (min-width: 768px) and (max-width: 1024px) {
+		display: none !important;
+	}
+}
+
+.ab-hide-mobile {
+
+	@media screen and (max-width: 767px) {
+		display: none !important;
+	}
+}
+
+// Universal hover lift (ABInteractions). The class + vars are added at render by
+// inc/Blocks/Interactions.php; no lift ⇒ no class ⇒ no effect.
+.ab-has-hover {
+	transition: transform var(--ab-hover-tr, 0.25s) ease,
+		box-shadow var(--ab-hover-tr, 0.25s) ease;
+}
+
+.ab-has-hover:hover {
+	transform: translateY(var(--ab-hover-lift, 0));
+}
+
+// Universal scroll-in entrance (ABEntrance). The class is added at render by
+// inc/Blocks/Entrance.php; no entrance ⇒ no class ⇒ no effect. CSS-only via
+// scroll-driven timelines — browsers without support just show the element
+// (no JS, no hidden/broken state). Motion is disabled for reduced-motion users.
+@supports (animation-timeline: view()) {
+	@media (prefers-reduced-motion: no-preference) {
+		.ab-entrance {
+			animation-name: ab-entrance-fade;
+			animation-fill-mode: both;
+			animation-timing-function: linear;
+			animation-timeline: view();
+			animation-range: entry 0% cover 25%;
+		}
+
+		.ab-entrance-fade-up {
+			animation-name: ab-entrance-fade-up;
+		}
+
+		.ab-entrance-fade-down {
+			animation-name: ab-entrance-fade-down;
+		}
+
+		.ab-entrance-fade-left {
+			animation-name: ab-entrance-fade-left;
+		}
+
+		.ab-entrance-fade-right {
+			animation-name: ab-entrance-fade-right;
+		}
+
+		.ab-entrance-zoom-in {
+			animation-name: ab-entrance-zoom-in;
+		}
+	}
+}
+
+@keyframes ab-entrance-fade {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes ab-entrance-fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(40px);
+	}
+}
+
+@keyframes ab-entrance-fade-down {
+	from {
+		opacity: 0;
+		transform: translateY(-40px);
+	}
+}
+
+@keyframes ab-entrance-fade-left {
+	from {
+		opacity: 0;
+		transform: translateX(40px);
+	}
+}
+
+@keyframes ab-entrance-fade-right {
+	from {
+		opacity: 0;
+		transform: translateX(-40px);
+	}
+}
+
+@keyframes ab-entrance-zoom-in {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+}

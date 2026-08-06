@@ -17,9 +17,12 @@
 		"subText":     { "type": "string",  "default": "" },
 		"subTag":      { "type": "string",  "default": "p" },
 		"subPosition": { "type": "string",  "default": "below" },
+		"headingSubGap": { "type": "string", "default": "" },
+		"headingMaxWidth": { "type": "string", "default": "" },
 
-		"highlightColor": { "type": "string", "default": "" },
-		"highlightBg":    { "type": "string", "default": "" },
+		"highlightColor":  { "type": "string", "default": "" },
+		"highlightBg":     { "type": "string", "default": "" },
+		"highlightRadius": { "type": "string", "default": "" },
 
 		"accentEnabled":   { "type": "boolean", "default": false },
 		"accentPosition":  { "type": "string",  "default": "below" },

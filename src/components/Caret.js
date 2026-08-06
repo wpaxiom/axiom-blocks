@@ -1,8 +1,8 @@
 /**
  * Caret — the single down-chevron used by every select-like trigger
  * (ABSelectControl, ABSubAccordion, IconControl). One glyph, one size, one
- * colour so the inspector never shows mismatched carets. Colour comes from
- * `currentColor`; size/colour are set per-consumer via the passed className
+ * color so the inspector never shows mismatched carets. Color comes from
+ * `currentColor`; size/color are set per-consumer via the passed className
  * (defaults to 12×12 / #9ca3af in editor.scss `.ab-caret`).
  */
 

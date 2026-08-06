@@ -10,7 +10,11 @@
     "textdomain": "axiom-blocks",
     "icon": "money-alt",
     "parent": ["axiom-blocks/pricing-table"],
-    "usesContext": ["axiom-blocks/featureIconStyle"],
+    "usesContext": [
+        "axiom-blocks/featureIconStyle",
+        "axiom-blocks/showCurrency",
+        "axiom-blocks/showPeriod"
+    ],
     "attributes": {
         "name":        { "type": "string",  "default": "Plan" },
         "badge":       { "type": "string",  "default": "" },

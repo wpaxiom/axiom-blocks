@@ -7,12 +7,16 @@
 .ab-pt-feat {
 	position: relative;
 
+	/* The canvas swaps the frontend's `__icon` span for a click-to-toggle
+	   button, so it has to consume the same Features vars — otherwise Icon size
+	   and both icon colors look dead in the editor while working on the front
+	   end. Keep these three in step with the `__icon` rules in style.scss. */
 	&__toggle {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 18px;
-		height: 18px;
+		width: var(--ab-pt-feat-icon-size, 18px);
+		height: var(--ab-pt-feat-icon-size, 18px);
 		margin-top: 1px;
 		padding: 0;
 		border: 0;
@@ -23,17 +27,22 @@
 		flex-shrink: 0;
 		transition: background 0.12s;
 
+		svg {
+			width: 100%;
+			height: 100%;
+		}
+
 		&:hover {
 			background: rgba(124, 58, 237, 0.08);
 		}
 	}
 
 	&.is-included &__toggle {
-		color: var(--ab-pt-accent, #7c3aed);
+		color: var(--ab-pt-feat-icon, var(--ab-pt-accent, #7c3aed));
 	}
 
 	&.is-excluded &__toggle {
-		color: #9ca3af;
+		color: var(--ab-pt-feat-icon-ex, #9ca3af);
 	}
 
 	&__remove {

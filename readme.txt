@@ -5,7 +5,7 @@ Tags: gutenberg, blocks, editor, page-builder, woocommerce
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,10 +28,10 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 
 * **Advanced Heading** - Heading with inline highlight spans, an optional sub-heading, an accent line, and full typography control.
 * **Advanced Button** - Button with leading or trailing icons, an optional sub-caption, style and size presets, and hover states.
-* **Icon** - A single icon from the built-in library or your own SVG, with size, colour, shape background, and link controls.
+* **Icon** - A single icon from the built-in library or your own SVG, with size, color, shape background, and link controls.
 * **Icon List** - A list with a custom icon on every row - for features, benefits, and checklists.
 * **Accordion** - Collapsible panels for FAQs and disclosures, with single-open mode, first-panel-open, icon position/rotation, and automatic FAQ schema (JSON-LD).
-* **Notice / Alert** - Dismissible info, success, warning, or error messages with presets, icons, and custom colours.
+* **Notice / Alert** - Dismissible info, success, warning, or error messages with presets, icons, and custom colors.
 * **Counter** - Animated count-up statistics with icons, labels, custom separators, per-stat cards, and hover states.
 * **Testimonials** - Grid, carousel, or marquee testimonials with author details, avatars, and star ratings.
 * **Info Box** - A styled box that holds an icon, heading, text, and button as editable blocks, with predefined styles and a single control for the spacing between items.
@@ -55,7 +55,7 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 * **Responsive controls** - typography (all blocks), columns, gap, alignment, and sizes with per-device overrides and live editor previews
 * **Deactivation survival** - authored content from dynamic blocks stays visible on the page even if the plugin is deactivated (semantic save fallback + deprecation migration)
 * **Shared icon system** - 136 curated Lucide icons plus custom SVG uploads, shared across all icon-supporting blocks
-* **Advanced colour picker** - every colour control has an HSV canvas, theme palette, Hex/RGB/HSL inputs, alpha, eyedropper, and recent colours
+* **Advanced color picker** - every color control has an HSV canvas, theme palette, Hex/RGB/HSL inputs, alpha, eyedropper, and recent colors
 * Clean, semantic markup with no extra wrapper bloat
 * Fully compatible with Full Site Editing (FSE) and block themes
 * Optimized performance - only loads assets for active blocks
@@ -105,9 +105,14 @@ No. Axiom Blocks works on any WordPress site. The Trust Badges and Free Shipping
 == Screenshots ==
 
 1. Axiom Blocks block manager - enable or disable individual blocks from a clean admin interface.
-2. Pricing Table block with feature lists and CTAs.
-3. Advanced Section block settings - backgrounds, overlays, shape dividers, and animations.
-4. Before/After Slider block in action.
+2. Before/After Slider - drag or hover to compare two images, horizontally or vertically.
+3. Advanced Section - backgrounds, overlays, and a flex/grid layout engine, styled by part.
+4. Pricing Table - every part styled from the Styles tab, with hover states.
+5. Content Slider - any blocks as slides, with slide, fade, and coverflow effects.
+6. Table of Contents - built automatically from the headings already on the page.
+7. Testimonials - grid, carousel, or marquee, with ten styleable parts.
+8. Accordion - the Header part carries Normal, Hover and Active states.
+9. Counter - animated stats, with the icon chip styled like any other part.
 
 == Source Code ==
 
@@ -151,10 +156,28 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Changelog ==
 
+= 1.0.6 =
+* Redesigned block settings across every block. Each block's sidebar is now split into Settings (what the block does) and Styles (how it looks), and the Styles tab is organised by the parts you can see - a Tab, a Card, an Icon, a Heading - instead of one long list of options. Border, shadow, and typography open in focused popovers, and rows show their current value at a glance.
+* Normal / Hover / Active states on styleable parts. Hover colors, backgrounds, and borders are now real controls rather than something baked into a preset.
+* A consistent styling stack on every part: colors, background (including gradients), border, radius, shadow, padding, size, and gap - with per-device values where it makes sense. Many parts that previously offered only a color now offer the full set.
+* Every style control now shows the block's actual shipped default instead of "None", so resetting returns you to the original look rather than clearing the style.
+* Removed the Tabs "Tab style" presets (Default/Pills/Underline/Boxed). Every look they produced is now built from the Styles rows on the Tab bar, Tab, and Panel parts. Existing tabs keep their design - the preset is converted once into those rows, so the look is preserved and now fully editable.
+* Removed the Pricing Table "Card style" presets (Bordered/Filled/Minimal). Card styling now comes from the Styles > Cards rows (background, border, radius, shadow, padding, min height), with a Featured tab for the highlighted plan. Tables using Filled or Minimal revert to the Bordered look and need restyling.
+* Tabs: new Tab padding, Tab shadow, and per-state Tab border controls, plus a "Tab bar fits content" layout option and a fully-round radius range.
+* Tabs: separate gap controls for tab-to-tab spacing, icon-to-label spacing inside a tab, and the gap between the tab bar and the panel.
+* Tabs: a chosen inactive tab color now renders at full strength instead of being dimmed by the built-in 75% fade.
+* Trust Badges: the "Card background" and "Card border" toggles are gone - both are now ordinary Styles rows on the Card part. Existing badges keep their appearance.
+* Reading Progress Bar: the fill accepts a gradient, and the block now supports HTML anchors.
+* Testimonials: avatar/monogram size and weight moved to the block's Monogram part, so one setting styles every card.
+* Fixed Advanced Button: outline-style buttons flickered on hover and showed the wrong border width. The button changed size between its normal and hover states, which shifted the layout out from under the pointer.
+* Fixed Reading Progress Bar dropping a custom CSS class added in the editor.
+* Fixed Table of Contents ignoring per-device typography settings.
+* Fixed border controls reading "None" when a block's shipped border applies to only one side.
+
 = 1.0.5 =
 * New block: Content Slider - a slider/carousel that holds any blocks per slide, with slide, fade, and coverflow effects, autoplay with loop and pause-on-hover, arrows and dots, drag and swipe, keyboard control, responsive slides-per-view, adaptive height, and an optional click-to-zoom lightbox.
 * New block: Table of Contents - auto-built from your page headings, with numbered/bullet/none markers, nesting, smooth scroll, active-section highlight, a sticky sidebar with internal scroll, a collapsible panel, a per-section reading-progress rail, copy-link, back-to-top, a mobile dock bar, and light or dark schemes.
-* New colour picker - every colour control now uses a redesigned picker with an HSV canvas, theme palette, Hex/RGB/HSL inputs, alpha, an eyedropper, and recent colours.
+* New color picker - every color control now uses a redesigned picker with an HSV canvas, theme palette, Hex/RGB/HSL inputs, alpha, an eyedropper, and recent colors.
 
 = 1.0.4 =
 * Deactivation survival for Accordion, Advanced Heading, Advanced Button, and Notice blocks.
@@ -171,7 +194,7 @@ Developers can redirect the feedback to their own server - or disable it entirel
 = 1.0.2 =
 * New blocks: Accordion, Notice / Alert, Counter, and Testimonials.
 * Accordion outputs FAQ schema (JSON-LD) for rich results, with single-open and first-panel-open options.
-* Counter adds custom decimal/thousands separators, per-stat cards, hover colours, and label positioning.
+* Counter adds custom decimal/thousands separators, per-stat cards, hover colors, and label positioning.
 
 = 1.0.1 =
 * New blocks: Advanced Heading, Advanced Button, Icon, and Icon List.
@@ -186,8 +209,11 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Upgrade Notice ==
 
+= 1.0.6 =
+Action needed if you use Pricing Table with the Filled or Minimal card style: those presets are removed and the tables revert to the Bordered look, so you will need to restyle them from Styles > Cards. Tabs presets are also removed, but existing tabs are converted automatically and keep their design. Everything else is additive - block settings are redesigned around the parts you can see, with hover/active states and a consistent styling stack on every part.
+
 = 1.0.5 =
-Adds two new blocks - Content Slider and Table of Contents - plus a redesigned colour picker with an HSV canvas, alpha, eyedropper, and recent colours.
+Adds two new blocks - Content Slider and Table of Contents - plus a redesigned color picker with an HSV canvas, alpha, eyedropper, and recent colors.
 
 = 1.0.4 =
 Adds responsive controls, deactivation survival, custom icon library, Advanced Section focal point improvements, and multiple bug fixes.

@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use AxiomBlocks\Blocks\Background;
 use AxiomBlocks\Blocks\Spacing;
 use AxiomBlocks\Blocks\Typography;
 
@@ -49,7 +50,11 @@ $axiom_blocks_expired_action  = isset( $attributes['expiredAction'] ) ? sanitize
 $axiom_blocks_expired_message = isset( $attributes['expiredMessage'] ) ? sanitize_text_field( $attributes['expiredMessage'] ) : __( "Time's up!", 'axiom-blocks' );
 $axiom_blocks_redirect_url    = isset( $attributes['redirectUrl'] ) ? esc_url_raw( $attributes['redirectUrl'] ) : '';
 
-// Inline element styles — preserve original declarations from the pre-refactor render.
+// Inline element styles — the container keeps its flex layout (gap is
+// responsive via ResponsiveProps; this is the desktop value). The unit box's
+// background / radius / border / shadow / min-width are CSS vars on the wrapper
+// (below), consumed by style.scss, so the unit div carries no inline style.
+// Digit and label keep their typography inline (colors are vars too).
 $axiom_blocks_container_parts = array(
 	'display: flex',
 	'flex-wrap: wrap',
@@ -60,12 +65,6 @@ if ( 'vertical' === $axiom_blocks_layout ) {
 }
 $axiom_blocks_container_style = safecss_filter_attr( implode( '; ', $axiom_blocks_container_parts ) );
 
-$axiom_blocks_unit_style = safecss_filter_attr(
-	'background-color: ' . $axiom_blocks_background_color
-	. '; border-radius: ' . $axiom_blocks_border_radius
-	. '; padding: 20px; min-width: 80px'
-);
-
 $axiom_blocks_digit_typo = Typography::inline_style( $attributes, 'digit' );
 $axiom_blocks_label_typo = Typography::inline_style( $attributes, 'label' );
 
@@ -75,7 +74,6 @@ $axiom_blocks_digit_parts = array_filter(
 		'line-height: 1',
 		'font-size: ' . $axiom_blocks_digit_font_size,
 		rtrim( trim( $axiom_blocks_digit_typo ), ';' ),
-		'color: ' . $axiom_blocks_digit_color,
 	)
 );
 $axiom_blocks_digit_style = safecss_filter_attr( implode( '; ', $axiom_blocks_digit_parts ) );
@@ -86,7 +84,6 @@ $axiom_blocks_label_parts = array_filter(
 		'letter-spacing: 1px',
 		'font-size: ' . $axiom_blocks_label_font_size,
 		rtrim( trim( $axiom_blocks_label_typo ), ';' ),
-		'color: ' . $axiom_blocks_label_color,
 		'margin-top: 8px',
 	)
 );
@@ -128,12 +125,82 @@ if ( ! empty( $axiom_blocks_block_supports['class'] ) ) {
 }
 $axiom_blocks_class_attr = trim( implode( ' ', array_filter( $axiom_blocks_classes ) ) );
 
+// Design-layer vars — consumed by style.scss on the unit boxes / digit / label
+// (loaded in editor AND frontend). Mirrors getCdVars() in index.js. The digit
+// box background reuses the shipped `backgroundColor` as the flat-color key, so
+// gradient/image (`digitBg*`) are additive and unset ⇒ byte-identical.
+$axiom_blocks_var_parts = array();
+
+$axiom_blocks_digit_bg = Background::value( $attributes, 'digitBg', 'backgroundColor' );
+if ( '' !== $axiom_blocks_digit_bg ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-digit-bg: ' . $axiom_blocks_digit_bg;
+}
+$axiom_blocks_var_parts = array_merge(
+	$axiom_blocks_var_parts,
+	Background::layer_vars( $attributes, 'digitBg', 'ab-cd-digit' )
+);
+
+if ( '' !== $axiom_blocks_digit_color ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-digit-color: ' . $axiom_blocks_digit_color;
+}
+if ( '' !== $axiom_blocks_label_color ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-label-color: ' . $axiom_blocks_label_color;
+}
+
+$axiom_blocks_border_color = $attributes['borderColor'] ?? '';
+if ( '' !== $axiom_blocks_border_color ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-bc: ' . $axiom_blocks_border_color;
+}
+$axiom_blocks_border_style_attr = $attributes['borderStyle'] ?? '';
+$axiom_blocks_bw_map            = array(
+	'top'    => 'borderTopWidth',
+	'right'  => 'borderRightWidth',
+	'bottom' => 'borderBottomWidth',
+	'left'   => 'borderLeftWidth',
+);
+$axiom_blocks_any_bw = false;
+foreach ( $axiom_blocks_bw_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $attributes[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_any_bw            = true;
+		$axiom_blocks_var_parts[] = '--ab-cd-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_val;
+	}
+}
+if ( $axiom_blocks_any_bw ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-bs: ' . ( '' !== $axiom_blocks_border_style_attr ? $axiom_blocks_border_style_attr : 'solid' );
+} elseif ( '' !== $axiom_blocks_border_style_attr ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-bs: ' . $axiom_blocks_border_style_attr;
+}
+
+$axiom_blocks_radius_map = array(
+	'tl' => 'radiusTopLeft',
+	'tr' => 'radiusTopRight',
+	'br' => 'radiusBottomRight',
+	'bl' => 'radiusBottomLeft',
+);
+foreach ( $axiom_blocks_radius_map as $axiom_blocks_corner => $axiom_blocks_attr_key ) {
+	if ( ! empty( $attributes[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_var_parts[] = '--ab-cd-radius-' . $axiom_blocks_corner . ': ' . $attributes[ $axiom_blocks_attr_key ];
+	}
+}
+if ( '' !== $axiom_blocks_border_radius ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-radius: ' . $axiom_blocks_border_radius;
+}
+
+if ( ! empty( $attributes['digitShadow'] ) ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-shadow: ' . $attributes['digitShadow'];
+}
+if ( ! empty( $attributes['digitMinWidth'] ) ) {
+	$axiom_blocks_var_parts[] = '--ab-cd-digit-minw: ' . $attributes['digitMinWidth'];
+}
+
 $axiom_blocks_style_parts = array_filter(
 	array(
 		rtrim( trim( $axiom_blocks_block_supports['style'] ?? '' ), ';' ),
 		rtrim( trim( $axiom_blocks_spacing_style ), ';' ),
 	)
 );
+$axiom_blocks_style_parts = array_merge( $axiom_blocks_style_parts, $axiom_blocks_var_parts );
 $axiom_blocks_style_attr  = safecss_filter_attr( implode( ';', $axiom_blocks_style_parts ) );
 
 $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
@@ -162,7 +229,7 @@ $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 			data-redirect-url="<?php echo esc_url( $axiom_blocks_redirect_url ); ?>"
 		>
 			<?php if ( $axiom_blocks_show_days ) : ?>
-				<div class="axiom-blocks-countdown__unit" data-unit="days" style="<?php echo esc_attr( $axiom_blocks_unit_style ); ?>">
+				<div class="axiom-blocks-countdown__unit" data-unit="days">
 					<div class="axiom-blocks-countdown__digit" style="<?php echo esc_attr( $axiom_blocks_digit_style ); ?>">
 						<?php echo esc_html( sprintf( '%02d', $axiom_blocks_days ) ); ?>
 					</div>
@@ -173,7 +240,7 @@ $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 			<?php endif; ?>
 
 			<?php if ( $axiom_blocks_show_hours ) : ?>
-				<div class="axiom-blocks-countdown__unit" data-unit="hours" style="<?php echo esc_attr( $axiom_blocks_unit_style ); ?>">
+				<div class="axiom-blocks-countdown__unit" data-unit="hours">
 					<div class="axiom-blocks-countdown__digit" style="<?php echo esc_attr( $axiom_blocks_digit_style ); ?>">
 						<?php echo esc_html( sprintf( '%02d', $axiom_blocks_hours ) ); ?>
 					</div>
@@ -184,7 +251,7 @@ $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 			<?php endif; ?>
 
 			<?php if ( $axiom_blocks_show_minutes ) : ?>
-				<div class="axiom-blocks-countdown__unit" data-unit="minutes" style="<?php echo esc_attr( $axiom_blocks_unit_style ); ?>">
+				<div class="axiom-blocks-countdown__unit" data-unit="minutes">
 					<div class="axiom-blocks-countdown__digit" style="<?php echo esc_attr( $axiom_blocks_digit_style ); ?>">
 						<?php echo esc_html( sprintf( '%02d', $axiom_blocks_minutes ) ); ?>
 					</div>
@@ -195,7 +262,7 @@ $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
 			<?php endif; ?>
 
 			<?php if ( $axiom_blocks_show_seconds ) : ?>
-				<div class="axiom-blocks-countdown__unit" data-unit="seconds" style="<?php echo esc_attr( $axiom_blocks_unit_style ); ?>">
+				<div class="axiom-blocks-countdown__unit" data-unit="seconds">
 					<div class="axiom-blocks-countdown__digit" style="<?php echo esc_attr( $axiom_blocks_digit_style ); ?>">
 						<?php echo esc_html( sprintf( '%02d', $axiom_blocks_seconds ) ); ?>
 					</div>

@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AxiomBlocks\Blocks\Spacing;
+use AxiomBlocks\Blocks\Background;
 
 $axiom_blocks_a      = $attributes ?? array();
 $axiom_blocks_slides = $block->parsed_block['innerBlocks'] ?? array();
@@ -66,11 +67,61 @@ $axiom_blocks_var_map     = array(
 	'--ab-slider-bw'           => 'borderWidth',
 	'--ab-slider-radius'       => 'borderRadius',
 	'--ab-slider-height'       => 'sliderHeight',
+	'--ab-slider-bs'           => 'borderStyle',
+	'--ab-slider-shadow'       => 'containerShadow',
+	'--ab-slider-arrow-color-hover' => 'arrowColorHover',
+	'--ab-slider-arrow-bg-hover'    => 'arrowBgHover',
 );
 $axiom_blocks_style_parts = array();
 foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
 	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
 		$axiom_blocks_style_parts[] = $axiom_blocks_css_var . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+
+/* Max width is a real inline declaration (not a CSS var): unset must inherit
+ * the layout width, and a var with a `none` fallback would force full width.
+ * Tablet/Mobile overrides arrive via ResponsiveProps media queries. */
+if ( ! empty( $axiom_blocks_a['maxWidth'] ) ) {
+	$axiom_blocks_style_parts[] = 'max-width: ' . $axiom_blocks_a['maxWidth'];
+}
+
+/* Per-side border widths / per-corner radii (L3 upgrade). Emitted only when
+ * set; style.scss falls back to the legacy single-value vars so saved
+ * single-width borders render on every side until the longhands are edited.
+ * Var names avoid the substring "border-width" (core's [style*=border-width]
+ * rule would force border-style: solid on the wrapper). */
+$axiom_blocks_side_map = array(
+	'top'    => 'borderTopWidth',
+	'right'  => 'borderRightWidth',
+	'bottom' => 'borderBottomWidth',
+	'left'   => 'borderLeftWidth',
+);
+foreach ( $axiom_blocks_side_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_style_parts[] = '--ab-slider-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+$axiom_blocks_radius_map = array(
+	'tl' => 'radiusTopLeft',
+	'tr' => 'radiusTopRight',
+	'br' => 'radiusBottomRight',
+	'bl' => 'radiusBottomLeft',
+);
+foreach ( $axiom_blocks_radius_map as $axiom_blocks_suffix => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_style_parts[] = '--ab-slider-radius-' . $axiom_blocks_suffix . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+$axiom_blocks_arrow_radius_map = array(
+	'tl' => 'arrowRadiusTopLeft',
+	'tr' => 'arrowRadiusTopRight',
+	'br' => 'arrowRadiusBottomRight',
+	'bl' => 'arrowRadiusBottomLeft',
+);
+foreach ( $axiom_blocks_arrow_radius_map as $axiom_blocks_suffix => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_style_parts[] = '--ab-slider-arrow-radius-' . $axiom_blocks_suffix . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
 	}
 }
 $axiom_blocks_wrapper_style = implode( '; ', $axiom_blocks_style_parts );
@@ -132,7 +183,6 @@ $axiom_blocks_id_attr            = $axiom_blocks_block_supports['id'] ?? '';
 				$axiom_blocks_slide_attrs = $axiom_blocks_slide['attrs'] ?? array();
 				$axiom_blocks_align       = (string) ( $axiom_blocks_slide_attrs['contentAlign'] ?? 'center' );
 				$axiom_blocks_valign      = (string) ( $axiom_blocks_slide_attrs['verticalAlign'] ?? 'center' );
-				$axiom_blocks_bg          = (string) ( $axiom_blocks_slide_attrs['bgColor'] ?? '' );
 
 				if ( ! in_array( $axiom_blocks_align, array( 'left', 'center', 'right' ), true ) ) {
 					$axiom_blocks_align = 'center';
@@ -146,8 +196,29 @@ $axiom_blocks_id_attr            = $axiom_blocks_block_supports['id'] ?? '';
 					$axiom_blocks_slide_body .= ( new WP_Block( $axiom_blocks_inner ) )->render();
 				}
 
+				/* Background: a slide with no background type keeps the legacy
+				 * inline `background-color` byte-for-byte; gradient/image/overlay
+				 * (bgType set) render via the shared --ab-slide-bg var + layer
+				 * vars consumed by style.scss. */
+				$axiom_blocks_slide_bg_type = (string) ( $axiom_blocks_slide_attrs['bgType'] ?? '' );
+				$axiom_blocks_slide_styles  = array();
+				if ( '' !== $axiom_blocks_slide_bg_type ) {
+					$axiom_blocks_slide_bg_value = Background::value( $axiom_blocks_slide_attrs, '', 'bgColor' );
+					if ( '' !== $axiom_blocks_slide_bg_value ) {
+						$axiom_blocks_slide_styles[] = '--ab-slide-bg: ' . $axiom_blocks_slide_bg_value;
+					}
+					foreach ( Background::layer_vars( $axiom_blocks_slide_attrs, '', 'ab-slide' ) as $axiom_blocks_slide_var ) {
+						$axiom_blocks_slide_styles[] = $axiom_blocks_slide_var;
+					}
+				} else {
+					$axiom_blocks_slide_bg = (string) ( $axiom_blocks_slide_attrs['bgColor'] ?? '' );
+					if ( '' !== $axiom_blocks_slide_bg ) {
+						$axiom_blocks_slide_styles[] = 'background-color: ' . $axiom_blocks_slide_bg;
+					}
+				}
+
 				$axiom_blocks_slide_class = 'ab-slide ab-slide--align-' . $axiom_blocks_align . ' ab-slide--valign-' . $axiom_blocks_valign;
-				$axiom_blocks_slide_style = '' !== $axiom_blocks_bg ? safecss_filter_attr( 'background-color: ' . $axiom_blocks_bg ) : '';
+				$axiom_blocks_slide_style = safecss_filter_attr( implode( '; ', $axiom_blocks_slide_styles ) );
 				?>
 				<div class="<?php echo esc_attr( $axiom_blocks_slide_class ); ?>"<?php echo '' !== $axiom_blocks_slide_style ? ' style="' . esc_attr( $axiom_blocks_slide_style ) . '"' : ''; ?>>
 					<div class="ab-slide__content"><?php echo $axiom_blocks_slide_body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Inner block HTML, already escaped by each block's own render/save. ?></div>

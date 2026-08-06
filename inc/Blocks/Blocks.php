@@ -128,7 +128,7 @@ class Blocks {
 			'name'        => 'Icon',
 			'category'    => 'content',
 			'tier'        => 'free',
-			'description' => 'Library or custom SVG icon with shape, colour, and link',
+			'description' => 'Library or custom SVG icon with shape, color, and link',
 			'icon'        => 'star-filled',
 		),
 		array(

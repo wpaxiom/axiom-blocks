@@ -1,19 +1,20 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
 	ABRangeControl,
 	ABSelectControl,
 	ABTextControl,
-	ABColorControl,
 	ABToggleControl,
 } from '../../components/ABControls';
+import { useTypographyStyle } from '../../components/TypographyPanel';
+import { useSpacingStyle } from '../../components/SpacingPanel';
+import { ABInspectorGroups } from '../../components/ABInspectorGroups';
 import {
-	TypographyPanel,
-	useTypographyStyle,
-} from '../../components/TypographyPanel';
-import { SpacingPanel, useSpacingStyle } from '../../components/SpacingPanel';
-import { useDeviceType, resolveResponsive, resolveResponsiveAttrs } from '../../components/responsive';
+	useDeviceType,
+	resolveResponsive,
+	resolveResponsiveAttrs,
+} from '../../components/responsive';
 import { ABResponsive } from '../../components/ABResponsive';
 import {
 	responsiveAlignValue,
@@ -27,11 +28,68 @@ import {
 import { nullSaveDeprecation } from '../../components/deprecations';
 import metadata from './block.json';
 
-/* Star size stores a px string ('' = inherit). */
-const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
-const fromPx = ( v, fallback ) =>
-	v === '' || v == null ? fallback : parseInt( v, 10 ) || fallback;
+const FILLED_DEFAULT = '#fbbf24';
+const EMPTY_DEFAULT = '#e5e7eb';
+const TEXT_DEFAULT = '#4b5563';
 
+/* Anatomy-as-declaration — two parts: the Stars row and the Labels (meta) text.
+ *
+ * ⚠️ The audit's "Silence test": there is deliberately NO border / radius /
+ * shadow / size key here. A star row should not grow a box just because the
+ * capability stack exists — this block is the proof that the system only renders
+ * what a part actually declares. Do not add them.
+ *
+ * Pure re-home: every binding is a shipped attribute, no new attrs, no new vars,
+ * render.php and style.scss are untouched. Static — no states, ever. */
+const designFor = ( { showValue, showCount } ) => ( {
+	block: 'star',
+	targets: [
+		{
+			noun: __( 'Stars', 'axiom-blocks' ),
+			colors: [
+				{
+					label: __( 'Filled', 'axiom-blocks' ),
+					bind: 'filledColor',
+					fallback: FILLED_DEFAULT,
+				},
+				{
+					label: __( 'Empty', 'axiom-blocks' ),
+					bind: 'emptyColor',
+					fallback: EMPTY_DEFAULT,
+				},
+			],
+			ranges: [
+				{
+					bind: 'starSize',
+					label: __( 'Size', 'axiom-blocks' ),
+					min: 10,
+					max: 80,
+					default: 20,
+					responsive: true,
+				},
+			],
+		},
+		// The meta row only renders when there is something to show, so its part
+		// section follows it — matching the shipped panel's conditional rows.
+		...( showValue || showCount
+			? [
+					{
+						noun: __( 'Labels', 'axiom-blocks' ),
+						colors: [
+							{
+								label: __( 'Text', 'axiom-blocks' ),
+								bind: 'textColor',
+								fallback: TEXT_DEFAULT,
+							},
+						],
+						typography: 'meta',
+					},
+			  ]
+			: [] ),
+	],
+} );
+
+/* Star size stores a px string ('' = inherit). */
 const StarSVG = ( { size, color } ) => (
 	<svg
 		width={ size }
@@ -67,11 +125,14 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 		reviewCount,
 		countLabel,
 		textColor,
-		alignment,
 	} = attributes;
 
 	const device = useDeviceType();
-	const resolved = resolveResponsiveAttrs( attributes, [ 'alignment' ], device );
+	const resolved = resolveResponsiveAttrs(
+		attributes,
+		[ 'alignment' ],
+		device
+	);
 	// Active device's star size (cascade) for the canvas preview.
 	const resolvedStarSize =
 		resolveResponsive( attributes, 'starSize', device ) || '20px';
@@ -96,200 +157,150 @@ function StarRatingEdit( { attributes, setAttributes } ) {
 
 	const stars = Array.from( { length: maxStars } );
 
-	return (
+	const leading = (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Rating', 'axiom-blocks' ) }
-					initialOpen={ true }
-				>
-					<ABSelectControl
-						label={ __( 'Precision', 'axiom-blocks' ) }
-						value={ precision }
-						options={ [
-							{
-								label: __( 'Full stars only', 'axiom-blocks' ),
-								value: 'full',
-							},
-							{
-								label: __( 'Half stars', 'axiom-blocks' ),
-								value: 'half',
-							},
-							{
-								label: __( 'Any fraction', 'axiom-blocks' ),
-								value: 'any',
-							},
-						] }
-						onChange={ ( v ) => setAttributes( { precision: v } ) }
-					/>
-					<ABRangeControl
-						label={ __( 'Rating', 'axiom-blocks' ) }
-						value={ rating }
-						onChange={ ( v ) =>
-							setAttributes( { rating: v ?? 0 } )
-						}
-						min={ 0 }
-						max={ maxStars }
-						step={
-							precision === 'full'
-								? 1
-								: precision === 'half'
-								? 0.5
-								: 0.1
-						}
-						unit=""
-					/>
-					<ABRangeControl
-						label={ __( 'Max Stars', 'axiom-blocks' ) }
-						value={ maxStars }
-						onChange={ ( v ) =>
-							setAttributes( { maxStars: v ?? 5 } )
-						}
-						min={ 3 }
-						max={ 10 }
-						step={ 1 }
-						unit=""
-					/>
-				</PanelBody>
+			<PanelBody
+				title={ __( 'Rating', 'axiom-blocks' ) }
+				initialOpen={ true }
+			>
+				<ABSelectControl
+					label={ __( 'Precision', 'axiom-blocks' ) }
+					value={ precision }
+					options={ [
+						{
+							label: __( 'Full stars only', 'axiom-blocks' ),
+							value: 'full',
+						},
+						{
+							label: __( 'Half stars', 'axiom-blocks' ),
+							value: 'half',
+						},
+						{
+							label: __( 'Any fraction', 'axiom-blocks' ),
+							value: 'any',
+						},
+					] }
+					onChange={ ( v ) => setAttributes( { precision: v } ) }
+				/>
+				<ABRangeControl
+					label={ __( 'Rating', 'axiom-blocks' ) }
+					value={ rating }
+					onChange={ ( v ) => setAttributes( { rating: v ?? 0 } ) }
+					min={ 0 }
+					max={ maxStars }
+					step={
+						precision === 'full'
+							? 1
+							: precision === 'half'
+							? 0.5
+							: 0.1
+					}
+					unit=""
+				/>
+				<ABRangeControl
+					label={ __( 'Max Stars', 'axiom-blocks' ) }
+					value={ maxStars }
+					onChange={ ( v ) => setAttributes( { maxStars: v ?? 5 } ) }
+					min={ 3 }
+					max={ 10 }
+					step={ 1 }
+					unit=""
+				/>
+			</PanelBody>
 
-				<PanelBody
-					title={ __( 'Labels', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABToggleControl
-						label={ __( 'Show numeric value', 'axiom-blocks' ) }
-						checked={ showValue }
-						onChange={ ( v ) => setAttributes( { showValue: v } ) }
-					/>
-					<ABToggleControl
-						label={ __( 'Show review count', 'axiom-blocks' ) }
-						checked={ showCount }
-						onChange={ ( v ) => setAttributes( { showCount: v } ) }
-					/>
-					{ showCount && (
-						<>
-							<ABTextControl
-								label={ __( 'Review count', 'axiom-blocks' ) }
-								type="number"
-								value={ String( reviewCount ?? 0 ) }
-								onChange={ ( v ) =>
-									setAttributes( {
-										reviewCount: parseInt( v, 10 ) || 0,
-									} )
-								}
-								min={ 0 }
-							/>
-							<ABTextControl
-								label={ __( 'Count label', 'axiom-blocks' ) }
-								value={ countLabel }
-								onChange={ ( v ) =>
-									setAttributes( { countLabel: v } )
-								}
-								help={ __(
-									'e.g. "reviews", "ratings"',
-									'axiom-blocks'
-								) }
-							/>
-						</>
-					) }
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Style', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="alignment"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABSelectControl
-								label={ __( 'Alignment', 'axiom-blocks' ) }
-								value={
-									value !== '' && value != null
-										? value
-										: inherited ?? 'left'
-								}
-								options={ [
-									{
-										label: __( 'Left', 'axiom-blocks' ),
-										value: 'left',
-									},
-									{
-										label: __( 'Center', 'axiom-blocks' ),
-										value: 'center',
-									},
-									{
-										label: __( 'Right', 'axiom-blocks' ),
-										value: 'right',
-									},
-								] }
-								onChange={ setValue }
-							/>
-						) }
-					</ABResponsive>
-					<ABResponsive
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						attrKey="starSize"
-					>
-						{ ( { value, setValue, inherited } ) => (
-							<ABRangeControl
-								label={ __( 'Star size', 'axiom-blocks' ) }
-								value={ fromPx(
-									value === '' ? inherited : value,
-									20
-								) }
-								onChange={ ( v ) => setValue( toPx( v ) ) }
-								min={ 10 }
-								max={ 80 }
-								step={ 1 }
-								unit="px"
-							/>
-						) }
-					</ABResponsive>
-					<ABColorControl
-						label={ __( 'Filled color', 'axiom-blocks' ) }
-						color={ filledColor }
-						defaultColor="#fbbf24"
-						onChange={ ( c ) =>
-							setAttributes( { filledColor: c } )
-						}
-					/>
-					<ABColorControl
-						label={ __( 'Empty color', 'axiom-blocks' ) }
-						color={ emptyColor }
-						defaultColor="#e5e7eb"
-						onChange={ ( c ) => setAttributes( { emptyColor: c } ) }
-					/>
-					{ ( showValue || showCount ) && (
-						<ABColorControl
-							label={ __( 'Text color', 'axiom-blocks' ) }
-							color={ textColor }
-							defaultColor="#4b5563"
-							onChange={ ( c ) =>
-								setAttributes( { textColor: c } )
+			<PanelBody
+				title={ __( 'Labels', 'axiom-blocks' ) }
+				initialOpen={ false }
+			>
+				<ABToggleControl
+					label={ __( 'Show numeric value', 'axiom-blocks' ) }
+					checked={ showValue }
+					onChange={ ( v ) => setAttributes( { showValue: v } ) }
+				/>
+				<ABToggleControl
+					label={ __( 'Show review count', 'axiom-blocks' ) }
+					checked={ showCount }
+					onChange={ ( v ) => setAttributes( { showCount: v } ) }
+				/>
+				{ showCount && (
+					<>
+						<ABTextControl
+							label={ __( 'Review count', 'axiom-blocks' ) }
+							type="number"
+							value={ String( reviewCount ?? 0 ) }
+							onChange={ ( v ) =>
+								setAttributes( {
+									reviewCount: parseInt( v, 10 ) || 0,
+								} )
 							}
+							min={ 0 }
 						/>
-					) }
-				</PanelBody>
-
-				{ ( showValue || showCount ) && (
-					<TypographyPanel
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						prefix="meta"
-						title={ __( 'Meta typography', 'axiom-blocks' ) }
-						responsive
-					/>
+						<ABTextControl
+							label={ __( 'Count label', 'axiom-blocks' ) }
+							value={ countLabel }
+							onChange={ ( v ) =>
+								setAttributes( { countLabel: v } )
+							}
+							help={ __(
+								'e.g. "reviews", "ratings"',
+								'axiom-blocks'
+							) }
+						/>
+					</>
 				) }
+			</PanelBody>
 
-				<SpacingPanel
+			<PanelBody
+				title={ __( 'Layout', 'axiom-blocks' ) }
+				initialOpen={ false }
+			>
+				<ABResponsive
 					attributes={ attributes }
 					setAttributes={ setAttributes }
-				/>
-			</InspectorControls>
+					attrKey="alignment"
+				>
+					{ ( { value, setValue, inherited } ) => (
+						<ABSelectControl
+							label={ __( 'Alignment', 'axiom-blocks' ) }
+							value={
+								value !== '' && value != null
+									? value
+									: inherited ?? 'left'
+							}
+							options={ [
+								{
+									label: __( 'Left', 'axiom-blocks' ),
+									value: 'left',
+								},
+								{
+									label: __( 'Center', 'axiom-blocks' ),
+									value: 'center',
+								},
+								{
+									label: __( 'Right', 'axiom-blocks' ),
+									value: 'right',
+								},
+							] }
+							onChange={ setValue }
+							help={ __(
+								'Aligns the whole row — stars and labels together.',
+								'axiom-blocks'
+							) }
+						/>
+					) }
+				</ABResponsive>
+			</PanelBody>
+		</>
+	);
+
+	return (
+		<>
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ designFor( attributes ) }
+				leading={ leading }
+			/>
 
 			<div { ...blockProps }>
 				<div
@@ -363,20 +374,30 @@ export const StarRating = {
 		edit: StarRatingEdit,
 		save: ( { attributes } ) => {
 			const {
-				rating, maxStars, precision,
-				showValue, showCount, reviewCount, countLabel,
+				rating,
+				maxStars,
+				precision,
+				showCount,
+				reviewCount,
+				countLabel,
 			} = attributes;
-			const blockProps = useBlockProps.save( { className: 'axiom-blocks-star-rating' } );
+			const blockProps = useBlockProps.save( {
+				className: 'axiom-blocks-star-rating',
+			} );
 			const normalized = clampRating( rating, maxStars, precision );
-			const display = precision === 'full'
-				? Math.round( normalized ).toString()
-				: normalized.toFixed( 1 );
+			const display =
+				precision === 'full'
+					? Math.round( normalized ).toString()
+					: normalized.toFixed( 1 );
 			return (
 				<div { ...blockProps }>
-					<span className="axiom-blocks-star-rating__value">{ display }</span>
+					<span className="axiom-blocks-star-rating__value">
+						{ display }
+					</span>
 					{ showCount && (
 						<span className="axiom-blocks-star-rating__count">
-							({ Number( reviewCount ).toLocaleString() } { countLabel })
+							({ Number( reviewCount ).toLocaleString() }{ ' ' }
+							{ countLabel })
 						</span>
 					) }
 				</div>

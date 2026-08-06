@@ -16,6 +16,13 @@ $advbtn-purple-dark: #6d28d9;
 // editor's content-width constraint — keep it a normal block.)
 .ab-adv-btn-wrap {
 	display: block;
+
+	// The button is inline-flex, so this wrapper would otherwise build a line
+	// box sized by the inherited line-height strut and pin the button to its
+	// top — leaving phantom space below it and knocking the button off-centre
+	// against its siblings in a flex row. Zeroing the strut makes the wrapper
+	// hug the button; `.ab-adv-btn` re-establishes its own line-height below.
+	line-height: 0;
 }
 
 .ab-adv-btn {
@@ -25,8 +32,28 @@ $advbtn-purple-dark: #6d28d9;
 	justify-content: center;
 	gap: 0.5em;
 	box-sizing: border-box;
-	border: 0 solid transparent;
-	border-radius: 8px;
+	min-width: var(--ab-advbtn-minw, 0);
+	border-style: var(--ab-advbtn-bs, solid);
+	border-color: var(--ab-advbtn-bc, transparent);
+	border-top-width: var(--ab-advbtn-bw-top, 0);
+	border-right-width: var(--ab-advbtn-bw-right, 0);
+	border-bottom-width: var(--ab-advbtn-bw-bottom, 0);
+	border-left-width: var(--ab-advbtn-bw-left, 0);
+	border-top-left-radius: var(--ab-advbtn-radius-tl, 8px);
+	border-top-right-radius: var(--ab-advbtn-radius-tr, 8px);
+	border-bottom-right-radius: var(--ab-advbtn-radius-br, 8px);
+	border-bottom-left-radius: var(--ab-advbtn-radius-bl, 8px);
+	box-shadow: var(--ab-advbtn-shadow, none);
+
+	&:hover {
+		box-shadow: var(--ab-advbtn-h-shadow, var(--ab-advbtn-shadow, none));
+		border-top-width: var(--ab-advbtn-h-bw-top, var(--ab-advbtn-bw-top, 0));
+		border-right-width: var(--ab-advbtn-h-bw-right, var(--ab-advbtn-bw-right, 0));
+		border-bottom-width: var(--ab-advbtn-h-bw-bottom, var(--ab-advbtn-bw-bottom, 0));
+		border-left-width: var(--ab-advbtn-h-bw-left, var(--ab-advbtn-bw-left, 0));
+		border-style: var(--ab-advbtn-h-bs, var(--ab-advbtn-bs, solid));
+	}
+
 	font-family: inherit;
 	font-weight: 600;
 	line-height: 1.2;
@@ -35,12 +62,7 @@ $advbtn-purple-dark: #6d28d9;
 	transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease,
 		box-shadow 0.2s ease, transform 0.2s ease;
 
-	&:focus-visible {
-		outline: none;
-		box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.35);
-	}
-
-	// ── Size presets (inline padding/font-size from attributes win over these) ──
+	// ── Size presets (fallback for old content; granular controls override) ──
 	&--sm {
 		padding: 8px 16px;
 		font-size: 14px;
@@ -56,7 +78,7 @@ $advbtn-purple-dark: #6d28d9;
 		font-size: 18px;
 	}
 
-	// ── Style presets ───────────────────────────────────────────────────────
+	// ── Style presets (fallback for old content; granular controls override) ─
 	&--fill {
 		background: var(--ab-advbtn-bg, $advbtn-purple);
 		color: var(--ab-advbtn-color, #fff);
@@ -70,8 +92,17 @@ $advbtn-purple-dark: #6d28d9;
 	}
 
 	&--outline {
-		border-width: 2px;
-		border-style: solid;
+		// Feed the shared var chain rather than setting border-width directly.
+		// As a raw property this rule (0,1,0) beat the base longhands at rest but
+		// lost to `.ab-adv-btn:hover` (0,2,0), so an outline button with its own
+		// borderWidth rendered 2px at rest and its configured width on hover —
+		// a size change that re-centred the flex row, slid the button out from
+		// under the cursor and flickered. Inline vars still override these.
+		--ab-advbtn-bw-top: 2px;
+		--ab-advbtn-bw-right: 2px;
+		--ab-advbtn-bw-bottom: 2px;
+		--ab-advbtn-bw-left: 2px;
+
 		background: var(--ab-advbtn-bg, transparent);
 		color: var(--ab-advbtn-color, $advbtn-purple);
 		border-color: var(--ab-advbtn-bc, $advbtn-purple);
@@ -95,31 +126,57 @@ $advbtn-purple-dark: #6d28d9;
 		}
 	}
 
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.35);
+	}
+
 	// ── Content ─────────────────────────────────────────────────────────────
 	&__content {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		text-align: var(--ab-advbtn-ta, center);
 		min-width: 0;
 	}
 
 	&__sub {
 		display: block;
-		font-size: 0.75em;
-		font-weight: 400;
-		opacity: 0.75;
-		line-height: 1.3;
+		font-family: var(--ab-advbtn-sub-ff, inherit);
+		font-weight: var(--ab-advbtn-sub-fw, 400);
+		font-size: var(--ab-advbtn-sub-fs, 0.75em);
+		line-height: var(--ab-advbtn-sub-lh, 1.3);
+		letter-spacing: var(--ab-advbtn-sub-ls, normal);
+		text-transform: var(--ab-advbtn-sub-tt, none);
+		text-decoration: var(--ab-advbtn-sub-td, none);
+		text-align: var(--ab-advbtn-sub-ta, var(--ab-advbtn-ta, inherit));
+		color: var(--ab-advbtn-sub-color, inherit);
+		opacity: var(--ab-advbtn-sub-op, 0.75);
+	}
+
+	&:hover &__sub {
+		color: var(
+			--ab-advbtn-sub-h-color,
+			var(--ab-advbtn-sub-color, inherit)
+		);
 	}
 
 	&__icon {
 		display: inline-flex;
 		flex-shrink: 0;
+		color: var(--ab-advbtn-icon-color, inherit);
 
 		svg {
 			display: block;
 			width: var(--ab-advbtn-icon, 1.1em);
 			height: var(--ab-advbtn-icon, 1.1em);
 		}
+	}
+
+	&:hover &__icon {
+		color: var(
+			--ab-advbtn-icon-h-color,
+			var(--ab-advbtn-icon-color, inherit)
+		);
 	}
 
 	&.is-icon-only &__content {
@@ -139,35 +196,6 @@ $advbtn-purple-dark: #6d28d9;
 button.ab-adv-btn {
 	appearance: none;
 	-webkit-appearance: none;
-}
-
-// ── Shadows ──────────────────────────────────────────────────────────────────
-.ab-advsh-sm {
-	box-shadow: 0 1px 3px rgba(16, 24, 40, 0.18);
-}
-
-.ab-advsh-md {
-	box-shadow: 0 4px 10px rgba(16, 24, 40, 0.2);
-}
-
-.ab-advsh-lg {
-	box-shadow: 0 10px 24px rgba(16, 24, 40, 0.24);
-}
-
-.ab-advsh-h-none:hover {
-	box-shadow: none;
-}
-
-.ab-advsh-h-sm:hover {
-	box-shadow: 0 1px 3px rgba(16, 24, 40, 0.18);
-}
-
-.ab-advsh-h-md:hover {
-	box-shadow: 0 4px 10px rgba(16, 24, 40, 0.2);
-}
-
-.ab-advsh-h-lg:hover {
-	box-shadow: 0 10px 24px rgba(16, 24, 40, 0.24);
 }
 
 // ── Hover effects ────────────────────────────────────────────────────────────

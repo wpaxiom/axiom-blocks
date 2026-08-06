@@ -2,7 +2,7 @@
  * Icon — frontend styles.
  *
  * Dynamic values arrive as CSS custom properties set inline on the wrapper by
- * render.php (mirrored by edit). Hover colours read the same vars so a single
+ * render.php (mirrored by edit). Hover colors read the same vars so a single
  * declaration covers both states; transitions live here (safecss strips inline).
  */
 
@@ -36,6 +36,29 @@
 		line-height: 0;
 		color: var(--ab-icon-color, currentColor);
 		text-decoration: none;
+		// Box — every var falls back to "no box" (no padding, transparent,
+		// borderless, square, no shadow) so an untouched block is a bare glyph.
+		// Per-side padding falls back to the legacy single `--ab-icon-pad`, then 0.
+		padding-top: var(--ab-icon-pad-top, var(--ab-icon-pad, 0));
+		padding-right: var(--ab-icon-pad-right, var(--ab-icon-pad, 0));
+		padding-bottom: var(--ab-icon-pad-bottom, var(--ab-icon-pad, 0));
+		padding-left: var(--ab-icon-pad-left, var(--ab-icon-pad, 0));
+		background: var(--ab-icon-bg, transparent);
+		// Per-side widths fall back to the legacy single `--ab-icon-bw` (old
+		// blocks set only that), then 0.
+		border-style: var(--ab-icon-bs, solid);
+		border-color: var(--ab-icon-bc, transparent);
+		border-top-width: var(--ab-icon-bw-top, var(--ab-icon-bw, 0));
+		border-right-width: var(--ab-icon-bw-right, var(--ab-icon-bw, 0));
+		border-bottom-width: var(--ab-icon-bw-bottom, var(--ab-icon-bw, 0));
+		border-left-width: var(--ab-icon-bw-left, var(--ab-icon-bw, 0));
+		// Per-corner radii fall back to the legacy single `--ab-icon-radius`,
+		// then 0 (square — the "no box" default).
+		border-top-left-radius: var(--ab-icon-radius-tl, var(--ab-icon-radius, 0));
+		border-top-right-radius: var(--ab-icon-radius-tr, var(--ab-icon-radius, 0));
+		border-bottom-right-radius: var(--ab-icon-radius-br, var(--ab-icon-radius, 0));
+		border-bottom-left-radius: var(--ab-icon-radius-bl, var(--ab-icon-radius, 0));
+		box-shadow: var(--ab-icon-shadow, none);
 		transition:
 			color 0.15s ease,
 			background-color 0.15s ease,
@@ -43,22 +66,24 @@
 
 		&:hover {
 			color: var(--ab-icon-color-h, var(--ab-icon-color, currentColor));
+			background: var(--ab-icon-bg-h, var(--ab-icon-bg, transparent));
 		}
 	}
 
-	// ── Shape containers ──────────────────────────────────────────────────────
+	// ── Legacy shape presets (saved blocks only) ────────────────────────────
+	// New blocks build the box entirely from the base styling above; these
+	// classes stay so already-saved blocks render pixel-identically. Padding is
+	// per-side (NOT the `padding` shorthand — that would override the base
+	// per-side vars and lock the box to a static value), falling back to the
+	// legacy single `--ab-icon-pad`, then the shipped 16px default; the radius
+	// overrides beat the base 0.
 	&--circle,
 	&--square,
 	&--rounded {
-		padding: var(--ab-icon-pad, 16px);
-		background: var(--ab-icon-bg, transparent);
-		border:
-			var(--ab-icon-bw, 0) var(--ab-icon-bs, solid)
-			var(--ab-icon-bc, transparent);
-
-		&:hover {
-			background: var(--ab-icon-bg-h, var(--ab-icon-bg, transparent));
-		}
+		padding-top: var(--ab-icon-pad-top, var(--ab-icon-pad, 16px));
+		padding-right: var(--ab-icon-pad-right, var(--ab-icon-pad, 16px));
+		padding-bottom: var(--ab-icon-pad-bottom, var(--ab-icon-pad, 16px));
+		padding-left: var(--ab-icon-pad-left, var(--ab-icon-pad, 16px));
 	}
 
 	&--circle {
@@ -70,7 +95,12 @@
 	}
 
 	&--rounded {
-		border-radius: var(--ab-icon-radius, 12px);
+		// Per-corner falls back to the legacy single `--ab-icon-radius`, then the
+		// shipped 12px default.
+		border-top-left-radius: var(--ab-icon-radius-tl, var(--ab-icon-radius, 12px));
+		border-top-right-radius: var(--ab-icon-radius-tr, var(--ab-icon-radius, 12px));
+		border-bottom-right-radius: var(--ab-icon-radius-br, var(--ab-icon-radius, 12px));
+		border-bottom-left-radius: var(--ab-icon-radius-bl, var(--ab-icon-radius, 12px));
 	}
 
 	// ── Glyph ─────────────────────────────────────────────────────────────────

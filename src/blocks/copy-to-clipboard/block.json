@@ -46,6 +46,17 @@
       "type": "string",
       "default": "4px"
     },
+    "borderStyle":          { "type": "string", "default": "" },
+    "borderColor":          { "type": "string", "default": "" },
+    "borderTopWidth":       { "type": "string", "default": "" },
+    "borderRightWidth":     { "type": "string", "default": "" },
+    "borderBottomWidth":    { "type": "string", "default": "" },
+    "borderLeftWidth":      { "type": "string", "default": "" },
+    "radiusTopLeft":        { "type": "string", "default": "" },
+    "radiusTopRight":       { "type": "string", "default": "" },
+    "radiusBottomRight":    { "type": "string", "default": "" },
+    "radiusBottomLeft":     { "type": "string", "default": "" },
+    "buttonShadow":         { "type": "string", "default": "" },
     "fontSize": {
       "type": "string",
       "default": "14px"

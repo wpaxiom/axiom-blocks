@@ -1,63 +1,17 @@
 /**
- * Advanced Section — editor-only styles (inspector UI).
+ * Advanced Section — editor-only styles (inspector UI + canvas preview).
  */
 
-.axiom-blocks-media-control {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-	margin-bottom: 16px;
-
-	&__label {
-		font-size: 11px;
-		font-weight: 600;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		color: #757575;
-		display: block;
-	}
-
-	&__preview {
-		width: 100%;
-		max-height: 140px;
-		object-fit: cover;
-		border-radius: 6px;
-		display: block;
-		border: 1px solid #e5e7eb;
-	}
-}
-
-.axiom-blocks-remove-overlay-btn {
-	margin: -4px 0 14px;
-}
-
-/* Focal point picker preview lives inside .ab-ctrl — keep it tight. */
-.ab-ctrl .components-focal-point-picker__media {
-	border-radius: 4px;
-	overflow: hidden;
-}
-
-/* The picker carries `__nextHasNoMarginBottom`, so add our standard control gap
-   (16px) below the image before the Left/Top range controls that follow. */
-.ab-ctrl .components-focal-point-picker-wrapper {
-	margin-bottom: 16px;
-}
-
-/* Hide the native Left/Top number inputs — they ship WP's default styling and
-   don't match our control design. We render our own ABRangeControls below.
-   WP names this row `focal-point-picker__controls` (no `components-` prefix in
-   current builds); older builds used the prefixed form — target both. */
-.ab-ctrl .focal-point-picker__controls,
-.ab-ctrl .components-focal-point-picker__controls {
-	display: none;
-}
+/* Focal-point-picker cosmetics (hide native inputs, tidy preview, zero the
+   picker's own margin so the popover's flex gap owns the rhythm) live in the
+   shared src/editor.scss under .ab-bg-focal — BackgroundControl is shared. */
 
 /* ── Advanced Section block styles (editor preview) ─────────────────────── */
+/* editorStyle is enqueued after style, so anything declared here at the same
+   specificity beats style.scss. Keep the stacking defaults off the layout
+   classes or flex/grid sections collapse to a centered column in the canvas. */
 .axiom-blocks-section {
-	display: flex;
-	flex-direction: column;
-	justify-content: var(--axiom-blocks-section-justify, center);
-	align-items: var(--axiom-blocks-section-align, center);
+	text-align: var(--ab-sec-ta, inherit);
 	padding-top: var(--ab-padding-top, 0);
 	padding-right: var(--ab-padding-right, 0);
 	padding-bottom: var(--ab-padding-bottom, 0);
@@ -66,6 +20,29 @@
 	margin-right: var(--ab-margin-right, 0);
 	margin-bottom: var(--ab-margin-bottom, 0);
 	margin-left: var(--ab-margin-left, 0);
+}
+
+.axiom-blocks-section:not(.axiom-blocks-section--layout-flex):not(.axiom-blocks-section--layout-grid) {
+	display: flex;
+	flex-direction: column;
+	justify-content: var(--axiom-blocks-section-justify, center);
+	align-items: var(--axiom-blocks-section-align, center);
+}
+
+.axiom-blocks-section.axiom-blocks-section--layout-flex {
+	display: flex;
+	flex-direction: var(--ab-sec-fd, row);
+	flex-wrap: var(--ab-sec-fw, wrap);
+	justify-content: var(--ab-sec-jc, center);
+	align-items: var(--ab-sec-ai, center);
+	gap: var(--ab-sec-gap, 0);
+}
+
+.axiom-blocks-section.axiom-blocks-section--layout-grid {
+	display: grid;
+	grid-template-columns: repeat(var(--ab-sec-cols, 3), minmax(0, 1fr));
+	align-items: var(--ab-sec-ai, stretch);
+	gap: var(--ab-sec-gap, 0);
 }
 
 /* ── Empty-section placeholder — matches other block designs ── */

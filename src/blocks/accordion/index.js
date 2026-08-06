@@ -3,27 +3,19 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	InnerBlocks,
-	InspectorControls,
 } from '@wordpress/block-editor';
 import { PanelBody } from '@wordpress/components';
 import {
 	ABSelectControl,
-	ABColorControl,
 	ABToggleControl,
 	ABRangeControl,
-	ABSubAccordion,
 } from '../../components/ABControls';
-import {
-	SpacingPanel,
-	SpacingControl,
-	useSpacingStyle,
-} from '../../components/SpacingPanel';
-import { TypographyPanel } from '../../components/TypographyPanel';
+import { useSpacingStyle } from '../../components/SpacingPanel';
+import { getBackgroundVars } from '../../components/BackgroundControl';
+import { ABInspectorGroups } from '../../components/ABInspectorGroups';
 import { useDeviceType } from '../../components/responsive';
 
-
 import { resolveTypographyAttrs } from '../../components/typographyTargets';
-import { ABResponsive } from '../../components/ABResponsive';
 import { responsiveVarValue } from '../../components/responsiveProps';
 import { IconControl } from '../../components/IconControl';
 import { BlockIcon } from '../../blockIcons';
@@ -37,14 +29,157 @@ const TEMPLATE = [
 	[ 'axiom-blocks/accordion-item', { title: 'Accordion item one' } ],
 ];
 
-const toPx = ( v ) => ( v === '' || v == null ? '' : `${ v }px` );
-const fromPx = ( v, fallback ) =>
-	v === '' || v == null ? fallback : parseInt( v, 10 ) || 0;
+const ITEM_BW_KEYS = [
+	'borderTopWidth',
+	'borderRightWidth',
+	'borderBottomWidth',
+	'borderLeftWidth',
+];
+const ITEM_RADIUS_KEYS = [
+	'radiusTopLeft',
+	'radiusTopRight',
+	'radiusBottomRight',
+	'radiusBottomLeft',
+];
+const CONT_BW_KEYS = [
+	'containerBorderTopWidth',
+	'containerBorderRightWidth',
+	'containerBorderBottomWidth',
+	'containerBorderLeftWidth',
+];
+const CONT_RADIUS_KEYS = [
+	'containerRadiusTopLeft',
+	'containerRadiusTopRight',
+	'containerRadiusBottomRight',
+	'containerRadiusBottomLeft',
+];
+
+/* Anatomy-as-declaration — the part-first (Option C) Styles UI is rendered from
+ * this config by ABInspectorGroups/TargetSection. Every binding maps to an
+ * EXISTING shipped attribute, so re-homing the inspector changes zero data. */
+const DESIGN = {
+	block: 'acc',
+	targets: [
+		{
+			noun: __( 'Container', 'axiom-blocks' ),
+			border: {
+				prefix: 'container',
+				widthKeys: CONT_BW_KEYS,
+				legacyWidth: 'containerBorderWidth',
+				max: 20,
+			},
+			radius: {
+				prefix: 'container',
+				keys: CONT_RADIUS_KEYS,
+				legacyRadius: 'containerBorderRadius',
+				max: 64,
+			},
+			shadow: { bind: 'containerShadow' },
+			ranges: [
+				{
+					bind: 'itemGap',
+					label: __( 'Gap between items', 'axiom-blocks' ),
+					min: 0,
+					max: 32,
+					default: 8,
+					responsive: true,
+				},
+			],
+		},
+		{
+			noun: __( 'Item', 'axiom-blocks' ),
+			states: [ 'hover' ],
+			background: {
+				full: true,
+				prefix: 'item',
+				colorKey: 'itemBg',
+				statePrefix: { hover: 'itemHover' },
+				stateColorKey: { hover: 'itemBgHover' },
+			},
+			border: {
+				widthKeys: ITEM_BW_KEYS,
+				legacyWidth: 'borderWidth',
+				colorDefault: '#e3e3e6',
+				max: 20,
+			},
+			radius: {
+				keys: ITEM_RADIUS_KEYS,
+				legacyRadius: 'borderRadius',
+				max: 64,
+			},
+			shadow: { bind: 'itemShadow' },
+		},
+		{
+			noun: __( 'Header', 'axiom-blocks' ),
+			states: [ 'hover', 'active' ],
+			colors: [
+				{
+					label: __( 'Text', 'axiom-blocks' ),
+					bind: 'headerColor',
+					stateBind: {
+						hover: 'headerColorHover',
+						active: 'activeHeaderColor',
+					},
+				},
+			],
+			background: {
+				full: true,
+				prefix: 'header',
+				colorKey: 'headerBg',
+				statePrefix: { hover: 'headerHover', active: 'headerActive' },
+				stateColorKey: {
+					hover: 'headerBgHover',
+					active: 'activeHeaderBg',
+				},
+			},
+			typography: 'header',
+			padding: { type: 'headerPadding', responsive: true },
+		},
+		{
+			noun: __( 'Body', 'axiom-blocks' ),
+			// Body hosts InnerBlocks — box capabilities only; inner blocks own
+			// their text (wrapper rule). Legacy `bodyColor` attr + render kept for
+			// back-compat, but no text-color control here.
+			background: {
+				full: true,
+				prefix: 'body',
+				colorKey: 'bodyBg',
+			},
+			border: { prefix: 'body', colorDefault: '#e3e3e6', max: 20 },
+			radius: { prefix: 'body', max: 64 },
+			padding: { type: 'bodyPadding', responsive: true },
+			size: {
+				bind: 'bodyMaxWidth',
+				label: __( 'Max width', 'axiom-blocks' ),
+				responsive: true,
+			},
+		},
+		{
+			noun: __( 'Icon', 'axiom-blocks' ),
+			states: [ 'active' ],
+			colors: [
+				{ label: __( 'Color', 'axiom-blocks' ), bind: 'iconColor' },
+			],
+			ranges: [
+				{
+					bind: 'iconSize',
+					label: __( 'Icon size', 'axiom-blocks' ),
+					min: 10,
+					max: 48,
+					default: 20,
+					responsive: true,
+				},
+			],
+		},
+	],
+};
 
 export function getAccordionVars( attributes ) {
 	const {
 		headerBg,
 		headerColor,
+		headerBgHover,
+		headerColorHover,
 		activeHeaderBg,
 		activeHeaderColor,
 		headerPaddingTop,
@@ -57,14 +192,50 @@ export function getAccordionVars( attributes ) {
 		bodyPaddingRight,
 		bodyPaddingBottom,
 		bodyPaddingLeft,
+		bodyBorderStyle,
+		bodyBorderColor,
+		bodyBorderTopWidth,
+		bodyBorderRightWidth,
+		bodyBorderBottomWidth,
+		bodyBorderLeftWidth,
+		bodyRadiusTopLeft,
+		bodyRadiusTopRight,
+		bodyRadiusBottomRight,
+		bodyRadiusBottomLeft,
 		borderColor,
 		borderWidth,
 		borderRadius,
+		borderStyle,
+		borderTopWidth,
+		borderRightWidth,
+		borderBottomWidth,
+		borderLeftWidth,
+		radiusTopLeft,
+		radiusTopRight,
+		radiusBottomRight,
+		radiusBottomLeft,
 		itemGap,
 		containerBorderColor,
 		containerBorderWidth,
 		containerBorderRadius,
+		containerBorderStyle,
+		containerBorderTopWidth,
+		containerBorderRightWidth,
+		containerBorderBottomWidth,
+		containerBorderLeftWidth,
+		containerRadiusTopLeft,
+		containerRadiusTopRight,
+		containerRadiusBottomRight,
+		containerRadiusBottomLeft,
+		containerShadow,
+		containerMaxWidth,
+		itemBg,
+		itemShadow,
+		itemBgHover,
+		itemShadowHover,
+		bodyMaxWidth,
 		iconColor,
+		iconColorActive,
 		iconSize,
 		headerFontFamily,
 		headerFontWeight,
@@ -78,6 +249,8 @@ export function getAccordionVars( attributes ) {
 	return {
 		'--ab-acc-header-bg': headerBg || undefined,
 		'--ab-acc-header-color': headerColor || undefined,
+		'--ab-acc-header-bg-hover': headerBgHover || undefined,
+		'--ab-acc-header-color-hover': headerColorHover || undefined,
 		'--ab-acc-active-header-bg': activeHeaderBg || undefined,
 		'--ab-acc-active-header-color': activeHeaderColor || undefined,
 		'--ab-acc-header-pt': headerPaddingTop || undefined,
@@ -90,14 +263,50 @@ export function getAccordionVars( attributes ) {
 		'--ab-acc-body-pr': bodyPaddingRight || undefined,
 		'--ab-acc-body-pb': bodyPaddingBottom || undefined,
 		'--ab-acc-body-pl': bodyPaddingLeft || undefined,
+		'--ab-acc-body-bs': bodyBorderStyle || undefined,
+		'--ab-acc-body-bc': bodyBorderColor || undefined,
+		'--ab-acc-body-bw-top': bodyBorderTopWidth || undefined,
+		'--ab-acc-body-bw-right': bodyBorderRightWidth || undefined,
+		'--ab-acc-body-bw-bottom': bodyBorderBottomWidth || undefined,
+		'--ab-acc-body-bw-left': bodyBorderLeftWidth || undefined,
+		'--ab-acc-body-radius-tl': bodyRadiusTopLeft || undefined,
+		'--ab-acc-body-radius-tr': bodyRadiusTopRight || undefined,
+		'--ab-acc-body-radius-br': bodyRadiusBottomRight || undefined,
+		'--ab-acc-body-radius-bl': bodyRadiusBottomLeft || undefined,
 		'--ab-acc-border-color': borderColor || undefined,
 		'--ab-acc-border-width': borderWidth || undefined,
 		'--ab-acc-radius': borderRadius || undefined,
+		'--ab-acc-bs': borderStyle || undefined,
+		'--ab-acc-bw-top': borderTopWidth || undefined,
+		'--ab-acc-bw-right': borderRightWidth || undefined,
+		'--ab-acc-bw-bottom': borderBottomWidth || undefined,
+		'--ab-acc-bw-left': borderLeftWidth || undefined,
+		'--ab-acc-radius-tl': radiusTopLeft || undefined,
+		'--ab-acc-radius-tr': radiusTopRight || undefined,
+		'--ab-acc-radius-br': radiusBottomRight || undefined,
+		'--ab-acc-radius-bl': radiusBottomLeft || undefined,
 		'--ab-acc-gap': itemGap || undefined,
 		'--ab-acc-cont-bc': containerBorderColor || undefined,
 		'--ab-acc-cont-bw': containerBorderWidth || undefined,
 		'--ab-acc-cont-radius': containerBorderRadius || undefined,
+		'--ab-acc-cont-bs': containerBorderStyle || undefined,
+		'--ab-acc-cont-bw-top': containerBorderTopWidth || undefined,
+		'--ab-acc-cont-bw-right': containerBorderRightWidth || undefined,
+		'--ab-acc-cont-bw-bottom': containerBorderBottomWidth || undefined,
+		'--ab-acc-cont-bw-left': containerBorderLeftWidth || undefined,
+		'--ab-acc-cont-radius-tl': containerRadiusTopLeft || undefined,
+		'--ab-acc-cont-radius-tr': containerRadiusTopRight || undefined,
+		'--ab-acc-cont-radius-br': containerRadiusBottomRight || undefined,
+		'--ab-acc-cont-radius-bl': containerRadiusBottomLeft || undefined,
+		'--ab-acc-cont-shadow': containerShadow || undefined,
+		'--ab-acc-cont-maxw': containerMaxWidth || undefined,
+		'--ab-acc-item-bg': itemBg || undefined,
+		'--ab-acc-item-shadow': itemShadow || undefined,
+		'--ab-acc-item-bg-hover': itemBgHover || undefined,
+		'--ab-acc-item-shadow-hover': itemShadowHover || undefined,
+		'--ab-acc-body-maxw': bodyMaxWidth || undefined,
 		'--ab-acc-icon-color': iconColor || undefined,
+		'--ab-acc-icon-color-active': iconColorActive || undefined,
 		'--ab-acc-icon-size': iconSize || undefined,
 		'--ab-acc-title-ff': headerFontFamily || undefined,
 		'--ab-acc-title-fw': headerFontWeight || undefined,
@@ -107,6 +316,36 @@ export function getAccordionVars( attributes ) {
 		'--ab-acc-title-tt': headerTextTransform || undefined,
 		'--ab-acc-title-td': headerTextDecoration || undefined,
 		'--ab-acc-title-ta': headerTextAlign || undefined,
+		...getBackgroundVars( attributes, {
+			prefix: 'item',
+			varName: '--ab-acc-item-bg',
+			colorKey: 'itemBg',
+		} ),
+		...getBackgroundVars( attributes, {
+			prefix: 'itemHover',
+			varName: '--ab-acc-item-bg-hover',
+			colorKey: 'itemBgHover',
+		} ),
+		...getBackgroundVars( attributes, {
+			prefix: 'header',
+			varName: '--ab-acc-header-bg',
+			colorKey: 'headerBg',
+		} ),
+		...getBackgroundVars( attributes, {
+			prefix: 'headerHover',
+			varName: '--ab-acc-header-bg-hover',
+			colorKey: 'headerBgHover',
+		} ),
+		...getBackgroundVars( attributes, {
+			prefix: 'headerActive',
+			varName: '--ab-acc-active-header-bg',
+			colorKey: 'activeHeaderBg',
+		} ),
+		...getBackgroundVars( attributes, {
+			prefix: 'body',
+			varName: '--ab-acc-body-bg',
+			colorKey: 'bodyBg',
+		} ),
 	};
 }
 
@@ -138,20 +377,6 @@ function AccordionEdit( { attributes, setAttributes } ) {
 		iconSlug,
 		iconPosition,
 		rotateIcon,
-		iconColor,
-		headerBg,
-		headerColor,
-		activeHeaderBg,
-		activeHeaderColor,
-		bodyBg,
-		bodyColor,
-		borderColor,
-		borderWidth,
-		borderRadius,
-		itemGap,
-		containerBorderColor,
-		containerBorderWidth,
-		containerBorderRadius,
 	} = attributes;
 
 	const device = useDeviceType();
@@ -168,6 +393,16 @@ function AccordionEdit( { attributes, setAttributes } ) {
 				'iconSize',
 				device
 			),
+			'--ab-acc-cont-maxw': responsiveVarValue(
+				attributes,
+				'containerMaxWidth',
+				device
+			),
+			'--ab-acc-body-maxw': responsiveVarValue(
+				attributes,
+				'bodyMaxWidth',
+				device
+			),
 		},
 	} );
 
@@ -179,360 +414,147 @@ function AccordionEdit( { attributes, setAttributes } ) {
 		renderAppender: InnerBlocks.ButtonBlockAppender,
 	} );
 
-	return (
+	const behaviorPanel = (
+		<PanelBody
+			title={ __( 'Behavior', 'axiom-blocks' ) }
+			initialOpen={ true }
+		>
+			<ABToggleControl
+				label={ __( 'Close others when opening', 'axiom-blocks' ) }
+				help={ __( 'Only one panel open at a time.', 'axiom-blocks' ) }
+				checked={ !! closeOthers }
+				onChange={ ( v ) => setAttributes( { closeOthers: v } ) }
+			/>
+			<ABToggleControl
+				label={ __( 'Open first item by default', 'axiom-blocks' ) }
+				checked={ !! firstItemOpen }
+				onChange={ ( v ) => setAttributes( { firstItemOpen: v } ) }
+			/>
+			<ABSelectControl
+				label={ __( 'Heading level', 'axiom-blocks' ) }
+				help={ __(
+					'HTML tag for each item title (for accessibility and document outline).',
+					'axiom-blocks'
+				) }
+				value={ headingLevel || 'h3' }
+				options={ [
+					{ label: 'H2', value: 'h2' },
+					{ label: 'H3', value: 'h3' },
+					{ label: 'H4', value: 'h4' },
+					{ label: 'H5', value: 'h5' },
+					{ label: 'H6', value: 'h6' },
+				] }
+				onChange={ ( v ) => setAttributes( { headingLevel: v } ) }
+			/>
+			<ABToggleControl
+				label={ __( 'Output FAQ schema', 'axiom-blocks' ) }
+				help={ __(
+					'Add schema.org FAQPage structured data (item titles = questions, panel content = answers). Use only for genuine question-and-answer content.',
+					'axiom-blocks'
+				) }
+				checked={ !! faqSchema }
+				onChange={ ( v ) => setAttributes( { faqSchema: v } ) }
+			/>
+			<ABRangeControl
+				label={ __( 'Animation speed', 'axiom-blocks' ) }
+				help={ __( '0 = instant (no animation).', 'axiom-blocks' ) }
+				value={ transitionDuration ?? 300 }
+				onChange={ ( v ) =>
+					setAttributes( { transitionDuration: v ?? 0 } )
+				}
+				min={ 0 }
+				max={ 1000 }
+				step={ 50 }
+				unit="ms"
+			/>
+			<ABToggleControl
+				label={ __( 'Expand / collapse all button', 'axiom-blocks' ) }
+				checked={ !! showExpandAll }
+				onChange={ ( v ) => setAttributes( { showExpandAll: v } ) }
+			/>
+			<ABToggleControl
+				label={ __(
+					'Deep-link to items (URL anchor)',
+					'axiom-blocks'
+				) }
+				help={ __(
+					'Open and scroll to the item whose HTML Anchor (set per item in the Advanced panel) matches the page URL, e.g. #shipping. The URL updates as items open. This is not a clickable link on the item.',
+					'axiom-blocks'
+				) }
+				checked={ !! deepLink }
+				onChange={ ( v ) => setAttributes( { deepLink: v } ) }
+			/>
+			<ABToggleControl
+				label={ __( 'Collapse on mobile', 'axiom-blocks' ) }
+				help={ __(
+					'Start every panel closed on small screens.',
+					'axiom-blocks'
+				) }
+				checked={ !! collapseOnMobile }
+				onChange={ ( v ) => setAttributes( { collapseOnMobile: v } ) }
+			/>
+		</PanelBody>
+	);
+
+	const iconContent = (
 		<>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Behaviour', 'axiom-blocks' ) }
-					initialOpen={ true }
-				>
-					<ABToggleControl
-						label={ __(
-							'Close others when opening',
-							'axiom-blocks'
-						) }
-						help={ __(
-							'Only one panel open at a time.',
-							'axiom-blocks'
-						) }
-						checked={ !! closeOthers }
-						onChange={ ( v ) =>
-							setAttributes( { closeOthers: v } )
-						}
-					/>
-					<ABToggleControl
-						label={ __(
-							'Open first item by default',
-							'axiom-blocks'
-						) }
-						checked={ !! firstItemOpen }
-						onChange={ ( v ) =>
-							setAttributes( { firstItemOpen: v } )
-						}
+			<ABToggleControl
+				label={ __( 'Show icon', 'axiom-blocks' ) }
+				checked={ !! showIcon }
+				onChange={ ( v ) => setAttributes( { showIcon: v } ) }
+			/>
+			{ showIcon && (
+				<>
+					<IconControl
+						value={ iconSlug }
+						onChange={ ( v ) => setAttributes( { iconSlug: v } ) }
+						fallback="chevron-down"
 					/>
 					<ABSelectControl
-						label={ __( 'Heading level', 'axiom-blocks' ) }
-						help={ __(
-							'HTML tag for each item title (for accessibility and document outline).',
-							'axiom-blocks'
-						) }
-						value={ headingLevel || 'h3' }
+						label={ __( 'Icon position', 'axiom-blocks' ) }
+						value={ iconPosition }
 						options={ [
-							{ label: 'H2', value: 'h2' },
-							{ label: 'H3', value: 'h3' },
-							{ label: 'H4', value: 'h4' },
-							{ label: 'H5', value: 'h5' },
-							{ label: 'H6', value: 'h6' },
+							{
+								label: __( 'Left', 'axiom-blocks' ),
+								value: 'left',
+							},
+							{
+								label: __( 'Right', 'axiom-blocks' ),
+								value: 'right',
+							},
 						] }
 						onChange={ ( v ) =>
-							setAttributes( { headingLevel: v } )
+							setAttributes( { iconPosition: v } )
 						}
 					/>
 					<ABToggleControl
-						label={ __( 'Output FAQ schema', 'axiom-blocks' ) }
-						help={ __(
-							'Add schema.org FAQPage structured data (item titles = questions, panel content = answers). Use only for genuine question-and-answer content.',
-							'axiom-blocks'
-						) }
-						checked={ !! faqSchema }
-						onChange={ ( v ) => setAttributes( { faqSchema: v } ) }
+						label={ __( 'Rotate icon when open', 'axiom-blocks' ) }
+						checked={ !! rotateIcon }
+						onChange={ ( v ) => setAttributes( { rotateIcon: v } ) }
 					/>
-					<ABRangeControl
-						label={ __( 'Animation speed', 'axiom-blocks' ) }
-						help={ __( '0 = instant (no animation).', 'axiom-blocks' ) }
-						value={ transitionDuration ?? 300 }
-						onChange={ ( v ) => setAttributes( { transitionDuration: v ?? 0 } ) }
-						min={ 0 }
-						max={ 1000 }
-						step={ 50 }
-						unit="ms"
-					/>
-					<ABToggleControl
-						label={ __( 'Expand / collapse all button', 'axiom-blocks' ) }
-						checked={ !! showExpandAll }
-						onChange={ ( v ) => setAttributes( { showExpandAll: v } ) }
-					/>
-					<ABToggleControl
-						label={ __( 'Deep-link to items (URL anchor)', 'axiom-blocks' ) }
-						help={ __( 'Open and scroll to the item whose HTML Anchor (set per item in the Advanced panel) matches the page URL, e.g. #shipping. The URL updates as items open. This is not a clickable link on the item.', 'axiom-blocks' ) }
-						checked={ !! deepLink }
-						onChange={ ( v ) => setAttributes( { deepLink: v } ) }
-					/>
-					<ABToggleControl
-						label={ __( 'Collapse on mobile', 'axiom-blocks' ) }
-						help={ __( 'Start every panel closed on small screens.', 'axiom-blocks' ) }
-						checked={ !! collapseOnMobile }
-						onChange={ ( v ) => setAttributes( { collapseOnMobile: v } ) }
-					/>
-				</PanelBody>
+				</>
+			) }
+		</>
+	);
 
-				<PanelBody
-					title={ __( 'Icon', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABToggleControl
-						label={ __( 'Show icon', 'axiom-blocks' ) }
-						checked={ !! showIcon }
-						onChange={ ( v ) => setAttributes( { showIcon: v } ) }
-					/>
-					{ showIcon && (
-						<>
-							<IconControl
-								value={ iconSlug }
-								onChange={ ( v ) =>
-									setAttributes( { iconSlug: v } )
-								}
-								fallback="chevron-down"
-							/>
-							<ABSelectControl
-								label={ __( 'Icon position', 'axiom-blocks' ) }
-								value={ iconPosition }
-								options={ [
-									{
-										label: __( 'Left', 'axiom-blocks' ),
-										value: 'left',
-									},
-									{
-										label: __( 'Right', 'axiom-blocks' ),
-										value: 'right',
-									},
-								] }
-								onChange={ ( v ) =>
-									setAttributes( { iconPosition: v } )
-								}
-							/>
-							<ABToggleControl
-								label={ __(
-									'Rotate icon when open',
-									'axiom-blocks'
-								) }
-								checked={ !! rotateIcon }
-								onChange={ ( v ) =>
-									setAttributes( { rotateIcon: v } )
-								}
-							/>
-							<ABResponsive
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								attrKey="iconSize"
-							>
-								{ ( { value, setValue, inherited } ) => (
-									<ABRangeControl
-										label={ __( 'Icon size', 'axiom-blocks' ) }
-										value={ fromPx(
-											value === '' ? inherited : value,
-											20
-										) }
-										onChange={ ( v ) => setValue( toPx( v ) ) }
-										min={ 10 }
-										max={ 48 }
-										step={ 1 }
-										unit="px"
-									/>
-								) }
-							</ABResponsive>
-							<ABColorControl
-								label={ __( 'Icon colour', 'axiom-blocks' ) }
-								color={ iconColor }
-								onChange={ ( v ) =>
-									setAttributes( { iconColor: v } )
-								}
-							/>
-						</>
-					) }
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Header', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABColorControl
-						label={ __( 'Background', 'axiom-blocks' ) }
-						color={ headerBg }
-						onChange={ ( v ) => setAttributes( { headerBg: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Text', 'axiom-blocks' ) }
-						color={ headerColor }
-						onChange={ ( v ) =>
-							setAttributes( { headerColor: v } )
-						}
-					/>
-					<ABColorControl
-						label={ __( 'Active background', 'axiom-blocks' ) }
-						color={ activeHeaderBg }
-						onChange={ ( v ) =>
-							setAttributes( { activeHeaderBg: v } )
-						}
-					/>
-					<ABColorControl
-						label={ __( 'Active text', 'axiom-blocks' ) }
-						color={ activeHeaderColor }
-						onChange={ ( v ) =>
-							setAttributes( { activeHeaderColor: v } )
-						}
-					/>
-					<SpacingControl
-						label={ __( 'Padding', 'axiom-blocks' ) }
-						type="headerPadding"
-						attrs={ attributes }
-						onChange={ ( update ) => setAttributes( update ) }
-						responsive={ true }
-						device={ device }
-						showDeviceSwitcher={ true }
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Body', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<ABColorControl
-						label={ __( 'Background', 'axiom-blocks' ) }
-						color={ bodyBg }
-						onChange={ ( v ) => setAttributes( { bodyBg: v } ) }
-					/>
-					<ABColorControl
-						label={ __( 'Text', 'axiom-blocks' ) }
-						color={ bodyColor }
-						onChange={ ( v ) => setAttributes( { bodyColor: v } ) }
-					/>
-					<SpacingControl
-						label={ __( 'Padding', 'axiom-blocks' ) }
-						type="bodyPadding"
-						attrs={ attributes }
-						onChange={ ( update ) => setAttributes( update ) }
-						responsive={ true }
-						device={ device }
-						showDeviceSwitcher={ true }
-					/>
-				</PanelBody>
-
-				<PanelBody
-					title={ __( 'Border', 'axiom-blocks' ) }
-					initialOpen={ false }
-				>
-					<div className="ab-sub-acc-list">
-						<ABSubAccordion
-							title={ __( 'Items', 'axiom-blocks' ) }
+	return (
+		<>
+			<ABInspectorGroups
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				design={ DESIGN }
+				leading={
+					<>
+						{ behaviorPanel }
+						<PanelBody
+							title={ __( 'Icon', 'axiom-blocks' ) }
+							initialOpen={ false }
 						>
-							<ABColorControl
-								label={ __( 'Colour', 'axiom-blocks' ) }
-								color={ borderColor }
-								onChange={ ( v ) =>
-									setAttributes( { borderColor: v } )
-								}
-							/>
-							<ABRangeControl
-								label={ __( 'Width', 'axiom-blocks' ) }
-								value={ fromPx( borderWidth, 1 ) }
-								onChange={ ( v ) =>
-									setAttributes( {
-										borderWidth: toPx( v ),
-									} )
-								}
-								min={ 0 }
-								max={ 6 }
-								step={ 1 }
-								unit="px"
-							/>
-							<ABRangeControl
-								label={ __( 'Corner radius', 'axiom-blocks' ) }
-								value={ fromPx( borderRadius, 8 ) }
-								onChange={ ( v ) =>
-									setAttributes( {
-										borderRadius: toPx( v ),
-									} )
-								}
-								min={ 0 }
-								max={ 32 }
-								step={ 1 }
-								unit="px"
-							/>
-							<ABResponsive
-								attributes={ attributes }
-								setAttributes={ setAttributes }
-								attrKey="itemGap"
-							>
-								{ ( { value, setValue, inherited } ) => (
-									<ABRangeControl
-										label={ __(
-											'Gap between items',
-											'axiom-blocks'
-										) }
-										value={ fromPx(
-											value !== '' && value != null
-												? value
-												: inherited,
-											8
-										) }
-										onChange={ ( v ) =>
-											setValue( toPx( v ) )
-										}
-										min={ 0 }
-										max={ 32 }
-										step={ 1 }
-										unit="px"
-									/>
-								) }
-							</ABResponsive>
-						</ABSubAccordion>
-						<ABSubAccordion
-							title={ __( 'Container', 'axiom-blocks' ) }
-						>
-							<ABColorControl
-								label={ __( 'Colour', 'axiom-blocks' ) }
-								color={ containerBorderColor }
-								onChange={ ( v ) =>
-									setAttributes( {
-										containerBorderColor: v,
-									} )
-								}
-							/>
-							<ABRangeControl
-								label={ __( 'Width', 'axiom-blocks' ) }
-								value={ fromPx( containerBorderWidth, 0 ) }
-								onChange={ ( v ) =>
-									setAttributes( {
-										containerBorderWidth: toPx( v ),
-									} )
-								}
-								min={ 0 }
-								max={ 6 }
-								step={ 1 }
-								unit="px"
-							/>
-							<ABRangeControl
-								label={ __( 'Corner radius', 'axiom-blocks' ) }
-								value={ fromPx( containerBorderRadius, 0 ) }
-								onChange={ ( v ) =>
-									setAttributes( {
-										containerBorderRadius: toPx( v ),
-									} )
-								}
-								min={ 0 }
-								max={ 32 }
-								step={ 1 }
-								unit="px"
-							/>
-						</ABSubAccordion>
-					</div>
-				</PanelBody>
-
-				<TypographyPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-					prefix="header"
-					title={ __( 'Header typography', 'axiom-blocks' ) }
-					responsive
-				/>
-
-				<SpacingPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-				/>
-			</InspectorControls>
-
+							{ iconContent }
+						</PanelBody>
+					</>
+				}
+			/>
 			<div { ...innerBlocksProps } />
 		</>
 	);

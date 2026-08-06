@@ -260,7 +260,7 @@ function SelectPill( { value, onChange, options } ) {
 				aria-haspopup="listbox"
 				aria-expanded={ open }
 			>
-				{ selectedLabel }
+				<span className="ab-tp-select__label">{ selectedLabel }</span>
 			</button>
 			<ChevronSvg />
 			{ open && (
@@ -465,6 +465,7 @@ const ChevronSvg = () => (
  * @param root0.title
  * @param root0.initialOpen
  * @param root0.unwrapped
+ * @param root0.responsive
  */
 export function TypographyPanel( {
 	attributes,
@@ -489,7 +490,9 @@ export function TypographyPanel( {
 	const inherited = ( k ) => {
 		if ( ! perDevice ) return '';
 		const parent = device === 'Mobile' ? 'Tablet' : 'Desktop';
-		return resolveResponsive( attributes, camel( prefix, k ), parent ) || '';
+		return (
+			resolveResponsive( attributes, camel( prefix, k ), parent ) || ''
+		);
 	};
 
 	const hasAny = KEYS.some( ( k ) => attributes[ attrKey( k ) ] );
@@ -516,7 +519,11 @@ export function TypographyPanel( {
 	// Weight options follow the *effective* family for the active device (the
 	// device value, or whatever it inherits) so the list stays correct on Tablet/Mobile.
 	const resolvedFamily = perDevice
-		? resolveResponsive( attributes, camel( prefix, 'fontFamily' ), device ) || ''
+		? resolveResponsive(
+				attributes,
+				camel( prefix, 'fontFamily' ),
+				device
+		  ) || ''
 		: get( 'fontFamily' );
 	const selectedFamily = fontFamilies.find(
 		( f ) => f.fontFamily === resolvedFamily

@@ -25,18 +25,48 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	gap: 14px;
+	gap: var(--ab-tst-card-gap, 14px);
 	min-width: 0;
+	min-height: var(--ab-tst-card-minh, auto);
 	box-sizing: border-box;
 	padding: var(--ab-tst-card-pt, 28px) var(--ab-tst-card-pr, 28px)
 		var(--ab-tst-card-pb, 28px) var(--ab-tst-card-pl, 28px);
 	background: var(--ab-tst-card-bg, #fff);
-	border: var(--ab-tst-card-bw, 1px) solid var(--ab-tst-card-bc, #e7e7ea);
-	border-radius: var(--ab-tst-card-radius, 12px);
+	background-attachment: var(--ab-tst-card-attach, scroll);
+	border-style: var(--ab-tst-card-bs, solid);
+	border-color: var(--ab-tst-card-bc, #e7e7ea);
+	// Per-side widths fall back to the legacy single `--ab-tst-card-bw` (old
+	// blocks set only that), then 1px. Per-corner radius likewise.
+	border-top-width: var(--ab-tst-card-bw-top, var(--ab-tst-card-bw, 1px));
+	border-right-width: var(--ab-tst-card-bw-right, var(--ab-tst-card-bw, 1px));
+	border-bottom-width: var(--ab-tst-card-bw-bottom, var(--ab-tst-card-bw, 1px));
+	border-left-width: var(--ab-tst-card-bw-left, var(--ab-tst-card-bw, 1px));
+	border-top-left-radius: var(--ab-tst-card-radius-tl, var(--ab-tst-card-radius, 12px));
+	border-top-right-radius: var(--ab-tst-card-radius-tr, var(--ab-tst-card-radius, 12px));
+	border-bottom-right-radius: var(--ab-tst-card-radius-br, var(--ab-tst-card-radius, 12px));
+	border-bottom-left-radius: var(--ab-tst-card-radius-bl, var(--ab-tst-card-radius, 12px));
+	box-shadow: var(--ab-tst-card-shadow, none);
+	transition:
+		background-color 0.2s ease,
+		border-color 0.2s ease,
+		box-shadow 0.2s ease,
+		transform 0.2s ease;
 }
 
-.has-shadow .ab-testimonial {
-	box-shadow: 0 6px 24px rgba(17, 17, 26, 0.06), 0 2px 8px rgba(17, 17, 26, 0.04);
+/* Card hover (built as P1 — the block shipped no hover attrs). Background +
+ * shadow fall back to the normal values (no change when unset); lift is stored
+ * negative (upward), unset ⇒ 0. */
+.ab-testimonial:hover {
+	background: var(--ab-tst-card-bg-h, var(--ab-tst-card-bg, #fff));
+	box-shadow: var(--ab-tst-card-shadow-h, var(--ab-tst-card-shadow, none));
+	transform: translateY(var(--ab-tst-lift, 0));
+}
+
+/* Shadow preset (the shipped `cardShadow` boolean, default on) sets the SAME
+ * var the custom ShadowControl writes, so a custom inline value always wins by
+ * specificity (inline > class). Unset ⇒ no shadow. */
+.ab-testimonials.has-shadow {
+	--ab-tst-card-shadow: 0 6px 24px rgba(17, 17, 26, 0.06), 0 2px 8px rgba(17, 17, 26, 0.04);
 }
 
 /* Whole-card link (stretched, sits above content but below interactive bits) */
@@ -156,8 +186,15 @@
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
+	box-sizing: border-box;
 	width: var(--ab-tst-avatar-size, 48px);
 	height: var(--ab-tst-avatar-size, 48px);
+	border-style: var(--ab-tst-avatar-bs, solid);
+	border-color: var(--ab-tst-avatar-bc, transparent);
+	border-top-width: var(--ab-tst-avatar-bw-top, 0);
+	border-right-width: var(--ab-tst-avatar-bw-right, 0);
+	border-bottom-width: var(--ab-tst-avatar-bw-bottom, 0);
+	border-left-width: var(--ab-tst-avatar-bw-left, 0);
 
 	img {
 		width: 100%;
@@ -167,16 +204,26 @@
 	}
 }
 
+/* Monogram — block-level colors + typography from the parent's Monogram part.
+   A card that sets its own avatarBg/avatarColor emits them inline (which beats
+   these); leaving them empty falls through to the block value, then to the auto
+   hue the card derives from the name. Font size tracks the avatar size unless
+   the Monogram typography overrides it. */
 .ab-testimonial__initials {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
 	height: 100%;
-	color: #fff;
-	font-weight: 600;
-	font-size: calc(var(--ab-tst-avatar-size, 48px) * 0.4);
-	line-height: 1;
+	background: var(--ab-tst-mono-bg, var(--ab-tst-mono-bg-auto));
+	color: var(--ab-tst-mono-color, #fff);
+	font-family: var(--ab-tst-mono-ff);
+	font-weight: var(--ab-tst-mono-fw, 600);
+	font-size: var(--ab-tst-mono-fs, calc(var(--ab-tst-avatar-size, 48px) * 0.4));
+	line-height: var(--ab-tst-mono-lh, 1);
+	letter-spacing: var(--ab-tst-mono-ls);
+	text-transform: var(--ab-tst-mono-tt);
+	text-decoration: var(--ab-tst-mono-td);
 }
 
 .ab-testimonials--shape-circle .ab-testimonial__avatar,
@@ -345,8 +392,8 @@
 	transition: background 0.15s, color 0.15s, border-color 0.15s;
 
 	&:hover {
-		background: #7c3aed;
-		border-color: #7c3aed;
+		background: var(--ab-tst-nav, #7c3aed);
+		border-color: var(--ab-tst-nav, #7c3aed);
 		color: #fff;
 	}
 
@@ -387,7 +434,7 @@
 	transition: background 0.15s, transform 0.15s;
 
 	&.is-active {
-		background: #7c3aed;
+		background: var(--ab-tst-nav, #7c3aed);
 		transform: scale(1.25);
 	}
 }

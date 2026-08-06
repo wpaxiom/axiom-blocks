@@ -42,11 +42,14 @@ $axiom_blocks_accent_align   = sanitize_html_class( (string) ( $axiom_blocks_a['
 $axiom_blocks_var_map     = array(
 	'--ab-ah-hl-color'     => 'highlightColor',
 	'--ab-ah-hl-bg'        => 'highlightBg',
+	'--ab-ah-hl-radius'    => 'highlightRadius',
 	'--ab-ah-link'         => 'linkColor',
 	'--ab-ah-link-h'       => 'linkHoverColor',
 	'--ab-ah-accent-color' => 'accentColor',
 	'--ab-ah-accent-w'     => 'accentWidth',
 	'--ab-ah-accent-h'     => 'accentThickness',
+	'--ab-ah-sub-gap'      => 'headingSubGap',
+	'--ab-ah-maxw'         => 'headingMaxWidth',
 );
 $axiom_blocks_style_parts = array();
 foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
@@ -57,7 +60,7 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 $axiom_blocks_wrapper_style = implode( '; ', $axiom_blocks_style_parts );
 $axiom_blocks_wrapper_style = Spacing::merge( $axiom_blocks_wrapper_style, $axiom_blocks_a );
 
-/* ── Per-element styles (colour + typography) ─────────────────────────────── */
+/* ── Per-element styles (color + typography) ─────────────────────────────── */
 $axiom_blocks_heading_style = ! empty( $axiom_blocks_a['headingColor'] )
 	? 'color: ' . $axiom_blocks_a['headingColor']
 	: '';
@@ -104,7 +107,7 @@ if ( '' === trim( wp_strip_all_tags( $axiom_blocks_heading_text ) ) && ! $axiom_
 	<?php echo '' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : ''; ?>
 >
 	<?php if ( $axiom_blocks_sub_enabled && '' !== $axiom_blocks_sub_text && $axiom_blocks_sub_above ) : ?>
-		<<?php echo esc_attr( $axiom_blocks_sub_tag ); ?> class="ab-ah__sub"<?php echo '' !== $axiom_blocks_sub_style_attr ? ' style="' . esc_attr( $axiom_blocks_sub_style_attr ) . '"' : ''; ?>><?php echo wp_kses_post( $axiom_blocks_sub_text ); ?></<?php echo esc_attr( $axiom_blocks_sub_tag ); ?>>
+		<<?php echo esc_attr( $axiom_blocks_sub_tag ); ?> class="ab-ah__sub ab-ah__sub--above"<?php echo '' !== $axiom_blocks_sub_style_attr ? ' style="' . esc_attr( $axiom_blocks_sub_style_attr ) . '"' : ''; ?>><?php echo wp_kses_post( $axiom_blocks_sub_text ); ?></<?php echo esc_attr( $axiom_blocks_sub_tag ); ?>>
 	<?php endif; ?>
 
 	<?php if ( $axiom_blocks_accent_enabled && $axiom_blocks_accent_above ) : ?>
@@ -118,6 +121,6 @@ if ( '' === trim( wp_strip_all_tags( $axiom_blocks_heading_text ) ) && ! $axiom_
 	<?php endif; ?>
 
 	<?php if ( $axiom_blocks_sub_enabled && '' !== $axiom_blocks_sub_text && ! $axiom_blocks_sub_above ) : ?>
-		<<?php echo esc_attr( $axiom_blocks_sub_tag ); ?> class="ab-ah__sub"<?php echo '' !== $axiom_blocks_sub_style_attr ? ' style="' . esc_attr( $axiom_blocks_sub_style_attr ) . '"' : ''; ?>><?php echo wp_kses_post( $axiom_blocks_sub_text ); ?></<?php echo esc_attr( $axiom_blocks_sub_tag ); ?>>
+		<<?php echo esc_attr( $axiom_blocks_sub_tag ); ?> class="ab-ah__sub ab-ah__sub--below"<?php echo '' !== $axiom_blocks_sub_style_attr ? ' style="' . esc_attr( $axiom_blocks_sub_style_attr ) . '"' : ''; ?>><?php echo wp_kses_post( $axiom_blocks_sub_text ); ?></<?php echo esc_attr( $axiom_blocks_sub_tag ); ?>>
 	<?php endif; ?>
 </div>

@@ -41,7 +41,7 @@
 
 // ── Shared caret (Caret) — one down-chevron for every select-like trigger ─────
 // ABSelectControl, ABSubAccordion and IconControl all render <Caret/>, so the
-// glyph, size and colour stay identical across the inspector.
+// glyph, size and color stay identical across the inspector.
 .ab-caret {
 	width: 12px;
 	height: 12px;
@@ -207,6 +207,15 @@
 	/* The wrapped control owns the label row; the toggle floats over its right edge. */
 	.ab-ctrl {
 		margin-bottom: 0;
+	}
+
+	/* Reserve the compact switcher's height (22px) on the label row so a full-width
+	   control below it (e.g. the alignment segments) clears the floating toggle
+	   instead of crowding it. */
+	.ab-ctrl__label {
+		min-height: 22px;
+		display: flex;
+		align-items: center;
 	}
 
 	/* Reserve room so a long label never runs under the floated toggle. */
@@ -475,6 +484,15 @@ $ab-field-focus-color: #7c3aed;
 		display: block;
 	}
 
+	&__media-preview {
+		display: block;
+		width: 100%;
+		height: auto;
+		border: $ab-field-border;
+		border-radius: $ab-field-radius;
+		margin-bottom: 8px;
+	}
+
 	// ── Range ─────────────────────────────────────────────────────────────────
 
 	&__range-row {
@@ -688,7 +706,7 @@ $ab-field-focus-color: #7c3aed;
 		line-height: $ab-field-h;
 	}
 
-	// Caret size/colour come from the shared .ab-caret rule.
+	// Caret size/color come from the shared .ab-caret rule.
 
 	&__select-list {
 		position: absolute;
@@ -1304,6 +1322,42 @@ $ab-field-focus-color: #7c3aed;
 	}
 }
 
+// ── Part switch (TargetSection [Content | Style]) ─────────────────────────────
+// Segmented toggle shown at the top of a dual-kind part's section. Matches the
+// design-system purple; mirrors the AxiomColorPicker segmented control.
+.ab-part-switch {
+	display: flex;
+	gap: 2px;
+	padding: 3px;
+	margin-bottom: 14px;
+	background: #f1f0f5;
+	border-radius: 8px;
+
+	&__btn {
+		flex: 1;
+		height: 26px;
+		border: 0;
+		border-radius: 6px;
+		background: transparent;
+		font-family: inherit;
+		font-size: 12px;
+		font-weight: 600;
+		color: #6b7280;
+		cursor: pointer;
+		transition: background 0.12s, color 0.12s, box-shadow 0.12s;
+
+		&:hover {
+			color: #1e1e1e;
+		}
+
+		&.is-active {
+			background: #fff;
+			color: #7c3aed;
+			box-shadow: 0 1px 2px rgba(30, 20, 50, 0.14);
+		}
+	}
+}
+
 // ── Wayfinding note (shared) ──────────────────────────────────────────────────
 // A help paragraph set off from the controls above it with a hairline divider.
 // Use on a wrapper around an `.ab-ctrl__help` to point users to related settings
@@ -1665,7 +1719,16 @@ $ab-tp-h:            32px;
 		text-align: left;
 		white-space: nowrap;
 		overflow: hidden;
+	}
+
+	// Truncates long weight labels (e.g. "600 Semi Bold") as a flex item so they
+	// ellipsize instead of running under the chevron.
+	&__label {
+		flex: 1 1 auto;
+		min-width: 0;
+		overflow: hidden;
 		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	&__list {
@@ -2180,7 +2243,7 @@ $ab-tp-h:            32px;
 		}
 	}
 
-	// Caret (&__chevron) size/colour come from the shared .ab-caret rule.
+	// Caret (&__chevron) size/color come from the shared .ab-caret rule.
 }
 
 .ab-icon-control__pop {
@@ -2192,5 +2255,390 @@ $ab-tp-h:            32px;
 	// The picker fills the popover; drop its standalone bottom margin.
 	.ab-icon-picker {
 		margin-bottom: 0;
+	}
+}
+
+// ── ABEditPopover ─────────────────────────────────────────────────────────────
+// The shared shell every composite control (Background/Border/Typography/Size/
+// Shadow/Date) opens into. WP's Popover supplies the outer frame; this only lays
+// out the head (title + optional device switcher + Reset) and the body slot.
+
+// WP's Popover renders at z-index 1000000 — above the media modal (160000) and
+// every other WP overlay — so an open popover would cover the media library.
+// Drop it below the modal/fullscreen overlays but above the editor chrome
+// (sidebar/header sit ~100000). !important beats WP's inline z-index.
+.components-popover.ab-edit-popover-frame {
+	z-index: 150000 !important;
+}
+
+.ab-edit-popover {
+	box-sizing: border-box;
+	width: 280px;
+	max-width: 100%;
+
+	&__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		padding: 12px 14px;
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	&__title {
+		font-size: 13px;
+		font-weight: 600;
+		color: #1e1e1e;
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	&__body {
+		padding: 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+
+		// The flex gap owns the vertical rhythm inside the popover, so rows
+		// shed the standalone margin they carry in a panel.
+		.ab-ctrl,
+		.ab-sp-control {
+			margin-bottom: 0;
+		}
+		.ab-toggle {
+			margin: 0;
+		}
+	}
+}
+
+// ── BackgroundControl (popover internals) ─────────────────────────────────────
+.ab-bg-preview {
+	height: 34px;
+	border-radius: 5px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+// Focal-point group: a flex column so its rows (pick / Left / Top / preset) get
+// the same 14px rhythm as the popover body. The __pick sub-group (label + the
+// visual picker) hugs together; the picker's native inputs are hidden because we
+// render our own ABRangeControls below.
+.ab-bg-focal {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+
+	&__pick {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	.components-focal-point-picker__media {
+		border-radius: 4px;
+		overflow: hidden;
+	}
+
+	.components-focal-point-picker-wrapper {
+		margin-bottom: 0;
+	}
+
+	.focal-point-picker__controls,
+	.components-focal-point-picker__controls {
+		display: none;
+	}
+}
+
+.ab-bg-stop {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-top: 12px;
+	border-top: 1px solid #f0f0f0;
+}
+
+// ── ShadowControl (workspace preview) ─────────────────────────────────────────
+.ab-shadow-preview {
+	height: 92px;
+	border-radius: 6px;
+	background: #f6f6f8;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&__box {
+		width: 74px;
+		height: 42px;
+		border-radius: 6px;
+		background: #fff;
+	}
+}
+
+// ── ABDateControl (calendar workspace) ────────────────────────────────────────
+.ab-cal {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	&__time {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding-bottom: 12px;
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	&__timef {
+		width: 46px;
+		height: 32px;
+		border: 1px solid #dcdde1;
+		border-radius: 3px;
+		display: flex;
+		align-items: center;
+
+		input {
+			width: 100%;
+			text-align: center;
+			border: 0;
+			outline: none;
+			background: none;
+			font: inherit;
+			font-size: 13px;
+			-moz-appearance: textfield;
+
+			&::-webkit-inner-spin-button,
+			&::-webkit-outer-spin-button {
+				appearance: none;
+				margin: 0;
+			}
+		}
+	}
+
+	&__colon {
+		color: #9ca3af;
+	}
+
+	&__ampm {
+		margin-left: auto;
+		margin-bottom: 0;
+		flex: 0 0 auto;
+	}
+
+	&__nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__navbtn {
+		width: 26px;
+		height: 26px;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		background: none;
+		color: #757575;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&:hover {
+			color: #7c3aed;
+			background: #faf5ff;
+		}
+	}
+
+	&__mo {
+		font-size: 13px;
+		font-weight: 600;
+
+		span {
+			font-weight: 500;
+			color: #757575;
+		}
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		gap: 2px;
+	}
+
+	&__wk {
+		font-size: 10px;
+		font-weight: 600;
+		color: #9ca3af;
+		text-align: center;
+		padding: 4px 0;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+	}
+
+	&__d {
+		height: 32px;
+		border: 0;
+		background: none;
+		border-radius: 5px;
+		font-size: 12px;
+		color: #1e1e1e;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&:hover {
+			background: #f3eefe;
+			color: #7c3aed;
+		}
+
+		&.is-out {
+			color: #cdd1d6;
+			cursor: default;
+		}
+
+		&.is-today {
+			box-shadow: inset 0 0 0 1.5px #7c3aed;
+			color: #7c3aed;
+			font-weight: 600;
+		}
+
+		&.is-sel {
+			background: #7c3aed;
+			color: #fff;
+			font-weight: 600;
+		}
+	}
+
+	&__foot {
+		display: flex;
+		justify-content: space-between;
+		border-top: 1px solid #f0f0f0;
+		padding-top: 10px;
+	}
+
+	&__clear {
+		color: #9ca3af;
+	}
+}
+
+// ── ABDeviceVisibility (universal — handoff summary strip + hide toggles) ─────
+.ab-vis-summary {
+	display: flex;
+	gap: 10px;
+	padding: 12px;
+	background: #f0f0f1;
+	border-radius: 6px;
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
+		flex: 1;
+		color: #757575;
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+	}
+
+	&__icon {
+		display: inline-flex;
+
+		svg {
+			width: 15px;
+			height: 15px;
+		}
+	}
+
+	&__item.is-hidden {
+		color: #c9ccd1;
+
+		.ab-vis-summary__icon {
+			position: relative;
+
+			&::after {
+				content: "";
+				position: absolute;
+				left: -2px;
+				top: 50%;
+				width: 26px;
+				height: 1.5px;
+				background: #c9ccd1;
+				transform: rotate(-20deg);
+			}
+		}
+	}
+}
+
+.ab-vis-rows {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-top: 12px;
+}
+
+.ab-vis-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.ab-ctrl__label {
+		margin: 0;
+	}
+
+	.ab-toggle {
+		flex-shrink: 0;
+		margin: 0;
+	}
+}
+
+/* ── Block-inspector Settings / Styles tabs — match the handoff design ────────
+ * The native inspector tabs use the admin accent (blue); the handoff (`.mk-tab`)
+ * wants full-width tabs with a purple #7c3aed active underline + darker, bolder
+ * active label. Scoped to the inspector tab strip only. Gutenberg has renamed
+ * the tab container/indicator across versions, so target by role under the
+ * inspector root and cover every active-underline mechanism (Ariakit sliding
+ * indicator, TabPanel per-item border, and the plain aria-selected tab). */
+.block-editor-block-inspector {
+
+	[role="tablist"] {
+		[role="tab"] {
+			flex: 1;
+			font-size: 13px;
+			font-weight: 500;
+			color: #50575e;
+			// Kill the default blue focus/active ring on every tab.
+			box-shadow: none;
+
+			&[aria-selected="true"] {
+				color: #1e1e1e;
+				font-weight: 600;
+				// Fallback underline for versions with no indicator element.
+				box-shadow: inset 0 -2px 0 0 #7c3aed;
+			}
+
+			// Keep the purple underline (not the blue ring) on the focused tab.
+			&:focus:not(:disabled) {
+				box-shadow: none;
+			}
+
+			&[aria-selected="true"]:focus:not(:disabled) {
+				box-shadow: inset 0 -2px 0 0 #7c3aed;
+			}
+		}
+
+		// Modern (Ariakit) Tabs: the single sliding underline indicator.
+		.components-tabs__tab-indicator {
+			background-color: #7c3aed !important;
+		}
+	}
+
+	// Classic TabPanel: per-item active underline.
+	.block-editor-block-inspector__tab-item.is-active {
+		box-shadow: inset 0 -1.5px 0 0 #7c3aed;
 	}
 }

@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AxiomBlocks\Blocks\AllowedHtml;
+use AxiomBlocks\Blocks\Background;
 use AxiomBlocks\Blocks\Icons;
 use AxiomBlocks\Blocks\Spacing;
 
@@ -40,15 +41,16 @@ $axiom_blocks_rotation = (int) ( $axiom_blocks_a['rotation'] ?? 0 );
 
 /* ── Wrapper CSS custom properties + spacing ──────────────────────────────── */
 $axiom_blocks_var_map     = array(
-	'--ab-icon-size'    => 'iconSize',
-	'--ab-icon-color'   => 'iconColor',
-	'--ab-icon-color-h' => 'iconHoverColor',
-	'--ab-icon-bg'      => 'bgColor',
-	'--ab-icon-bg-h'    => 'bgHoverColor',
-	'--ab-icon-pad'     => 'shapePadding',
-	'--ab-icon-radius'  => 'shapeRadius',
-	'--ab-icon-bc'      => 'borderColor',
-	'--ab-icon-bw'      => 'borderWidth',
+	'--ab-icon-size'       => 'iconSize',
+	'--ab-icon-color'      => 'iconColor',
+	'--ab-icon-color-h'    => 'iconHoverColor',
+	'--ab-icon-pad'        => 'shapePadding',
+	'--ab-icon-pad-top'    => 'shapePaddingTop',
+	'--ab-icon-pad-right'  => 'shapePaddingRight',
+	'--ab-icon-pad-bottom' => 'shapePaddingBottom',
+	'--ab-icon-pad-left'   => 'shapePaddingLeft',
+	'--ab-icon-radius'     => 'shapeRadius',
+	'--ab-icon-bc'         => 'borderColor',
 );
 $axiom_blocks_style_parts = array();
 foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
@@ -56,9 +58,76 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 		$axiom_blocks_style_parts[] = $axiom_blocks_css_var . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
 	}
 }
-if ( ! empty( $axiom_blocks_a['borderWidth'] ) ) {
-	$axiom_blocks_style_parts[] = '--ab-icon-bs: ' . ( $axiom_blocks_a['borderStyle'] ?? 'solid' );
+
+/* Shape background — flat color (legacy `bgColor`/`bgHoverColor`, bgType empty)
+   is the fallback; gradient/image (bgType set) win. Mirrors getIconVars(). */
+$axiom_blocks_bg = Background::value( $axiom_blocks_a, 'shapeBg', 'bgColor' );
+if ( '' !== $axiom_blocks_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-icon-bg: ' . $axiom_blocks_bg;
 }
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'shapeBg', 'ab-icon' )
+);
+$axiom_blocks_bg_hover = Background::value( $axiom_blocks_a, 'bgHover', 'bgHoverColor' );
+if ( '' !== $axiom_blocks_bg_hover ) {
+	$axiom_blocks_style_parts[] = '--ab-icon-bg-h: ' . $axiom_blocks_bg_hover;
+}
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'bgHover', 'ab-icon-h' )
+);
+
+/* Border — per-side widths fall back to the legacy single `borderWidth`; style +
+   color are single-value. */
+$axiom_blocks_bw_map = array(
+	'top'    => 'borderTopWidth',
+	'right'  => 'borderRightWidth',
+	'bottom' => 'borderBottomWidth',
+	'left'   => 'borderLeftWidth',
+);
+$axiom_blocks_bw_fallback = $axiom_blocks_a['borderWidth'] ?? '';
+$axiom_blocks_any_bw      = false;
+foreach ( $axiom_blocks_bw_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_bw_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_any_bw        = true;
+		$axiom_blocks_style_parts[] = '--ab-icon-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_val;
+	}
+}
+$axiom_blocks_border_style = $axiom_blocks_a['borderStyle'] ?? '';
+if ( $axiom_blocks_any_bw ) {
+	$axiom_blocks_style_parts[] = '--ab-icon-bs: ' . ( '' !== $axiom_blocks_border_style ? $axiom_blocks_border_style : 'solid' );
+} elseif ( '' !== $axiom_blocks_border_style ) {
+	$axiom_blocks_style_parts[] = '--ab-icon-bs: ' . $axiom_blocks_border_style;
+}
+
+/* Radius — per-corner falls back to the legacy single `shapeRadius`. */
+$axiom_blocks_radius_map = array(
+	'tl' => 'shapeRadiusTopLeft',
+	'tr' => 'shapeRadiusTopRight',
+	'br' => 'shapeRadiusBottomRight',
+	'bl' => 'shapeRadiusBottomLeft',
+);
+$axiom_blocks_radius_fallback = $axiom_blocks_a['shapeRadius'] ?? '';
+foreach ( $axiom_blocks_radius_map as $axiom_blocks_corner => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_radius_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_style_parts[] = '--ab-icon-radius-' . $axiom_blocks_corner . ': ' . $axiom_blocks_val;
+	}
+}
+
+/* Shadow (L4). */
+if ( ! empty( $axiom_blocks_a['shapeShadow'] ) ) {
+	$axiom_blocks_style_parts[] = '--ab-icon-shadow: ' . $axiom_blocks_a['shapeShadow'];
+}
+
 if ( 0 !== $axiom_blocks_rotation ) {
 	$axiom_blocks_style_parts[] = '--ab-icon-rotate: ' . $axiom_blocks_rotation . 'deg';
 }

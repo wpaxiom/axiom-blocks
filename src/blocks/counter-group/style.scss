@@ -1,7 +1,7 @@
 /**
  * Counter — frontend + editor styles.
  *
- * Shared visual settings (number/label typography + colour, icon size/colour,
+ * Shared visual settings (number/label typography + color, icon size/color,
  * layout) live as CSS custom properties on the .ab-counter-group wrapper and
  * cascade down to each .ab-counter child. Static layout lives here; dynamic
  * values arrive as the --ab-counter-* properties.
@@ -43,14 +43,30 @@
 	text-align: center;
 	gap: 8px;
 	min-width: 0;
+	min-height: var(--ab-counter-card-minh, auto);
 	background: var(--ab-counter-card-bg, transparent);
-	border: var(--ab-counter-card-bd-width, 0) solid var(--ab-counter-card-bd-color, transparent);
-	border-radius: var(--ab-counter-card-radius, 0);
+	// Per-side widths fall back to the legacy single `--ab-counter-card-bd-width`
+	// (old blocks set only that), then 0. Per-corner radius likewise.
+	border-style: var(--ab-counter-card-bs, solid);
+	border-color: var(--ab-counter-card-bd-color, transparent);
+	border-top-width: var(--ab-counter-card-bw-top, var(--ab-counter-card-bd-width, 0));
+	border-right-width: var(--ab-counter-card-bw-right, var(--ab-counter-card-bd-width, 0));
+	border-bottom-width: var(--ab-counter-card-bw-bottom, var(--ab-counter-card-bd-width, 0));
+	border-left-width: var(--ab-counter-card-bw-left, var(--ab-counter-card-bd-width, 0));
+	border-top-left-radius: var(--ab-counter-card-radius-tl, var(--ab-counter-card-radius, 0));
+	border-top-right-radius: var(--ab-counter-card-radius-tr, var(--ab-counter-card-radius, 0));
+	border-bottom-right-radius: var(--ab-counter-card-radius-br, var(--ab-counter-card-radius, 0));
+	border-bottom-left-radius: var(--ab-counter-card-radius-bl, var(--ab-counter-card-radius, 0));
+	box-shadow: var(--ab-counter-card-shadow, none);
 	padding:
 		var(--ab-counter-card-pt, 0)
 		var(--ab-counter-card-pr, 0)
 		var(--ab-counter-card-pb, 0)
 		var(--ab-counter-card-pl, 0);
+
+	&:hover {
+		background: var(--ab-counter-card-bg-hover, var(--ab-counter-card-bg, transparent));
+	}
 
 	&__icon {
 		order: 0;
@@ -58,7 +74,26 @@
 		align-items: center;
 		justify-content: center;
 		color: var(--ab-counter-icon-color, #7c3aed);
-		transition: color 0.2s ease;
+		// Chip (background / border / radius / padding behind the glyph). Unset
+		// ⇒ transparent, borderless, square, no padding — i.e. no chip, exactly
+		// as shipped. Circle = radius 50%.
+		background: var(--ab-counter-icon-chip-bg, transparent);
+		border-style: var(--ab-counter-icon-chip-bs, solid);
+		border-color: var(--ab-counter-icon-chip-bc, transparent);
+		border-top-width: var(--ab-counter-icon-chip-bw-top, 0);
+		border-right-width: var(--ab-counter-icon-chip-bw-right, 0);
+		border-bottom-width: var(--ab-counter-icon-chip-bw-bottom, 0);
+		border-left-width: var(--ab-counter-icon-chip-bw-left, 0);
+		border-top-left-radius: var(--ab-counter-icon-chip-radius-tl, 0);
+		border-top-right-radius: var(--ab-counter-icon-chip-radius-tr, 0);
+		border-bottom-right-radius: var(--ab-counter-icon-chip-radius-br, 0);
+		border-bottom-left-radius: var(--ab-counter-icon-chip-radius-bl, 0);
+		padding:
+			var(--ab-counter-icon-chip-pt, 0)
+			var(--ab-counter-icon-chip-pr, 0)
+			var(--ab-counter-icon-chip-pb, 0)
+			var(--ab-counter-icon-chip-pl, 0);
+		transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 
 		svg {
 			width: var(--ab-counter-icon-size, 32px);
@@ -103,6 +138,15 @@
 
 	&:hover &__icon {
 		color: var(--ab-counter-icon-hover, var(--ab-counter-icon-color, #7c3aed));
+		// Chip hover — each falls back to the normal chip value, so a hover set
+		// only on some properties leaves the rest unchanged.
+		background: var(--ab-counter-icon-chip-bg-hover, var(--ab-counter-icon-chip-bg, transparent));
+		border-color: var(--ab-counter-icon-chip-h-bc, var(--ab-counter-icon-chip-bc, transparent));
+		border-style: var(--ab-counter-icon-chip-h-bs, var(--ab-counter-icon-chip-bs, solid));
+		border-top-width: var(--ab-counter-icon-chip-h-bw-top, var(--ab-counter-icon-chip-bw-top, 0));
+		border-right-width: var(--ab-counter-icon-chip-h-bw-right, var(--ab-counter-icon-chip-bw-right, 0));
+		border-bottom-width: var(--ab-counter-icon-chip-h-bw-bottom, var(--ab-counter-icon-chip-bw-bottom, 0));
+		border-left-width: var(--ab-counter-icon-chip-h-bw-left, var(--ab-counter-icon-chip-bw-left, 0));
 	}
 }
 

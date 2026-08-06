@@ -1,7 +1,7 @@
 /**
  * Table of Contents — shared frontend + editor styles.
  * Adapted from the BlockSuite design-system handoff. The look ships as the
- * default; per-block colour/typography controls override the tokens inline
+ * default; per-block color/typography controls override the tokens inline
  * (see render.php / index.js). Dynamic values arrive as --ab-toc-* props.
  */
 
@@ -30,8 +30,18 @@
 
 	font-family: "DM Sans", system-ui, -apple-system, sans-serif;
 	background: var(--ab-toc-bg);
-	border: var(--ab-toc-bw) solid var(--ab-toc-border);
-	border-radius: var(--ab-toc-radius);
+	/* Per-side border width falls back to the legacy single `--ab-toc-bw`. */
+	border-top-width: var(--ab-toc-bw-top, var(--ab-toc-bw, 1px));
+	border-right-width: var(--ab-toc-bw-right, var(--ab-toc-bw, 1px));
+	border-bottom-width: var(--ab-toc-bw-bottom, var(--ab-toc-bw, 1px));
+	border-left-width: var(--ab-toc-bw-left, var(--ab-toc-bw, 1px));
+	border-style: var(--ab-toc-bs, solid);
+	border-color: var(--ab-toc-border);
+	/* Per-corner radius falls back to the legacy single `--ab-toc-radius`. */
+	border-top-left-radius: var(--ab-toc-radius-tl, var(--ab-toc-radius, 12px));
+	border-top-right-radius: var(--ab-toc-radius-tr, var(--ab-toc-radius, 12px));
+	border-bottom-right-radius: var(--ab-toc-radius-br, var(--ab-toc-radius, 12px));
+	border-bottom-left-radius: var(--ab-toc-radius-bl, var(--ab-toc-radius, 12px));
 	box-shadow: var(--ab-toc-shadow);
 	padding: 18px 20px 20px;
 	color: var(--ab-toc-link);
@@ -92,7 +102,8 @@
 	font-weight: 600;
 	letter-spacing: -0.01em;
 	line-height: 1.3;
-	color: var(--ab-toc-title);
+	/* Additive title color falls back to the shipped title token. */
+	color: var(--ab-toc-title-color, var(--ab-toc-title));
 }
 
 /* Collapse / close button */

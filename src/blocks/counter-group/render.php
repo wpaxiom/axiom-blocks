@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use AxiomBlocks\Blocks\AllowedHtml;
+use AxiomBlocks\Blocks\Background;
 use AxiomBlocks\Blocks\Spacing;
 
 $axiom_blocks_a = $attributes ?? array();
@@ -69,10 +70,6 @@ $axiom_blocks_var_map     = array(
 	'--ab-counter-num-hover'   => 'numberHoverColor',
 	'--ab-counter-label-hover' => 'labelHoverColor',
 	'--ab-counter-icon-hover'  => 'iconHoverColor',
-	'--ab-counter-card-bg'        => 'cardBackground',
-	'--ab-counter-card-bd-color'  => 'cardBorderColor',
-	'--ab-counter-card-bd-width'  => 'cardBorderWidth',
-	'--ab-counter-card-radius'    => 'cardBorderRadius',
 	'--ab-counter-card-pt'        => 'cardPaddingTop',
 	'--ab-counter-card-pr'        => 'cardPaddingRight',
 	'--ab-counter-card-pb'        => 'cardPaddingBottom',
@@ -84,6 +81,164 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 		$axiom_blocks_style_parts[] = $axiom_blocks_css_var . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
 	}
 }
+
+/* Card box — the design-layer upgrade. Flat color (legacy `cardBackground`,
+   cardBgType empty) is the fallback; gradient/image (cardBgType set) win. The
+   hover background likewise falls back to `cardBackgroundHover`. Mirrors
+   getCounterGroupVars() in index.js. */
+$axiom_blocks_card_bg = Background::value( $axiom_blocks_a, 'card', 'cardBackground' );
+if ( '' !== $axiom_blocks_card_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-card-bg: ' . $axiom_blocks_card_bg;
+}
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'card', 'ab-counter-card' )
+);
+$axiom_blocks_card_bg_hover = Background::value( $axiom_blocks_a, 'cardHover', 'cardBackgroundHover' );
+if ( '' !== $axiom_blocks_card_bg_hover ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-card-bg-hover: ' . $axiom_blocks_card_bg_hover;
+}
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'cardHover', 'ab-counter-card-h' )
+);
+
+/* Card border — per-side widths fall back to the legacy single `cardBorderWidth`;
+   style + color are single-value. */
+if ( ! empty( $axiom_blocks_a['cardBorderColor'] ) ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-card-bd-color: ' . $axiom_blocks_a['cardBorderColor'];
+}
+$axiom_blocks_card_bw_map = array(
+	'top'    => 'cardBorderTopWidth',
+	'right'  => 'cardBorderRightWidth',
+	'bottom' => 'cardBorderBottomWidth',
+	'left'   => 'cardBorderLeftWidth',
+);
+$axiom_blocks_card_bw_fallback = $axiom_blocks_a['cardBorderWidth'] ?? '';
+$axiom_blocks_any_card_bw      = false;
+foreach ( $axiom_blocks_card_bw_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_card_bw_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_any_card_bw     = true;
+		$axiom_blocks_style_parts[] = '--ab-counter-card-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_val;
+	}
+}
+$axiom_blocks_card_border_style = $axiom_blocks_a['borderStyle'] ?? '';
+if ( $axiom_blocks_any_card_bw ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-card-bs: ' . ( '' !== $axiom_blocks_card_border_style ? $axiom_blocks_card_border_style : 'solid' );
+} elseif ( '' !== $axiom_blocks_card_border_style ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-card-bs: ' . $axiom_blocks_card_border_style;
+}
+
+/* Card radius — per-corner falls back to the legacy single `cardBorderRadius`. */
+$axiom_blocks_card_radius_map = array(
+	'tl' => 'cardRadiusTopLeft',
+	'tr' => 'cardRadiusTopRight',
+	'br' => 'cardRadiusBottomRight',
+	'bl' => 'cardRadiusBottomLeft',
+);
+$axiom_blocks_card_radius_fallback = $axiom_blocks_a['cardBorderRadius'] ?? '';
+foreach ( $axiom_blocks_card_radius_map as $axiom_blocks_corner => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_card_radius_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_style_parts[] = '--ab-counter-card-radius-' . $axiom_blocks_corner . ': ' . $axiom_blocks_val;
+	}
+}
+
+/* Custom shadow (L4) wins over the preset class; min-height is responsive. */
+if ( ! empty( $axiom_blocks_a['cardShadowCustom'] ) ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-card-shadow: ' . $axiom_blocks_a['cardShadowCustom'];
+}
+if ( ! empty( $axiom_blocks_a['cardMinHeight'] ) ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-card-minh: ' . $axiom_blocks_a['cardMinHeight'];
+}
+
+/* Icon chip — background / border / radius / padding behind the glyph. Flat
+   color (legacy `iconChipColor`, iconChipBgType empty) is the fallback;
+   gradient/image (iconChipBgType set) win. Mirrors getCounterGroupVars(). */
+$axiom_blocks_chip_bg = Background::value( $axiom_blocks_a, 'iconChip', 'iconChipColor' );
+if ( '' !== $axiom_blocks_chip_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-bg: ' . $axiom_blocks_chip_bg;
+}
+$axiom_blocks_style_parts = array_merge(
+	$axiom_blocks_style_parts,
+	Background::layer_vars( $axiom_blocks_a, 'iconChip', 'ab-counter-icon-chip' )
+);
+$axiom_blocks_chip_bg_hover = Background::value( $axiom_blocks_a, 'iconChipHover', 'iconChipColorHover' );
+if ( '' !== $axiom_blocks_chip_bg_hover ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-bg-hover: ' . $axiom_blocks_chip_bg_hover;
+}
+
+if ( ! empty( $axiom_blocks_a['iconChipBorderColor'] ) ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-bc: ' . $axiom_blocks_a['iconChipBorderColor'];
+}
+if ( ! empty( $axiom_blocks_a['iconChipBorderColorHover'] ) ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-h-bc: ' . $axiom_blocks_a['iconChipBorderColorHover'];
+}
+$axiom_blocks_chip_bw_map = array(
+	'top'    => 'iconChipBorderTopWidth',
+	'right'  => 'iconChipBorderRightWidth',
+	'bottom' => 'iconChipBorderBottomWidth',
+	'left'   => 'iconChipBorderLeftWidth',
+);
+$axiom_blocks_any_chip_bw = false;
+foreach ( $axiom_blocks_chip_bw_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_any_chip_bw   = true;
+		$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+$axiom_blocks_chip_border_style = $axiom_blocks_a['iconChipBorderStyle'] ?? '';
+if ( $axiom_blocks_any_chip_bw ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-bs: ' . ( '' !== $axiom_blocks_chip_border_style ? $axiom_blocks_chip_border_style : 'solid' );
+} elseif ( '' !== $axiom_blocks_chip_border_style ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-bs: ' . $axiom_blocks_chip_border_style;
+}
+$axiom_blocks_chip_bw_hover_map = array(
+	'top'    => 'iconChipBorderTopWidthHover',
+	'right'  => 'iconChipBorderRightWidthHover',
+	'bottom' => 'iconChipBorderBottomWidthHover',
+	'left'   => 'iconChipBorderLeftWidthHover',
+);
+$axiom_blocks_any_chip_bw_hover = false;
+foreach ( $axiom_blocks_chip_bw_hover_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_any_chip_bw_hover = true;
+		$axiom_blocks_style_parts[]     = '--ab-counter-icon-chip-h-bw-' . $axiom_blocks_side . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+if ( $axiom_blocks_any_chip_bw_hover && '' !== $axiom_blocks_chip_border_style ) {
+	$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-h-bs: ' . $axiom_blocks_chip_border_style;
+}
+$axiom_blocks_chip_radius_map = array(
+	'tl' => 'iconChipRadiusTopLeft',
+	'tr' => 'iconChipRadiusTopRight',
+	'br' => 'iconChipRadiusBottomRight',
+	'bl' => 'iconChipRadiusBottomLeft',
+);
+foreach ( $axiom_blocks_chip_radius_map as $axiom_blocks_corner => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-radius-' . $axiom_blocks_corner . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+$axiom_blocks_chip_padding_map = array(
+	'pt' => 'iconChipPaddingTop',
+	'pr' => 'iconChipPaddingRight',
+	'pb' => 'iconChipPaddingBottom',
+	'pl' => 'iconChipPaddingLeft',
+);
+foreach ( $axiom_blocks_chip_padding_map as $axiom_blocks_side => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_style_parts[] = '--ab-counter-icon-chip-' . $axiom_blocks_side . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+
 $axiom_blocks_wrapper_style = implode( '; ', $axiom_blocks_style_parts );
 $axiom_blocks_wrapper_style = Spacing::merge( $axiom_blocks_wrapper_style, $axiom_blocks_a );
 
@@ -99,7 +254,7 @@ if ( $axiom_blocks_stack ) {
 if ( $axiom_blocks_divider ) {
 	$axiom_blocks_classes[] = 'has-divider';
 }
-if ( '' !== $axiom_blocks_shadow ) {
+if ( '' !== $axiom_blocks_shadow && empty( $axiom_blocks_a['cardShadowCustom'] ) ) {
 	$axiom_blocks_classes[] = 'ab-counter-group--shadow-' . $axiom_blocks_shadow;
 }
 

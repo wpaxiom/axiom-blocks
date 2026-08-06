@@ -1,8 +1,10 @@
 /**
  * Testimonials — editor-only affordances.
- * Card visuals come from style.scss (loaded in the editor too). Carousel and
- * marquee layouts preview as a static grid in the canvas (the viewScript only
- * runs on the front end).
+ * Card visuals come from style.scss (loaded in the editor too), including the
+ * carousel/marquee chrome: the edit component reproduces the viewport > track >
+ * cards DOM the viewScript builds, so those layouts preview for real in the
+ * canvas. Only the parts that JS measures or animates are handled here, scoped
+ * to `.is-editor-preview` so the front end is untouched.
  */
 
 .ab-testimonials {
@@ -24,6 +26,50 @@
 	.ab-testimonial__link {
 		display: none;
 	}
+}
+
+/* ── Carousel / marquee preview ───────────────────────────────────────────── */
+
+/* sizeCards() divides the viewport by the visible column count and writes an
+   inline px width on every card. The canvas has no resize loop, so the same
+   division runs in CSS off `--ab-tst-visible` (set by the edit component from
+   the frontend's own visibleColumns() rules). */
+.ab-testimonials.is-editor-preview .ab-testimonials__track > .ab-testimonial {
+	flex: 0 0 calc((100% - var(--ab-tst-gap, 24px) * (var(--ab-tst-visible, 3) - 1)) / var(--ab-tst-visible, 3));
+	max-width: none;
+}
+
+/* The frontend track clips to the viewport and JS scrolls it. Editing needs the
+   off-frame cards reachable, so the canvas scrolls instead of hiding them —
+   identical at rest, since the track still starts at the first card. */
+.ab-testimonials.is-editor-preview .ab-testimonials__viewport {
+	overflow-x: auto;
+	overflow-y: visible;
+	scrollbar-width: thin;
+}
+
+/* Marquee: the real track is `width: max-content` and animates because the
+   viewScript has appended a duplicate set of cards. Neither happens here —
+   cloning inner blocks would mean cloning real blocks, and text that scrolls
+   can't be edited. The layout (row, card width, gap) still matches frame 0. */
+.ab-testimonials--marquee.is-editor-preview .ab-testimonials__track {
+	width: auto;
+	animation: none;
+}
+
+/* Appender sits after the last card instead of stretching to a card's width. */
+.ab-testimonials.is-editor-preview .ab-testimonials__track .block-list-appender {
+	flex: 0 0 auto;
+	align-self: center;
+	margin: 0;
+}
+
+/* Preview chrome only — the arrows/dots are spans, so kill the pointer
+   affordance the shared button styles imply. */
+.ab-testimonials.is-editor-preview .ab-testimonials__arrow,
+.ab-testimonials.is-editor-preview .ab-testimonials__dot {
+	cursor: default;
+	user-select: none;
 }
 
 /* Inspector: uploaded avatar preview */

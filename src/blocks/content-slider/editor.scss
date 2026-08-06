@@ -25,6 +25,27 @@
 		flex-direction: column;
 	}
 
+	/* Vertical simulation: the frontend sizes slides in px from the viewport
+	 * height (sliderHeight, or a 400px default). Give the editor viewport that
+	 * same definite height and the track 100% of it, so the shared slide
+	 * flex-basis `calc((100% − gaps)/perView)` and the track's
+	 * `translateY((100% + gap)/perView)` step both resolve against the viewport
+	 * height — not the track's content height (which would stack every slide
+	 * into page one and scroll the whole stack out of view on page two). */
+	&.ab-slider--vertical .ab-slider__viewport {
+		height: var(--ab-slider-height, 400px);
+	}
+
+	&.ab-slider--vertical .ab-slider__track {
+		height: 100%;
+	}
+
+	&.ab-slider--vertical .ab-slide {
+		/* The base min-height: var(--ab-slider-height) would force every slide
+		 * to the full viewport height and overflow a perView > 1 layout. */
+		min-height: 0;
+	}
+
 	.ab-slide {
 		position: relative;
 		inset: auto;

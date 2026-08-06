@@ -38,10 +38,34 @@
 .axiom-blocks-copy-to-clipboard__button {
 	font-family: inherit;
 	font-weight: 500;
-	border: none;
+	// Border / radius / shadow arrive as CSS vars set on the wrapper by
+	// render.php (mirrored by edit). Unset ⇒ shipped defaults, so old saved
+	// buttons render unchanged (borderless, 4px radius, no shadow).
+	border-style: var(--ab-ctc-bs, solid);
+	border-color: var(--ab-ctc-bc, transparent);
+	border-top-width: var(--ab-ctc-bw-top, 0);
+	border-right-width: var(--ab-ctc-bw-right, 0);
+	border-bottom-width: var(--ab-ctc-bw-bottom, 0);
+	border-left-width: var(--ab-ctc-bw-left, 0);
+	border-top-left-radius: var(--ab-ctc-radius-tl, var(--ab-ctc-radius, 4px));
+	border-top-right-radius: var(--ab-ctc-radius-tr, var(--ab-ctc-radius, 4px));
+	border-bottom-right-radius: var(--ab-ctc-radius-br, var(--ab-ctc-radius, 4px));
+	border-bottom-left-radius: var(--ab-ctc-radius-bl, var(--ab-ctc-radius, 4px));
+	box-shadow: var(--ab-ctc-shadow, none);
 	cursor: pointer;
 	transition: all 0.2s ease;
 	flex-shrink: 0;
+
+	&.is-filled {
+		background-color: var(--ab-ctc-bg, #7c3aed);
+		color: var(--ab-ctc-color, #ffffff);
+	}
+
+	&.is-outline {
+		background-color: transparent;
+		color: var(--ab-ctc-color, #7c3aed);
+		border-color: var(--ab-ctc-bc, #7c3aed);
+	}
 
 	&:hover {
 		opacity: 0.9;

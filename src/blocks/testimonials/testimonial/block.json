@@ -15,9 +15,15 @@
 		"role":      { "type": "string", "default": "" },
 		"company":   { "type": "string", "default": "" },
 
-		"avatarUrl": { "type": "string", "default": "" },
-		"avatarId":  { "type": "number", "default": 0 },
-		"avatarAlt": { "type": "string", "default": "" },
+		"avatarUrl":   { "type": "string",  "default": "" },
+		"avatarId":    { "type": "number",  "default": 0 },
+		"avatarAlt":   { "type": "string",  "default": "" },
+		"useInitials": { "type": "boolean", "default": false },
+		"avatarBg":    { "type": "string",  "default": "" },
+		"avatarColor": { "type": "string",  "default": "" },
+
+		"monoFontSize":   { "type": "string", "default": "" },
+		"monoFontWeight": { "type": "string", "default": "" },
 
 		"rating":     { "type": "number", "default": 5 },
 		"reviewDate": { "type": "string", "default": "" },

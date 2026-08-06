@@ -3,7 +3,14 @@
  *
  * Driven by CSS custom properties set inline in render.php / index.js:
  *   --ab-tb-gap, --ab-tb-icon-size, --ab-tb-icon-color, --ab-tb-card-bg,
- *   --ab-tb-card-radius, --ab-tb-border, --ab-tb-columns
+ *   --ab-tb-card-radius, --ab-tb-columns
+ *
+ * Design-layer wiring (2026-08-05): the badge card (`__item`) is painted in ONE
+ * place — the base `&__item` rule — reading
+ * `var(--ab-tb-<prop>, <shipped fallback>)`. The user's value arrives inline on
+ * the wrapper (so it wins); the `*-def` vars and literal fallbacks carry the
+ * shipped look. A variant rule may only re-declare a `*-def` fallback, never
+ * paint background/border/radius/padding on a card outside that base rule.
  */
 
 .axiom-blocks-trust-badges {
@@ -11,14 +18,13 @@
 	--ab-tb-icon-size: 48px;
 	--ab-tb-card-bg: transparent;
 	--ab-tb-card-radius: 8px;
-	--ab-tb-border: 0;
 	--ab-tb-columns: unset;
 
 	&__heading {
 		font-size: 1rem;
 		font-weight: 600;
 		margin: 0 0 14px;
-		color: inherit;
+		color: var(--ab-tb-heading-color, inherit);
 	}
 
 	&__list {
@@ -49,17 +55,35 @@
 	}
 
 	&__item {
+
+		/* Shipped look — no border until the "Show border" toggle is on. */
+		--ab-tb-bw-def: 0;
+
 		display: inline-flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 6px;
-		padding: 8px 12px;
+		gap: var(--ab-tb-item-gap, 6px);
+		padding:
+			var(--ab-tb-pt, 8px)
+			var(--ab-tb-pr, 12px)
+			var(--ab-tb-pb, 8px)
+			var(--ab-tb-pl, 12px);
 		background: var(--ab-tb-card-bg);
-		border-radius: var(--ab-tb-card-radius);
-		border: var(--ab-tb-border);
+		border-radius:
+			var(--ab-tb-card-radius-tl, var(--ab-tb-card-radius))
+			var(--ab-tb-card-radius-tr, var(--ab-tb-card-radius))
+			var(--ab-tb-card-radius-br, var(--ab-tb-card-radius))
+			var(--ab-tb-card-radius-bl, var(--ab-tb-card-radius));
+		border-style: var(--ab-tb-bs, solid);
+		border-color: var(--ab-tb-bc, transparent);
+		border-top-width: var(--ab-tb-bw-top, var(--ab-tb-bw-def));
+		border-right-width: var(--ab-tb-bw-right, var(--ab-tb-bw-def));
+		border-bottom-width: var(--ab-tb-bw-bottom, var(--ab-tb-bw-def));
+		border-left-width: var(--ab-tb-bw-left, var(--ab-tb-bw-def));
+		box-shadow: var(--ab-tb-shadow, none);
 		min-width: var(--ab-tb-icon-size);
-		transition: transform 0.12s ease, box-shadow 0.12s ease;
+		transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease, border-color 0.12s ease;
 
 		a {
 			display: inline-flex;
@@ -75,7 +99,17 @@
 			display: block;
 			width: var(--ab-tb-icon-size);
 			height: var(--ab-tb-icon-size);
+			color: var(--ab-tb-icon-color, inherit);
 		}
+	}
+
+	&.has-border &__item {
+		--ab-tb-bw-def: 1px;
+	}
+
+	&__item:hover {
+		background: var(--ab-tb-card-bg-h, var(--ab-tb-card-bg));
+		box-shadow: var(--ab-tb-shadow-h, var(--ab-tb-shadow, none));
 	}
 
 	&.has-card &__item:hover {
@@ -86,8 +120,11 @@
 		font-size: 11px;
 		font-weight: 500;
 		letter-spacing: 0.02em;
-		color: inherit;
-		opacity: 0.7;
+		color: var(--ab-tb-label-color, inherit);
+
+		/* The shipped label is dimmed; a chosen color would inherit the cap, so
+	       setting one restores full opacity (index.js / render.php emit 1). */
+		opacity: var(--ab-tb-label-opacity, 0.7);
 		text-align: center;
 		line-height: 1.2;
 	}
@@ -114,10 +151,6 @@
 	/* Monochrome — uses separate mono SVG files, no filter needed */
 	&.is-color-mono img {
 		filter: none;
-	}
-
-	&.is-color-mono .axiom-blocks-trust-badges__label {
-		opacity: 0.7;
 	}
 
 	/* ── Sizes — primarily drive label font-size; icon size driven by var. */

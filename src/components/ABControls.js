@@ -51,7 +51,8 @@ export function ABRangeControl( {
 	// Opt-in: when a multi-unit list is supplied, the inline unit label becomes a
 	// click-to-change picker (styled popover). Otherwise it's a static label.
 	const unitList = normalizeUnits( units );
-	const hasUnitMenu = unitList.length > 1 && typeof onUnitChange === 'function';
+	const hasUnitMenu =
+		unitList.length > 1 && typeof onUnitChange === 'function';
 
 	const [ unitOpen, setUnitOpen ] = useState( false );
 	const pxWrapRef = useRef( null );
@@ -61,7 +62,10 @@ export function ABRangeControl( {
 			return undefined;
 		}
 		const close = ( e ) => {
-			if ( pxWrapRef.current && ! pxWrapRef.current.contains( e.target ) ) {
+			if (
+				pxWrapRef.current &&
+				! pxWrapRef.current.contains( e.target )
+			) {
 				setUnitOpen( false );
 			}
 		};
@@ -94,7 +98,7 @@ export function ABRangeControl( {
 						min={ min }
 						max={ max }
 						step={ step }
-						placeholder={ `${ min }` }
+						placeholder={ `${ Math.min( Math.max( 0, min ), max ) }` }
 					/>
 					{ unit && ! hasUnitMenu && (
 						<span className="ab-ctrl__unit">{ unit }</span>
@@ -104,12 +108,13 @@ export function ABRangeControl( {
 							<button
 								type="button"
 								className="ab-ctrl__unit ab-ctrl__unit--menu"
-								onClick={ () =>
-									setUnitOpen( ( v ) => ! v )
-								}
+								onClick={ () => setUnitOpen( ( v ) => ! v ) }
 								aria-haspopup="listbox"
 								aria-expanded={ unitOpen }
-								aria-label={ __( 'Change unit', 'axiom-blocks' ) }
+								aria-label={ __(
+									'Change unit',
+									'axiom-blocks'
+								) }
 							>
 								{ unit }
 							</button>
@@ -164,7 +169,7 @@ export function ABRangeControl( {
 }
 
 /* ── Styled dropdown ─────────────────────────────────────────────────────── */
-export function ABSelectControl( { label, value, onChange, options } ) {
+export function ABSelectControl( { label, value, onChange, options, help } ) {
 	const selectedLabel =
 		options.find( ( o ) => o.value === value )?.label ?? '';
 	const [ open, setOpen ] = useState( false );
@@ -192,9 +197,7 @@ export function ABSelectControl( { label, value, onChange, options } ) {
 		<div className="ab-ctrl">
 			{ label && <div className="ab-ctrl__label">{ label }</div> }
 			<div
-				className={ `ab-ctrl__select-wrap${
-					open ? ' is-open' : ''
-				}` }
+				className={ `ab-ctrl__select-wrap${ open ? ' is-open' : '' }` }
 				ref={ wrapRef }
 			>
 				<button
@@ -233,6 +236,7 @@ export function ABSelectControl( { label, value, onChange, options } ) {
 					</ul>
 				) }
 			</div>
+			{ help && <p className="ab-ctrl__help">{ help }</p> }
 		</div>
 	);
 }
@@ -295,7 +299,9 @@ export function ABColorControl( {
 						</span>
 						<span
 							className="ab-ctrl__color-swatch"
-							style={ { background: displayColor || 'transparent' } }
+							style={ {
+								background: displayColor || 'transparent',
+							} }
 						/>
 					</button>
 				) }

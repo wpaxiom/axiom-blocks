@@ -48,12 +48,14 @@ $axiom_blocks_icon_svg = $axiom_blocks_show_icon ? Icons::get( $axiom_blocks_ico
 
 /* ── Wrapper CSS custom properties + spacing ──────────────────────────────── */
 $axiom_blocks_var_map     = array(
-	'--ab-notice-bg'        => 'bgColor',
-	'--ab-notice-color'     => 'textColor',
-	'--ab-notice-accent'    => 'accentColor',
-	'--ab-notice-radius'    => 'borderRadius',
-	'--ab-notice-icon'      => 'iconColor',
-	'--ab-notice-icon-size' => 'iconSize',
+	'--ab-notice-bg'            => 'bgColor',
+	'--ab-notice-color'         => 'textColor',
+	'--ab-notice-accent'        => 'accentColor',
+	'--ab-notice-radius'        => 'borderRadius',
+	'--ab-notice-icon'          => 'iconColor',
+	'--ab-notice-icon-size'     => 'iconSize',
+	'--ab-notice-shadow'        => 'noticeShadow',
+	'--ab-notice-title-color'   => 'titleColor',
 );
 $axiom_blocks_style_parts = array();
 foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
@@ -61,6 +63,31 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 		$axiom_blocks_style_parts[] = $axiom_blocks_css_var . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
 	}
 }
+
+/* Radius — per-corner falls back to the legacy single `borderRadius`. */
+$axiom_blocks_radius_map      = array(
+	'tl' => 'radiusTopLeft',
+	'tr' => 'radiusTopRight',
+	'br' => 'radiusBottomRight',
+	'bl' => 'radiusBottomLeft',
+);
+$axiom_blocks_radius_fallback = $axiom_blocks_a['borderRadius'] ?? '';
+foreach ( $axiom_blocks_radius_map as $axiom_blocks_corner => $axiom_blocks_attr_key ) {
+	$axiom_blocks_val = $axiom_blocks_a[ $axiom_blocks_attr_key ] ?? '';
+	if ( '' === $axiom_blocks_val ) {
+		$axiom_blocks_val = $axiom_blocks_radius_fallback;
+	}
+	if ( '' !== $axiom_blocks_val ) {
+		$axiom_blocks_style_parts[] = '--ab-notice-radius-' . $axiom_blocks_corner . ': ' . $axiom_blocks_val;
+	}
+}
+
+/* Max width — inline-only (content-slider / info-box pattern): unset ⇒ no output
+   so the notice fills the content column; ResponsiveProps adds the media rules. */
+if ( ! empty( $axiom_blocks_a['maxWidth'] ) ) {
+	$axiom_blocks_style_parts[] = 'max-width: ' . $axiom_blocks_a['maxWidth'];
+}
+
 $axiom_blocks_wrapper_style = implode( '; ', $axiom_blocks_style_parts );
 $axiom_blocks_wrapper_style = Spacing::merge( $axiom_blocks_wrapper_style, $axiom_blocks_a );
 

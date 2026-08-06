@@ -2,50 +2,150 @@
  * Tabs Block — shared styles (frontend + editor).
  *
  * Theme-aware: colors default to `currentColor` / `transparent`.
- * Users override via the 4 color pickers, which set CSS custom props on the root.
+ * Users override via the color pickers, which set CSS custom props on the root.
+ *
+ * Design-layer wiring (2026-08-05): the Tab bar, Tab and Panel boxes are painted
+ * in ONE place each — the base `&__list` / `&__tab` / `&__content` rules —
+ * reading `var(--ab-tabs-<part>-<prop>, var(--ab-<part>-<prop>-def))`. The user's
+ * value comes from the wrapper (inline, so it wins); the `*-def` vars carry the
+ * shipped look. A rule setting the real property on the element would beat an
+ * inherited inline var, so any variant (e.g. the vertical orientation) may ONLY
+ * re-declare `*-def` fallbacks — never paint border/radius/background/padding on
+ * a bar, tab or panel outside the three base rules.
+ *
+ * The four `tabStyle` presets (default/pills/underline/boxed) were REMOVED
+ * 2026-08-05 (user: "i dont want any preset here") — every look they produced is
+ * now built from the Styles rows. Do not re-add a preset layer. Saved blocks that
+ * carried a preset are **baked** into those rows once (see `TAB_STYLE_BAKE` in
+ * index.js / `axiom_blocks_tab_style_bake()` in render.php), which is why the Tab
+ * part gained padding, shadow and per-state border vars below — without them the
+ * pills and boxed looks had nowhere to land.
  */
 
 .axiom-blocks-tabs {
 
 	/* Note: --axiom-blocks-tab-active and --axiom-blocks-tab-inactive are
-     * intentionally NOT defaulted here. Each variant supplies its own fallback
+     * intentionally NOT defaulted here. Each rule supplies its own fallback
      * via var(--axiom-blocks-tab-active, <fallback>) so the user's color picker
      * still overrides everything when set. Defaulting here to currentColor
-     * caused pills/boxed active backgrounds to inherit page text color. */
+     * made filled active backgrounds inherit page text color. */
 	--axiom-blocks-tab-bg: transparent;
 	--axiom-blocks-tab-content-bg: transparent;
 	--axiom-blocks-tab-rule: rgba(128, 128, 128, 0.2);
 
 	&__list {
+		--ab-list-gap-def: 0;
+
+		/* Shipped look — a 1px rule under the bar, nothing else. */
+		--ab-bar-bg-def: var(--axiom-blocks-tab-bg);
+		--ab-bar-bw-top-def: 0;
+		--ab-bar-bw-right-def: 0;
+		--ab-bar-bw-bottom-def: 1px;
+		--ab-bar-bw-left-def: 0;
+		--ab-bar-bc-def: var(--axiom-blocks-tab-rule);
+		--ab-bar-radius-tl-def: 0;
+		--ab-bar-radius-tr-def: 0;
+		--ab-bar-radius-br-def: 0;
+		--ab-bar-radius-bl-def: 0;
+		--ab-bar-pt-def: 0;
+		--ab-bar-pr-def: 0;
+		--ab-bar-pb-def: 0;
+		--ab-bar-pl-def: 0;
+
 		display: flex;
 		flex-wrap: wrap;
 		margin: 0;
-		padding: 0;
 		list-style: none;
-		background: var(--axiom-blocks-tab-bg);
-		border-bottom: 1px solid var(--axiom-blocks-tab-rule);
 		position: relative;
+		gap: var(--ab-tabs-gap, var(--ab-list-gap-def));
+
+		background: var(--ab-tabs-bar-bg, var(--ab-bar-bg-def));
+		border-style: var(--ab-tabs-bar-bs, solid);
+		border-color: var(--ab-tabs-bar-bc, var(--ab-bar-bc-def));
+		border-top-width: var(--ab-tabs-bar-bw-top, var(--ab-bar-bw-top-def));
+		border-right-width: var(--ab-tabs-bar-bw-right, var(--ab-bar-bw-right-def));
+		border-bottom-width: var(--ab-tabs-bar-bw-bottom, var(--ab-bar-bw-bottom-def));
+		border-left-width: var(--ab-tabs-bar-bw-left, var(--ab-bar-bw-left-def));
+		border-radius:
+			var(--ab-tabs-bar-radius-tl, var(--ab-bar-radius-tl-def))
+			var(--ab-tabs-bar-radius-tr, var(--ab-bar-radius-tr-def))
+			var(--ab-tabs-bar-radius-br, var(--ab-bar-radius-br-def))
+			var(--ab-tabs-bar-radius-bl, var(--ab-bar-radius-bl-def));
+		padding:
+			var(--ab-tabs-bar-pt, var(--ab-bar-pt-def))
+			var(--ab-tabs-bar-pr, var(--ab-bar-pr-def))
+			var(--ab-tabs-bar-pb, var(--ab-bar-pb-def))
+			var(--ab-tabs-bar-pl, var(--ab-bar-pl-def));
 	}
 
 	&__tab {
+
+		/* Shipped look — a 2px underline that the active tab colors in. */
+		--ab-tab-bg-def: transparent;
+		--ab-tab-bw-top-def: 0;
+		--ab-tab-bw-right-def: 0;
+		--ab-tab-bw-bottom-def: 2px;
+		--ab-tab-bw-left-def: 0;
+		--ab-tab-bc-def: transparent;
+		--ab-tab-radius-tl-def: 0;
+		--ab-tab-radius-tr-def: 0;
+		--ab-tab-radius-br-def: 0;
+		--ab-tab-radius-bl-def: 0;
+		--ab-tab-icon-gap-def: 0.5rem;
+		--ab-tab-pt-def: 0.75rem;
+		--ab-tab-pr-def: 1.25rem;
+		--ab-tab-pb-def: 0.75rem;
+		--ab-tab-pl-def: 1.25rem;
+
 		appearance: none;
-		background: transparent;
-		border: none;
 		cursor: pointer;
-		padding: 0.75rem 1.25rem;
+		padding:
+			var(--ab-tabs-tab-pt, var(--ab-tab-pt-def))
+			var(--ab-tabs-tab-pr, var(--ab-tab-pr-def))
+			var(--ab-tabs-tab-pb, var(--ab-tab-pb-def))
+			var(--ab-tabs-tab-pl, var(--ab-tab-pl-def));
 		font: inherit;
 		color: var(--axiom-blocks-tab-inactive);
-		opacity: 0.75;
+
+		/* The shipped 0.75 dims an inactive tab. It sits on top of the Tab ▸ Text
+		   color row, so a chosen color never rendered true — the emitters set
+		   `--ab-tabs-tab-op: 1` only when that color is set, leaving an untouched
+		   tab byte-identical. */
+		opacity: var(--ab-tabs-tab-op, 0.75);
 		transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
-		border-bottom: 2px solid transparent;
 		margin-bottom: -1px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.5rem;
+		gap: var(--ab-tabs-tab-icon-gap, var(--ab-tab-icon-gap-def));
 
+		background: var(--ab-tabs-tab-bg, var(--ab-tab-bg-def));
+		border-style: var(--ab-tabs-tab-bs, solid);
+		border-color: var(--ab-tabs-tab-bc, var(--ab-tab-bc-def));
+		border-top-width: var(--ab-tabs-tab-bw-top, var(--ab-tab-bw-top-def));
+		border-right-width: var(--ab-tabs-tab-bw-right, var(--ab-tab-bw-right-def));
+		border-bottom-width: var(--ab-tabs-tab-bw-bottom, var(--ab-tab-bw-bottom-def));
+		border-left-width: var(--ab-tabs-tab-bw-left, var(--ab-tab-bw-left-def));
+		border-radius:
+			var(--ab-tabs-tab-radius-tl, var(--ab-tab-radius-tl-def))
+			var(--ab-tabs-tab-radius-tr, var(--ab-tab-radius-tr-def))
+			var(--ab-tabs-tab-radius-br, var(--ab-tab-radius-br-def))
+			var(--ab-tabs-tab-radius-bl, var(--ab-tab-radius-bl-def));
+		box-shadow: var(--ab-tabs-tab-shadow, none);
+
+		/* Hover and active fall through to the tab's own normal when unset, so a
+		   styled tab holds steady instead of snapping back to the shipped look. */
 		&:hover {
 			opacity: 1;
+			background: var(--ab-tabs-tab-bg-h, var(--ab-tab-bg-hover-def, var(--ab-tabs-tab-bg, var(--ab-tab-bg-def))));
+			color: var(--ab-tabs-tab-color-h, var(--ab-tab-color-hover-def, var(--axiom-blocks-tab-inactive)));
+			box-shadow: var(--ab-tabs-tab-shadow-h, var(--ab-tabs-tab-shadow, none));
+			border-style: var(--ab-tabs-tab-bs-h, var(--ab-tabs-tab-bs, solid));
+			border-color: var(--ab-tabs-tab-bc-h, var(--ab-tabs-tab-bc, var(--ab-tab-bc-def)));
+			border-top-width: var(--ab-tabs-tab-bw-top-h, var(--ab-tabs-tab-bw-top, var(--ab-tab-bw-top-def)));
+			border-right-width: var(--ab-tabs-tab-bw-right-h, var(--ab-tabs-tab-bw-right, var(--ab-tab-bw-right-def)));
+			border-bottom-width: var(--ab-tabs-tab-bw-bottom-h, var(--ab-tabs-tab-bw-bottom, var(--ab-tab-bw-bottom-def)));
+			border-left-width: var(--ab-tabs-tab-bw-left-h, var(--ab-tabs-tab-bw-left, var(--ab-tab-bw-left-def)));
 		}
 
 		&:focus-visible {
@@ -56,8 +156,27 @@
 		&.is-active {
 			color: var(--axiom-blocks-tab-active);
 			opacity: 1;
-			border-bottom-color: var(--axiom-blocks-tab-active);
+			background: var(--ab-tabs-tab-bg-a, var(--ab-tab-bg-active-def, var(--ab-tabs-tab-bg, var(--ab-tab-bg-def))));
+			box-shadow: var(--ab-tabs-tab-shadow-a, var(--ab-tabs-tab-shadow, none));
+			border-style: var(--ab-tabs-tab-bs-a, var(--ab-tabs-tab-bs, solid));
+			border-top-width: var(--ab-tabs-tab-bw-top-a, var(--ab-tabs-tab-bw-top, var(--ab-tab-bw-top-def)));
+			border-right-width: var(--ab-tabs-tab-bw-right-a, var(--ab-tabs-tab-bw-right, var(--ab-tab-bw-right-def)));
+			border-bottom-width: var(--ab-tabs-tab-bw-bottom-a, var(--ab-tabs-tab-bw-bottom, var(--ab-tab-bw-bottom-def)));
+			border-left-width: var(--ab-tabs-tab-bw-left-a, var(--ab-tabs-tab-bw-left, var(--ab-tab-bw-left-def)));
+
+			/* Shipped behaviour: only the underline edge takes the active color.
+			   An explicit active border color takes every edge, this one last. */
+			border-color: var(--ab-tabs-tab-bc-a, var(--ab-tabs-tab-bc, var(--ab-tab-bc-def)));
+			border-bottom-color: var(--ab-tabs-tab-bc-a, var(--axiom-blocks-tab-active));
 		}
+	}
+
+	/* Tab bar ▸ "Fit to content" (Settings ▸ Layout). Neither `display` nor
+	   `width` is a Styles-row property, so painting them here competes with
+	   nothing — the `*-def` rule above does not apply. */
+	&.is-bar-fit .axiom-blocks-tabs__list {
+		display: inline-flex;
+		width: auto;
 	}
 
 	&.is-full-width .axiom-blocks-tabs__tab {
@@ -65,125 +184,63 @@
 	}
 
 	&__content {
-		background: var(--axiom-blocks-tab-content-bg);
+		--ab-panel-bg-def: var(--axiom-blocks-tab-content-bg);
+		--ab-panel-bw-top-def: 0;
+		--ab-panel-bw-right-def: 0;
+		--ab-panel-bw-bottom-def: 0;
+		--ab-panel-bw-left-def: 0;
+		--ab-panel-bc-def: transparent;
+		--ab-panel-radius-tl-def: 0;
+		--ab-panel-radius-tr-def: 0;
+		--ab-panel-radius-br-def: 0;
+		--ab-panel-radius-bl-def: 0;
+		--ab-panel-pt-def: 0;
+		--ab-panel-pr-def: 0;
+		--ab-panel-pb-def: 0;
+		--ab-panel-pl-def: 0;
+
+		position: relative;
+		background: var(--ab-tabs-panel-bg, var(--ab-panel-bg-def));
+		border-style: var(--ab-tabs-panel-bs, solid);
+		border-color: var(--ab-tabs-panel-bc, var(--ab-panel-bc-def));
+		border-top-width: var(--ab-tabs-panel-bw-top, var(--ab-panel-bw-top-def));
+		border-right-width: var(--ab-tabs-panel-bw-right, var(--ab-panel-bw-right-def));
+		border-bottom-width: var(--ab-tabs-panel-bw-bottom, var(--ab-panel-bw-bottom-def));
+		border-left-width: var(--ab-tabs-panel-bw-left, var(--ab-panel-bw-left-def));
+		border-radius:
+			var(--ab-tabs-panel-radius-tl, var(--ab-panel-radius-tl-def))
+			var(--ab-tabs-panel-radius-tr, var(--ab-panel-radius-tr-def))
+			var(--ab-tabs-panel-radius-br, var(--ab-panel-radius-br-def))
+			var(--ab-tabs-panel-radius-bl, var(--ab-panel-radius-bl-def));
+		padding:
+			var(--ab-tabs-panel-pt, var(--ab-panel-pt-def))
+			var(--ab-tabs-panel-pr, var(--ab-panel-pr-def))
+			var(--ab-tabs-panel-pb, var(--ab-panel-pb-def))
+			var(--ab-tabs-panel-pl, var(--ab-panel-pl-def));
+		box-shadow: var(--ab-tabs-panel-shadow, none);
+
+		/* Background-image overlay layer (BackgroundControl `overlay`). Emitted
+		   only when an opacity or gradient overlay is set, so it is inert
+		   otherwise; inner blocks are lifted above it. */
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			border-radius: inherit;
+			pointer-events: none;
+			background: var(--ab-tabs-panel-overlay-bg, none);
+			opacity: var(--ab-tabs-panel-overlay-opacity, 0);
+			mix-blend-mode: var(--ab-tabs-panel-overlay-blend, normal);
+		}
+
+		> * {
+			position: relative;
+			z-index: 1;
+		}
 	}
 
 	&.axiom-blocks-tab--horizontal .axiom-blocks-tabs__content {
 		margin-top: var(--axiom-blocks-tabs-content-gap, 0);
-	}
-
-	/* — Pills — soft track + solid filled active pill — */
-	&--pills {
-		--ab-pills-track: rgba(124, 58, 237, 0.06);
-		--ab-pills-active-bg: #7c3aed;
-		--ab-pills-active-text: #fff;
-		--ab-pills-inactive: rgba(0, 0, 0, 0.55);
-		--ab-pills-hover-bg: rgba(124, 58, 237, 0.08);
-		--ab-pills-hover-text: #7c3aed;
-
-		.axiom-blocks-tabs__list {
-			border-bottom: none;
-			gap: 0.375rem;
-			padding: 0.375rem;
-			background: var(--ab-pills-track);
-			border-radius: 9999px;
-			display: inline-flex;
-			width: auto;
-		}
-
-		&.is-full-width .axiom-blocks-tabs__list {
-			width: 100%;
-			display: flex;
-		}
-
-		.axiom-blocks-tabs__tab {
-			border-bottom: none;
-			border-radius: 9999px;
-			margin: 0;
-			padding: 0.5rem 1.1rem;
-			font-weight: 500;
-			opacity: 1;
-			color: var(--ab-pills-inactive);
-
-			&:hover {
-				background: var(--ab-pills-hover-bg);
-				color: var(--ab-pills-hover-text);
-				opacity: 1;
-			}
-
-			&.is-active {
-				background: var(--axiom-blocks-tab-active, var(--ab-pills-active-bg));
-				color: var(--ab-pills-active-text);
-				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
-				opacity: 1;
-			}
-		}
-	}
-
-	/* — Underline (default rule, beefier) — */
-	&--underline {
-
-		.axiom-blocks-tabs__list {
-			border-bottom-width: 2px;
-		}
-
-		.axiom-blocks-tabs__tab {
-			border-bottom-width: 3px;
-			margin-bottom: -2px;
-		}
-	}
-
-	/* — Boxed — active tab "lifts" out of the track with a card look — */
-	&--boxed {
-		--ab-boxed-track: #f3f4f6;
-		--ab-boxed-track-rule: #e5e7eb;
-		--ab-boxed-active-bg: #fff;
-		--ab-boxed-active-text: #7c3aed;
-		--ab-boxed-inactive: rgba(0, 0, 0, 0.55);
-		--ab-boxed-content-bg: #fff;
-
-		.axiom-blocks-tabs__list {
-			border-bottom: 1px solid var(--ab-boxed-track-rule);
-			gap: 0.25rem;
-			padding: 0.375rem 0.375rem 0;
-			background: var(--ab-boxed-track);
-			border-radius: 8px 8px 0 0;
-		}
-
-		.axiom-blocks-tabs__tab {
-			border: 1px solid transparent;
-			border-bottom: none;
-			border-radius: 6px 6px 0 0;
-			margin: 0;
-			padding: 0.625rem 1.1rem;
-			font-weight: 500;
-			opacity: 1;
-			color: var(--ab-boxed-inactive);
-			position: relative;
-			top: 1px;
-
-			&:hover {
-				background: rgba(255, 255, 255, 0.55);
-				color: var(--ab-boxed-active-text);
-				opacity: 1;
-			}
-
-			&.is-active {
-				background: var(--axiom-blocks-tab-content-bg, var(--ab-boxed-active-bg));
-				color: var(--axiom-blocks-tab-active, var(--ab-boxed-active-text));
-				border-color: var(--ab-boxed-track-rule);
-				opacity: 1;
-				font-weight: 600;
-			}
-		}
-
-		.axiom-blocks-tabs__content {
-			background: var(--axiom-blocks-tab-content-bg, var(--ab-boxed-content-bg));
-			border: 1px solid var(--ab-boxed-track-rule);
-			border-top: none;
-			border-radius: 0 0 8px 8px;
-			padding: 1.25rem;
-		}
 	}
 }
 
@@ -219,83 +276,36 @@
 	align-items: flex-start;
 
 	.axiom-blocks-tabs__list {
+
+		/* `*-def` only — painting the real border here would beat the Tab bar
+		   Border rows, which arrive as inherited inline vars. */
+		--ab-bar-bw-bottom-def: 0;
+		--ab-bar-bw-right-def: 1px;
+
 		flex-direction: column;
 		align-items: stretch;
 		flex-shrink: 0;
 		min-width: 180px;
-		border-bottom: none;
-		border-right: 1px solid var(--axiom-blocks-tab-rule);
 	}
 
 	.axiom-blocks-tabs__tab {
+		--ab-tab-bw-bottom-def: 0;
+		--ab-tab-bw-right-def: 2px;
+
 		width: 100%;
 		justify-content: flex-start;
 		text-align: left;
-		border-bottom: none;
-		border-right: 2px solid transparent;
 		margin-bottom: 0;
 		margin-right: -1px;
 
 		&.is-active {
-			border-right-color: var(--axiom-blocks-tab-active);
+			border-right-color: var(--ab-tabs-tab-bc-a, var(--axiom-blocks-tab-active));
 		}
 	}
 
 	.axiom-blocks-tabs__content {
 		flex: 1;
 		min-width: 0;
-	}
-
-	/* Vertical + Pills — purple track on the left, pills stack vertically. */
-	&.axiom-blocks-tabs--pills {
-
-		.axiom-blocks-tabs__list {
-			background: var(--ab-pills-track);
-			border-radius: 12px;
-			border-right: none;
-			padding: 0.5rem;
-			gap: 0.25rem;
-		}
-
-		.axiom-blocks-tabs__tab {
-			border-radius: 8px;
-			border-right: none;
-			margin: 0;
-			padding: 0.5rem 0.875rem;
-		}
-	}
-
-	/* Vertical + Boxed — track wraps left side, active tab opens to the right. */
-	&.axiom-blocks-tabs--boxed {
-
-		.axiom-blocks-tabs__list {
-			background: var(--ab-boxed-track);
-			border-radius: 8px 0 0 8px;
-			border-bottom: none;
-			border-right: 1px solid var(--ab-boxed-track-rule);
-			padding: 0.5rem 0 0.5rem 0.5rem;
-			gap: 0.25rem;
-		}
-
-		.axiom-blocks-tabs__tab {
-			top: 0;
-			border-radius: 6px 0 0 6px;
-			border: 1px solid transparent;
-			border-right: none;
-			margin: 0 -1px 0 0;
-			padding: 0.625rem 0.875rem;
-
-			&.is-active {
-				border-color: var(--ab-boxed-track-rule);
-				border-right-color: var(--axiom-blocks-tab-content-bg, var(--ab-boxed-active-bg));
-			}
-		}
-
-		.axiom-blocks-tabs__content {
-			border: 1px solid var(--ab-boxed-track-rule);
-			border-radius: 0 8px 8px 0;
-			padding: 1.25rem;
-		}
 	}
 }
 

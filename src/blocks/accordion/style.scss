@@ -5,20 +5,45 @@
  * strip them.
  */
 .ab-accordion {
-	border: var(--ab-acc-cont-bw, 0) solid var(--ab-acc-cont-bc, transparent);
-	border-radius: var(--ab-acc-cont-radius, 0);
+	box-sizing: border-box;
+	border-style: var(--ab-acc-cont-bs, solid);
+	border-color: var(--ab-acc-cont-bc, transparent);
+	border-top-width: var(--ab-acc-cont-bw-top, var(--ab-acc-cont-bw, 0));
+	border-right-width: var(--ab-acc-cont-bw-right, var(--ab-acc-cont-bw, 0));
+	border-bottom-width: var(--ab-acc-cont-bw-bottom, var(--ab-acc-cont-bw, 0));
+	border-left-width: var(--ab-acc-cont-bw-left, var(--ab-acc-cont-bw, 0));
+	border-radius: var(--ab-acc-cont-radius-tl, var(--ab-acc-cont-radius, 0))
+		var(--ab-acc-cont-radius-tr, var(--ab-acc-cont-radius, 0))
+		var(--ab-acc-cont-radius-br, var(--ab-acc-cont-radius, 0))
+		var(--ab-acc-cont-radius-bl, var(--ab-acc-cont-radius, 0));
+	box-shadow: var(--ab-acc-cont-shadow, none);
 }
 
 .ab-accordion__item {
 	overflow: hidden;
-	background: var(--ab-acc-body-bg, #fff);
-	border: var(--ab-acc-border-width, 1px) solid var(--ab-acc-border-color, #e3e3e6);
-	border-radius: var(--ab-acc-radius, 8px);
+	background: var(--ab-acc-item-bg, var(--ab-acc-body-bg, #fff));
+	box-shadow: var(--ab-acc-item-shadow, none);
+	border-style: var(--ab-acc-bs, solid);
+	border-color: var(--ab-acc-border-color, #e3e3e6);
+	border-top-width: var(--ab-acc-bw-top, var(--ab-acc-border-width, 1px));
+	border-right-width: var(--ab-acc-bw-right, var(--ab-acc-border-width, 1px));
+	border-bottom-width: var(--ab-acc-bw-bottom, var(--ab-acc-border-width, 1px));
+	border-left-width: var(--ab-acc-bw-left, var(--ab-acc-border-width, 1px));
+	border-radius: var(--ab-acc-radius-tl, var(--ab-acc-radius, 8px))
+		var(--ab-acc-radius-tr, var(--ab-acc-radius, 8px))
+		var(--ab-acc-radius-br, var(--ab-acc-radius, 8px))
+		var(--ab-acc-radius-bl, var(--ab-acc-radius, 8px));
 	margin-bottom: var(--ab-acc-gap, 8px);
+	transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .ab-accordion__item:last-child {
 	margin-bottom: 0;
+}
+
+.ab-accordion__item:hover {
+	background: var(--ab-acc-item-bg-hover, var(--ab-acc-item-bg, var(--ab-acc-body-bg, #fff)));
+	box-shadow: var(--ab-acc-item-shadow-hover, var(--ab-acc-item-shadow, none));
 }
 
 .ab-accordion__header {
@@ -51,6 +76,11 @@
 		outline: 2px solid currentcolor;
 		outline-offset: -2px;
 	}
+}
+
+.ab-accordion__header:hover {
+	background: var(--ab-acc-header-bg-hover, var(--ab-acc-header-bg, #f6f7f8));
+	color: var(--ab-acc-header-color-hover, var(--ab-acc-header-color, inherit));
 }
 
 .ab-accordion__item[open] > .ab-accordion__header,
@@ -89,6 +119,11 @@
 	}
 }
 
+.ab-accordion__item[open] > .ab-accordion__header .ab-accordion__icon,
+.ab-accordion__item.is-editor > .ab-accordion__header .ab-accordion__icon {
+	color: var(--ab-acc-icon-color-active, var(--ab-acc-icon-color, currentcolor));
+}
+
 .ab-accordion--icon-left .ab-accordion__icon {
 	order: -1;
 }
@@ -103,10 +138,21 @@
 
 .ab-accordion__body-inner {
 	box-sizing: border-box;
+	max-width: var(--ab-acc-body-maxw, none);
+	margin-inline: auto;
 	padding: var(--ab-acc-body-pt, 16px) var(--ab-acc-body-pr, 16px)
 		var(--ab-acc-body-pb, 16px) var(--ab-acc-body-pl, 16px);
 	background: var(--ab-acc-body-bg, #fff);
 	color: var(--ab-acc-body-color, inherit);
+	border-style: var(--ab-acc-body-bs, solid);
+	border-color: var(--ab-acc-body-bc, transparent);
+	border-top-width: var(--ab-acc-body-bw-top, 0);
+	border-right-width: var(--ab-acc-body-bw-right, 0);
+	border-bottom-width: var(--ab-acc-body-bw-bottom, 0);
+	border-left-width: var(--ab-acc-body-bw-left, 0);
+	border-radius: var(--ab-acc-body-radius-tl, 0)
+		var(--ab-acc-body-radius-tr, 0) var(--ab-acc-body-radius-br, 0)
+		var(--ab-acc-body-radius-bl, 0);
 
 	> :first-child {
 		margin-top: 0;
@@ -115,6 +161,15 @@
 	> :last-child {
 		margin-bottom: 0;
 	}
+}
+
+// Block themes with `useRootPaddingAwareAlignments` add inline padding to
+// alignfull children of `.has-global-padding`. Zero it so the accordion can
+// bleed edge-to-edge when full-alignment is selected.
+// Doubled selector pushes specificity past the theme's 0,2,1 rule.
+.ab-accordion.ab-accordion.alignfull {
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .ab-accordion__toggle-all {

@@ -52,14 +52,27 @@
 	align-items: flex-end;
 }
 
-// Unit
+// Unit — mirror the frontend var-driven box (style.scss) so the editor preview
+// matches exactly. Unset vars ⇒ shipped defaults.
 .axiom-blocks-countdown__unit {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	min-width: 80px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	min-width: var(--ab-cd-digit-minw, 80px);
+	background: var(--ab-cd-digit-bg, #f0f0f0);
+	border-style: var(--ab-cd-bs, solid);
+	border-color: var(--ab-cd-bc, transparent);
+	border-top-width: var(--ab-cd-bw-top, 0);
+	border-right-width: var(--ab-cd-bw-right, 0);
+	border-bottom-width: var(--ab-cd-bw-bottom, 0);
+	border-left-width: var(--ab-cd-bw-left, 0);
+	border-top-left-radius: var(--ab-cd-radius-tl, var(--ab-cd-radius, 8px));
+	border-top-right-radius: var(--ab-cd-radius-tr, var(--ab-cd-radius, 8px));
+	border-bottom-right-radius: var(--ab-cd-radius-br, var(--ab-cd-radius, 8px));
+	border-bottom-left-radius: var(--ab-cd-radius-bl, var(--ab-cd-radius, 8px));
+	box-shadow: var(--ab-cd-shadow, none);
 }
 
 // Digit
@@ -67,6 +80,7 @@
 	font-weight: 700;
 	line-height: 1;
 	font-variant-numeric: tabular-nums;
+	color: var(--ab-cd-digit-color, #333333);
 }
 
 // Label
@@ -75,6 +89,7 @@
 	letter-spacing: 1px;
 	margin-top: 8px;
 	font-weight: 500;
+	color: var(--ab-cd-label-color, #666666);
 }
 
 // Expired state

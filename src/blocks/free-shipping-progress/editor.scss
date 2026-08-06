@@ -1,73 +1,15 @@
 /**
  * Free Shipping Progress — editor-only styles.
  *
- * The editor uses a dedicated `.axiom-blocks-fsp-preview` wrapper (dashed
- * chrome + label pill + hint) so the live frontend `.axiom-blocks-fsp` styles
- * never leak into the authoring view. Bar/fill colors mirror the block's
- * actual attrs via inline styles so authors can see their styling choices.
+ * The editor renders the SAME markup as the frontend (`.axiom-blocks-fsp` +
+ * `__msg` / `__track` / `__fill`), so the shared style.scss — loaded in the
+ * editor too — styles it WYSIWYG. The inspector vars (getFspVars) drive the
+ * container box, bar fill/radius and message typography live. Nothing here
+ * needs to duplicate that; this file only carries editor affordances.
  */
 
-.axiom-blocks-fsp-preview {
-	box-sizing: border-box;
-	padding: 14px 16px;
-	border: 1px dashed #c3c4c7;
-	border-radius: 6px;
-	background: #f6f7f7;
-
-	*,
-	*::before,
-	*::after {
-		box-sizing: border-box;
-	}
-
-	&.is-align-left {
-		text-align: left;
-	}
-
-	&.is-align-center {
-		text-align: center;
-	}
-
-	&.is-align-right {
-		text-align: right;
-	}
-
-	&__label {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		font-size: 12px;
-		font-weight: 600;
-		color: #1d2327;
-		margin-bottom: 8px;
-	}
-
-	&__mode {
-		font-size: 10px;
-		font-weight: 600;
-		color: #7c3aed;
-		background: #ede9fe;
-		border-radius: 3px;
-		padding: 2px 6px;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-	}
-
-	&__bar {
-		width: 100%;
-		overflow: hidden;
-		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
-	}
-
-	&__fill {
-		height: 100%;
-		transition: width 0.25s ease;
-	}
-
-	&__hint {
-		margin: 8px 0 0;
-		font-size: 11px;
-		color: #6b7280;
-		font-style: italic;
-	}
+/* The message is a non-editable preview of the "before qualifying" template
+ * (the frontend builds it from the live cart). Keep the caret off it. */
+.axiom-blocks-fsp .axiom-blocks-fsp__msg {
+	caret-color: transparent;
 }
