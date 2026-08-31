@@ -196,6 +196,16 @@ class Blocks {
 			'icon'        => 'list-view',
 		),
 
+		// ── Dynamic ──────────────────────────────────────────────────────────
+		array(
+			'id'          => 'post-grid',
+			'name'        => 'Post Grid',
+			'category'    => 'dynamic',
+			'tier'        => 'free',
+			'description' => 'Posts in a designed grid or list, card built from blocks',
+			'icon'        => 'grid',
+		),
+
 		// ── WooCommerce ──────────────────────────────────────────────────────
 		array(
 			'id'          => 'trust-badges',

@@ -71,7 +71,7 @@ if ( '' === $axiom_blocks_bg_type && ! empty( $attributes['backgroundType'] ) ) 
 	}
 	$axiom_blocks_legacy['bgGradStops'] = $axiom_blocks_stops;
 
-	$attributes = $axiom_blocks_legacy;
+	$attributes = $axiom_blocks_legacy; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- $attributes is the WordPress-provided render template variable.
 	$axiom_blocks_bg_type = $attributes['bgType'];
 }
 

@@ -1,0 +1,42 @@
+/**
+ * Post Grid — editor-only affordances.
+ *
+ * The canvas renders the card template once as an editable block, then a
+ * read-only preview of it per remaining post, so the row matches what
+ * render.php will output.
+ */
+
+.wp-block-axiom-blocks-post-grid {
+	position: relative;
+
+	.ab-pg__loading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 120px;
+	}
+
+	/* Read-only twins of the card template, one per remaining post. They are
+	 * real grid columns like the editable card, and sort between it and the
+	 * full-width siblings. */
+	.ab-pg__list > .ab-pg__preview {
+		grid-column: auto;
+		order: 1;
+		min-width: 0;
+		pointer-events: none;
+	}
+
+	.ab-pg__empty-note {
+		margin: 0;
+		padding: 16px;
+		border: 1px dashed #d8d5e0;
+		border-radius: 6px;
+		color: #6b6577;
+		font-size: 13px;
+		text-align: center;
+	}
+}
+
+.wp-block-axiom-blocks-post-card {
+	min-height: 40px;
+}

@@ -108,6 +108,31 @@ const BLOCKS = [
 		id: 'table-of-contents',
 		files: [ 'block.json', 'render.php', 'assets/toc.js' ],
 	},
+	{
+		id: 'post-grid',
+		files: [ 'block.json', 'render.php' ],
+		extras: [
+			[ 'post-card/block.json', 'post-card/block.json' ],
+			[ 'post-card/render.php', 'post-card/render.php' ],
+			[ 'post-title/block.json', 'post-title/block.json' ],
+			[ 'post-title/render.php', 'post-title/render.php' ],
+			[ 'post-excerpt/block.json', 'post-excerpt/block.json' ],
+			[ 'post-excerpt/render.php', 'post-excerpt/render.php' ],
+			[ 'post-image/block.json', 'post-image/block.json' ],
+			[ 'post-image/render.php', 'post-image/render.php' ],
+			[ 'post-terms/block.json', 'post-terms/block.json' ],
+			[ 'post-terms/render.php', 'post-terms/render.php' ],
+			[ 'post-meta/block.json', 'post-meta/block.json' ],
+			[ 'post-meta/render.php', 'post-meta/render.php' ],
+			[ 'post-read-more/block.json', 'post-read-more/block.json' ],
+			[ 'post-read-more/render.php', 'post-read-more/render.php' ],
+			[ 'post-pagination/block.json', 'post-pagination/block.json' ],
+			[ 'post-pagination/render.php', 'post-pagination/render.php' ],
+			[ 'post-pagination/view.js', 'post-pagination/view.js' ],
+			[ 'post-no-results/block.json', 'post-no-results/block.json' ],
+			[ 'post-no-results/render.php', 'post-no-results/render.php' ],
+		],
+	},
 ];
 
 /** Non-block files copied to build/. */

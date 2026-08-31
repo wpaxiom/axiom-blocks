@@ -1,0 +1,401 @@
+/**
+ * Post Grid + Post Card — shared frontend + editor styles.
+ *
+ * Grid-level custom properties are --ab-pg-*, the card box is --ab-pc-*.
+ * That split is what lets a different parent host the same card later.
+ * Every var carries the shipped default as its fallback, so an untouched
+ * block renders the baseline look with no inline style at all.
+ *
+ * --ab-pg-c is the resolved column count for the current breakpoint; the
+ * media queries below reassign it so the grid template itself stays one line.
+ */
+
+.ab-pg {
+	padding: var(--ab-pg-pt, 0) var(--ab-pg-pr, 0) var(--ab-pg-pb, 0) var(--ab-pg-pl, 0);
+	border-style: var(--ab-pg-bs, solid);
+	border-color: var(--ab-pg-bc, transparent);
+	border-width:
+		var(--ab-pg-bw-top, 0) var(--ab-pg-bw-right, 0)
+		var(--ab-pg-bw-bottom, 0) var(--ab-pg-bw-left, 0);
+	border-radius:
+		var(--ab-pg-radius-tl, 0) var(--ab-pg-radius-tr, 0)
+		var(--ab-pg-radius-br, 0) var(--ab-pg-radius-bl, 0);
+	background: var(--ab-pg-bg, transparent);
+	box-shadow: var(--ab-pg-shadow, none);
+
+	&__list {
+		--ab-pg-c: var(--ab-pg-cols, 3);
+
+		display: grid;
+		grid-template-columns: repeat(var(--ab-pg-c), minmax(0, 1fr));
+		column-gap: var(--ab-pg-col-gap, 24px);
+		row-gap: var(--ab-pg-row-gap, 24px);
+
+		/* Cards are the only column items. render.php emits pagination and
+		 * no-results after this container, but the editor keeps every inner
+		 * block inside it, so anything that is not a card takes a full row
+		 * and sorts last (the editor's card previews claim order 1). */
+		> :not(.ab-pc) {
+			grid-column: 1 / -1;
+			order: 2;
+		}
+	}
+
+	&--list &__list {
+		--ab-pg-c: 1;
+	}
+
+	&.is-equal-height &__list {
+		align-items: stretch;
+	}
+}
+
+.ab-pc {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ab-pc-gap, 12px);
+	min-width: 0;
+	padding-block: var(--ab-pc-pt, 0) var(--ab-pc-pb, 0);
+	padding-inline: var(--ab-pc-pl, 0) var(--ab-pc-pr, 0);
+
+	> * {
+		margin-block-start: 0;
+		margin-block-end: 0;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+}
+
+.ab-pg--list .ab-pc {
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+/* The featured card is a real second template, not a state of the first, so it
+ * carries the whole capability stack. Span is clamped server-side and in the
+ * editor to the grid's column count so it can never create implicit tracks. */
+.ab-pc--featured {
+	grid-column: span var(--ab-pg-feat-span, 1);
+}
+
+/* ── Per-item parts ───────────────────────────────────────────────────────── */
+
+.ab-pc__title {
+	margin: 0;
+	color: var(--ab-pc-title-color, inherit);
+
+	&-link {
+		color: inherit;
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+
+	&:hover &-link,
+	&-link:hover {
+		color: var(--ab-pc-title-color-h, var(--ab-pc-title-color, inherit));
+	}
+}
+
+.ab-pc__excerpt {
+	margin: 0;
+	color: var(--ab-pc-excerpt-color, inherit);
+
+	&.is-clamped {
+		display: -webkit-box;
+		overflow: hidden;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: var(--ab-pc-excerpt-clamp, 3);
+	}
+}
+
+.ab-pc__media {
+	position: relative;
+	overflow: hidden;
+	margin: 0;
+	border-style: var(--ab-pc-img-bs, solid);
+	border-color: var(--ab-pc-img-bc, transparent);
+	border-width:
+		var(--ab-pc-img-bw-top, 0) var(--ab-pc-img-bw-right, 0)
+		var(--ab-pc-img-bw-bottom, 0) var(--ab-pc-img-bw-left, 0);
+	border-radius:
+		var(--ab-pc-img-radius-tl, 0) var(--ab-pc-img-radius-tr, 0)
+		var(--ab-pc-img-radius-br, 0) var(--ab-pc-img-radius-bl, 0);
+	box-shadow: var(--ab-pc-img-shadow, none);
+	transition: box-shadow 0.2s ease;
+
+	&:hover {
+		box-shadow: var(--ab-pc-img-shadow-h, var(--ab-pc-img-shadow, none));
+	}
+
+	&.has-overlay::after {
+		position: absolute;
+		background: var(--ab-pc-img-overlay, transparent);
+		content: "";
+		inset: 0;
+		pointer-events: none;
+		transition: background 0.2s ease;
+	}
+
+	&.has-overlay:hover::after {
+		background: var(--ab-pc-img-overlay-h, var(--ab-pc-img-overlay, transparent));
+	}
+}
+
+.ab-pc__media-link {
+	display: block;
+}
+
+.ab-pc__img {
+	display: block;
+	width: 100%;
+	height: var(--ab-pc-img-h, auto);
+	aspect-ratio: var(--ab-pc-img-ratio, auto);
+	object-fit: var(--ab-pc-img-fit, cover);
+}
+
+.ab-pc__terms {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--ab-pc-term-gap, 8px);
+	align-items: center;
+}
+
+.ab-pc__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--ab-pc-meta-gap, 12px);
+	align-items: center;
+
+	&-item {
+		display: inline-flex;
+		gap: calc(var(--ab-pc-meta-gap, 12px) / 2);
+		align-items: center;
+	}
+
+	&-icon svg {
+		display: block;
+		width: var(--ab-pc-meta-icon-size, 14px);
+		height: var(--ab-pc-meta-icon-size, 14px);
+		color: var(--ab-pc-meta-icon, currentcolor);
+	}
+
+	&-item:hover &-icon svg {
+		color: var(--ab-pc-meta-icon-h, var(--ab-pc-meta-icon, currentcolor));
+	}
+
+	&-avatar {
+		display: block;
+		width: var(--ab-pc-meta-avatar-size, 20px);
+		height: var(--ab-pc-meta-avatar-size, 20px);
+		border-radius: 50%;
+	}
+
+	&-label {
+		opacity: 0.85;
+	}
+
+	&-sep {
+		color: var(--ab-pc-meta-sep, currentcolor);
+	}
+
+	&-link {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	&-item--author {
+		color: var(--ab-pc-meta-author, inherit);
+
+		&:hover {
+			color: var(--ab-pc-meta-author-h, var(--ab-pc-meta-author, inherit));
+		}
+	}
+
+	&-item--date,
+	&-item--updated {
+		color: var(--ab-pc-meta-date, inherit);
+
+		&:hover {
+			color: var(--ab-pc-meta-date-h, var(--ab-pc-meta-date, inherit));
+		}
+	}
+
+	&-item--comments,
+	&-item--read-time {
+		color: var(--ab-pc-meta-comments, inherit);
+
+		&:hover {
+			color: var(--ab-pc-meta-comments-h, var(--ab-pc-meta-comments, inherit));
+		}
+	}
+}
+
+.ab-pc__more {
+	display: flex;
+	justify-content: var(--ab-pc-btn-justify, flex-start);
+
+	&.is-full .ab-pc__more-link {
+		flex: 1;
+		justify-content: center;
+	}
+
+	&-link {
+		display: inline-flex;
+		gap: var(--ab-pc-btn-icon-gap, 6px);
+		align-items: center;
+		padding:
+			var(--ab-pc-btn-pt, 0) var(--ab-pc-btn-pr, 0)
+			var(--ab-pc-btn-pb, 0) var(--ab-pc-btn-pl, 0);
+		border-style: var(--ab-pc-btn-bs, solid);
+		border-color: var(--ab-pc-btn-bc, transparent);
+		border-width:
+			var(--ab-pc-btn-bw-top, 0) var(--ab-pc-btn-bw-right, 0)
+			var(--ab-pc-btn-bw-bottom, 0) var(--ab-pc-btn-bw-left, 0);
+		border-radius:
+			var(--ab-pc-btn-radius-tl, 0) var(--ab-pc-btn-radius-tr, 0)
+			var(--ab-pc-btn-radius-br, 0) var(--ab-pc-btn-radius-bl, 0);
+		background: var(--ab-pc-btn-bg, transparent);
+		box-shadow: var(--ab-pc-btn-shadow, none);
+		color: var(--ab-pc-btn-color, inherit);
+		text-decoration: none;
+		transition:
+			color 0.15s ease,
+			background 0.15s ease,
+			border-color 0.15s ease,
+			box-shadow 0.15s ease;
+
+		&:hover {
+			border-color: var(--ab-pc-btn-bc-h, var(--ab-pc-btn-bc, transparent));
+			background: var(--ab-pc-btn-bg-h, var(--ab-pc-btn-bg, transparent));
+			box-shadow: var(--ab-pc-btn-shadow-h, var(--ab-pc-btn-shadow, none));
+			color: var(--ab-pc-btn-color-h, var(--ab-pc-btn-color, inherit));
+		}
+	}
+
+	&-icon svg {
+		display: block;
+		width: 1em;
+		height: 1em;
+	}
+}
+
+/* ── Pagination + empty state ─────────────────────────────────────────────── */
+
+.ab-pg__pagination {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--ab-pg-pag-gap, 8px);
+	justify-content: var(--ab-pg-pag-justify, center);
+	align-items: center;
+	margin-top: var(--ab-pg-row-gap, 24px);
+
+	.page-numbers,
+	.ab-pg__loadmore {
+		display: inline-block;
+		padding:
+			var(--ab-pg-pag-pt, 0) var(--ab-pg-pag-pr, 0)
+			var(--ab-pg-pag-pb, 0) var(--ab-pg-pag-pl, 0);
+		border-style: var(--ab-pg-pag-bs, solid);
+		border-color: var(--ab-pg-pag-bc, transparent);
+		border-width:
+			var(--ab-pg-pag-bw-top, 0) var(--ab-pg-pag-bw-right, 0)
+			var(--ab-pg-pag-bw-bottom, 0) var(--ab-pg-pag-bw-left, 0);
+		border-radius:
+			var(--ab-pg-pag-radius-tl, 0) var(--ab-pg-pag-radius-tr, 0)
+			var(--ab-pg-pag-radius-br, 0) var(--ab-pg-pag-radius-bl, 0);
+		background: var(--ab-pg-pag-bg, transparent);
+		color: var(--ab-pg-pag-color, inherit);
+		text-decoration: none;
+		transition:
+			color 0.15s ease,
+			background 0.15s ease,
+			border-color 0.15s ease;
+	}
+
+	a.page-numbers:hover,
+	.ab-pg__loadmore:hover {
+		border-color: var(--ab-pg-pag-bc-h, var(--ab-pg-pag-bc, transparent));
+		background: var(--ab-pg-pag-bg-h, var(--ab-pg-pag-bg, transparent));
+		color: var(--ab-pg-pag-color-h, var(--ab-pg-pag-color, inherit));
+	}
+
+	.page-numbers.current {
+		border-color: var(--ab-pg-pag-bc-a, var(--ab-pg-pag-bc, transparent));
+		background: var(--ab-pg-pag-bg-a, var(--ab-pg-pag-bg, transparent));
+		color: var(--ab-pg-pag-color-a, var(--ab-pg-pag-color, inherit));
+	}
+
+	.ab-pg__loadmore.is-loading {
+		opacity: 0.6;
+		pointer-events: none;
+	}
+}
+
+.ab-pg__no-results {
+	padding:
+		var(--ab-pg-nr-pt, 0) var(--ab-pg-nr-pr, 0)
+		var(--ab-pg-nr-pb, 0) var(--ab-pg-nr-pl, 0);
+	border-style: var(--ab-pg-nr-bs, solid);
+	border-color: var(--ab-pg-nr-bc, transparent);
+	border-width:
+		var(--ab-pg-nr-bw-top, 0) var(--ab-pg-nr-bw-right, 0)
+		var(--ab-pg-nr-bw-bottom, 0) var(--ab-pg-nr-bw-left, 0);
+	border-radius:
+		var(--ab-pg-nr-radius-tl, 0) var(--ab-pg-nr-radius-tr, 0)
+		var(--ab-pg-nr-radius-br, 0) var(--ab-pg-nr-radius-bl, 0);
+	background: var(--ab-pg-nr-bg, transparent);
+	box-shadow: var(--ab-pg-nr-shadow, none);
+}
+
+.ab-pc__term {
+	display: inline-block;
+	padding:
+		var(--ab-pc-term-pt, 0) var(--ab-pc-term-pr, 0)
+		var(--ab-pc-term-pb, 0) var(--ab-pc-term-pl, 0);
+	border-style: var(--ab-pc-term-bs, solid);
+	border-color: var(--ab-pc-term-bc, transparent);
+	border-width:
+		var(--ab-pc-term-bw-top, 0) var(--ab-pc-term-bw-right, 0)
+		var(--ab-pc-term-bw-bottom, 0) var(--ab-pc-term-bw-left, 0);
+	border-radius:
+		var(--ab-pc-term-radius-tl, 0) var(--ab-pc-term-radius-tr, 0)
+		var(--ab-pc-term-radius-br, 0) var(--ab-pc-term-radius-bl, 0);
+	background: var(--ab-pc-term-bg, transparent);
+	color: var(--ab-pc-term-color, inherit);
+	text-decoration: none;
+	transition: color 0.15s ease, background 0.15s ease;
+
+	&:hover {
+		background: var(--ab-pc-term-bg-h, var(--ab-pc-term-bg, transparent));
+		color: var(--ab-pc-term-color-h, var(--ab-pc-term-color, inherit));
+	}
+
+	/* The separator is punctuation between chips, so it tracks the chip's text
+	 * color rather than carrying its own control. Matches how post-meta styles
+	 * its own separator. */
+	&-sep {
+		color: var(--ab-pc-term-color, inherit);
+	}
+}
+
+@media (max-width: 781px) {
+
+	.ab-pg__list {
+		--ab-pg-c: var(--ab-pg-cols-tablet, 2);
+	}
+}
+
+@media (max-width: 480px) {
+
+	.ab-pg__list {
+		--ab-pg-c: var(--ab-pg-cols-mobile, 1);
+		--ab-pg-feat-span: 1;
+	}
+
+	.ab-pg--list .ab-pc {
+		flex-direction: column;
+	}
+}

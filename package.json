@@ -1,7 +1,7 @@
 {
   "name": "axiom-blocks",
-  "version": "1.0.6",
-  "description": "A collection of powerful Gutenberg blocks",
+  "version": "1.0.7",
+  "description": "Advanced Gutenberg blocks for the WordPress block editor",
   "main": "build/index.js",
   "scripts": {
     "build": "node scripts/build.js",

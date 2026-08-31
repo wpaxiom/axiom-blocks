@@ -1,0 +1,76 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/post-pagination",
+	"version": "1.0.0",
+	"title": "Post Pagination",
+	"category": "axiom-blocks",
+	"description": "Numbered pages or a Load more button for a Post Grid.",
+	"textdomain": "axiom-blocks",
+	"icon": "controls-forward",
+	"ancestor": ["axiom-blocks/post-grid"],
+	"usesContext": [
+		"axiom-blocks/pgKey",
+		"axiom-blocks/pgPage",
+		"axiom-blocks/pgTotalPages",
+		"axiom-blocks/pgHasResults"
+	],
+	"attributes": {
+		"paginationType": { "type": "string", "default": "numbered" },
+		"prevLabel":      { "type": "string", "default": "" },
+		"nextLabel":      { "type": "string", "default": "" },
+		"loadMoreLabel":  { "type": "string", "default": "" },
+		"midSize":        { "type": "number", "default": 2 },
+		"pagAlign":       { "type": "string", "default": "center" },
+
+		"pagColor":        { "type": "string", "default": "" },
+		"pagColorHover":   { "type": "string", "default": "" },
+		"pagColorActive":  { "type": "string", "default": "" },
+		"pagBg":           { "type": "string", "default": "" },
+		"pagBgHover":      { "type": "string", "default": "" },
+		"pagBgActive":     { "type": "string", "default": "" },
+
+		"pagBorderTopWidth":    { "type": "string", "default": "" },
+		"pagBorderRightWidth":  { "type": "string", "default": "" },
+		"pagBorderBottomWidth": { "type": "string", "default": "" },
+		"pagBorderLeftWidth":   { "type": "string", "default": "" },
+		"pagBorderStyle":       { "type": "string", "default": "" },
+		"pagBorderColor":       { "type": "string", "default": "" },
+		"pagBorderColorHover":  { "type": "string", "default": "" },
+		"pagBorderColorActive": { "type": "string", "default": "" },
+
+		"pagRadiusTopLeft":     { "type": "string", "default": "" },
+		"pagRadiusTopRight":    { "type": "string", "default": "" },
+		"pagRadiusBottomRight": { "type": "string", "default": "" },
+		"pagRadiusBottomLeft":  { "type": "string", "default": "" },
+
+		"pagPaddingTop":    { "type": "string", "default": "" },
+		"pagPaddingRight":  { "type": "string", "default": "" },
+		"pagPaddingBottom": { "type": "string", "default": "" },
+		"pagPaddingLeft":   { "type": "string", "default": "" },
+
+		"pagGap": { "type": "string", "default": "" },
+
+		"fontFamily":     { "type": "string", "default": "" },
+		"fontWeight":     { "type": "string", "default": "" },
+		"fontSize":       { "type": "string", "default": "" },
+		"lineHeight":     { "type": "string", "default": "" },
+		"letterSpacing":  { "type": "string", "default": "" },
+		"textTransform":  { "type": "string", "default": "" },
+		"textDecoration": { "type": "string", "default": "" },
+		"textAlign":      { "type": "string", "default": "" },
+
+		"marginTop":    { "type": "string", "default": "" },
+		"marginRight":  { "type": "string", "default": "" },
+		"marginBottom": { "type": "string", "default": "" },
+		"marginLeft":   { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"inserter": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"viewScript":   "file:./view.js",
+	"render":       "file:./render.php"
+}

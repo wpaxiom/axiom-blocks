@@ -122,6 +122,24 @@ class ResponsiveTypography {
 			'title'   => '.ab-toc__title',
 			'content' => '.ab-toc__list',
 		),
+		'axiom-blocks/post-title'       => array(
+			'' => '.ab-pc__title',
+		),
+		'axiom-blocks/post-excerpt'     => array(
+			'' => '.ab-pc__excerpt',
+		),
+		'axiom-blocks/post-terms'       => array(
+			'' => '.ab-pc__terms',
+		),
+		'axiom-blocks/post-meta'        => array(
+			'' => '.ab-pc__meta',
+		),
+		'axiom-blocks/post-read-more'   => array(
+			'' => '.ab-pc__more-link',
+		),
+		'axiom-blocks/post-pagination'  => array(
+			'' => '.page-numbers',
+		),
 	);
 
 	/**

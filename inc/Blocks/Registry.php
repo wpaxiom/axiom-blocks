@@ -59,6 +59,16 @@ class Registry {
 		self::register_table_of_contents();
 		self::register_trust_badges();
 		self::register_free_shipping_progress();
+		self::register_post_grid();
+		self::register_post_card();
+		self::register_post_title();
+		self::register_post_excerpt();
+		self::register_post_image();
+		self::register_post_terms();
+		self::register_post_meta();
+		self::register_post_read_more();
+		self::register_post_pagination();
+		self::register_post_no_results();
 
 		// Handle frontend rendering of disabled blocks.
 		add_filter( 'render_block', array( self::class, 'render_disabled_block_frontend' ), 10, 2 );
@@ -371,6 +381,96 @@ class Registry {
 			return;
 		}
 		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/free-shipping-progress' );
+	}
+
+	/**
+	 * Register Post Grid Block
+	 *
+	 * @return void
+	 */
+	private static function register_post_grid(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid' );
+	}
+
+	/**
+	 * Register Post Card Block (item template of Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_card(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-card' );
+	}
+
+	/**
+	 * Register Post Title Block (per-item block of Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_title(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-title' );
+	}
+
+	/**
+	 * Register Post Excerpt Block (per-item block of Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_excerpt(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-excerpt' );
+	}
+
+	/**
+	 * Register Post Image Block (per-item block of Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_image(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-image' );
+	}
+
+	/**
+	 * Register Post Terms Block (per-item block of Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_terms(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-terms' );
+	}
+
+	/**
+	 * Register Post Meta Block (per-item block of Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_meta(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-meta' );
+	}
+
+	/**
+	 * Register Post Read More Block (per-item block of Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_read_more(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-read-more' );
+	}
+
+	/**
+	 * Register Post Pagination Block (sibling of the loop in Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_pagination(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-pagination' );
+	}
+
+	/**
+	 * Register No Results Block (sibling of the loop in Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_no_results(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-no-results' );
 	}
 
 	/**

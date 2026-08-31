@@ -1,0 +1,72 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/post-read-more",
+	"version": "1.0.0",
+	"title": "Post Read More",
+	"category": "axiom-blocks",
+	"description": "A link to the full post, styled as text or a button.",
+	"textdomain": "axiom-blocks",
+	"icon": "arrow-right-alt",
+	"ancestor": ["axiom-blocks/post-card", "core/post-template"],
+	"usesContext": ["postId", "postType"],
+	"attributes": {
+		"label":        { "type": "string",  "default": "Read more" },
+		"showIcon":     { "type": "boolean", "default": true },
+		"iconPosition": { "type": "string",  "default": "right" },
+		"linkTarget":   { "type": "string",  "default": "" },
+		"fullWidth":    { "type": "boolean", "default": false },
+		"btnAlign":     { "type": "string",  "default": "" },
+
+		"btnColor":      { "type": "string", "default": "" },
+		"btnColorHover": { "type": "string", "default": "" },
+		"btnBg":         { "type": "string", "default": "" },
+		"btnBgHover":    { "type": "string", "default": "" },
+
+		"btnBorderTopWidth":    { "type": "string", "default": "" },
+		"btnBorderRightWidth":  { "type": "string", "default": "" },
+		"btnBorderBottomWidth": { "type": "string", "default": "" },
+		"btnBorderLeftWidth":   { "type": "string", "default": "" },
+		"btnBorderStyle":       { "type": "string", "default": "" },
+		"btnBorderColor":       { "type": "string", "default": "" },
+		"btnBorderColorHover":  { "type": "string", "default": "" },
+
+		"btnRadiusTopLeft":     { "type": "string", "default": "" },
+		"btnRadiusTopRight":    { "type": "string", "default": "" },
+		"btnRadiusBottomRight": { "type": "string", "default": "" },
+		"btnRadiusBottomLeft":  { "type": "string", "default": "" },
+
+		"btnPaddingTop":    { "type": "string", "default": "" },
+		"btnPaddingRight":  { "type": "string", "default": "" },
+		"btnPaddingBottom": { "type": "string", "default": "" },
+		"btnPaddingLeft":   { "type": "string", "default": "" },
+
+		"btnShadow":      { "type": "string", "default": "" },
+		"btnShadowHover": { "type": "string", "default": "" },
+		"iconGap":        { "type": "string", "default": "" },
+
+		"fontFamily":     { "type": "string", "default": "" },
+		"fontWeight":     { "type": "string", "default": "" },
+		"fontSize":       { "type": "string", "default": "" },
+		"lineHeight":     { "type": "string", "default": "" },
+		"letterSpacing":  { "type": "string", "default": "" },
+		"textTransform":  { "type": "string", "default": "" },
+		"textDecoration": { "type": "string", "default": "" },
+		"textAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render":       "file:./render.php"
+}

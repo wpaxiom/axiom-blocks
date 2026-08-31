@@ -1,6 +1,6 @@
 # Axiom Blocks
 
-A collection of powerful Gutenberg blocks to enhance your WordPress content creation experience.
+Advanced Gutenberg blocks: post grid, tabs, accordion, content slider, table of contents, counter, testimonials, pricing table and more.
 
 Repository: https://github.com/wpaxiom/axiom-blocks
 

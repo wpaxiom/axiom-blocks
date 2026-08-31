@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.6\n"
+"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/axiom-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-06T14:01:10+00:00\n"
+"POT-Creation-Date: 2026-08-30T13:22:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axiom-blocks\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #. Description of the plugin
 #: axiom-blocks.php
-msgid "A powerful block collection and page builder toolkit for Gutenberg and Full Site Editing (FSE). Built for extensibility with WooCommerce and third-party integrations."
+msgid "Advanced Gutenberg blocks for the WordPress block editor and Full Site Editing. Built for extensibility with WooCommerce and third-party integrations."
 msgstr ""
 
 #. Author of the plugin
@@ -120,11 +120,15 @@ msgid "Only the option you choose and anything you type is sent — never your c
 msgstr ""
 
 #: inc/API/Routes.php:217
+msgid "That grid is no longer available. Reload the page and try again."
+msgstr ""
+
+#: inc/API/Routes.php:305
 msgid "That doesn’t look like a valid <svg>. Paste the full SVG markup."
 msgstr ""
 
 #. translators: %d: number of blocks using the icon.
-#: inc/API/Routes.php:240
+#: inc/API/Routes.php:328
 #, php-format
 msgid "Can’t delete — %d block is using this icon. Remove it from that block first."
 msgid_plural "Can’t delete — %d blocks are using this icon. Remove it from those blocks first."
@@ -198,6 +202,54 @@ msgstr ""
 msgid "Dismiss this notice"
 msgstr ""
 
+#. translators: %s: number of comments.
+#: src/blocks/post-grid/post-meta/render.php:160
+#, php-format
+msgid "%s comment"
+msgid_plural "%s comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of minutes.
+#: src/blocks/post-grid/post-meta/render.php:181
+#, php-format
+msgid "%s min read"
+msgid_plural "%s min read"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/blocks/post-grid/post-pagination/render.php:150
+#: src/blocks/post-grid/post-pagination/index.js:172
+msgid "Previous"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/render.php:153
+#: src/blocks/post-grid/post-pagination/index.js:178
+msgid "Next"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/render.php:158
+msgid "Post grid pagination"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/render.php:165
+#: src/blocks/post-grid/post-pagination/index.js:17
+#: src/blocks/post-grid/post-pagination/index.js:167
+msgid "Load more"
+msgstr ""
+
+#: src/blocks/post-grid/post-read-more/render.php:35
+#: src/blocks/post-grid/post-read-more/index.js:171
+#: src/blocks/testimonials/index.js:856
+msgid "Read more"
+msgstr ""
+
+#. translators: 1: link label, for example "Read more". 2: post title.
+#: src/blocks/post-grid/post-read-more/render.php:141
+#, php-format
+msgid "%1$s: %2$s"
+msgstr ""
+
 #: src/blocks/reading-progress-bar/render.php:90
 msgid "Reading progress"
 msgstr ""
@@ -225,7 +277,7 @@ msgstr ""
 msgid "Back to top"
 msgstr ""
 
-#: src/blocks/tabs/render.php:449
+#: src/blocks/tabs/render.php:451
 #: src/blocks/tabs/index.js:416
 #: src/blocks/tabs/index.js:862
 msgid "Tab"
@@ -281,12 +333,7 @@ msgstr ""
 msgid "All blocks disabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:195
-msgid "All Blocks"
-msgstr ""
-
-#: src/admin/components/Dashboard.js:200
-#: src/admin/components/Dashboard.js:412
+#: src/admin/components/Dashboard.js:179
 #: src/blocks/advanced-section/index.js:375
 #: src/blocks/advanced-section/index.js:379
 #: src/blocks/button-group/index.js:98
@@ -296,6 +343,8 @@ msgstr ""
 #: src/blocks/counter-group/index.js:487
 #: src/blocks/icon-list/index.js:330
 #: src/blocks/info-box/index.js:266
+#: src/blocks/post-grid/index.js:443
+#: src/blocks/post-grid/index.js:447
 #: src/blocks/pricing-table/index.js:710
 #: src/blocks/star-rating/index.js:254
 #: src/blocks/testimonials/index.js:595
@@ -305,91 +354,98 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:205
-#: src/admin/components/Dashboard.js:437
+#: src/admin/components/Dashboard.js:180
 #: src/blocks/copy-to-clipboard/index.js:232
 #: src/blocks/testimonials/index.js:742
 #: src/components/TargetSection.js:614
 msgid "Content"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:212
-#: src/admin/components/Dashboard.js:353
+#: src/admin/components/Dashboard.js:181
+msgid "Dynamic"
+msgstr ""
+
+#: src/admin/components/Dashboard.js:206
+msgid "All Blocks"
+msgstr ""
+
+#: src/admin/components/Dashboard.js:220
+#: src/admin/components/Dashboard.js:361
 msgid "WooCommerce"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:227
+#: src/admin/components/Dashboard.js:235
 msgid "Block Manager"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:232
+#: src/admin/components/Dashboard.js:240
 #: src/components/iconLibrary.js:1040
 msgid "Settings"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:255
+#: src/admin/components/Dashboard.js:263
 msgid "Free and Pro Gutenberg blocks for WordPress"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:269
+#: src/admin/components/Dashboard.js:277
 msgid "Read Docs"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:314
+#: src/admin/components/Dashboard.js:322
 msgid "Total Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:316
-#: src/admin/components/Dashboard.js:342
+#: src/admin/components/Dashboard.js:324
+#: src/admin/components/Dashboard.js:350
 msgid "active"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:325
+#: src/admin/components/Dashboard.js:333
 #: src/admin/components/Stats.js:12
 msgid "Free Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:327
+#: src/admin/components/Dashboard.js:335
 msgid "Always available"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:333
+#: src/admin/components/Dashboard.js:341
 #: src/admin/components/Stats.js:17
 msgid "Pro Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:343
+#: src/admin/components/Dashboard.js:351
 msgid "Requires Pro plugin"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:359
+#: src/admin/components/Dashboard.js:367
 #: src/blocks/pricing-table/index.js:561
 msgid "Pro"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:360
+#: src/admin/components/Dashboard.js:368
 msgid "Integration disabled"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:380
+#: src/admin/components/Dashboard.js:388
 msgid "Search blocks…"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:469
+#: src/admin/components/Dashboard.js:461
 msgid "WooCommerce Blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:483
+#: src/admin/components/Dashboard.js:475
 #: src/admin/components/ui.js:312
 msgid "Enable all"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:490
+#: src/admin/components/Dashboard.js:482
 #: src/admin/components/ui.js:315
 msgid "Disable all"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:515
+#: src/admin/components/Dashboard.js:508
 msgid "No blocks found."
 msgstr ""
 
@@ -557,6 +613,11 @@ msgstr ""
 #: src/blocks/icon-list/index.js:101
 #: src/blocks/notice/index.js:124
 #: src/blocks/notice/index.js:131
+#: src/blocks/post-grid/post-excerpt/index.js:21
+#: src/blocks/post-grid/post-pagination/index.js:47
+#: src/blocks/post-grid/post-read-more/index.js:48
+#: src/blocks/post-grid/post-terms/index.js:38
+#: src/blocks/post-grid/post-title/index.js:34
 #: src/blocks/pricing-table/index.js:177
 #: src/blocks/pricing-table/index.js:205
 #: src/blocks/pricing-table/index.js:223
@@ -610,6 +671,7 @@ msgstr ""
 #: src/blocks/icon/index.js:329
 #: src/blocks/notice/index.js:106
 #: src/blocks/notice/index.js:211
+#: src/blocks/post-grid/post-meta/index.js:57
 #: src/blocks/trust-badges/index.js:178
 #: src/components/IconControl.js:24
 msgid "Icon"
@@ -630,6 +692,7 @@ msgstr ""
 #: src/blocks/icon/index.js:62
 #: src/blocks/notice/index.js:102
 #: src/blocks/notice/index.js:108
+#: src/blocks/post-grid/post-excerpt/index.js:24
 #: src/blocks/pricing-table/index.js:194
 #: src/blocks/testimonials/index.js:240
 #: src/blocks/testimonials/index.js:250
@@ -645,6 +708,7 @@ msgid "Color"
 msgstr ""
 
 #: src/blocks/accordion/index.js:166
+#: src/blocks/post-grid/post-meta/index.js:66
 #: src/blocks/pricing-table/index.js:300
 msgid "Icon size"
 msgstr ""
@@ -712,11 +776,13 @@ msgstr ""
 
 #: src/blocks/accordion/index.js:502
 #: src/blocks/notice/index.js:215
+#: src/blocks/post-grid/post-read-more/index.js:126
 msgid "Show icon"
 msgstr ""
 
 #: src/blocks/accordion/index.js:514
 #: src/blocks/icon-list/index.js:345
+#: src/blocks/post-grid/post-read-more/index.js:132
 msgid "Icon position"
 msgstr ""
 
@@ -732,6 +798,9 @@ msgstr ""
 #: src/blocks/icon-list/index.js:349
 #: src/blocks/icon-list/index.js:364
 #: src/blocks/info-box/index.js:321
+#: src/blocks/post-grid/post-pagination/index.js:21
+#: src/blocks/post-grid/post-read-more/index.js:29
+#: src/blocks/post-grid/post-read-more/index.js:35
 #: src/blocks/pricing-table/index.js:787
 #: src/blocks/star-rating/index.js:272
 #: src/blocks/tabs/index.js:1128
@@ -757,6 +826,9 @@ msgstr ""
 #: src/blocks/icon-list/index.js:353
 #: src/blocks/icon-list/index.js:372
 #: src/blocks/info-box/index.js:329
+#: src/blocks/post-grid/post-pagination/index.js:23
+#: src/blocks/post-grid/post-read-more/index.js:30
+#: src/blocks/post-grid/post-read-more/index.js:37
 #: src/blocks/pricing-table/index.js:795
 #: src/blocks/star-rating/index.js:280
 #: src/blocks/tabs/index.js:1136
@@ -784,6 +856,8 @@ msgstr ""
 #: src/blocks/advanced-button/index.js:122
 #: src/blocks/advanced-button/index.js:346
 #: src/blocks/copy-to-clipboard/index.js:71
+#: src/blocks/post-grid/post-read-more/index.js:44
+#: src/blocks/post-grid/post-read-more/index.js:119
 #: src/blocks/pricing-table/index.js:327
 msgid "Button"
 msgstr ""
@@ -806,6 +880,7 @@ msgstr ""
 #: src/blocks/icon/index.js:70
 #: src/blocks/info-box/index.js:123
 #: src/blocks/notice/index.js:113
+#: src/blocks/post-grid/post-image/index.js:193
 #: src/blocks/star-rating/index.js:64
 #: src/blocks/testimonials/index.js:213
 #: src/components/BackgroundControl.js:484
@@ -818,6 +893,9 @@ msgstr ""
 #: src/blocks/advanced-section/index.js:503
 #: src/blocks/advanced-section/index.js:552
 #: src/blocks/button-group/index.js:163
+#: src/blocks/post-grid/post-meta/index.js:74
+#: src/blocks/post-grid/post-pagination/index.js:69
+#: src/blocks/post-grid/post-terms/index.js:56
 #: src/blocks/pricing-table/index.js:239
 #: src/blocks/pricing-table/index.js:743
 #: src/blocks/tabs/index.js:464
@@ -857,6 +935,9 @@ msgstr ""
 
 #: src/blocks/advanced-button/index.js:396
 #: src/blocks/icon/index.js:279
+#: src/blocks/post-grid/post-image/index.js:217
+#: src/blocks/post-grid/post-read-more/index.js:150
+#: src/blocks/post-grid/post-title/index.js:103
 #: src/blocks/pricing-table/pricing-plan/index.js:259
 #: src/blocks/pricing-table/pricing-plan/index.js:489
 #: src/blocks/testimonials/testimonial/index.js:338
@@ -942,6 +1023,7 @@ msgid "Text Color"
 msgstr ""
 
 #: src/blocks/advanced-heading/format.js:263
+#: src/blocks/post-grid/post-read-more/index.js:34
 #: src/blocks/pricing-table/index.js:112
 #: src/components/ABControls.js:298
 #: src/components/ABPosition.js:18
@@ -1042,6 +1124,8 @@ msgstr ""
 #: src/blocks/icon-list/index.js:360
 #: src/blocks/icon/index.js:57
 #: src/blocks/info-box/index.js:313
+#: src/blocks/post-grid/post-pagination/index.js:154
+#: src/blocks/post-grid/post-read-more/index.js:139
 #: src/blocks/star-rating/index.js:264
 #: src/blocks/tabs/index.js:1120
 #: src/blocks/trust-badges/index.js:697
@@ -1151,6 +1235,8 @@ msgstr ""
 #: src/blocks/countdown-timer/index.js:463
 #: src/blocks/icon-list/index.js:368
 #: src/blocks/info-box/index.js:325
+#: src/blocks/post-grid/post-pagination/index.js:22
+#: src/blocks/post-grid/post-read-more/index.js:36
 #: src/blocks/pricing-table/index.js:791
 #: src/blocks/star-rating/index.js:276
 #: src/blocks/tabs/index.js:1132
@@ -1181,6 +1267,7 @@ msgstr ""
 
 #: src/blocks/advanced-section/index.js:465
 #: src/blocks/info-box/index.js:268
+#: src/blocks/post-grid/index.js:254
 msgid "Direction"
 msgstr ""
 
@@ -1199,6 +1286,7 @@ msgstr ""
 
 #: src/blocks/advanced-section/index.js:523
 #: src/blocks/counter-group/index.js:497
+#: src/blocks/post-grid/index.js:459
 #: src/blocks/pricing-table/index.js:720
 #: src/blocks/testimonials/index.js:627
 #: src/blocks/trust-badges/index.js:671
@@ -1248,17 +1336,20 @@ msgid "Line"
 msgstr ""
 
 #: src/blocks/before-after-slider/index.js:204
+#: src/blocks/post-grid/post-image/index.js:115
 #: src/blocks/testimonials/testimonial/index.js:224
 msgid "Replace"
 msgstr ""
 
 #: src/blocks/before-after-slider/index.js:205
+#: src/blocks/post-grid/post-image/index.js:116
 #: src/blocks/testimonials/testimonial/index.js:228
 #: src/components/BackgroundControl.js:461
 msgid "Select image"
 msgstr ""
 
 #: src/blocks/before-after-slider/index.js:213
+#: src/blocks/post-grid/post-image/index.js:130
 #: src/blocks/tabs/index.js:752
 #: src/blocks/testimonials/testimonial/index.js:245
 #: src/components/BackgroundControl.js:474
@@ -1325,6 +1416,7 @@ msgid "Where the handle starts, as a percent from the left."
 msgstr ""
 
 #: src/blocks/before-after-slider/index.js:380
+#: src/blocks/post-grid/post-image/index.js:199
 msgid "Aspect ratio"
 msgstr ""
 
@@ -1853,6 +1945,12 @@ msgstr ""
 
 #: src/blocks/counter-group/index.js:188
 #: src/blocks/counter-group/index.js:643
+#: src/blocks/post-grid/post-meta/index.js:195
+#: src/blocks/post-grid/post-meta/index.js:243
+#: src/blocks/post-grid/post-meta/index.js:260
+#: src/blocks/post-grid/post-meta/index.js:277
+#: src/blocks/post-grid/post-meta/index.js:295
+#: src/blocks/post-grid/post-read-more/index.js:121
 #: src/blocks/trust-badges/index.js:199
 msgid "Label"
 msgstr ""
@@ -2051,6 +2149,7 @@ msgid "Qualified fill"
 msgstr ""
 
 #: src/blocks/free-shipping-progress/index.js:96
+#: src/blocks/post-grid/post-image/index.js:75
 #: src/blocks/reading-progress-bar/index.js:67
 #: src/blocks/shape-divider/index.js:57
 msgid "Height"
@@ -2139,6 +2238,7 @@ msgid "Cart progress bar showing how much more a customer needs to spend to qual
 msgstr ""
 
 #: src/blocks/icon-list/index.js:141
+#: src/blocks/post-grid/post-read-more/index.js:68
 #: src/blocks/pricing-table/index.js:308
 #: src/blocks/tabs/index.js:474
 msgid "Icon gap"
@@ -2149,6 +2249,7 @@ msgid "Divider"
 msgstr ""
 
 #: src/blocks/icon-list/index.js:328
+#: src/blocks/post-grid/index.js:89
 #: src/components/iconLibrary.js:1010
 msgid "List"
 msgstr ""
@@ -2270,6 +2371,9 @@ msgid "A styled box holding an icon, heading, text, and button as editable block
 msgstr ""
 
 #: src/blocks/notice/index.js:122
+#: src/blocks/post-grid/index.js:81
+#: src/blocks/post-grid/post-title/index.js:30
+#: src/blocks/post-grid/post-title/index.js:89
 #: src/blocks/table-of-contents/index.js:208
 msgid "Title"
 msgstr ""
@@ -2280,6 +2384,7 @@ msgid "Message"
 msgstr ""
 
 #: src/blocks/notice/index.js:175
+#: src/blocks/post-grid/post-pagination/index.js:115
 #: src/components/BackgroundControl.js:378
 msgid "Type"
 msgstr ""
@@ -2331,6 +2436,581 @@ msgstr ""
 
 #: src/blocks/notice/index.js:308
 msgid "Highlight an info, success, warning, or error message with an icon and optional dismiss button."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:74
+msgid "Newest first"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:75
+msgid "Oldest first"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:79
+#: src/blocks/post-grid/post-meta/index.js:41
+msgid "Date"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:80
+msgid "Last modified"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:82
+msgid "Menu order"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:83
+msgid "Comment count"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:84
+msgid "Random"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:88
+#: src/blocks/post-grid/index.js:120
+#: src/blocks/testimonials/index.js:603
+#: src/blocks/trust-badges/index.js:657
+#: src/components/iconLibrary.js:1016
+msgid "Grid"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:93
+msgid "First result"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:94
+msgid "A specific post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:98
+msgid "Include"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:99
+msgid "Exclude"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:100
+msgid "Only sticky"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:191
+msgid "Query"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:193
+msgid "Post type"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:200
+msgid "Posts"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:215
+msgid "Filter by taxonomy"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:218
+#: src/blocks/post-grid/post-pagination/index.js:15
+#: src/blocks/table-of-contents/index.js:516
+#: src/blocks/testimonials/testimonial/index.js:287
+#: src/components/ABEditPopover.js:26
+#: src/components/ABEntrance.js:17
+#: src/components/ABPosition.js:83
+#: src/components/BorderControl.js:112
+#: src/components/BorderControl.js:126
+#: src/components/IconControl.js:31
+#: src/components/IconPicker.js:165
+#: src/components/IconPicker.js:166
+#: src/components/IconPicker.js:173
+#: src/components/IconPicker.js:206
+#: src/components/IconPicker.js:207
+#: src/components/IconPicker.js:214
+#: src/components/ShadowControl.js:32
+#: src/components/ShadowControl.js:49
+#: src/components/ShadowControl.js:100
+#: src/components/ShadowControl.js:154
+msgid "None"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:232
+msgid "Include terms"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:238
+msgid "Exclude terms"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:248
+msgid "Sort by"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:260
+msgid "Posts to show"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:268
+msgid "Skip first"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:269
+msgid "Useful when a featured block above already shows the newest posts."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:280
+msgid "Sticky posts"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:286
+msgid "Exclude the current post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:287
+msgid "Stops a related-posts grid listing the post it sits on."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:370
+msgid "Featured post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:374
+msgid "Feature one post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:375
+msgid "Adds a second card to the template that you can style independently."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:385
+msgid "Which post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:394
+msgid "Post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:398
+msgid "Choose a post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:407
+msgid "(no title)"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:419
+msgid "Columns to span"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:420
+msgid "Clamped to the column count, so it never overflows the grid."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:475
+msgid "Column gap"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:491
+#: src/blocks/pricing-table/index.js:292
+msgid "Row gap"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:501
+msgid "Equal height cards"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:668
+msgid "No posts match this query yet."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:682
+msgid "Post Grid"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:683
+msgid "Show posts in a designed grid or list. Build the card from the blocks you want, style every part."
+msgstr ""
+
+#: src/blocks/post-grid/post-card/index.js:34
+msgid "Post Card"
+msgstr ""
+
+#: src/blocks/post-grid/post-card/index.js:35
+msgid "The card template repeated for every post in a Post Grid. Holds any blocks."
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/index.js:12
+msgid "The post excerpt appears here. Set its length, clamp it to a fixed number of lines, and style it like any other text part."
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/index.js:83
+msgid "Excerpt"
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/index.js:85
+msgid "Length in words"
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/index.js:93
+msgid "Trim indicator"
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/index.js:98
+msgid "Clamp to lines"
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/index.js:99
+msgid "0 lets the excerpt run to its full length. Any other value keeps every card the same height."
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/index.js:128
+msgid "Post Excerpt"
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/index.js:129
+msgid "The post's excerpt, inside a Post Card or any post template."
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:19
+msgid "Thumbnail"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:20
+#: src/components/ShadowControl.js:35
+#: src/components/TypographyPanel.js:84
+msgid "Medium"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:21
+#: src/components/ShadowControl.js:39
+msgid "Large"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:22
+msgid "Full"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:26
+msgid "Original"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:36
+#: src/components/BackgroundControl.js:53
+msgid "Cover"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:37
+#: src/components/BackgroundControl.js:54
+msgid "Contain"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:57
+#: src/blocks/post-grid/post-image/index.js:191
+#: src/blocks/testimonials/testimonial/index.js:195
+#: src/components/BackgroundControl.js:35
+#: src/components/BackgroundControl.js:278
+#: src/components/iconLibrary.js:1412
+msgid "Image"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:61
+#: src/components/BackgroundControl.js:75
+msgid "Overlay"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:99
+msgid "Fallback image"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:205
+msgid "Scale"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:211
+#: src/blocks/post-grid/post-title/index.js:97
+msgid "Link to post"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:229
+msgid "Hide when no featured image"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:230
+msgid "Overrides the fallback: the card simply has no image."
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:253
+msgid "Featured image"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:264
+msgid "Post Image"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/index.js:265
+msgid "The post's featured image, with a fallback for posts that have none."
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:32
+msgid "Meta"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:36
+#: src/blocks/post-grid/post-meta/index.js:186
+msgid "Author"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:46
+#: src/blocks/post-grid/post-meta/index.js:269
+msgid "Comments"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:51
+#: src/blocks/post-grid/post-meta/index.js:322
+#: src/blocks/post-grid/post-terms/index.js:154
+msgid "Separator"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:152
+msgid "Author name"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:159
+msgid "January 1, 2026"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:166
+msgid "February 3, 2026"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:173
+msgid "4 comments"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:180
+msgid "6 min read"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:185
+msgid "Fields"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:188
+msgid "Show author"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:196
+msgid "For example \"By\"."
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:203
+msgid "Link to author archive"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:213
+msgid "Show avatar"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:221
+msgid "Avatar size"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:235
+msgid "Dates"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:237
+msgid "Show published date"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:244
+msgid "For example \"on\"."
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:250
+msgid "Show updated date"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:251
+msgid "Only appears when the post was edited after publishing."
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:271
+msgid "Show comment count"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:286
+msgid "Read time"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:288
+msgid "Show read time"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:302
+msgid "Words per minute"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:317
+msgid "Show icons"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:340
+msgid "No meta fields switched on."
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:383
+msgid "Post Meta"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/index.js:384
+msgid "Author, date, comment count and read time, each with its own label and color."
+msgstr ""
+
+#: src/blocks/post-grid/post-no-results/index.js:25
+msgid "No posts found."
+msgstr ""
+
+#: src/blocks/post-grid/post-no-results/index.js:34
+msgid "Box"
+msgstr ""
+
+#: src/blocks/post-grid/post-no-results/index.js:77
+msgid "No Results"
+msgstr ""
+
+#: src/blocks/post-grid/post-no-results/index.js:78
+msgid "Shown inside a Post Grid when the query returns nothing. Holds any blocks."
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:16
+#: src/blocks/table-of-contents/index.js:508
+msgid "Numbered"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:43
+#: src/blocks/table-of-contents/index.js:219
+msgid "Links"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:113
+msgid "Pagination"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:123
+msgid "Previous label"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:128
+msgid "Next label"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:133
+msgid "Pages either side"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:134
+msgid "How many page numbers sit beside the current one."
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:148
+#: src/blocks/pricing-table/pricing-plan/index.js:242
+#: src/blocks/pricing-table/pricing-plan/index.js:419
+msgid "Button label"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:194
+msgid "Pagination is off."
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:207
+msgid "Post Pagination"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/index.js:208
+msgid "Numbered pages or a Load more button for a Post Grid."
+msgstr ""
+
+#: src/blocks/post-grid/post-read-more/index.js:145
+#: src/components/AlignControl.js:83
+msgid "Full width"
+msgstr ""
+
+#: src/blocks/post-grid/post-read-more/index.js:183
+msgid "Post Read More"
+msgstr ""
+
+#: src/blocks/post-grid/post-read-more/index.js:184
+msgid "A link to the full post, styled as text or a button."
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:34
+msgid "Chip"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:121
+msgid "Category"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:128
+msgid "Terms"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:130
+msgid "Taxonomy"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:137
+msgid "Categories"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:145
+msgid "Maximum terms"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:146
+msgid "0 shows every term."
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:155
+msgid "Leave empty for chips; set a character for an inline list."
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:163
+msgid "Link to term archive"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:192
+msgid "Post Terms"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/index.js:193
+msgid "The post's categories or tags, as styleable chips."
+msgstr ""
+
+#: src/blocks/post-grid/post-title/index.js:80
+msgid "Post title"
+msgstr ""
+
+#: src/blocks/post-grid/post-title/index.js:91
+#: src/components/iconLibrary.js:1226
+msgid "Tag"
+msgstr ""
+
+#: src/blocks/post-grid/post-title/index.js:111
+msgid "Crop after words"
+msgstr ""
+
+#: src/blocks/post-grid/post-title/index.js:112
+msgid "0 keeps the full title."
+msgstr ""
+
+#: src/blocks/post-grid/post-title/index.js:138
+msgid "Post Title"
+msgstr ""
+
+#: src/blocks/post-grid/post-title/index.js:139
+msgid "The post's title, inside a Post Card or any post template."
 msgstr ""
 
 #: src/blocks/pricing-table/index.js:110
@@ -2400,10 +3080,6 @@ msgstr ""
 
 #: src/blocks/pricing-table/index.js:283
 msgid "Icon (excluded)"
-msgstr ""
-
-#: src/blocks/pricing-table/index.js:292
-msgid "Row gap"
 msgstr ""
 
 #: src/blocks/pricing-table/index.js:315
@@ -2577,11 +3253,6 @@ msgstr ""
 
 #: src/blocks/pricing-table/pricing-plan/index.js:238
 msgid "Call to action"
-msgstr ""
-
-#: src/blocks/pricing-table/pricing-plan/index.js:242
-#: src/blocks/pricing-table/pricing-plan/index.js:419
-msgid "Button label"
 msgstr ""
 
 #: src/blocks/pricing-table/pricing-plan/index.js:245
@@ -2821,10 +3492,6 @@ msgstr ""
 msgid "Progress"
 msgstr ""
 
-#: src/blocks/table-of-contents/index.js:219
-msgid "Links"
-msgstr ""
-
 #: src/blocks/table-of-contents/index.js:324
 msgid "Structure"
 msgstr ""
@@ -2937,33 +3604,8 @@ msgstr ""
 msgid "List marker"
 msgstr ""
 
-#: src/blocks/table-of-contents/index.js:508
-msgid "Numbered"
-msgstr ""
-
 #: src/blocks/table-of-contents/index.js:512
 msgid "Bullet"
-msgstr ""
-
-#: src/blocks/table-of-contents/index.js:516
-#: src/blocks/testimonials/testimonial/index.js:287
-#: src/components/ABEditPopover.js:26
-#: src/components/ABEntrance.js:17
-#: src/components/ABPosition.js:83
-#: src/components/BorderControl.js:112
-#: src/components/BorderControl.js:126
-#: src/components/IconControl.js:31
-#: src/components/IconPicker.js:165
-#: src/components/IconPicker.js:166
-#: src/components/IconPicker.js:173
-#: src/components/IconPicker.js:206
-#: src/components/IconPicker.js:207
-#: src/components/IconPicker.js:214
-#: src/components/ShadowControl.js:32
-#: src/components/ShadowControl.js:49
-#: src/components/ShadowControl.js:100
-#: src/components/ShadowControl.js:154
-msgid "None"
 msgstr ""
 
 #: src/blocks/table-of-contents/index.js:524
@@ -3162,12 +3804,6 @@ msgstr ""
 msgid "Company"
 msgstr ""
 
-#: src/blocks/testimonials/index.js:603
-#: src/blocks/trust-badges/index.js:657
-#: src/components/iconLibrary.js:1016
-msgid "Grid"
-msgstr ""
-
 #: src/blocks/testimonials/index.js:607
 #: src/blocks/testimonials/index.js:759
 msgid "Carousel"
@@ -3226,10 +3862,6 @@ msgstr ""
 msgid "Reverse direction"
 msgstr ""
 
-#: src/blocks/testimonials/index.js:856
-msgid "Read more"
-msgstr ""
-
 #: src/blocks/testimonials/index.js:860
 msgid "Clamp long quotes"
 msgstr ""
@@ -3280,13 +3912,6 @@ msgstr ""
 
 #: src/blocks/testimonials/testimonial/index.js:175
 msgid "This card only. Leave empty for a color generated from the name, or set one for every card under Styles → Monogram on the parent Testimonials block."
-msgstr ""
-
-#: src/blocks/testimonials/testimonial/index.js:195
-#: src/components/BackgroundControl.js:35
-#: src/components/BackgroundControl.js:278
-#: src/components/iconLibrary.js:1412
-msgid "Image"
 msgstr ""
 
 #: src/blocks/testimonials/testimonial/index.js:258
@@ -3581,10 +4206,6 @@ msgstr ""
 msgid "Clear this device’s value"
 msgstr ""
 
-#: src/components/AlignControl.js:83
-msgid "Full width"
-msgstr ""
-
 #: src/components/AxiomColorPicker.js:484
 msgid "Theme"
 msgstr ""
@@ -3623,14 +4244,6 @@ msgstr ""
 msgid "Bottom right"
 msgstr ""
 
-#: src/components/BackgroundControl.js:53
-msgid "Cover"
-msgstr ""
-
-#: src/components/BackgroundControl.js:54
-msgid "Contain"
-msgstr ""
-
 #: src/components/BackgroundControl.js:55
 #: src/components/TypographyPanel.js:612
 msgid "Auto"
@@ -3663,10 +4276,6 @@ msgstr ""
 
 #: src/components/BackgroundControl.js:74
 msgid "Screen"
-msgstr ""
-
-#: src/components/BackgroundControl.js:75
-msgid "Overlay"
 msgstr ""
 
 #: src/components/BackgroundControl.js:76
@@ -4003,10 +4612,6 @@ msgstr ""
 
 #: src/components/iconLibrary.js:1220
 msgid "Store"
-msgstr ""
-
-#: src/components/iconLibrary.js:1226
-msgid "Tag"
 msgstr ""
 
 #: src/components/iconLibrary.js:1232
@@ -4376,15 +4981,6 @@ msgstr ""
 
 #: src/components/ShadowControl.js:33
 msgid "Small"
-msgstr ""
-
-#: src/components/ShadowControl.js:35
-#: src/components/TypographyPanel.js:84
-msgid "Medium"
-msgstr ""
-
-#: src/components/ShadowControl.js:39
-msgid "Large"
 msgstr ""
 
 #: src/components/ShadowControl.js:43
@@ -5048,6 +5644,136 @@ msgstr ""
 #: src/blocks/notice/block.json
 msgctxt "block keyword"
 msgid "banner"
+msgstr ""
+
+#: src/blocks/post-grid/block.json
+msgctxt "block title"
+msgid "Post Grid"
+msgstr ""
+
+#: src/blocks/post-grid/block.json
+msgctxt "block description"
+msgid "Show posts in a designed grid or list. Build the card from the blocks you want, style every part."
+msgstr ""
+
+#: src/blocks/post-grid/block.json
+msgctxt "block keyword"
+msgid "posts"
+msgstr ""
+
+#: src/blocks/post-grid/block.json
+msgctxt "block keyword"
+msgid "grid"
+msgstr ""
+
+#: src/blocks/post-grid/block.json
+msgctxt "block keyword"
+msgid "loop"
+msgstr ""
+
+#: src/blocks/post-grid/block.json
+msgctxt "block keyword"
+msgid "query"
+msgstr ""
+
+#: src/blocks/post-grid/block.json
+msgctxt "block keyword"
+msgid "blog"
+msgstr ""
+
+#: src/blocks/post-grid/block.json
+msgctxt "block keyword"
+msgid "archive"
+msgstr ""
+
+#: src/blocks/post-grid/post-card/block.json
+msgctxt "block title"
+msgid "Post Card"
+msgstr ""
+
+#: src/blocks/post-grid/post-card/block.json
+msgctxt "block description"
+msgid "The card template repeated for every post in a Post Grid. Holds any blocks."
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/block.json
+msgctxt "block title"
+msgid "Post Excerpt"
+msgstr ""
+
+#: src/blocks/post-grid/post-excerpt/block.json
+msgctxt "block description"
+msgid "The post's excerpt, inside a Post Card or any post template."
+msgstr ""
+
+#: src/blocks/post-grid/post-image/block.json
+msgctxt "block title"
+msgid "Post Image"
+msgstr ""
+
+#: src/blocks/post-grid/post-image/block.json
+msgctxt "block description"
+msgid "The post's featured image, with a fallback for posts that have none."
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/block.json
+msgctxt "block title"
+msgid "Post Meta"
+msgstr ""
+
+#: src/blocks/post-grid/post-meta/block.json
+msgctxt "block description"
+msgid "Author, date, comment count and read time, each with its own label and color."
+msgstr ""
+
+#: src/blocks/post-grid/post-no-results/block.json
+msgctxt "block title"
+msgid "No Results"
+msgstr ""
+
+#: src/blocks/post-grid/post-no-results/block.json
+msgctxt "block description"
+msgid "Shown inside a Post Grid when the query returns nothing. Holds any blocks."
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/block.json
+msgctxt "block title"
+msgid "Post Pagination"
+msgstr ""
+
+#: src/blocks/post-grid/post-pagination/block.json
+msgctxt "block description"
+msgid "Numbered pages or a Load more button for a Post Grid."
+msgstr ""
+
+#: src/blocks/post-grid/post-read-more/block.json
+msgctxt "block title"
+msgid "Post Read More"
+msgstr ""
+
+#: src/blocks/post-grid/post-read-more/block.json
+msgctxt "block description"
+msgid "A link to the full post, styled as text or a button."
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/block.json
+msgctxt "block title"
+msgid "Post Terms"
+msgstr ""
+
+#: src/blocks/post-grid/post-terms/block.json
+msgctxt "block description"
+msgid "The post's categories or tags, as styleable chips."
+msgstr ""
+
+#: src/blocks/post-grid/post-title/block.json
+msgctxt "block title"
+msgid "Post Title"
+msgstr ""
+
+#: src/blocks/post-grid/post-title/block.json
+msgctxt "block description"
+msgid "The post's title, inside a Post Card or any post template."
 msgstr ""
 
 #: src/blocks/pricing-table/block.json

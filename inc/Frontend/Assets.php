@@ -85,7 +85,8 @@ class Assets {
 			|| has_block( 'axiom-blocks/content-slider' )
 			|| has_block( 'axiom-blocks/table-of-contents' )
 			|| has_block( 'axiom-blocks/trust-badges' )
-			|| has_block( 'axiom-blocks/free-shipping-progress' );
+			|| has_block( 'axiom-blocks/free-shipping-progress' )
+			|| has_block( 'axiom-blocks/post-grid' );
 	}
 
 	/**
@@ -95,6 +96,7 @@ class Assets {
 	 * @return bool
 	 */
 	private static function needs_rest_api(): bool {
-		return has_block( 'axiom-blocks/free-shipping-progress' );
+		return has_block( 'axiom-blocks/free-shipping-progress' )
+			|| has_block( 'axiom-blocks/post-pagination' );
 	}
 }

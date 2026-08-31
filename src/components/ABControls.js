@@ -405,8 +405,8 @@ export function ABTextareaControl( {
    #7C3AED on focus/open). Use inside a <PanelBody> when you want to expose
    sub-sections without resorting to nested PanelBody (which looks unpolished).
 
-   Group multiple in a parent `<div className="ab-sub-acc-list">…</div>` so
-   the gap-based spacing kicks in. */
+   Stacking several straight into a PanelBody is fine — the row carries its own
+   spacing. The optional `ab-sub-acc-list` wrapper only adds flex column flow. */
 export function ABSubAccordion( { title, children, defaultOpen = false } ) {
 	const [ isOpen, setIsOpen ] = useState( defaultOpen );
 	return (

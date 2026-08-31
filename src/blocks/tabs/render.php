@@ -213,6 +213,7 @@ if ( '' !== $axiom_blocks_tab_style ) {
 	$axiom_blocks_bake = $axiom_blocks_bake_all[ $axiom_blocks_tab_style ][ $axiom_blocks_bake_vertical ? 'vertical' : 'horizontal' ] ?? array();
 
 	// An author value beats the preset it was saved with, so only fill blanks.
+	// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- $attributes is the WordPress-provided render template variable.
 	foreach ( $axiom_blocks_bake as $axiom_blocks_bake_key => $axiom_blocks_bake_value ) {
 		if ( ! isset( $attributes[ $axiom_blocks_bake_key ] ) || '' === (string) $attributes[ $axiom_blocks_bake_key ] ) {
 			$attributes[ $axiom_blocks_bake_key ] = $axiom_blocks_bake_value;
@@ -235,6 +236,7 @@ if ( '' !== $axiom_blocks_tab_style ) {
 			$attributes['contentBackgroundColor'] = '' !== $axiom_blocks_attr_panel_bg ? $axiom_blocks_attr_panel_bg : '#ffffff';
 		}
 	}
+	// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
 
 $axiom_blocks_tab_orientation = $attributes['tabOrientation'] ?? 'horizontal';

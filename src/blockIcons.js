@@ -615,6 +615,75 @@ export const BLOCK_ICONS = {
 			<path d="M22 3v18" />
 		</>
 	),
+	'post-grid': (
+		<>
+			<rect width="7" height="7" x="3" y="3" rx="1" />
+			<rect width="7" height="7" x="14" y="3" rx="1" />
+			<rect width="7" height="7" x="14" y="14" rx="1" />
+			<rect width="7" height="7" x="3" y="14" rx="1" />
+		</>
+	),
+	'post-card': (
+		<>
+			<rect width="18" height="18" x="3" y="3" rx="2" />
+			<path d="M3 10h18" />
+			<path d="M7 15h6" />
+		</>
+	),
+	'post-title': (
+		<>
+			<path d="M4 7V5h16v2" />
+			<path d="M9 19h6" />
+			<path d="M12 5v14" />
+		</>
+	),
+	'post-excerpt': (
+		<>
+			<path d="M4 6h16" />
+			<path d="M4 11h16" />
+			<path d="M4 16h10" />
+		</>
+	),
+	'post-image': (
+		<>
+			<rect width="18" height="18" x="3" y="3" rx="2" />
+			<circle cx="9" cy="9" r="2" />
+			<path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+		</>
+	),
+	'post-pagination': (
+		<>
+			<rect width="5" height="5" x="3" y="10" rx="1" />
+			<rect width="5" height="5" x="10" y="10" rx="1" />
+			<rect width="5" height="5" x="17" y="10" rx="1" />
+		</>
+	),
+	'post-no-results': (
+		<>
+			<circle cx="11" cy="11" r="8" />
+			<path d="m21 21-4.3-4.3" />
+			<path d="M8 11h6" />
+		</>
+	),
+	'post-read-more': (
+		<>
+			<path d="M5 12h14" />
+			<path d="m12 5 7 7-7 7" />
+		</>
+	),
+	'post-meta': (
+		<>
+			<circle cx="12" cy="12" r="10" />
+			<path d="M12 16v-4" />
+			<path d="M12 8h.01" />
+		</>
+	),
+	'post-terms': (
+		<>
+			<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" />
+			<circle cx="7.5" cy="7.5" r=".5" fill="currentColor" />
+		</>
+	),
 	'table-of-contents': (
 		<>
 			<path d="M21 12H8" />

@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/post-excerpt",
+	"version": "1.0.0",
+	"title": "Post Excerpt",
+	"category": "axiom-blocks",
+	"description": "The post's excerpt, inside a Post Card or any post template.",
+	"textdomain": "axiom-blocks",
+	"icon": "editor-alignleft",
+	"ancestor": ["axiom-blocks/post-card", "core/post-template"],
+	"usesContext": ["postId", "postType"],
+	"attributes": {
+		"excerptLength":  { "type": "number",  "default": 20 },
+		"indicator":      { "type": "string",  "default": "…" },
+		"clampLines":     { "type": "number",  "default": 0 },
+
+		"excerptColor": { "type": "string", "default": "" },
+
+		"fontFamily":     { "type": "string", "default": "" },
+		"fontWeight":     { "type": "string", "default": "" },
+		"fontSize":       { "type": "string", "default": "" },
+		"lineHeight":     { "type": "string", "default": "" },
+		"letterSpacing":  { "type": "string", "default": "" },
+		"textTransform":  { "type": "string", "default": "" },
+		"textDecoration": { "type": "string", "default": "" },
+		"textAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render":       "file:./render.php"
+}

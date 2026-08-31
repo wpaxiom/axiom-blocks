@@ -1,0 +1,67 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/post-terms",
+	"version": "1.0.0",
+	"title": "Post Terms",
+	"category": "axiom-blocks",
+	"description": "The post's categories or tags, as styleable chips.",
+	"textdomain": "axiom-blocks",
+	"icon": "category",
+	"ancestor": ["axiom-blocks/post-card", "core/post-template"],
+	"usesContext": ["postId", "postType"],
+	"attributes": {
+		"taxonomy":  { "type": "string",  "default": "category" },
+		"limit":     { "type": "number",  "default": 0 },
+		"separator": { "type": "string",  "default": "" },
+		"isLink":    { "type": "boolean", "default": true },
+
+		"termColor":      { "type": "string", "default": "" },
+		"termColorHover": { "type": "string", "default": "" },
+		"termBg":         { "type": "string", "default": "" },
+		"termBgHover":    { "type": "string", "default": "" },
+
+		"chipBorderTopWidth":    { "type": "string", "default": "" },
+		"chipBorderRightWidth":  { "type": "string", "default": "" },
+		"chipBorderBottomWidth": { "type": "string", "default": "" },
+		"chipBorderLeftWidth":   { "type": "string", "default": "" },
+		"chipBorderStyle":       { "type": "string", "default": "" },
+		"chipBorderColor":       { "type": "string", "default": "" },
+
+		"chipRadiusTopLeft":     { "type": "string", "default": "" },
+		"chipRadiusTopRight":    { "type": "string", "default": "" },
+		"chipRadiusBottomRight": { "type": "string", "default": "" },
+		"chipRadiusBottomLeft":  { "type": "string", "default": "" },
+
+		"chipPaddingTop":    { "type": "string", "default": "" },
+		"chipPaddingRight":  { "type": "string", "default": "" },
+		"chipPaddingBottom": { "type": "string", "default": "" },
+		"chipPaddingLeft":   { "type": "string", "default": "" },
+
+		"chipGap": { "type": "string", "default": "" },
+
+		"fontFamily":     { "type": "string", "default": "" },
+		"fontWeight":     { "type": "string", "default": "" },
+		"fontSize":       { "type": "string", "default": "" },
+		"lineHeight":     { "type": "string", "default": "" },
+		"letterSpacing":  { "type": "string", "default": "" },
+		"textTransform":  { "type": "string", "default": "" },
+		"textDecoration": { "type": "string", "default": "" },
+		"textAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render":       "file:./render.php"
+}

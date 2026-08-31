@@ -1,0 +1,75 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/post-meta",
+	"version": "1.0.0",
+	"title": "Post Meta",
+	"category": "axiom-blocks",
+	"description": "Author, date, comment count and read time, each with its own label and color.",
+	"textdomain": "axiom-blocks",
+	"icon": "info-outline",
+	"ancestor": ["axiom-blocks/post-card", "core/post-template"],
+	"usesContext": ["postId", "postType"],
+	"attributes": {
+		"showAuthor":   { "type": "boolean", "default": true },
+		"showDate":     { "type": "boolean", "default": true },
+		"showUpdated":  { "type": "boolean", "default": false },
+		"showComments": { "type": "boolean", "default": false },
+		"showReadTime": { "type": "boolean", "default": false },
+
+		"authorLabel":   { "type": "string", "default": "" },
+		"dateLabel":     { "type": "string", "default": "" },
+		"updatedLabel":  { "type": "string", "default": "" },
+		"commentsLabel": { "type": "string", "default": "" },
+		"readTimeLabel": { "type": "string", "default": "" },
+
+		"dateFormat":     { "type": "string", "default": "" },
+		"wordsPerMinute": { "type": "number", "default": 200 },
+
+		"showAvatar": { "type": "boolean", "default": false },
+		"avatarSize": { "type": "string",  "default": "" },
+		"authorLink": { "type": "boolean", "default": false },
+
+		"showIcons": { "type": "boolean", "default": false },
+		"separator": { "type": "string",  "default": "·" },
+
+		"authorColor":        { "type": "string", "default": "" },
+		"authorColorHover":   { "type": "string", "default": "" },
+		"dateColor":          { "type": "string", "default": "" },
+		"dateColorHover":     { "type": "string", "default": "" },
+		"commentsColor":      { "type": "string", "default": "" },
+		"commentsColorHover": { "type": "string", "default": "" },
+		"separatorColor":     { "type": "string", "default": "" },
+		"metaIconColor":      { "type": "string", "default": "" },
+		"metaIconColorHover": { "type": "string", "default": "" },
+
+		"iconSize":       { "type": "string", "default": "" },
+		"iconSizeTablet": { "type": "string", "default": "" },
+		"iconSizeMobile": { "type": "string", "default": "" },
+		"itemGap":        { "type": "string", "default": "" },
+
+		"fontFamily":     { "type": "string", "default": "" },
+		"fontWeight":     { "type": "string", "default": "" },
+		"fontSize":       { "type": "string", "default": "" },
+		"lineHeight":     { "type": "string", "default": "" },
+		"letterSpacing":  { "type": "string", "default": "" },
+		"textTransform":  { "type": "string", "default": "" },
+		"textDecoration": { "type": "string", "default": "" },
+		"textAlign":      { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render":       "file:./render.php"
+}

@@ -39,6 +39,12 @@ export const TYPOGRAPHY_TARGETS = {
 	'axiom-blocks/before-after-slider': [ 'label' ],
 	'axiom-blocks/free-shipping-progress': [ 'message' ],
 	'axiom-blocks/table-of-contents': [ 'title', 'content' ],
+	'axiom-blocks/post-title': [ '' ],
+	'axiom-blocks/post-excerpt': [ '' ],
+	'axiom-blocks/post-terms': [ '' ],
+	'axiom-blocks/post-meta': [ '' ],
+	'axiom-blocks/post-read-more': [ '' ],
+	'axiom-blocks/post-pagination': [ '' ],
 };
 
 /** Typography base attribute suffixes — mirrors KEYS in TypographyPanel.js. */

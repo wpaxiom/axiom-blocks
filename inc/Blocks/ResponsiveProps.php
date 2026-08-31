@@ -690,6 +690,47 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
+		'axiom-blocks/post-grid'        => array(
+			array(
+				'prop'     => '--ab-pg-c',
+				'key'      => 'columns',
+				'selector' => '.ab-pg__list',
+				'format'   => '',
+				'type'     => 'number',
+			),
+			array(
+				'prop'     => '--ab-pg-col-gap',
+				'key'      => 'columnGap',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-pg-row-gap',
+				'key'      => 'rowGap',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+		),
+		'axiom-blocks/post-image'       => array(
+			array(
+				'prop'     => '--ab-pc-img-h',
+				'key'      => 'height',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+		),
+		'axiom-blocks/post-meta'        => array(
+			array(
+				'prop'     => '--ab-pc-meta-icon-size',
+				'key'      => 'iconSize',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+		),
 	);
 
 	/**

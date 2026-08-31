@@ -1,6 +1,6 @@
 {
     "name": "axiom-blocks/axiom-blocks",
-    "description": "A collection of powerful Gutenberg blocks",
+    "description": "Advanced Gutenberg blocks for the WordPress block editor",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "homepage": "https://github.com/wpaxiom/axiom-blocks",

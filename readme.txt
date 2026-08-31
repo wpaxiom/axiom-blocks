@@ -3,25 +3,23 @@ Contributors: wpaxiom, shuvo586
 Donate link: https://wpaxiom.com/donate
 Tags: gutenberg, blocks, editor, page-builder, woocommerce
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A collection of powerful Gutenberg blocks to enhance your WordPress content creation experience.
+A collection of powerful Gutenberg blocks: post grid, tabs, accordion, content slider, table of contents, counter, testimonials, pricing table and more.
 
 == Description ==
 
-Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build beautiful, professional layouts without any page builder bloat.
-
-**All blocks are completely free.**
+Axiom Blocks adds the blocks the WordPress editor leaves out. Use core blocks for paragraphs, headings and images, and Axiom for the rest.
 
 = Layout Blocks =
 
 * **Advanced Section** - Full-width container with background images, gradients, video backgrounds, overlays with blend modes, shape dividers, and entrance animations.
 * **Device Visibility** - Wrapper block to show or hide content based on device type (mobile, tablet, desktop).
-* **Shape Divider** - Add beautiful shape dividers to the top or bottom of sections with 5 shapes: wave, curve, triangle, tilt, and slant.
+* **Shape Divider** - Add shape dividers to the top or bottom of sections with 5 shapes: wave, curve, triangle, tilt, and slant.
 * **Reading Progress Bar** - Sticky scroll progress indicator for long-form content.
 
 = Content Blocks =
@@ -40,9 +38,13 @@ Axiom Blocks adds a powerful collection of Gutenberg blocks to help you build be
 * **Table of Contents** - Auto-built from your page headings, with numbered/bullet/none markers, nesting, smooth scroll, active-section highlight, a sticky sidebar with internal scroll, a collapsible panel, a reading-progress rail, copy-link, back-to-top, a mobile dock bar, and light or dark schemes.
 * **Countdown Timer** - Live countdown to a target date or time.
 * **Copy to Clipboard** - Button that copies text or code snippets to the visitor's clipboard.
-* **Star Rating** - 5-star display block perfect for reviews and testimonials.
+* **Star Rating** - 5-star display block for reviews and testimonials.
 * **Before/After Slider** - Drag-to-compare slider for two images.
 * **Pricing Table** - Clean pricing plans with feature lists and call-to-action buttons.
+
+= Dynamic Blocks =
+
+* **Post Grid** - Show your posts in a grid or list, with the card built from Post Image, Post Terms, Post Title, Post Meta, Post Excerpt, and Post Read More blocks you arrange and style yourself. Query by post type, taxonomy, or author, skip or exclude posts, and choose numbered or load-more pagination. Adds a featured card, a fallback image for posts without one, read time, per-field meta labels, and your own no-results message.
 
 = WooCommerce Blocks =
 
@@ -156,6 +158,13 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Changelog ==
 
+= 1.0.7 =
+* New block: Post Grid - show your posts in a grid or list, with the card built from Post Image, Post Terms, Post Title, Post Meta, Post Excerpt, and Post Read More blocks that you arrange and style individually. Query by post type, taxonomy, or author, order by date, title, comment count or random, skip or exclude posts, and choose how sticky posts are handled.
+* Post Grid pagination - numbered page links or a Load more button, both working with JavaScript disabled. Load more is a real link to the next page and falls back to it if the request fails.
+* Post Grid featured card - an optional second card template for the first or a chosen post, carrying its own padding, radius and typography rather than only different colors.
+* Post Grid also adds a fallback image for posts with no featured image, read time, per-field labels on the meta row, an option to exclude the post currently being viewed, and an editable no-results message.
+* The per-item blocks (Post Image, Post Terms, Post Title, Post Meta, Post Excerpt, Post Read More) work inside the core Query Loop block as well as inside Post Grid.
+
 = 1.0.6 =
 * Redesigned block settings across every block. Each block's sidebar is now split into Settings (what the block does) and Styles (how it looks), and the Styles tab is organised by the parts you can see - a Tab, a Card, an Icon, a Heading - instead of one long list of options. Border, shadow, and typography open in focused popovers, and rows show their current value at a glance.
 * Normal / Hover / Active states on styleable parts. Hover colors, backgrounds, and borders are now real controls rather than something baked into a preset.
@@ -209,8 +218,11 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Upgrade Notice ==
 
+= 1.0.7 =
+Adds the Post Grid block: your posts in a grid or list, built from separate Image, Terms, Title, Meta, Excerpt and Read More blocks you style individually, plus numbered or load-more pagination and an optional featured card. Nothing else changes and no existing content is affected.
+
 = 1.0.6 =
-Action needed if you use Pricing Table with the Filled or Minimal card style: those presets are removed and the tables revert to the Bordered look, so you will need to restyle them from Styles > Cards. Tabs presets are also removed, but existing tabs are converted automatically and keep their design. Everything else is additive - block settings are redesigned around the parts you can see, with hover/active states and a consistent styling stack on every part.
+If your Pricing Table used the Filled or Minimal style: those presets are gone, tables revert to Bordered and need restyling in Styles > Cards. Tabs presets are removed but existing tabs convert automatically and keep their design. Everything else is additive.
 
 = 1.0.5 =
 Adds two new blocks - Content Slider and Table of Contents - plus a redesigned color picker with an HSV canvas, alpha, eyedropper, and recent colors.

@@ -37,6 +37,16 @@ import { Testimonials } from './blocks/testimonials';
 import { Testimonial } from './blocks/testimonials/testimonial';
 import { InfoBox } from './blocks/info-box';
 import { ContentSlider } from './blocks/content-slider';
+import { PostGrid } from './blocks/post-grid';
+import { PostCard } from './blocks/post-grid/post-card';
+import { PostTitle } from './blocks/post-grid/post-title';
+import { PostExcerpt } from './blocks/post-grid/post-excerpt';
+import { PostImage } from './blocks/post-grid/post-image';
+import { PostTerms } from './blocks/post-grid/post-terms';
+import { PostMeta } from './blocks/post-grid/post-meta';
+import { PostReadMore } from './blocks/post-grid/post-read-more';
+import { PostPagination } from './blocks/post-grid/post-pagination';
+import { PostNoResults } from './blocks/post-grid/post-no-results';
 import { Slide } from './blocks/content-slider/slide';
 import { TableOfContents } from './blocks/table-of-contents';
 import { TrustBadges } from './blocks/trust-badges';
@@ -171,6 +181,16 @@ const blocks = [
 	Testimonial,
 	InfoBox,
 	ContentSlider,
+	PostGrid,
+	PostCard,
+	PostTitle,
+	PostExcerpt,
+	PostImage,
+	PostTerms,
+	PostMeta,
+	PostReadMore,
+	PostPagination,
+	PostNoResults,
 	Slide,
 	TableOfContents,
 	TrustBadges,

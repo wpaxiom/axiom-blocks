@@ -208,6 +208,13 @@ export const RESPONSIVE_PROPS = {
 		{ key: 'maxWidth', type: 'string' },
 	],
 	'axiom-blocks/table-of-contents': [ { key: 'maxWidth', type: 'string' } ],
+	'axiom-blocks/post-grid': [
+		{ key: 'columns', type: 'number' },
+		{ key: 'columnGap', type: 'string' },
+		{ key: 'rowGap', type: 'string' },
+	],
+	'axiom-blocks/post-image': [ { key: 'height', type: 'string' } ],
+	'axiom-blocks/post-meta': [ { key: 'iconSize', type: 'string' } ],
 };
 
 /**

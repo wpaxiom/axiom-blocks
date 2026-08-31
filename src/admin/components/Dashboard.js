@@ -161,8 +161,6 @@ export function Dashboard() {
 		? blocks
 		: blocks.filter( ( b ) => ! isWoo( b ) );
 
-	const layout = visibleBlocks.filter( ( b ) => b.category === 'layout' );
-	const content = visibleBlocks.filter( ( b ) => b.category === 'content' );
 	const woo = visibleBlocks.filter( isWoo );
 
 	const matches = ( b ) => {
@@ -174,12 +172,25 @@ export function Dashboard() {
 		);
 	};
 
-	const visLayout = layout.filter(
-		( b ) => matches( b ) && ( catTab === 'all' || catTab === 'layout' )
-	);
-	const visContent = content.filter(
-		( b ) => matches( b ) && ( catTab === 'all' || catTab === 'content' )
-	);
+	// Every non-Woo category gets its own section and tab. Add the category
+	// here when a new one appears in inc/Blocks/Blocks.php, or its blocks
+	// never reach the screen.
+	const generalCats = [
+		{ id: 'layout', label: __( 'Layout', 'axiom-blocks' ) },
+		{ id: 'content', label: __( 'Content', 'axiom-blocks' ) },
+		{ id: 'dynamic', label: __( 'Dynamic', 'axiom-blocks' ) },
+	].map( ( cat ) => {
+		const all = visibleBlocks.filter( ( b ) => b.category === cat.id );
+		return {
+			...cat,
+			all,
+			shown: all.filter(
+				( b ) =>
+					matches( b ) && ( catTab === 'all' || catTab === cat.id )
+			),
+		};
+	} );
+
 	const visWoo = woo.filter(
 		( b ) => matches( b ) && ( catTab === 'all' || catTab === 'woo' )
 	);
@@ -195,16 +206,13 @@ export function Dashboard() {
 			label: __( 'All Blocks', 'axiom-blocks' ),
 			count: visibleBlocks.length,
 		},
-		{
-			id: 'layout',
-			label: __( 'Layout', 'axiom-blocks' ),
-			count: layout.length,
-		},
-		{
-			id: 'content',
-			label: __( 'Content', 'axiom-blocks' ),
-			count: content.length,
-		},
+		...generalCats
+			.filter( ( cat ) => cat.all.length > 0 )
+			.map( ( cat ) => ( {
+				id: cat.id,
+				label: cat.label,
+				count: cat.all.length,
+			} ) ),
 		...( wcEnabled
 			? [
 					{
@@ -405,57 +413,41 @@ export function Dashboard() {
 							</div>
 						</div>
 
-						{ /* Layout section */ }
-						{ showGeneral && visLayout.length > 0 && (
-							<div className="ab-section">
-								<SectionBar
-									title={ __( 'Layout', 'axiom-blocks' ) }
-									count={ visLayout.length }
-									icon={ <GridIcon size={ 14 } /> }
-									iconColor={ PRIMARY }
-									onEnableAll={ () => setAll( layout, true ) }
-									onDisableAll={ () =>
-										setAll( layout, false )
-									}
-								/>
-								<div className="ab-grid">
-									{ visLayout.map( ( b ) => (
-										<BlockCard
-											key={ b.id }
-											block={ b }
-											onToggle={ toggleBlock }
-										/>
-									) ) }
-								</div>
-							</div>
-						) }
-
-						{ /* Content section */ }
-						{ showGeneral && visContent.length > 0 && (
-							<div className="ab-section">
-								<SectionBar
-									title={ __( 'Content', 'axiom-blocks' ) }
-									count={ visContent.length }
-									icon={ <GridIcon size={ 14 } /> }
-									iconColor={ PRIMARY }
-									onEnableAll={ () =>
-										setAll( content, true )
-									}
-									onDisableAll={ () =>
-										setAll( content, false )
-									}
-								/>
-								<div className="ab-grid">
-									{ visContent.map( ( b ) => (
-										<BlockCard
-											key={ b.id }
-											block={ b }
-											onToggle={ toggleBlock }
-										/>
-									) ) }
-								</div>
-							</div>
-						) }
+						{ /* One section per non-Woo category */ }
+						{ showGeneral &&
+							generalCats.map(
+								( cat ) =>
+									cat.shown.length > 0 && (
+										<div
+											className="ab-section"
+											key={ cat.id }
+										>
+											<SectionBar
+												title={ cat.label }
+												count={ cat.shown.length }
+												icon={
+													<GridIcon size={ 14 } />
+												}
+												iconColor={ PRIMARY }
+												onEnableAll={ () =>
+													setAll( cat.all, true )
+												}
+												onDisableAll={ () =>
+													setAll( cat.all, false )
+												}
+											/>
+											<div className="ab-grid">
+												{ cat.shown.map( ( b ) => (
+													<BlockCard
+														key={ b.id }
+														block={ b }
+														onToggle={ toggleBlock }
+													/>
+												) ) }
+											</div>
+										</div>
+									)
+							) }
 
 						{ /* WooCommerce section */ }
 						{ showWoo && visWoo.length > 0 && (
@@ -503,8 +495,9 @@ export function Dashboard() {
 						) }
 
 						{ /* Empty state */ }
-						{ visLayout.length === 0 &&
-							visContent.length === 0 &&
+						{ generalCats.every(
+							( cat ) => cat.shown.length === 0
+						) &&
 							visWoo.length === 0 && (
 								<div className="ab-empty">
 									<SearchIcon

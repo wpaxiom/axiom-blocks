@@ -11,6 +11,7 @@ namespace AxiomBlocks\API;
 use AxiomBlocks\Admin\Settings;
 use AxiomBlocks\Blocks\Blocks;
 use AxiomBlocks\Blocks\CustomIcons;
+use AxiomBlocks\Blocks\PostGridTemplates;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -168,6 +169,93 @@ class Routes {
 						'default'  => false,
 					),
 				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/post-grid',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( self::class, 'post_grid_page' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'key'  => array(
+						'required'          => true,
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_key',
+					),
+					'page' => array(
+						'required'          => true,
+						'type'              => 'integer',
+						'sanitize_callback' => 'absint',
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Render one more page of a Post Grid.
+	 *
+	 * Deliberately narrow: the request supplies only a template key and a page
+	 * number. Everything else, the card markup and every query argument, is read
+	 * back from what the grid registered when it rendered. Nothing the client
+	 * sends can widen the query or introduce block markup.
+	 *
+	 * @param \WP_REST_Request $request Request.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public static function post_grid_page( \WP_REST_Request $request ) {
+		$key  = (string) $request->get_param( 'key' );
+		$page = max( 1, (int) $request->get_param( 'page' ) );
+
+		$payload = PostGridTemplates::get( $key );
+		if ( null === $payload ) {
+			return new \WP_Error(
+				'axiom_blocks_unknown_grid',
+				__( 'That grid is no longer available. Reload the page and try again.', 'axiom-blocks' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		$args = $payload['args'];
+
+		// Belt and braces: these are already the author's saved values, but the
+		// route re-asserts the invariants rather than trusting the stored copy.
+		$args['post_status']    = 'publish';
+		$args['fields']         = 'ids';
+		$args['posts_per_page'] = max( 1, min( 50, (int) ( $args['posts_per_page'] ?? 6 ) ) );
+		$args['no_found_rows']  = false;
+
+		if ( ! empty( $args['offset'] ) ) {
+			$args['offset'] = (int) $args['offset'] + ( ( $page - 1 ) * $args['posts_per_page'] );
+			unset( $args['paged'] );
+		} else {
+			$args['paged'] = $page;
+			unset( $args['offset'] );
+		}
+
+		$query = new \WP_Query( $args );
+
+		$html = '';
+		foreach ( $query->posts as $post_id ) {
+			$html .= ( new \WP_Block(
+				$payload['card'],
+				array(
+					'postId'   => $post_id,
+					'postType' => get_post_type( $post_id ),
+				)
+			) )->render();
+		}
+		wp_reset_postdata();
+
+		return rest_ensure_response(
+			array(
+				'html'    => $html,
+				'page'    => $page,
+				'total'   => max( 1, (int) $query->max_num_pages ),
+				'hasMore' => $page < (int) $query->max_num_pages,
 			)
 		);
 	}

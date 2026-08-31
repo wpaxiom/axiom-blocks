@@ -1,0 +1,84 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/post-grid",
+	"version": "1.0.0",
+	"title": "Post Grid",
+	"category": "axiom-blocks",
+	"description": "Show posts in a designed grid or list. Build the card from the blocks you want, style every part.",
+	"keywords": ["posts", "grid", "loop", "query", "blog", "archive"],
+	"textdomain": "axiom-blocks",
+	"icon": "grid-view",
+	"attributes": {
+		"postType":       { "type": "string",  "default": "post" },
+		"taxonomy":       { "type": "string",  "default": "" },
+		"terms":          { "type": "array",   "default": [] },
+		"excludeTerms":   { "type": "array",   "default": [] },
+		"authors":        { "type": "array",   "default": [] },
+		"order":          { "type": "string",  "default": "desc" },
+		"orderBy":        { "type": "string",  "default": "date" },
+		"postsPerPage":   { "type": "number",  "default": 6 },
+		"offset":         { "type": "number",  "default": 0 },
+		"excludeCurrent": { "type": "boolean", "default": false },
+		"sticky":         { "type": "string",  "default": "" },
+
+		"layout":         { "type": "string",  "default": "grid" },
+		"columns":        { "type": "number",  "default": 3 },
+		"columnsTablet":  { "type": "number",  "default": 2 },
+		"columnsMobile":  { "type": "number",  "default": 1 },
+		"columnGap":       { "type": "string", "default": "" },
+		"columnGapTablet": { "type": "string", "default": "" },
+		"columnGapMobile": { "type": "string", "default": "" },
+		"rowGap":          { "type": "string", "default": "" },
+		"rowGapTablet":    { "type": "string", "default": "" },
+		"rowGapMobile":    { "type": "string", "default": "" },
+		"equalHeight":    { "type": "boolean", "default": true },
+
+		"featuredEnabled": { "type": "boolean", "default": false },
+		"featuredSource":  { "type": "string",  "default": "first" },
+		"featuredPostId":  { "type": "number",  "default": 0 },
+		"featuredSpan":    { "type": "number",  "default": 2 },
+
+		"gridBg":          { "type": "string", "default": "" },
+		"gridShadow":      { "type": "string", "default": "" },
+		"gridBorderStyle": { "type": "string", "default": "" },
+		"gridBorderColor": { "type": "string", "default": "" },
+
+		"gridBorderTopWidth":    { "type": "string", "default": "" },
+		"gridBorderRightWidth":  { "type": "string", "default": "" },
+		"gridBorderBottomWidth": { "type": "string", "default": "" },
+		"gridBorderLeftWidth":   { "type": "string", "default": "" },
+
+		"gridRadiusTopLeft":     { "type": "string", "default": "" },
+		"gridRadiusTopRight":    { "type": "string", "default": "" },
+		"gridRadiusBottomRight": { "type": "string", "default": "" },
+		"gridRadiusBottomLeft":  { "type": "string", "default": "" },
+
+		"gridPaddingTop":    { "type": "string", "default": "" },
+		"gridPaddingRight":  { "type": "string", "default": "" },
+		"gridPaddingBottom": { "type": "string", "default": "" },
+		"gridPaddingLeft":   { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"providesContext": {
+		"axiom-blocks/postGridLayout": "layout"
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./editor.scss",
+	"style":        "file:./style.scss",
+	"render":       "file:./render.php"
+}
