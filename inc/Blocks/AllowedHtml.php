@@ -1,6 +1,6 @@
 <?php
 /**
- * AllowedHtml — shared HTML allowlists for wp_kses calls across blocks.
+ * AllowedHtml - shared HTML allowlists for wp_kses calls across blocks.
  *
  * @package AxiomBlocks\Blocks
  * @since 1.0.0
@@ -13,28 +13,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * AllowedHtml helper — shared wp_kses allowlists.
+ * AllowedHtml helper - shared wp_kses allowlists.
  *
- * Use this when echoing inline SVG markup that wp_kses_post() would otherwise
- * strip. For general post content, continue using wp_kses_post() — this helper
- * is intentionally SVG-only.
+ * Use these when echoing markup that wp_kses_post() would otherwise strip:
+ * inline SVG, and the form controls a nested block may emit. For general post
+ * content, continue using wp_kses_post().
  *
  * @since 1.0.0
  */
 class AllowedHtml {
 
 	/**
-	 * Post-content allowlist merged with the SVG allowlist.
+	 * Post-content allowlist merged with the SVG and form allowlists.
 	 *
 	 * Use this only on wrapper blocks whose inner blocks legitimately emit SVG
-	 * (e.g. pricing-table wraps pricing-plan which renders feature-icon SVGs).
-	 * Without the merge, the post-content kses would strip the SVG that the
-	 * nested block already correctly escaped.
+	 * or form controls (e.g. pricing-table wraps pricing-plan which renders
+	 * feature-icon SVGs; advanced-section can wrap a post-filter bar). Without
+	 * the merge, the post-content kses would strip markup that the nested block
+	 * already correctly escaped.
 	 *
 	 * @return array<string, array<string, bool>>
 	 */
 	public static function post_with_svg(): array {
-		$allowed = array_merge( wp_kses_allowed_html( 'post' ), self::svg() );
+		$allowed = array_merge( wp_kses_allowed_html( 'post' ), self::svg(), self::form() );
 		// Wrapper blocks aggregate arbitrary inner blocks; many carry data-*
 		// attributes (interactivity, config). Allow the data-* wildcard on every
 		// element so nested blocks keep working through the wrapper's kses.
@@ -44,6 +45,112 @@ class AllowedHtml {
 			}
 		}
 		return $allowed;
+	}
+
+	/**
+	 * Allowlist for form controls.
+	 *
+	 * `wp_kses_allowed_html( 'post' )` carries `button`, `label`, `textarea`,
+	 * `fieldset` and `legend`, but not `form`, `input`, `select`, `option` or
+	 * `optgroup`. A wrapper block running its inner content through the post
+	 * allowlist therefore deletes the form element and both controls of a
+	 * nested Post Filter bar, leaving the option text behind as bare text.
+	 *
+	 * Only the five missing tags are declared here. Re-declaring one the post
+	 * allowlist already carries would replace core's attribute set with this
+	 * one and narrow it.
+	 *
+	 * @return array<string, array<string, bool>>
+	 */
+	public static function form(): array {
+		// Mirrors core's _wp_add_global_attributes(), which the post allowlist
+		// applies to its own tags but cannot apply to tags added here.
+		$g = array(
+			'aria-controls'    => true,
+			'aria-current'     => true,
+			'aria-describedby' => true,
+			'aria-expanded'    => true,
+			'aria-hidden'      => true,
+			'aria-label'       => true,
+			'aria-labelledby'  => true,
+			'aria-live'        => true,
+			'class'            => true,
+			'dir'              => true,
+			'hidden'           => true,
+			'id'               => true,
+			'lang'             => true,
+			'role'             => true,
+			'style'            => true,
+			'tabindex'         => true,
+			'title'            => true,
+		);
+
+		return array(
+			'form'     => array_merge(
+				$g,
+				array(
+					'accept-charset' => true,
+					'action'         => true,
+					'autocomplete'   => true,
+					'enctype'        => true,
+					'method'         => true,
+					'name'           => true,
+					'novalidate'     => true,
+					'target'         => true,
+				)
+			),
+			'input'    => array_merge(
+				$g,
+				array(
+					'accept'       => true,
+					'autocomplete' => true,
+					'checked'      => true,
+					'disabled'     => true,
+					'list'         => true,
+					'max'          => true,
+					'maxlength'    => true,
+					'min'          => true,
+					'minlength'    => true,
+					'multiple'     => true,
+					'name'         => true,
+					'pattern'      => true,
+					'placeholder'  => true,
+					'readonly'     => true,
+					'required'     => true,
+					'size'         => true,
+					'step'         => true,
+					'type'         => true,
+					'value'        => true,
+				)
+			),
+			'select'   => array_merge(
+				$g,
+				array(
+					'autocomplete' => true,
+					'disabled'     => true,
+					'multiple'     => true,
+					'name'         => true,
+					'required'     => true,
+					'size'         => true,
+				)
+			),
+			'option'   => array_merge(
+				$g,
+				array(
+					'disabled' => true,
+					'label'    => true,
+					'selected' => true,
+					'value'    => true,
+				)
+			),
+			'optgroup' => array_merge(
+				$g,
+				array(
+					'disabled' => true,
+					'label'    => true,
+				)
+			),
+		);
 	}
 
 	/**

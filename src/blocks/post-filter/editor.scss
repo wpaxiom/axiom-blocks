@@ -1,0 +1,28 @@
+/**
+ * Post Filter - editor-only affordances.
+ *
+ * The canvas shows the real bar with each child field block laid out inside.
+ * Layout comes from the same --ab-pf-* vars the frontend uses, so direction,
+ * gap, alignment and the per-field width presets preview as authored; only the
+ * empty-block minimum below is editor-only.
+ */
+
+.wp-block-axiom-blocks-post-filter {
+
+	.ab-pf__fields {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: var(--ab-pf-dir, row);
+		align-items: var(--ab-pf-align, center);
+		gap:
+			var(--ab-pf-row-gap, var(--ab-pf-gap, 12px))
+			var(--ab-pf-gap, 12px);
+	}
+
+	// A field block with no visible body would otherwise collapse to nothing
+	// and become impossible to select. Width presets opt out, since they are
+	// the author asking for a specific size.
+	.ab-pff:not([class*="ab-pff--w-"]) {
+		min-width: 160px;
+	}
+}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Post Grid — frontend render.
+ * Post Grid - frontend render.
  *
  * Runs the query, then renders the first `post-card` inner block once per
  * result with `postId` / `postType` injected as render context. Those are
@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use AxiomBlocks\Blocks\PostFilterResolver;
 use AxiomBlocks\Blocks\Spacing;
 
 $axiom_blocks_a     = $attributes ?? array();
@@ -101,6 +102,12 @@ if ( ! empty( $axiom_blocks_authors ) ) {
 
 $axiom_blocks_taxonomy = (string) ( $axiom_blocks_a['taxonomy'] ?? '' );
 if ( '' !== $axiom_blocks_taxonomy && taxonomy_exists( $axiom_blocks_taxonomy ) ) {
+	// Carry the taxonomy as metadata on the stored args so PostFilterResolver can
+	// validate a Post Filter bar's `ab_f_tax_{taxonomy}` token against the grid.
+	// WP_Query ignores a lone `taxonomy` var (it only acts when `term` is also
+	// present), so this never changes the base query itself.
+	$axiom_blocks_args['taxonomy'] = $axiom_blocks_taxonomy;
+
 	$axiom_blocks_tax_query = array();
 
 	$axiom_blocks_terms = array_filter( array_map( 'absint', (array) ( $axiom_blocks_a['terms'] ?? array() ) ) );
@@ -149,7 +156,52 @@ foreach ( $axiom_blocks_siblings as $axiom_blocks_sibling ) {
 	}
 }
 
-$axiom_blocks_key  = substr( md5( wp_json_encode( array( $axiom_blocks_card, $axiom_blocks_feat, $axiom_blocks_args ) ) ), 0, 16 );
+// The base key is the hash of the card template + the author's saved args
+// (before any filter or pagination folds in). A Post Filter bar targets a grid
+// by exactly this base key.
+$axiom_blocks_base_key = substr( md5( wp_json_encode( array( $axiom_blocks_card, $axiom_blocks_feat, $axiom_blocks_args ) ) ), 0, 16 );
+
+// A Post Filter bar may target this grid on a full page load (JS-off, or a
+// bookmarked filtered URL). The bar only ever names this grid by its *base*
+// key, so verify the request's base key against our own before applying any
+// whitelisted `ab_f_*` tokens; a filter never applies to a grid it did not name.
+// This is purely additive: with no matching `ab_f_base` param it changes nothing.
+// The variant key is the hash of the filtered args, exactly the key the
+// no-reload route derives, so a reload and the JS upgrade converge on the same
+// transient.
+// A bar names its grid by anchor (always available to it) and by base key (only
+// available once the grid has rendered, so empty whenever the bar sits above the
+// grid). Either signal identifies this grid; neither can widen the query, since
+// the tokens are still applied to THIS grid's own saved args.
+$axiom_blocks_filter         = array();
+$axiom_blocks_filtered_args  = $axiom_blocks_args;
+$axiom_blocks_req_base       = '';
+$axiom_blocks_anchor         = (string) ( $axiom_blocks_a['anchor'] ?? '' );
+if ( class_exists( '\AxiomBlocks\Blocks\PostFilterResolver' ) ) {
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only public filter state; the tokens are whitelisted and validated in PostFilterResolver.
+	$axiom_blocks_req_base = isset( $_GET['ab_f_base'] ) ? sanitize_key( wp_unslash( $_GET['ab_f_base'] ) ) : '';
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only public filter state; the anchor only selects which grid on the page is addressed.
+	$axiom_blocks_req_target = isset( $_GET['ab_f_target'] ) ? sanitize_text_field( wp_unslash( $_GET['ab_f_target'] ) ) : '';
+
+	$axiom_blocks_addressed = ( '' !== $axiom_blocks_base_key && $axiom_blocks_req_base === $axiom_blocks_base_key )
+		|| ( '' !== $axiom_blocks_anchor && $axiom_blocks_req_target === $axiom_blocks_anchor );
+
+	if ( $axiom_blocks_addressed ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only public filter state paged via GET; tokens validated in PostFilterResolver.
+		$axiom_blocks_filter = PostFilterResolver::tokens_from_get( wp_unslash( $_GET ), $axiom_blocks_args );
+		if ( ! empty( $axiom_blocks_filter ) ) {
+			$axiom_blocks_filtered_args = PostFilterResolver::apply_filter( $axiom_blocks_args, $axiom_blocks_filter );
+		}
+	}
+}
+
+$axiom_blocks_variant_key  = substr( md5( wp_json_encode( array( $axiom_blocks_card, $axiom_blocks_feat, $axiom_blocks_filtered_args ) ) ), 0, 16 );
+$axiom_blocks_is_filtered  = $axiom_blocks_filtered_args !== $axiom_blocks_args;
+
+// If this grid is filtered, the rendered key is the variant; otherwise it is
+// the base. Pagination then matches whichever key the request actually targets.
+$axiom_blocks_key  = $axiom_blocks_is_filtered ? $axiom_blocks_variant_key : $axiom_blocks_base_key;
+$axiom_blocks_args = $axiom_blocks_filtered_args;
 $axiom_blocks_page = 1;
 if ( $axiom_blocks_has_pag ) {
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only public pagination state, no action taken.
@@ -169,13 +221,17 @@ if ( $axiom_blocks_has_pag ) {
 	}
 }
 
+
 $axiom_blocks_query = new WP_Query( $axiom_blocks_args );
 $axiom_blocks_ids   = $axiom_blocks_query->posts;
 $axiom_blocks_pages = $axiom_blocks_has_pag ? max( 1, (int) $axiom_blocks_query->max_num_pages ) : 1;
 
-// Register the template so the load-more route can render further pages without
-// ever accepting block markup from the client.
-if ( $axiom_blocks_has_pag && class_exists( '\AxiomBlocks\Blocks\PostGridTemplates' ) ) {
+// Register the template so the load-more route (and a Post Filter bar) can
+// render further / filtered results without ever accepting block markup from
+// the client. Registered on every render, not just grids with pagination, so a
+// filter bar can resolve the base grid it targets. This is still a template this
+// page actually rendered, bounded by the transient TTL; it never widens trust.
+if ( class_exists( '\AxiomBlocks\Blocks\PostGridTemplates' ) ) {
 	\AxiomBlocks\Blocks\PostGridTemplates::remember(
 		$axiom_blocks_key,
 		array(
@@ -200,6 +256,24 @@ foreach ( $axiom_blocks_var_map as $axiom_blocks_css_var => $axiom_blocks_attr_k
 }
 $axiom_blocks_style_parts[] = '--ab-pg-cols: ' . max( 1, (int) ( $axiom_blocks_a['columns'] ?? 3 ) );
 
+// Alignment. `left|center|right` maps to a flex value for the card's own
+// cross-axis and passes straight through as text-align; an unset value emits
+// nothing, so a grid saved before these controls is byte-identical.
+$axiom_blocks_align_flex = array(
+	'left'   => 'flex-start',
+	'center' => 'center',
+	'right'  => 'flex-end',
+);
+$axiom_blocks_content_align = (string) ( $axiom_blocks_a['contentAlign'] ?? '' );
+if ( isset( $axiom_blocks_align_flex[ $axiom_blocks_content_align ] ) ) {
+	$axiom_blocks_style_parts[] = '--ab-pg-calign: ' . $axiom_blocks_align_flex[ $axiom_blocks_content_align ];
+	$axiom_blocks_style_parts[] = '--ab-pg-ctext: ' . $axiom_blocks_content_align;
+}
+$axiom_blocks_vertical_align = (string) ( $axiom_blocks_a['verticalAlign'] ?? '' );
+if ( in_array( $axiom_blocks_vertical_align, array( 'start', 'center', 'end', 'stretch' ), true ) ) {
+	$axiom_blocks_style_parts[] = '--ab-pg-valign: ' . $axiom_blocks_vertical_align;
+}
+
 if ( ! empty( $axiom_blocks_a['featuredEnabled'] ) ) {
 	$axiom_blocks_cols = max( 1, (int) ( $axiom_blocks_a['columns'] ?? 3 ) );
 	$axiom_blocks_span = max( 1, (int) ( $axiom_blocks_a['featuredSpan'] ?? 2 ) );
@@ -207,7 +281,7 @@ if ( ! empty( $axiom_blocks_a['featuredEnabled'] ) ) {
 	$axiom_blocks_style_parts[] = '--ab-pg-feat-span: ' . min( $axiom_blocks_span, $axiom_blocks_cols );
 }
 
-/* Grid box — background / shadow / border color, then per-side and per-corner. */
+/* Grid box - background / shadow / border color, then per-side and per-corner. */
 foreach ( array(
 	'--ab-pg-bg'     => 'gridBg',
 	'--ab-pg-shadow' => 'gridShadow',
@@ -291,6 +365,14 @@ $axiom_blocks_merged_style_parts = array_filter(
 $axiom_blocks_style_attr         = safecss_filter_attr( implode( ';', $axiom_blocks_merged_style_parts ) );
 $axiom_blocks_id_attr            = $axiom_blocks_block_supports['id'] ?? '';
 
+// Record this grid's base key by its anchor so a Post Filter bar rendered later
+// in the same page can emit the key it must filter against. Always the BASE key:
+// on an already-filtered request the rendered key is the variant, and handing
+// that to a bar would make its next submit filter the filtered result.
+if ( class_exists( '\AxiomBlocks\Blocks\PostFilterResolver' ) ) {
+	\AxiomBlocks\Blocks\PostFilterResolver::record_anchor( $axiom_blocks_id_attr, $axiom_blocks_base_key );
+}
+
 /* ── Loop ─────────────────────────────────────────────────────────────────── */
 
 // Which post, if any, gets the featured template. "specific" falls back to the
@@ -342,7 +424,7 @@ foreach ( $axiom_blocks_siblings as $axiom_blocks_sibling ) {
 	<?php echo '' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : ''; ?>
 >
 	<?php if ( '' !== $axiom_blocks_cards ) : ?>
-		<div class="ab-pg__list" data-ab-pg-key="<?php echo esc_attr( $axiom_blocks_key ); ?>">
+		<div class="ab-pg__list" data-ab-pg-key="<?php echo esc_attr( $axiom_blocks_key ); ?>" data-ab-pg-base="<?php echo esc_attr( $axiom_blocks_base_key ); ?>">
 			<?php echo $axiom_blocks_cards; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Inner block HTML, already escaped by each block's own render. ?>
 		</div>
 	<?php endif; ?>

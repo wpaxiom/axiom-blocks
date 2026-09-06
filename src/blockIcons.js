@@ -623,6 +623,43 @@ export const BLOCK_ICONS = {
 			<rect width="7" height="7" x="3" y="14" rx="1" />
 		</>
 	),
+	'post-filter': (
+		<>
+			<path d="M3 5h18l-7 8.4V19l-4 2v-7.6L3 5Z" />
+			<path d="M3 5h18" />
+		</>
+	),
+	'post-filter-search': (
+		<>
+			<path d="M4 6h11" />
+			<path d="M4 12h9" />
+			<path d="M4 18h5" />
+			<circle cx="17.5" cy="15.5" r="3" />
+			<path d="m20 18 2 2" />
+		</>
+	),
+	'post-filter-taxonomy': (
+		<>
+			<path d="M3 5h18M3 12h18M3 19h18" />
+			<circle cx="7" cy="5" r="1.2" fill="currentColor" stroke="none" />
+			<circle cx="1" cy="12" r="1.2" fill="currentColor" stroke="none" />
+			<circle cx="10" cy="19" r="1.2" fill="currentColor" stroke="none" />
+		</>
+	),
+	'post-filter-sort': (
+		<>
+			<path d="M8 4v12" />
+			<path d="m4 8 4-4 4 4" />
+			<path d="M16 20V8" />
+			<path d="m12 16 4 4 4-4" />
+		</>
+	),
+	'post-filter-reset': (
+		<>
+			<path d="M3 12a9 9 0 1 0 3-6.7" />
+			<path d="M3 3v4h4" />
+		</>
+	),
 	'post-card': (
 		<>
 			<rect width="18" height="18" x="3" y="3" rx="2" />

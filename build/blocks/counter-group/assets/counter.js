@@ -69,6 +69,16 @@
 			return;
 		}
 
+		// The server renders the FINAL value, so the width right now is the width
+		// the animation ends at. Hold it for the duration: counting up adds
+		// characters ("0" to "1,200+"), and without a floor the box grows frame
+		// by frame and drags the centred layout sideways. Released on the last
+		// frame so nothing is left pinned at a stale font size.
+		const finalWidth = el.getBoundingClientRect().width;
+		if ( finalWidth ) {
+			el.style.minWidth = Math.ceil( finalWidth ) + 'px';
+		}
+
 		let startTime = null;
 		function step( now ) {
 			if ( startTime === null ) {
@@ -79,6 +89,8 @@
 			paint( start + ( end - start ) * ease( t ) );
 			if ( t < 1 ) {
 				window.requestAnimationFrame( step );
+			} else {
+				el.style.minWidth = '';
 			}
 		}
 		window.requestAnimationFrame( step );

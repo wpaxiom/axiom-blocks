@@ -98,7 +98,10 @@ export function ABRangeControl( {
 						min={ min }
 						max={ max }
 						step={ step }
-						placeholder={ `${ Math.min( Math.max( 0, min ), max ) }` }
+						placeholder={ `${ Math.min(
+							Math.max( 0, min ),
+							max
+						) }` }
 					/>
 					{ unit && ! hasUnitMenu && (
 						<span className="ab-ctrl__unit">{ unit }</span>
@@ -238,6 +241,215 @@ export function ABSelectControl( { label, value, onChange, options, help } ) {
 			</div>
 			{ help && <p className="ab-ctrl__help">{ help }</p> }
 		</div>
+	);
+}
+
+/* ── Multi-select: pick several options, shown as removable chips ───────────
+ * The scheme's answer to a token/tag field. Same value contract as a single
+ * select except `value` is an array: `options` is [{ value, label }] and
+ * onChange receives the picked values in order, untouched, so a control can be
+ * swapped in over an existing attribute without changing what gets saved. */
+export function ABMultiSelectControl( {
+	label,
+	value,
+	onChange,
+	options = [],
+	help,
+	placeholder = '',
+	searchThreshold = 8,
+} ) {
+	const selected = Array.isArray( value ) ? value : [];
+	const [ open, setOpen ] = useState( false );
+	const [ query, setQuery ] = useState( '' );
+	const wrapRef = useRef( null );
+
+	useEffect( () => {
+		if ( ! open ) {
+			return undefined;
+		}
+		const close = ( e ) => {
+			if ( wrapRef.current && ! wrapRef.current.contains( e.target ) ) {
+				setOpen( false );
+			}
+		};
+		const onKey = ( e ) => e.key === 'Escape' && setOpen( false );
+		document.addEventListener( 'mousedown', close );
+		document.addEventListener( 'keydown', onKey );
+		return () => {
+			document.removeEventListener( 'mousedown', close );
+			document.removeEventListener( 'keydown', onKey );
+		};
+	}, [ open ] );
+
+	const same = ( a, b ) => String( a ) === String( b );
+	const isPicked = ( v ) => selected.some( ( s ) => same( s, v ) );
+
+	const toggle = ( v ) =>
+		onChange(
+			isPicked( v )
+				? selected.filter( ( s ) => ! same( s, v ) )
+				: [ ...selected, v ]
+		);
+
+	const chips = selected
+		.map( ( v ) => ( {
+			value: v,
+			label: options.find( ( o ) => same( o.value, v ) )?.label,
+		} ) )
+		.filter( ( c ) => c.label );
+
+	const needle = query.trim().toLowerCase();
+	const visible = needle
+		? options.filter(
+				( o ) =>
+					o.label.toLowerCase().includes( needle ) ||
+					isPicked( o.value )
+		  )
+		: options;
+
+	return (
+		<div className="ab-ctrl">
+			{ label && <div className="ab-ctrl__label">{ label }</div> }
+			<div
+				className={ `ab-ctrl__multi-wrap${ open ? ' is-open' : '' }` }
+				ref={ wrapRef }
+			>
+				<div
+					className="ab-ctrl__multi-display"
+					onClick={ () => setOpen( ( v ) => ! v ) }
+					role="presentation"
+				>
+					{ chips.length ? (
+						<span className="ab-ctrl__multi-chips">
+							{ chips.map( ( c ) => (
+								<span
+									key={ String( c.value ) }
+									className="ab-ctrl__multi-chip"
+								>
+									{ c.label }
+									<button
+										type="button"
+										className="ab-ctrl__multi-chip-x"
+										aria-label={
+											__( 'Remove', 'axiom-blocks' ) +
+											' ' +
+											c.label
+										}
+										onClick={ ( e ) => {
+											e.stopPropagation();
+											toggle( c.value );
+										} }
+									>
+										<RemoveGlyph />
+									</button>
+								</span>
+							) ) }
+						</span>
+					) : (
+						<span className="ab-ctrl__multi-placeholder">
+							{ placeholder || __( 'Select…', 'axiom-blocks' ) }
+						</span>
+					) }
+					<button
+						type="button"
+						className="ab-ctrl__multi-toggle"
+						aria-haspopup="listbox"
+						aria-expanded={ open }
+						aria-label={ label }
+						onClick={ ( e ) => {
+							e.stopPropagation();
+							setOpen( ( v ) => ! v );
+						} }
+					>
+						<Caret className="ab-ctrl__select-arrow" />
+					</button>
+				</div>
+				{ open && (
+					<div className="ab-ctrl__multi-panel">
+						{ options.length > searchThreshold && (
+							<input
+								type="search"
+								className="ab-ctrl__multi-search"
+								value={ query }
+								placeholder={ __( 'Search…', 'axiom-blocks' ) }
+								onChange={ ( e ) => setQuery( e.target.value ) }
+							/>
+						) }
+						<ul
+							className="ab-ctrl__multi-list"
+							role="listbox"
+							aria-multiselectable="true"
+						>
+							{ visible.map( ( o ) => (
+								<li key={ String( o.value ) } role="none">
+									<button
+										type="button"
+										role="option"
+										aria-selected={ isPicked( o.value ) }
+										className={ `ab-ctrl__multi-opt${
+											isPicked( o.value )
+												? ' is-active'
+												: ''
+										}` }
+										onClick={ () => toggle( o.value ) }
+									>
+										<span className="ab-ctrl__multi-box">
+											{ isPicked( o.value ) && (
+												<CheckGlyph />
+											) }
+										</span>
+										{ o.label }
+									</button>
+								</li>
+							) ) }
+							{ ! visible.length && (
+								<li className="ab-ctrl__multi-empty">
+									{ __( 'No matches', 'axiom-blocks' ) }
+								</li>
+							) }
+						</ul>
+					</div>
+				) }
+			</div>
+			{ help && <p className="ab-ctrl__help">{ help }</p> }
+		</div>
+	);
+}
+
+function CheckGlyph() {
+	return (
+		<svg
+			width="10"
+			height="10"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="3.5"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			aria-hidden="true"
+			focusable="false"
+		>
+			<path d="M20 6 9 17l-5-5" />
+		</svg>
+	);
+}
+
+function RemoveGlyph() {
+	return (
+		<svg
+			width="10"
+			height="10"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth="2.5"
+			strokeLinecap="round"
+			aria-hidden="true"
+			focusable="false"
+		>
+			<path d="M18 6 6 18M6 6l12 12" />
+		</svg>
 	);
 }
 

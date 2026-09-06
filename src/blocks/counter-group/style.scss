@@ -112,6 +112,10 @@
 		text-decoration: var(--ab-counter-num-td);
 		color: var(--ab-counter-num-color, inherit);
 		transition: color 0.2s ease;
+		// Equal-width digits. The count-up rewrites this text every frame, and
+		// with proportional figures each swap changes the box width, so a
+		// centred counter jitters horizontally for the whole animation.
+		font-variant-numeric: tabular-nums;
 	}
 
 	&__label {

@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use AxiomBlocks\Blocks\Background;
 use AxiomBlocks\Blocks\Spacing;
 
 $axiom_blocks_a = $attributes ?? array();
@@ -40,7 +41,45 @@ if ( ! empty( $axiom_blocks_a['className'] ) ) {
 }
 $axiom_blocks_class_attr = trim( implode( ' ', array_filter( $axiom_blocks_classes ) ) );
 
-$axiom_blocks_style_attr = safecss_filter_attr( Spacing::merge( '', $axiom_blocks_a ) );
+/* Card box — mirrors cardVars() in index.js. Every var is emitted only when the
+   author set it, so an untouched card renders exactly as it did before these
+   controls existed. */
+$axiom_blocks_style_parts = array();
+
+$axiom_blocks_card_bg = Background::value( $axiom_blocks_a, 'card', 'cardBg' );
+if ( '' !== $axiom_blocks_card_bg ) {
+	$axiom_blocks_style_parts[] = '--ab-pc-bg: ' . $axiom_blocks_card_bg;
+}
+$axiom_blocks_card_bg_hover = Background::value( $axiom_blocks_a, 'cardHover', 'cardBgHover' );
+if ( '' !== $axiom_blocks_card_bg_hover ) {
+	$axiom_blocks_style_parts[] = '--ab-pc-bg-hover: ' . $axiom_blocks_card_bg_hover;
+}
+
+foreach ( array(
+	'--ab-pc-bw-t'      => 'cardBorderTopWidth',
+	'--ab-pc-bw-r'      => 'cardBorderRightWidth',
+	'--ab-pc-bw-b'      => 'cardBorderBottomWidth',
+	'--ab-pc-bw-l'      => 'cardBorderLeftWidth',
+	'--ab-pc-bs'        => 'cardBorderStyle',
+	'--ab-pc-bc'        => 'cardBorderColor',
+	'--ab-pc-bc-h'      => 'cardBorderColorHover',
+	'--ab-pc-radius-tl' => 'cardRadiusTopLeft',
+	'--ab-pc-radius-tr' => 'cardRadiusTopRight',
+	'--ab-pc-radius-br' => 'cardRadiusBottomRight',
+	'--ab-pc-radius-bl' => 'cardRadiusBottomLeft',
+	'--ab-pc-shadow'    => 'cardShadow',
+	'--ab-pc-shadow-h'  => 'cardShadowHover',
+	'--ab-pc-min-h'     => 'cardMinHeight',
+	'--ab-pc-gap'       => 'cardGap',
+) as $axiom_blocks_css_var => $axiom_blocks_attr_key ) {
+	if ( ! empty( $axiom_blocks_a[ $axiom_blocks_attr_key ] ) ) {
+		$axiom_blocks_style_parts[] = $axiom_blocks_css_var . ': ' . $axiom_blocks_a[ $axiom_blocks_attr_key ];
+	}
+}
+
+$axiom_blocks_style_attr = safecss_filter_attr(
+	Spacing::merge( implode( '; ', $axiom_blocks_style_parts ), $axiom_blocks_a )
+);
 ?>
 <div
 	class="<?php echo esc_attr( $axiom_blocks_class_attr ); ?>"

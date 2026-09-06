@@ -1,0 +1,143 @@
+/**
+ * Axiom Blocks — deactivation feedback modal styles.
+ */
+
+.ab-fb-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background: rgba(15, 23, 42, 0.55);
+}
+
+.ab-fb-modal {
+	position: relative;
+	width: 100%;
+	max-width: 460px;
+	padding: 28px 28px 22px;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.ab-fb-x {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	font-size: 22px;
+	line-height: 1;
+	color: #9ca3af;
+	cursor: pointer;
+	border-radius: 6px;
+}
+
+.ab-fb-x:hover {
+	color: #1e1e1e;
+	background: #f3f4f6;
+}
+
+.ab-fb-title {
+	margin: 0 0 6px;
+	font-size: 18px;
+	font-weight: 700;
+	color: #111827;
+}
+
+.ab-fb-sub {
+	margin: 0 0 16px;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #6b7280;
+}
+
+.ab-fb-reasons {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-bottom: 12px;
+}
+
+.ab-fb-reason {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 9px 10px;
+	border: 1px solid transparent;
+	border-radius: 8px;
+	font-size: 14px;
+	color: #1f2937;
+	cursor: pointer;
+	transition: background 0.12s, border-color 0.12s;
+}
+
+.ab-fb-reason:hover {
+	background: #faf5ff;
+}
+
+.ab-fb-reason input {
+	margin: 0;
+	accent-color: #7c3aed;
+}
+
+.ab-fb-detail {
+	width: 100%;
+	margin: 0 0 12px;
+	padding: 9px 10px;
+	border: 1px solid #dcdde1;
+	border-radius: 8px;
+	font-size: 13px;
+	font-family: inherit;
+	resize: vertical;
+	box-sizing: border-box;
+}
+
+.ab-fb-detail:focus {
+	outline: none;
+	border-color: #7c3aed;
+	box-shadow: 0 0 0 1px #7c3aed;
+}
+
+.ab-fb-privacy {
+	margin: 0 0 16px;
+	font-size: 11px;
+	line-height: 1.5;
+	color: #9ca3af;
+}
+
+.ab-fb-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+}
+
+.ab-fb-actions .ab-fb-skip {
+	padding: 0 10px;
+	line-height: 2.15384615;
+	color: #6b7280;
+	text-decoration: none;
+}
+
+.ab-fb-actions .ab-fb-skip:hover {
+	color: #1e1e1e;
+}
+
+.ab-fb-actions .ab-fb-submit {
+	background: #7c3aed;
+	border-color: #7c3aed;
+}
+
+.ab-fb-actions .ab-fb-submit:hover:not(:disabled) {
+	background: #6d28d9;
+	border-color: #6d28d9;
+}

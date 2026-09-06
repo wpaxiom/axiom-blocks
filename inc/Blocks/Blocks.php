@@ -205,6 +205,14 @@ class Blocks {
 			'description' => 'Posts in a designed grid or list, card built from blocks',
 			'icon'        => 'grid',
 		),
+		array(
+			'id'          => 'post-filter',
+			'name'        => 'Post Filter',
+			'category'    => 'dynamic',
+			'tier'        => 'free',
+			'description' => 'Search, filter and sort a Post Grid without reloading',
+			'icon'        => 'filter',
+		),
 
 		// ── WooCommerce ──────────────────────────────────────────────────────
 		array(

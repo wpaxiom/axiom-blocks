@@ -45,6 +45,11 @@ export const TYPOGRAPHY_TARGETS = {
 	'axiom-blocks/post-meta': [ '' ],
 	'axiom-blocks/post-read-more': [ '' ],
 	'axiom-blocks/post-pagination': [ '' ],
+	'axiom-blocks/post-filter': [ 'label', 'count' ],
+	'axiom-blocks/post-filter-search': [ '', 'btn' ],
+	'axiom-blocks/post-filter-taxonomy': [ '' ],
+	'axiom-blocks/post-filter-sort': [ '' ],
+	'axiom-blocks/post-filter-reset': [ '' ],
 };
 
 /** Typography base attribute suffixes — mirrors KEYS in TypographyPanel.js. */

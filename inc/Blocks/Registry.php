@@ -69,6 +69,11 @@ class Registry {
 		self::register_post_read_more();
 		self::register_post_pagination();
 		self::register_post_no_results();
+		self::register_post_filter();
+		self::register_post_filter_search();
+		self::register_post_filter_taxonomy();
+		self::register_post_filter_sort();
+		self::register_post_filter_reset();
 
 		// Handle frontend rendering of disabled blocks.
 		add_filter( 'render_block', array( self::class, 'render_disabled_block_frontend' ), 10, 2 );
@@ -110,10 +115,23 @@ class Registry {
 	/**
 	 * Register Advanced Section Block
 	 *
+	 * Uses an explicit render_callback that RETURNS the markup rather than block.json's
+	 * `render` file, which WordPress requires inside an output buffer. Returning is the
+	 * core render_callback model and is what lets the wrapper pass its inner blocks'
+	 * already escaped output through untouched. See the block's render.php header.
+	 *
 	 * @return void
 	 */
 	private static function register_advanced_section(): void {
-		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/advanced-section' );
+		register_block_type(
+			AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/advanced-section',
+			array(
+				// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter -- $attributes and $content ARE used: the required file reads them from this scope. PHPCS cannot see through require.
+				'render_callback' => static function ( $attributes, $content, $block ) {
+					return require AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/advanced-section/render.php';
+				},
+			)
+		);
 	}
 
 	/**
@@ -221,7 +239,15 @@ class Registry {
 	 * @return void
 	 */
 	private static function register_button_group(): void {
-		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/button-group' );
+		register_block_type(
+			AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/button-group',
+			array(
+				// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter -- $attributes and $content ARE used: the required file reads them from this scope. PHPCS cannot see through require.
+				'render_callback' => static function ( $attributes, $content, $block ) {
+					return require AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/button-group/render.php';
+				},
+			)
+		);
 	}
 
 	/**
@@ -471,6 +497,51 @@ class Registry {
 	 */
 	private static function register_post_no_results(): void {
 		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-grid/post-no-results' );
+	}
+
+	/**
+	 * Register Post Filter Block (parent bar that targets a Post Grid)
+	 *
+	 * @return void
+	 */
+	private static function register_post_filter(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-filter' );
+	}
+
+	/**
+	 * Register Post Filter Search Field Block (child of Post Filter)
+	 *
+	 * @return void
+	 */
+	private static function register_post_filter_search(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-filter/post-filter-search' );
+	}
+
+	/**
+	 * Register Post Filter Taxonomy Field Block (child of Post Filter)
+	 *
+	 * @return void
+	 */
+	private static function register_post_filter_taxonomy(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-filter/post-filter-taxonomy' );
+	}
+
+	/**
+	 * Register Post Filter Sort Field Block (child of Post Filter)
+	 *
+	 * @return void
+	 */
+	private static function register_post_filter_sort(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-filter/post-filter-sort' );
+	}
+
+	/**
+	 * Register Post Filter Reset Field Block (child of Post Filter)
+	 *
+	 * @return void
+	 */
+	private static function register_post_filter_reset(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/post-filter/post-filter-reset' );
 	}
 
 	/**

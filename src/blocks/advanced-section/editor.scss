@@ -1,51 +1,16 @@
 /**
- * Advanced Section — editor-only styles (inspector UI + canvas preview).
+ * Advanced Section, editor-only styles (inspector UI + canvas preview).
  */
 
 /* Focal-point-picker cosmetics (hide native inputs, tidy preview, zero the
    picker's own margin so the popover's flex gap owns the rhythm) live in the
-   shared src/editor.scss under .ab-bg-focal — BackgroundControl is shared. */
+   shared src/editor.scss under .ab-bg-focal, BackgroundControl is shared. */
 
-/* ── Advanced Section block styles (editor preview) ─────────────────────── */
-/* editorStyle is enqueued after style, so anything declared here at the same
-   specificity beats style.scss. Keep the stacking defaults off the layout
-   classes or flex/grid sections collapse to a centered column in the canvas. */
-.axiom-blocks-section {
-	text-align: var(--ab-sec-ta, inherit);
-	padding-top: var(--ab-padding-top, 0);
-	padding-right: var(--ab-padding-right, 0);
-	padding-bottom: var(--ab-padding-bottom, 0);
-	padding-left: var(--ab-padding-left, 0);
-	margin-top: var(--ab-margin-top, 0);
-	margin-right: var(--ab-margin-right, 0);
-	margin-bottom: var(--ab-margin-bottom, 0);
-	margin-left: var(--ab-margin-left, 0);
-}
+/* The block box and all three layout modes live in style.scss, which the editor
+   loads too. Never repeat them here: editorStyle is enqueued after style, so a
+   copy outranks the real rule and the canvas drifts from the frontend. */
 
-.axiom-blocks-section:not(.axiom-blocks-section--layout-flex):not(.axiom-blocks-section--layout-grid) {
-	display: flex;
-	flex-direction: column;
-	justify-content: var(--axiom-blocks-section-justify, center);
-	align-items: var(--axiom-blocks-section-align, center);
-}
-
-.axiom-blocks-section.axiom-blocks-section--layout-flex {
-	display: flex;
-	flex-direction: var(--ab-sec-fd, row);
-	flex-wrap: var(--ab-sec-fw, wrap);
-	justify-content: var(--ab-sec-jc, center);
-	align-items: var(--ab-sec-ai, center);
-	gap: var(--ab-sec-gap, 0);
-}
-
-.axiom-blocks-section.axiom-blocks-section--layout-grid {
-	display: grid;
-	grid-template-columns: repeat(var(--ab-sec-cols, 3), minmax(0, 1fr));
-	align-items: var(--ab-sec-ai, stretch);
-	gap: var(--ab-sec-gap, 0);
-}
-
-/* ── Empty-section placeholder — matches other block designs ── */
+/* ── Empty-section placeholder, matches other block designs ── */
 .axiom-blocks-section__placeholder {
 	display: flex;
 	align-items: center;

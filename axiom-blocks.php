@@ -3,7 +3,7 @@
  * Plugin Name:       Axiom Blocks - Page Builder & FSE Kit
  * Plugin URI:        https://www.wpaxiom.com/plugins/axiom-blocks
  * Description:       Advanced Gutenberg blocks for the WordPress block editor and Full Site Editing. Built for extensibility with WooCommerce and third-party integrations.
- * Version:           1.0.7
+ * Version:           1.0.8
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            WPAxiom
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'AXIOM_BLOCKS_VERSION', '1.0.7' );
+define( 'AXIOM_BLOCKS_VERSION', '1.0.8' );
 define( 'AXIOM_BLOCKS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AXIOM_BLOCKS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'AXIOM_BLOCKS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

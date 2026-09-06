@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.7\n"
+"Project-Id-Version: Axiom Blocks - Page Builder & FSE Kit 1.0.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/axiom-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-30T13:22:08+00:00\n"
+"POT-Creation-Date: 2026-09-06T10:16:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axiom-blocks\n"
@@ -119,16 +119,16 @@ msgstr ""
 msgid "Only the option you choose and anything you type is sent — never your content, email, or site address."
 msgstr ""
 
-#: inc/API/Routes.php:217
+#: inc/API/Routes.php:225
 msgid "That grid is no longer available. Reload the page and try again."
 msgstr ""
 
-#: inc/API/Routes.php:305
+#: inc/API/Routes.php:350
 msgid "That doesn’t look like a valid <svg>. Paste the full SVG markup."
 msgstr ""
 
 #. translators: %d: number of blocks using the icon.
-#: inc/API/Routes.php:328
+#: inc/API/Routes.php:373
 #, php-format
 msgid "Can’t delete — %d block is using this icon. Remove it from that block first."
 msgid_plural "Can’t delete — %d blocks are using this icon. Remove it from those blocks first."
@@ -200,6 +200,83 @@ msgstr ""
 
 #: src/blocks/notice/render.php:140
 msgid "Dismiss this notice"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-reset/render.php:25
+#: src/components/ABControls.js:492
+#: src/components/ABEditPopover.js:30
+#: src/components/ABResponsive.js:69
+#: src/components/LinkedBoxControl.js:149
+#: src/components/TypographyPanel.js:568
+msgid "Reset"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-search/render.php:34
+#: src/components/iconLibrary.js:1022
+msgid "Search"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/render.php:44
+#: src/blocks/post-filter/post-filter-sort/index.js:116
+#: src/blocks/post-filter/post-filter-sort/index.js:151
+#: src/blocks/post-grid/index.js:292
+msgid "Sort by"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/render.php:48
+#: src/blocks/post-filter/post-filter-sort/index.js:11
+#: src/blocks/post-grid/index.js:74
+msgid "Newest first"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/render.php:49
+#: src/blocks/post-filter/post-filter-sort/index.js:12
+#: src/blocks/post-grid/index.js:75
+msgid "Oldest first"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/render.php:50
+#: src/blocks/post-filter/post-filter-sort/index.js:13
+msgid "Title A-Z"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/render.php:51
+#: src/blocks/post-filter/post-filter-sort/index.js:14
+msgid "Title Z-A"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/render.php:52
+#: src/blocks/post-filter/post-filter-sort/index.js:15
+#: src/blocks/post-grid/index.js:80
+msgid "Last modified"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/render.php:53
+#: src/blocks/post-filter/post-filter-sort/index.js:17
+msgid "Most comments"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/render.php:56
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:162
+msgid "All"
+msgstr ""
+
+#. translators: %s is the number of matching posts.
+#: src/blocks/post-filter/render.php:194
+#, php-format
+msgid "%s post"
+msgstr ""
+
+#. translators: %s is the number of matching posts.
+#: src/blocks/post-filter/render.php:196
+#, php-format
+msgid "%s posts"
+msgstr ""
+
+#. translators: %s is the number of matching posts.
+#: src/blocks/post-filter/render.php:198
+#, php-format
+msgid "Filter applied. Showing %s results."
 msgstr ""
 
 #. translators: %s: number of comments.
@@ -334,8 +411,8 @@ msgid "All blocks disabled."
 msgstr ""
 
 #: src/admin/components/Dashboard.js:179
-#: src/blocks/advanced-section/index.js:375
-#: src/blocks/advanced-section/index.js:379
+#: src/blocks/advanced-section/index.js:368
+#: src/blocks/advanced-section/index.js:372
 #: src/blocks/button-group/index.js:98
 #: src/blocks/content-slider/index.js:384
 #: src/blocks/countdown-timer/index.js:415
@@ -343,8 +420,8 @@ msgstr ""
 #: src/blocks/counter-group/index.js:487
 #: src/blocks/icon-list/index.js:330
 #: src/blocks/info-box/index.js:266
-#: src/blocks/post-grid/index.js:443
-#: src/blocks/post-grid/index.js:447
+#: src/blocks/post-grid/index.js:487
+#: src/blocks/post-grid/index.js:491
 #: src/blocks/pricing-table/index.js:710
 #: src/blocks/star-rating/index.js:254
 #: src/blocks/testimonials/index.js:595
@@ -580,7 +657,7 @@ msgid "A single collapsible panel inside the Accordion block."
 msgstr ""
 
 #: src/blocks/accordion/index.js:64
-#: src/blocks/advanced-section/index.js:42
+#: src/blocks/advanced-section/index.js:41
 #: src/blocks/before-after-slider/index.js:61
 #: src/blocks/content-slider/index.js:83
 #: src/blocks/free-shipping-progress/index.js:57
@@ -613,6 +690,13 @@ msgstr ""
 #: src/blocks/icon-list/index.js:101
 #: src/blocks/notice/index.js:124
 #: src/blocks/notice/index.js:131
+#: src/blocks/post-filter/index.js:77
+#: src/blocks/post-filter/index.js:84
+#: src/blocks/post-filter/post-filter-reset/index.js:31
+#: src/blocks/post-filter/post-filter-search/index.js:49
+#: src/blocks/post-filter/post-filter-search/index.js:76
+#: src/blocks/post-filter/post-filter-sort/index.js:43
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:33
 #: src/blocks/post-grid/post-excerpt/index.js:21
 #: src/blocks/post-grid/post-pagination/index.js:47
 #: src/blocks/post-grid/post-read-more/index.js:48
@@ -788,7 +872,7 @@ msgstr ""
 
 #: src/blocks/accordion/index.js:518
 #: src/blocks/advanced-button/index.js:450
-#: src/blocks/advanced-section/index.js:440
+#: src/blocks/advanced-section/index.js:433
 #: src/blocks/button-group/index.js:133
 #: src/blocks/content-slider/slide/index.js:15
 #: src/blocks/copy-to-clipboard/index.js:292
@@ -798,6 +882,7 @@ msgstr ""
 #: src/blocks/icon-list/index.js:349
 #: src/blocks/icon-list/index.js:364
 #: src/blocks/info-box/index.js:321
+#: src/blocks/post-grid/index.js:100
 #: src/blocks/post-grid/post-pagination/index.js:21
 #: src/blocks/post-grid/post-read-more/index.js:29
 #: src/blocks/post-grid/post-read-more/index.js:35
@@ -817,7 +902,7 @@ msgstr ""
 
 #: src/blocks/accordion/index.js:522
 #: src/blocks/advanced-button/index.js:454
-#: src/blocks/advanced-section/index.js:448
+#: src/blocks/advanced-section/index.js:441
 #: src/blocks/button-group/index.js:141
 #: src/blocks/content-slider/slide/index.js:17
 #: src/blocks/copy-to-clipboard/index.js:296
@@ -826,6 +911,7 @@ msgstr ""
 #: src/blocks/icon-list/index.js:353
 #: src/blocks/icon-list/index.js:372
 #: src/blocks/info-box/index.js:329
+#: src/blocks/post-grid/index.js:102
 #: src/blocks/post-grid/post-pagination/index.js:23
 #: src/blocks/post-grid/post-read-more/index.js:30
 #: src/blocks/post-grid/post-read-more/index.js:37
@@ -856,6 +942,8 @@ msgstr ""
 #: src/blocks/advanced-button/index.js:122
 #: src/blocks/advanced-button/index.js:346
 #: src/blocks/copy-to-clipboard/index.js:71
+#: src/blocks/post-filter/post-filter-reset/index.js:27
+#: src/blocks/post-filter/post-filter-search/index.js:72
 #: src/blocks/post-grid/post-read-more/index.js:44
 #: src/blocks/post-grid/post-read-more/index.js:119
 #: src/blocks/pricing-table/index.js:327
@@ -874,7 +962,6 @@ msgid "Min width"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:205
-#: src/blocks/advanced-section/index.js:59
 #: src/blocks/counter-group/index.js:167
 #: src/blocks/icon-list/index.js:133
 #: src/blocks/icon/index.js:70
@@ -890,9 +977,11 @@ msgid "Size"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:213
-#: src/blocks/advanced-section/index.js:503
-#: src/blocks/advanced-section/index.js:552
+#: src/blocks/advanced-section/index.js:496
+#: src/blocks/advanced-section/index.js:545
 #: src/blocks/button-group/index.js:163
+#: src/blocks/post-filter/index.js:221
+#: src/blocks/post-grid/post-card/index.js:64
 #: src/blocks/post-grid/post-meta/index.js:74
 #: src/blocks/post-grid/post-pagination/index.js:69
 #: src/blocks/post-grid/post-terms/index.js:56
@@ -1023,9 +1112,12 @@ msgid "Text Color"
 msgstr ""
 
 #: src/blocks/advanced-heading/format.js:263
+#: src/blocks/post-filter/index.js:97
+#: src/blocks/post-grid/index.js:99
+#: src/blocks/post-grid/index.js:106
 #: src/blocks/post-grid/post-read-more/index.js:34
 #: src/blocks/pricing-table/index.js:112
-#: src/components/ABControls.js:298
+#: src/components/ABControls.js:510
 #: src/components/ABPosition.js:18
 #: src/components/AlignControl.js:69
 #: src/components/TargetSection.js:338
@@ -1136,6 +1228,7 @@ msgid "Alignment"
 msgstr ""
 
 #: src/blocks/advanced-heading/index.js:158
+#: src/blocks/post-filter/FieldPanel.js:87
 #: src/components/BorderControl.js:161
 #: src/components/BorderControl.js:176
 #: src/components/SizePanel.js:25
@@ -1191,23 +1284,24 @@ msgstr ""
 msgid "Heading with highlight spans, an optional sub-heading, and an accent line."
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:385
+#: src/blocks/advanced-section/index.js:378
 msgid "Constrained = content width (default). Flex / Grid arrange direct children."
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:397
+#: src/blocks/advanced-section/index.js:390
 #: src/blocks/counter-group/index.js:101
+#: src/blocks/post-grid/post-card/index.js:57
 #: src/blocks/pricing-table/index.js:156
 #: src/blocks/testimonials/index.js:188
 #: src/components/SizePanel.js:29
 msgid "Min height"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:410
+#: src/blocks/advanced-section/index.js:403
 msgid "Set a min height — with none, the section is exactly as tall as its content and there is no space to move it in."
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:415
+#: src/blocks/advanced-section/index.js:408
 #: src/blocks/before-after-slider/index.js:334
 #: src/blocks/button-group/index.js:110
 #: src/blocks/content-slider/index.js:424
@@ -1217,9 +1311,10 @@ msgstr ""
 msgid "Vertical"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:419
+#: src/blocks/advanced-section/index.js:412
 #: src/blocks/content-slider/slide/index.js:21
 #: src/blocks/counter-group/index.js:633
+#: src/blocks/post-grid/index.js:107
 #: src/blocks/testimonials/index.js:710
 #: src/components/ABPosition.js:26
 #: src/components/BackgroundControl.js:43
@@ -1227,14 +1322,16 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:423
-#: src/blocks/advanced-section/index.js:444
+#: src/blocks/advanced-section/index.js:416
+#: src/blocks/advanced-section/index.js:437
 #: src/blocks/button-group/index.js:137
 #: src/blocks/content-slider/slide/index.js:16
 #: src/blocks/copy-to-clipboard/index.js:330
 #: src/blocks/countdown-timer/index.js:463
 #: src/blocks/icon-list/index.js:368
 #: src/blocks/info-box/index.js:325
+#: src/blocks/post-filter/index.js:99
+#: src/blocks/post-grid/index.js:101
 #: src/blocks/post-grid/post-pagination/index.js:22
 #: src/blocks/post-grid/post-read-more/index.js:36
 #: src/blocks/pricing-table/index.js:791
@@ -1248,14 +1345,15 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:427
+#: src/blocks/advanced-section/index.js:420
 #: src/blocks/content-slider/slide/index.js:23
+#: src/blocks/post-grid/index.js:109
 #: src/components/ABPosition.js:28
 #: src/components/BackgroundControl.js:44
 msgid "Bottom"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:436
+#: src/blocks/advanced-section/index.js:429
 #: src/blocks/before-after-slider/index.js:330
 #: src/blocks/button-group/index.js:106
 #: src/blocks/content-slider/index.js:420
@@ -1265,55 +1363,56 @@ msgstr ""
 msgid "Horizontal"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:465
+#: src/blocks/advanced-section/index.js:458
 #: src/blocks/info-box/index.js:268
-#: src/blocks/post-grid/index.js:254
+#: src/blocks/post-filter/index.js:207
+#: src/blocks/post-grid/index.js:298
 msgid "Direction"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:473
+#: src/blocks/advanced-section/index.js:466
 msgid "Wrap"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:481
+#: src/blocks/advanced-section/index.js:474
 #: src/components/TypographyPanel.js:660
 msgid "Justify"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:489
+#: src/blocks/advanced-section/index.js:482
 msgid "Align"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:523
+#: src/blocks/advanced-section/index.js:516
 #: src/blocks/counter-group/index.js:497
-#: src/blocks/post-grid/index.js:459
+#: src/blocks/post-grid/index.js:503
 #: src/blocks/pricing-table/index.js:720
 #: src/blocks/testimonials/index.js:627
 #: src/blocks/trust-badges/index.js:671
 msgid "Columns"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:538
+#: src/blocks/advanced-section/index.js:531
 msgid "Align items"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:566
+#: src/blocks/advanced-section/index.js:559
 msgid "Stack below"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:567
+#: src/blocks/advanced-section/index.js:560
 msgid "Collapse to a single stacked column below this screen width. 0 = never."
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:589
+#: src/blocks/advanced-section/index.js:582
 msgid "Click to start adding content to this section."
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:652
+#: src/blocks/advanced-section/index.js:645
 msgid "Advanced Section"
 msgstr ""
 
-#: src/blocks/advanced-section/index.js:653
+#: src/blocks/advanced-section/index.js:646
 msgid "Full-width container with rich backgrounds and layout."
 msgstr ""
 
@@ -1352,6 +1451,7 @@ msgstr ""
 #: src/blocks/post-grid/post-image/index.js:130
 #: src/blocks/tabs/index.js:752
 #: src/blocks/testimonials/testimonial/index.js:245
+#: src/components/ABControls.js:334
 #: src/components/BackgroundControl.js:474
 msgid "Remove"
 msgstr ""
@@ -1664,6 +1764,7 @@ msgid "A content slider with slide, fade, and coverflow effects — any blocks p
 msgstr ""
 
 #: src/blocks/content-slider/slide/index.js:22
+#: src/blocks/post-grid/index.js:108
 msgid "Middle"
 msgstr ""
 
@@ -1672,6 +1773,7 @@ msgid "Add slide content…"
 msgstr ""
 
 #: src/blocks/content-slider/slide/index.js:89
+#: src/blocks/post-grid/index.js:551
 msgid "Content alignment"
 msgstr ""
 
@@ -1712,6 +1814,8 @@ msgid "Enter text or code to copy…"
 msgstr ""
 
 #: src/blocks/copy-to-clipboard/index.js:261
+#: src/blocks/post-filter/post-filter-search/index.js:53
+#: src/blocks/post-filter/post-filter-search/index.js:130
 msgid "Placeholder"
 msgstr ""
 
@@ -1930,6 +2034,7 @@ msgstr ""
 #: src/blocks/counter-group/index.js:73
 #: src/blocks/info-box/index.js:104
 #: src/blocks/notice/index.js:85
+#: src/blocks/post-grid/post-card/index.js:37
 #: src/blocks/testimonials/index.js:167
 #: src/blocks/trust-badges/index.js:130
 msgid "Card"
@@ -1945,6 +2050,10 @@ msgstr ""
 
 #: src/blocks/counter-group/index.js:188
 #: src/blocks/counter-group/index.js:643
+#: src/blocks/post-filter/index.js:75
+#: src/blocks/post-filter/post-filter-search/index.js:125
+#: src/blocks/post-filter/post-filter-sort/index.js:91
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:97
 #: src/blocks/post-grid/post-meta/index.js:195
 #: src/blocks/post-grid/post-meta/index.js:243
 #: src/blocks/post-grid/post-meta/index.js:260
@@ -2135,6 +2244,7 @@ msgid "Mobile"
 msgstr ""
 
 #: src/blocks/free-shipping-progress/index.js:73
+#: src/blocks/post-filter/index.js:60
 #: src/blocks/reading-progress-bar/index.js:45
 msgid "Bar"
 msgstr ""
@@ -2313,6 +2423,7 @@ msgid "Shape"
 msgstr ""
 
 #: src/blocks/icon/index.js:246
+#: src/blocks/post-filter/index.js:168
 msgid "Accessible label"
 msgstr ""
 
@@ -2438,80 +2549,113 @@ msgstr ""
 msgid "Highlight an info, success, warning, or error message with an icon and optional dismiss button."
 msgstr ""
 
-#: src/blocks/post-grid/index.js:74
-msgid "Newest first"
+#: src/blocks/post-filter/FieldPanel.js:17
+#: src/components/BackgroundControl.js:55
+#: src/components/TypographyPanel.js:612
+msgid "Auto"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:75
-msgid "Oldest first"
+#: src/blocks/post-filter/FieldPanel.js:18
+#: src/blocks/post-grid/post-image/index.js:22
+msgid "Full"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:79
-#: src/blocks/post-grid/post-meta/index.js:41
-msgid "Date"
+#: src/blocks/post-filter/FieldPanel.js:19
+msgid "Half"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:80
-msgid "Last modified"
+#: src/blocks/post-filter/FieldPanel.js:20
+#: src/components/IconPicker.js:219
+#: src/components/ShadowControl.js:103
+msgid "Custom"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:82
-msgid "Menu order"
+#: src/blocks/post-filter/FieldPanel.js:24
+msgid "Above"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:83
-msgid "Comment count"
+#: src/blocks/post-filter/FieldPanel.js:25
+msgid "Inline"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:84
-msgid "Random"
+#: src/blocks/post-filter/FieldPanel.js:27
+msgid "Hidden (screen readers only)"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:88
-#: src/blocks/post-grid/index.js:120
-#: src/blocks/testimonials/index.js:603
-#: src/blocks/trust-badges/index.js:657
-#: src/components/iconLibrary.js:1016
-msgid "Grid"
+#: src/blocks/post-filter/FieldPanel.js:47
+msgid "Show label"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:93
-msgid "First result"
+#: src/blocks/post-filter/FieldPanel.js:54
+msgid "Label position"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:94
-msgid "A specific post"
+#: src/blocks/post-filter/FieldPanel.js:62
+msgid "Label gap"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:98
-msgid "Include"
+#: src/blocks/post-filter/FieldPanel.js:74
+msgid "Field width"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:99
-msgid "Exclude"
+#: src/blocks/post-filter/index.js:82
+msgid "Result count"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:100
-msgid "Only sticky"
+#: src/blocks/post-filter/index.js:92
+msgid "Row"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:191
-msgid "Query"
+#: src/blocks/post-filter/index.js:93
+msgid "Column"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:193
-msgid "Post type"
+#: src/blocks/post-filter/index.js:98
+msgid "Start"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:200
-msgid "Posts"
+#: src/blocks/post-filter/index.js:100
+msgid "End"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:215
-msgid "Filter by taxonomy"
+#: src/blocks/post-filter/index.js:101
+#: src/blocks/post-grid/index.js:110
+msgid "Stretch"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:218
+#: src/blocks/post-filter/index.js:123
+msgid "Post Grid "
+msgstr ""
+
+#: src/blocks/post-filter/index.js:137
+#: src/components/iconLibrary.js:1028
+msgid "Filter"
+msgstr ""
+
+#: src/blocks/post-filter/index.js:139
+msgid "Target Post Grid"
+msgstr ""
+
+#: src/blocks/post-filter/index.js:140
+msgid "Pick the Post Grid this bar filters, by its anchor. The grid and the bar share a taxonomy."
+msgstr ""
+
+#: src/blocks/post-filter/index.js:147
+msgid "Select a grid…"
+msgstr ""
+
+#: src/blocks/post-filter/index.js:155
+#: src/blocks/post-grid/post-terms/index.js:130
+msgid "Taxonomy"
+msgstr ""
+
+#: src/blocks/post-filter/index.js:156
+msgid "The taxonomy the Taxonomy Filter exposes. Set it to the same taxonomy the target Post Grid uses."
+msgstr ""
+
+#: src/blocks/post-filter/index.js:162
+#: src/blocks/post-grid/index.js:253
+#: src/blocks/post-grid/index.js:277
 #: src/blocks/post-grid/post-pagination/index.js:15
 #: src/blocks/table-of-contents/index.js:516
 #: src/blocks/testimonials/testimonial/index.js:287
@@ -2534,108 +2678,281 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:232
-msgid "Include terms"
+#: src/blocks/post-filter/index.js:169
+msgid "A short label read out by screen readers for the form."
 msgstr ""
 
-#: src/blocks/post-grid/index.js:238
-msgid "Exclude terms"
+#: src/blocks/post-filter/index.js:177
+msgid "Show result count"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:248
-msgid "Sort by"
+#: src/blocks/post-filter/index.js:178
+msgid "Shows how many posts the current filter returns. Adds a small delay while the grid counts."
 msgstr ""
 
-#: src/blocks/post-grid/index.js:260
-msgid "Posts to show"
+#: src/blocks/post-filter/index.js:186
+msgid "Reset clears to the full grid"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:268
-msgid "Skip first"
+#: src/blocks/post-filter/index.js:197
+msgid "Bar Layout"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:269
-msgid "Useful when a featured block above already shows the newest posts."
-msgstr ""
-
-#: src/blocks/post-grid/index.js:280
-msgid "Sticky posts"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:286
-msgid "Exclude the current post"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:287
-msgid "Stops a related-posts grid listing the post it sits on."
-msgstr ""
-
-#: src/blocks/post-grid/index.js:370
-msgid "Featured post"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:374
-msgid "Feature one post"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:375
-msgid "Adds a second card to the template that you can style independently."
-msgstr ""
-
-#: src/blocks/post-grid/index.js:385
-msgid "Which post"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:394
-msgid "Post"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:398
-msgid "Choose a post"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:407
-msgid "(no title)"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:419
-msgid "Columns to span"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:420
-msgid "Clamped to the column count, so it never overflows the grid."
-msgstr ""
-
-#: src/blocks/post-grid/index.js:475
-msgid "Column gap"
-msgstr ""
-
-#: src/blocks/post-grid/index.js:491
+#: src/blocks/post-filter/index.js:235
+#: src/blocks/post-grid/index.js:535
 #: src/blocks/pricing-table/index.js:292
 msgid "Row gap"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:501
+#: src/blocks/post-filter/index.js:243
+msgid "Field alignment"
+msgstr ""
+
+#: src/blocks/post-filter/index.js:299
+msgid "Post Filter"
+msgstr ""
+
+#: src/blocks/post-filter/index.js:300
+msgid "Filter a Post Grid by search, taxonomy, and sort. Results always come back server-side from validated tokens."
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-reset/index.js:74
+#: src/blocks/post-filter/post-filter-reset/index.js:108
+msgid "Reset Filter"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-reset/index.js:80
+#: src/blocks/post-filter/post-filter-search/index.js:137
+msgid "Button text"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-reset/index.js:109
+msgid "Clears a Post Filter bar back to its unfiltered grid."
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-search/index.js:45
+msgid "Input"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-search/index.js:120
+#: src/blocks/post-filter/post-filter-search/index.js:172
+msgid "Search Field"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-search/index.js:158
+#: src/components/ABControls.js:374
+msgid "Search…"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-search/index.js:173
+msgid "A keyword search box inside a Post Filter bar."
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/index.js:39
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:29
+msgid "Select"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/index.js:86
+#: src/blocks/post-filter/post-filter-sort/index.js:130
+msgid "Sort Filter"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/index.js:96
+msgid "Default \"Sort by\" text"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/index.js:131
+msgid "A sort drop-down inside a Post Filter bar."
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:92
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:141
+msgid "Taxonomy Filter"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:102
+msgid "Show \"All\" option"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:108
+msgid "\"All\" label"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:142
+msgid "A taxonomy drop-down inside a Post Filter bar."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:79
+#: src/blocks/post-grid/post-meta/index.js:41
+msgid "Date"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:82
+msgid "Menu order"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:83
+msgid "Comment count"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:84
+msgid "Random"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:88
+#: src/blocks/post-grid/index.js:141
+#: src/blocks/testimonials/index.js:603
+#: src/blocks/trust-badges/index.js:657
+#: src/components/iconLibrary.js:1016
+msgid "Grid"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:114
+msgid "First result"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:115
+msgid "A specific post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:119
+msgid "Include"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:120
+msgid "Exclude"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:121
+msgid "Only sticky"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:226
+msgid "Query"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:228
+msgid "Post type"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:235
+msgid "Posts"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:250
+msgid "Filter by taxonomy"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:267
+msgid "Include terms"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:270
+msgid "All terms"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:274
+msgid "Exclude terms"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:285
+msgid "Filter by author"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:288
+msgid "All authors"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:304
+msgid "Posts to show"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:312
+msgid "Skip first"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:313
+msgid "Useful when a featured block above already shows the newest posts."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:324
+msgid "Sticky posts"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:330
+msgid "Exclude the current post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:331
+msgid "Stops a related-posts grid listing the post it sits on."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:414
+msgid "Featured post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:418
+msgid "Feature one post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:419
+msgid "Adds a second card to the template that you can style independently."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:429
+msgid "Which post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:438
+msgid "Post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:442
+msgid "Choose a post"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:451
+msgid "(no title)"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:463
+msgid "Columns to span"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:464
+msgid "Clamped to the column count, so it never overflows the grid."
+msgstr ""
+
+#: src/blocks/post-grid/index.js:519
+msgid "Column gap"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:559
+msgid "Card vertical alignment"
+msgstr ""
+
+#: src/blocks/post-grid/index.js:565
 msgid "Equal height cards"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:668
+#: src/blocks/post-grid/index.js:739
 msgid "No posts match this query yet."
 msgstr ""
 
-#: src/blocks/post-grid/index.js:682
+#: src/blocks/post-grid/index.js:753
 msgid "Post Grid"
 msgstr ""
 
-#: src/blocks/post-grid/index.js:683
+#: src/blocks/post-grid/index.js:754
 msgid "Show posts in a designed grid or list. Build the card from the blocks you want, style every part."
 msgstr ""
 
-#: src/blocks/post-grid/post-card/index.js:34
+#: src/blocks/post-grid/post-card/index.js:152
 msgid "Post Card"
 msgstr ""
 
-#: src/blocks/post-grid/post-card/index.js:35
+#: src/blocks/post-grid/post-card/index.js:153
 msgid "The card template repeated for every post in a Post Grid. Holds any blocks."
 msgstr ""
 
@@ -2684,10 +3001,6 @@ msgstr ""
 #: src/blocks/post-grid/post-image/index.js:21
 #: src/components/ShadowControl.js:39
 msgid "Large"
-msgstr ""
-
-#: src/blocks/post-grid/post-image/index.js:22
-msgid "Full"
 msgstr ""
 
 #: src/blocks/post-grid/post-image/index.js:26
@@ -2954,10 +3267,6 @@ msgstr ""
 
 #: src/blocks/post-grid/post-terms/index.js:128
 msgid "Terms"
-msgstr ""
-
-#: src/blocks/post-grid/post-terms/index.js:130
-msgid "Taxonomy"
 msgstr ""
 
 #: src/blocks/post-grid/post-terms/index.js:137
@@ -4074,16 +4383,16 @@ msgstr ""
 msgid "Reorder this item within its flex/grid section. Lower = earlier. Set a different value per device to reorder on mobile."
 msgstr ""
 
-#: src/components/ABControls.js:114
+#: src/components/ABControls.js:117
 msgid "Change unit"
 msgstr ""
 
-#: src/components/ABControls.js:280
-#: src/components/ABEditPopover.js:30
-#: src/components/ABResponsive.js:69
-#: src/components/LinkedBoxControl.js:149
-#: src/components/TypographyPanel.js:568
-msgid "Reset"
+#: src/components/ABControls.js:350
+msgid "Select…"
+msgstr ""
+
+#: src/components/ABControls.js:407
+msgid "No matches"
 msgstr ""
 
 #: src/components/ABDateControl.js:142
@@ -4242,11 +4551,6 @@ msgstr ""
 
 #: src/components/BackgroundControl.js:50
 msgid "Bottom right"
-msgstr ""
-
-#: src/components/BackgroundControl.js:55
-#: src/components/TypographyPanel.js:612
-msgid "Auto"
 msgstr ""
 
 #: src/components/BackgroundControl.js:58
@@ -4496,14 +4800,6 @@ msgstr ""
 
 #: src/components/iconLibrary.js:1004
 msgid "Menu"
-msgstr ""
-
-#: src/components/iconLibrary.js:1022
-msgid "Search"
-msgstr ""
-
-#: src/components/iconLibrary.js:1028
-msgid "Filter"
 msgstr ""
 
 #: src/components/iconLibrary.js:1034
@@ -4921,11 +5217,6 @@ msgstr ""
 #: src/components/IconPicker.js:179
 #: src/components/IconPicker.js:231
 msgid "No icons found."
-msgstr ""
-
-#: src/components/IconPicker.js:219
-#: src/components/ShadowControl.js:103
-msgid "Custom"
 msgstr ""
 
 #: src/components/IconPicker.js:225
@@ -5646,6 +5937,124 @@ msgctxt "block keyword"
 msgid "banner"
 msgstr ""
 
+#: src/blocks/post-filter/block.json
+msgctxt "block title"
+msgid "Post Filter"
+msgstr ""
+
+#: src/blocks/post-filter/block.json
+msgctxt "block description"
+msgid "A filter bar that narrows a Post Grid by search, taxonomy, and sort. Sends only validated tokens and always gets results server-side."
+msgstr ""
+
+#: src/blocks/post-filter/block.json
+#: src/blocks/post-filter/post-filter-reset/block.json
+#: src/blocks/post-filter/post-filter-search/block.json
+#: src/blocks/post-filter/post-filter-sort/block.json
+#: src/blocks/post-filter/post-filter-taxonomy/block.json
+msgctxt "block keyword"
+msgid "filter"
+msgstr ""
+
+#: src/blocks/post-filter/block.json
+#: src/blocks/post-filter/post-filter-search/block.json
+msgctxt "block keyword"
+msgid "search"
+msgstr ""
+
+#: src/blocks/post-filter/block.json
+#: src/blocks/post-filter/post-filter-reset/block.json
+#: src/blocks/post-filter/post-filter-search/block.json
+#: src/blocks/post-filter/post-filter-sort/block.json
+#: src/blocks/post-filter/post-filter-taxonomy/block.json
+#: src/blocks/post-grid/block.json
+msgctxt "block keyword"
+msgid "posts"
+msgstr ""
+
+#: src/blocks/post-filter/block.json
+#: src/blocks/post-grid/block.json
+msgctxt "block keyword"
+msgid "grid"
+msgstr ""
+
+#: src/blocks/post-filter/block.json
+#: src/blocks/post-filter/post-filter-sort/block.json
+msgctxt "block keyword"
+msgid "sort"
+msgstr ""
+
+#: src/blocks/post-filter/block.json
+#: src/blocks/post-filter/post-filter-taxonomy/block.json
+msgctxt "block keyword"
+msgid "taxonomy"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-reset/block.json
+msgctxt "block title"
+msgid "Reset Filter"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-reset/block.json
+msgctxt "block description"
+msgid "A button that clears a Post Filter bar back to its unfiltered grid."
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-reset/block.json
+msgctxt "block keyword"
+msgid "reset"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-reset/block.json
+msgctxt "block keyword"
+msgid "clear"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-search/block.json
+msgctxt "block title"
+msgid "Search Field"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-search/block.json
+msgctxt "block description"
+msgid "A keyword search box for a Post Filter bar."
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/block.json
+msgctxt "block title"
+msgid "Sort Filter"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/block.json
+msgctxt "block description"
+msgid "A drop-down that re-sorts a Post Filter bar's results. Uses the whitelisted order values."
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-sort/block.json
+msgctxt "block keyword"
+msgid "order"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/block.json
+msgctxt "block title"
+msgid "Taxonomy Filter"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/block.json
+msgctxt "block description"
+msgid "A drop-down that narrows a Post Filter bar by a taxonomy. Uses the taxonomy chosen in the bar."
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/block.json
+msgctxt "block keyword"
+msgid "category"
+msgstr ""
+
+#: src/blocks/post-filter/post-filter-taxonomy/block.json
+msgctxt "block keyword"
+msgid "tag"
+msgstr ""
+
 #: src/blocks/post-grid/block.json
 msgctxt "block title"
 msgid "Post Grid"
@@ -5654,16 +6063,6 @@ msgstr ""
 #: src/blocks/post-grid/block.json
 msgctxt "block description"
 msgid "Show posts in a designed grid or list. Build the card from the blocks you want, style every part."
-msgstr ""
-
-#: src/blocks/post-grid/block.json
-msgctxt "block keyword"
-msgid "posts"
-msgstr ""
-
-#: src/blocks/post-grid/block.json
-msgctxt "block keyword"
-msgid "grid"
 msgstr ""
 
 #: src/blocks/post-grid/block.json

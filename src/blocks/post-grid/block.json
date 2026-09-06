@@ -22,6 +22,8 @@
 		"excludeCurrent": { "type": "boolean", "default": false },
 		"sticky":         { "type": "string",  "default": "" },
 
+		"contentAlign":  { "type": "string", "default": "" },
+		"verticalAlign": { "type": "string", "default": "" },
 		"layout":         { "type": "string",  "default": "grid" },
 		"columns":        { "type": "number",  "default": 3 },
 		"columnsTablet":  { "type": "number",  "default": 2 },

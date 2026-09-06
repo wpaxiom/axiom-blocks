@@ -39,7 +39,7 @@ export function ABInspectorGroups( {
 		<>
 			<InspectorControls>{ leading }</InspectorControls>
 			<InspectorControls group="styles">
-				{ design.targets.map( ( target ) => (
+				{ design?.targets?.map( ( target ) => (
 					<TargetSection
 						key={ target.noun }
 						target={ target }

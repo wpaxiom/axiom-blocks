@@ -103,8 +103,6 @@ export const RESPONSIVE_PROPS = {
 	'axiom-blocks/advanced-section': [
 		{ key: 'gridColumns', type: 'number' },
 		{ key: 'layoutGap', type: 'string' },
-		{ key: 'width', type: 'string' },
-		{ key: 'maxWidth', type: 'string' },
 	],
 	'axiom-blocks/counter-group': [
 		{ key: 'columns', type: 'number' },
@@ -210,11 +208,35 @@ export const RESPONSIVE_PROPS = {
 	'axiom-blocks/table-of-contents': [ { key: 'maxWidth', type: 'string' } ],
 	'axiom-blocks/post-grid': [
 		{ key: 'columns', type: 'number' },
+		{ key: 'contentAlign', type: 'string' },
 		{ key: 'columnGap', type: 'string' },
 		{ key: 'rowGap', type: 'string' },
 	],
+	'axiom-blocks/post-card': [
+		{ key: 'cardMinHeight', type: 'string' },
+		{ key: 'cardGap', type: 'string' },
+	],
 	'axiom-blocks/post-image': [ { key: 'height', type: 'string' } ],
 	'axiom-blocks/post-meta': [ { key: 'iconSize', type: 'string' } ],
+	'axiom-blocks/post-filter': [
+		{ key: 'barPaddingTop', type: 'string' },
+		{ key: 'barPaddingRight', type: 'string' },
+		{ key: 'barPaddingBottom', type: 'string' },
+		{ key: 'barPaddingLeft', type: 'string' },
+		{ key: 'direction', type: 'string' },
+		{ key: 'fieldGap', type: 'string' },
+		{ key: 'fieldRowGap', type: 'string' },
+	],
+	'axiom-blocks/post-filter-search': [
+		{ key: 'widthCustom', type: 'string' },
+	],
+	'axiom-blocks/post-filter-taxonomy': [
+		{ key: 'widthCustom', type: 'string' },
+	],
+	'axiom-blocks/post-filter-sort': [ { key: 'widthCustom', type: 'string' } ],
+	'axiom-blocks/post-filter-reset': [
+		{ key: 'widthCustom', type: 'string' },
+	],
 };
 
 /**

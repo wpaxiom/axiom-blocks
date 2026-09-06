@@ -20,8 +20,8 @@ import {
 	ABSelectControl,
 	ABToggleControl,
 	ABRangeControl,
+	ABMultiSelectControl,
 } from '../../components/ABControls';
-import { ABTokenControl } from '../../components/ABTokenControl';
 import { ABInspectorGroups } from '../../components/ABInspectorGroups';
 import { ABResponsive } from '../../components/ABResponsive';
 import { useSpacingStyle } from '../../components/SpacingPanel';
@@ -89,6 +89,27 @@ const LAYOUTS = [
 	{ label: __( 'List', 'axiom-blocks' ), value: 'list' },
 ];
 
+const ALIGN_FLEX = {
+	left: 'flex-start',
+	center: 'center',
+	right: 'flex-end',
+};
+
+const CONTENT_ALIGN = [
+	{ label: __( 'Default', 'axiom-blocks' ), value: '' },
+	{ label: __( 'Left', 'axiom-blocks' ), value: 'left' },
+	{ label: __( 'Center', 'axiom-blocks' ), value: 'center' },
+	{ label: __( 'Right', 'axiom-blocks' ), value: 'right' },
+];
+
+const VERTICAL_ALIGN = [
+	{ label: __( 'Default', 'axiom-blocks' ), value: '' },
+	{ label: __( 'Top', 'axiom-blocks' ), value: 'start' },
+	{ label: __( 'Middle', 'axiom-blocks' ), value: 'center' },
+	{ label: __( 'Bottom', 'axiom-blocks' ), value: 'end' },
+	{ label: __( 'Stretch', 'axiom-blocks' ), value: 'stretch' },
+];
+
 const FEATURED_SOURCE = [
 	{ label: __( 'First result', 'axiom-blocks' ), value: 'first' },
 	{ label: __( 'A specific post', 'axiom-blocks' ), value: 'specific' },
@@ -145,6 +166,7 @@ function QueryPanel( { attributes, setAttributes } ) {
 		taxonomy,
 		terms,
 		excludeTerms,
+		authors,
 		order,
 		orderBy,
 		postsPerPage,
@@ -167,6 +189,19 @@ function QueryPanel( { attributes, setAttributes } ) {
 				.filter( ( t ) => t.types?.includes( postType ) )
 				.map( ( t ) => ( { label: t.name, value: t.slug } ) ),
 		[ postType ]
+	);
+
+	// `authors` and its author__in query have shipped since 1.0.7 with no way to
+	// set them.
+	const authorOptions = useSelect(
+		( select ) =>
+			(
+				select( coreStore ).getUsers( {
+					who: 'authors',
+					per_page: -1,
+				} ) || []
+			).map( ( u ) => ( { label: u.name, value: u.id } ) ),
+		[]
 	);
 
 	const termOptions = useSelect(
@@ -228,22 +263,31 @@ function QueryPanel( { attributes, setAttributes } ) {
 			/>
 			{ !! taxonomy && (
 				<>
-					<ABTokenControl
+					<ABMultiSelectControl
 						label={ __( 'Include terms', 'axiom-blocks' ) }
 						value={ terms || [] }
 						options={ termOptions }
+						placeholder={ __( 'All terms', 'axiom-blocks' ) }
 						onChange={ ( v ) => setAttributes( { terms: v } ) }
 					/>
-					<ABTokenControl
+					<ABMultiSelectControl
 						label={ __( 'Exclude terms', 'axiom-blocks' ) }
 						value={ excludeTerms || [] }
 						options={ termOptions }
+						placeholder={ __( 'None', 'axiom-blocks' ) }
 						onChange={ ( v ) =>
 							setAttributes( { excludeTerms: v } )
 						}
 					/>
 				</>
 			) }
+			<ABMultiSelectControl
+				label={ __( 'Filter by author', 'axiom-blocks' ) }
+				value={ authors || [] }
+				options={ authorOptions }
+				placeholder={ __( 'All authors', 'axiom-blocks' ) }
+				onChange={ ( v ) => setAttributes( { authors: v } ) }
+			/>
 			<ABSelectControl
 				label={ __( 'Sort by', 'axiom-blocks' ) }
 				value={ orderBy }
@@ -436,7 +480,7 @@ function FeaturedPanel( { attributes, setAttributes, clientId } ) {
 }
 
 function LayoutPanel( { attributes, setAttributes } ) {
-	const { layout, equalHeight } = attributes;
+	const { layout, equalHeight, verticalAlign } = attributes;
 
 	return (
 		<PanelBody
@@ -497,6 +541,26 @@ function LayoutPanel( { attributes, setAttributes } ) {
 					/>
 				) }
 			</ABResponsive>
+			<ABResponsive
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+				attrKey="contentAlign"
+			>
+				{ ( { value, setValue, inherited } ) => (
+					<ABSelectControl
+						label={ __( 'Content alignment', 'axiom-blocks' ) }
+						value={ value === '' ? inherited || '' : value }
+						options={ CONTENT_ALIGN }
+						onChange={ setValue }
+					/>
+				) }
+			</ABResponsive>
+			<ABSelectControl
+				label={ __( 'Card vertical alignment', 'axiom-blocks' ) }
+				value={ verticalAlign }
+				options={ VERTICAL_ALIGN }
+				onChange={ ( v ) => setAttributes( { verticalAlign: v } ) }
+			/>
 			<ABToggleControl
 				label={ __( 'Equal height cards', 'axiom-blocks' ) }
 				checked={ !! equalHeight }
@@ -518,6 +582,8 @@ function PostGridInner( { attributes, setAttributes, clientId } ) {
 		rowGap,
 		layout,
 		equalHeight,
+		contentAlign,
+		verticalAlign,
 		featuredEnabled,
 		featuredSpan,
 	} = attributes;
@@ -557,6 +623,11 @@ function PostGridInner( { attributes, setAttributes, clientId } ) {
 		style: {
 			...spacingStyle,
 			'--ab-pg-cols': Math.max( 1, columns || 3 ),
+			'--ab-pg-calign': ALIGN_FLEX[ contentAlign ] || undefined,
+			'--ab-pg-ctext': ALIGN_FLEX[ contentAlign ]
+				? contentAlign
+				: undefined,
+			'--ab-pg-valign': verticalAlign || undefined,
 			'--ab-pg-col-gap': columnGap || undefined,
 			'--ab-pg-row-gap': rowGap || undefined,
 			'--ab-pg-feat-span': featuredEnabled

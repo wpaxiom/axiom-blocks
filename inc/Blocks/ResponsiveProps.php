@@ -38,6 +38,20 @@ class ResponsiveProps {
 	);
 
 	/**
+	 * Per-device field sizing shared by every Post Filter child control. The
+	 * width preset is a class, so only the custom width needs a per-device var.
+	 */
+	private const FIELD_WIDTH_PROPS = array(
+		array(
+			'prop'     => '--ab-pff-w',
+			'key'      => 'widthCustom',
+			'selector' => '',
+			'format'   => '',
+			'type'     => 'string',
+		),
+	);
+
+	/**
 	 * Block name => list of prop specs. Keep in sync with the JS registry in
 	 * src/components/responsiveProps.js (which holds the attribute types).
 	 *
@@ -59,20 +73,6 @@ class ResponsiveProps {
 			array(
 				'prop'     => 'gap',
 				'key'      => 'layoutGap',
-				'selector' => '',
-				'format'   => '',
-				'type'     => 'string',
-			),
-			array(
-				'prop'     => '--ab-sec-w',
-				'key'      => 'width',
-				'selector' => '',
-				'format'   => '',
-				'type'     => 'string',
-			),
-			array(
-				'prop'     => '--ab-sec-mw',
-				'key'      => 'maxWidth',
 				'selector' => '',
 				'format'   => '',
 				'type'     => 'string',
@@ -699,6 +699,21 @@ class ResponsiveProps {
 				'type'     => 'number',
 			),
 			array(
+				'prop'     => '--ab-pg-calign',
+				'key'      => 'contentAlign',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+				'map'      => self::ALIGN_FLEX,
+			),
+			array(
+				'prop'     => '--ab-pg-ctext',
+				'key'      => 'contentAlign',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
 				'prop'     => '--ab-pg-col-gap',
 				'key'      => 'columnGap',
 				'selector' => '',
@@ -731,6 +746,77 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
+		'axiom-blocks/post-card'        => array(
+			array(
+				'prop'     => '--ab-pc-min-h',
+				'key'      => 'cardMinHeight',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-pc-gap',
+				'key'      => 'cardGap',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+		),
+		'axiom-blocks/post-filter'      => array(
+			array(
+				'prop'     => '--ab-pf-pt',
+				'key'      => 'barPaddingTop',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-pf-pr',
+				'key'      => 'barPaddingRight',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-pf-pb',
+				'key'      => 'barPaddingBottom',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-pf-pl',
+				'key'      => 'barPaddingLeft',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-pf-dir',
+				'key'      => 'direction',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-pf-gap',
+				'key'      => 'fieldGap',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-pf-row-gap',
+				'key'      => 'fieldRowGap',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+		),
+		'axiom-blocks/post-filter-search' => self::FIELD_WIDTH_PROPS,
+		'axiom-blocks/post-filter-taxonomy' => self::FIELD_WIDTH_PROPS,
+		'axiom-blocks/post-filter-sort' => self::FIELD_WIDTH_PROPS,
+		'axiom-blocks/post-filter-reset' => self::FIELD_WIDTH_PROPS,
 	);
 
 	/**

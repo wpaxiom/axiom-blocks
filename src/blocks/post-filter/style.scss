@@ -1,0 +1,259 @@
+/**
+ * Post Filter - shared frontend + editor styles.
+ *
+ * The bar box is --ab-pf-* (background, border, radius, shadow, padding); each
+ * field control is --ab-pff-* (padding, radius, gap). Every var carries a
+ * shipped default so an untouched block renders the baseline look.
+ */
+
+.ab-pf {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+	// The bar carries padding and a border, and WP's layout caps it with
+	// max-width. Without border-box that cap applies to the content box only,
+	// so the bar renders wider than the grid it sits above.
+	box-sizing: border-box;
+	padding:
+		var(--ab-pf-pt, 12px) var(--ab-pf-pr, 12px)
+		var(--ab-pf-pb, 12px) var(--ab-pf-pl, 12px);
+	border-style: var(--ab-pf-bs, solid);
+	border-color: var(--ab-pf-bc, transparent);
+	border-width:
+		var(--ab-pf-bw-top, 0) var(--ab-pf-bw-right, 0)
+		var(--ab-pf-bw-bottom, 0) var(--ab-pf-bw-left, 0);
+	border-radius:
+		var(--ab-pf-radius-tl, 8px) var(--ab-pf-radius-tr, 8px)
+		var(--ab-pf-radius-br, 8px) var(--ab-pf-radius-bl, 8px);
+	background: var(--ab-pf-bg, transparent);
+	box-shadow: var(--ab-pf-shadow, none);
+
+	&__fields {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: var(--ab-pf-dir, row);
+		align-items: var(--ab-pf-align, center);
+		// Row gap falls back to the column gap, so setting one gap still reads
+		// as "the gap" until the author splits them.
+		gap:
+			var(--ab-pf-row-gap, var(--ab-pf-gap, 12px))
+			var(--ab-pf-gap, 12px);
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	// The count is filled by the view script, so it starts empty. Left in flow
+	// it is still a flex item and consumes a gap, which shortens every field.
+	&__count:empty {
+		display: none;
+	}
+
+	&__count {
+		font-size: var(--ab-pf-count-font-size, 13px);
+		font-family: var(--ab-pf-count-font-family, inherit);
+		font-weight: var(--ab-pf-count-font-weight, inherit);
+		line-height: var(--ab-pf-count-line-height, 1.4);
+		letter-spacing: var(--ab-pf-count-letter-spacing, normal);
+		text-transform: var(--ab-pf-count-text-transform, none);
+		text-decoration: var(--ab-pf-count-text-decoration, none);
+		text-align: var(--ab-pf-count-text-align, left);
+		color: var(--ab-pf-count-color, inherit);
+		opacity: 0.75;
+	}
+
+	&.is-loading {
+		opacity: 0.6;
+		pointer-events: none;
+	}
+}
+
+.ab-pff {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: var(--ab-pff-label-gap, 6px);
+	// A flex item defaults to min-width:auto, which refuses to shrink below its
+	// content and pushes a long field past the bar.
+	min-width: 0;
+
+	// `custom` reads --ab-pff-w, which ResponsiveProps also writes per device.
+	&--w-full {
+		flex: 1 1 100%;
+		width: 100%;
+	}
+
+	&--w-half {
+		flex: 1 1 calc(50% - var(--ab-pf-gap, 12px));
+	}
+
+	&--w-custom {
+		flex: 0 0 auto;
+		width: var(--ab-pff-w, auto);
+	}
+
+	&--label-inline {
+		flex-direction: row;
+		align-items: center;
+		gap: var(--ab-pff-label-gap, 8px);
+	}
+
+	// Search carries two controls that belong side by side, so its label takes a
+	// line of its own and the input shares the next one with the button.
+	&--search {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+
+		.ab-pff__label {
+			flex: 0 0 100%;
+		}
+
+		.ab-pff__control {
+			flex: 1 1 0;
+			width: auto;
+			min-width: 0;
+		}
+
+		.ab-pff__btn {
+			flex: 0 0 auto;
+		}
+	}
+
+	&--search#{&}--label-inline .ab-pff__label {
+		flex: 0 0 auto;
+	}
+
+	&--label-hidden &__label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	&__label {
+		font-size: var(--ab-pff-label-font-size, 13px);
+		font-family: var(--ab-pff-label-font-family, inherit);
+		font-weight: var(--ab-pff-label-font-weight, inherit);
+		line-height: var(--ab-pff-label-line-height, 1.4);
+		letter-spacing: var(--ab-pff-label-letter-spacing, normal);
+		text-transform: var(--ab-pff-label-text-transform, none);
+		text-decoration: var(--ab-pff-label-text-decoration, none);
+		text-align: var(--ab-pff-label-text-align, left);
+		color: var(--ab-pff-label-color, inherit);
+		white-space: nowrap;
+	}
+
+	&__control {
+		// Themes do not agree on box-sizing for form controls, and width:100%
+		// on a content-box input adds its padding and border on top, so the
+		// field overflows its own bar.
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 100%;
+		min-height: 40px;
+		padding:
+			var(--ab-pff-input-pt, var(--ab-pff-sel-pt, 8px))
+			var(--ab-pff-input-pr, var(--ab-pff-sel-pr, 12px))
+			var(--ab-pff-input-pb, var(--ab-pff-sel-pb, 8px))
+			var(--ab-pff-input-pl, var(--ab-pff-sel-pl, 12px));
+		font-size: var(--ab-pff-input-font-size, var(--ab-pff-sel-font-size, 14px));
+		font-family: var(--ab-pff-input-font-family, var(--ab-pff-sel-font-family, inherit));
+		font-weight: var(--ab-pff-input-font-weight, var(--ab-pff-sel-font-weight, inherit));
+		line-height: var(--ab-pff-input-line-height, var(--ab-pff-sel-line-height, 1.4));
+		letter-spacing: var(--ab-pff-input-letter-spacing, var(--ab-pff-sel-letter-spacing, normal));
+		text-transform: var(--ab-pff-input-text-transform, var(--ab-pff-sel-text-transform, none));
+		text-decoration: var(--ab-pff-input-text-decoration, var(--ab-pff-sel-text-decoration, none));
+		text-align: var(--ab-pff-input-text-align, var(--ab-pff-sel-text-align, left));
+		color: var(--ab-pff-input-color, var(--ab-pff-sel-color, inherit));
+		background: var(--ab-pff-input-bg, var(--ab-pff-sel-bg, #fff));
+		border-width:
+			var(--ab-pff-input-bw-t, var(--ab-pff-sel-bw-t, 1px))
+			var(--ab-pff-input-bw-r, var(--ab-pff-sel-bw-r, 1px))
+			var(--ab-pff-input-bw-b, var(--ab-pff-sel-bw-b, 1px))
+			var(--ab-pff-input-bw-l, var(--ab-pff-sel-bw-l, 1px));
+		border-style: var(--ab-pff-input-bs, var(--ab-pff-sel-bs, solid));
+		border-color: var(--ab-pff-input-bc, var(--ab-pff-sel-bc, rgba(0, 0, 0, 0.12)));
+		border-radius:
+			var(--ab-pff-input-radius-tl, var(--ab-pff-sel-radius-tl, 6px))
+			var(--ab-pff-input-radius-tr, var(--ab-pff-sel-radius-tr, 6px))
+			var(--ab-pff-input-radius-br, var(--ab-pff-sel-radius-br, 6px))
+			var(--ab-pff-input-radius-bl, var(--ab-pff-sel-radius-bl, 6px));
+		box-shadow: var(--ab-pff-input-shadow, var(--ab-pff-sel-shadow, none));
+
+		&:hover {
+			color: var(--ab-pff-input-color-h, var(--ab-pff-sel-color-h));
+			background: var(--ab-pff-input-bg-h, var(--ab-pff-sel-bg-h));
+			border-color: var(--ab-pff-input-bc-h, var(--ab-pff-sel-bc-h));
+		}
+
+		&::placeholder {
+			color: var(--ab-pff-input-ph, inherit);
+			opacity: var(--ab-pff-input-ph-o, 0.6);
+		}
+
+		&:focus {
+			outline: 2px solid currentcolor;
+			outline-offset: 1px;
+		}
+	}
+
+	&__btn {
+		box-sizing: border-box;
+		max-width: 100%;
+		min-height: 40px;
+		padding:
+			var(--ab-pff-btn-pt, 8px)
+			var(--ab-pff-btn-pr, 16px)
+			var(--ab-pff-btn-pb, 8px)
+			var(--ab-pff-btn-pl, 16px);
+		font-size: var(--ab-pff-btn-font-size, 14px);
+		font-family: var(--ab-pff-btn-font-family, inherit);
+		font-weight: var(--ab-pff-btn-font-weight, 600);
+		line-height: var(--ab-pff-btn-line-height, 1.4);
+		letter-spacing: var(--ab-pff-btn-letter-spacing, normal);
+		text-transform: var(--ab-pff-btn-text-transform, none);
+		text-decoration: var(--ab-pff-btn-text-decoration, none);
+		text-align: var(--ab-pff-btn-text-align, center);
+		color: var(--ab-pff-btn-color, #fff);
+		background: var(--ab-pff-btn-bg, #111);
+		border-width:
+			var(--ab-pff-btn-bw-t, 1px)
+			var(--ab-pff-btn-bw-r, 1px)
+			var(--ab-pff-btn-bw-b, 1px)
+			var(--ab-pff-btn-bw-l, 1px);
+		border-style: var(--ab-pff-btn-bs, solid);
+		border-color: var(--ab-pff-btn-bc, #111);
+		border-radius:
+			var(--ab-pff-btn-radius-tl, 6px)
+			var(--ab-pff-btn-radius-tr, 6px)
+			var(--ab-pff-btn-radius-br, 6px)
+			var(--ab-pff-btn-radius-bl, 6px);
+		box-shadow: var(--ab-pff-btn-shadow, none);
+		cursor: pointer;
+
+		&:hover {
+			color: var(--ab-pff-btn-color-h, #fff);
+			background: var(--ab-pff-btn-bg-h, #111);
+			border-color: var(--ab-pff-btn-bc-h, #111);
+			opacity: 0.9;
+		}
+
+		&--ghost {
+			color: var(--ab-pff-btn-color, inherit);
+			background: var(--ab-pff-btn-bg, transparent);
+			border-color: var(--ab-pff-btn-bc, currentColor);
+
+			&:hover {
+				color: var(--ab-pff-btn-color-h, inherit);
+				background: var(--ab-pff-btn-bg-h, transparent);
+				border-color: var(--ab-pff-btn-bc-h, currentColor);
+			}
+		}
+	}
+}

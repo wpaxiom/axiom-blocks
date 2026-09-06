@@ -30,6 +30,9 @@
 		grid-template-columns: repeat(var(--ab-pg-c), minmax(0, 1fr));
 		column-gap: var(--ab-pg-col-gap, 24px);
 		row-gap: var(--ab-pg-row-gap, 24px);
+		// Unset leaves grid's own default, so a grid saved before these
+		// controls existed is untouched.
+		align-items: var(--ab-pg-valign, initial);
 
 		/* Cards are the only column items. render.php emits pagination and
 		 * no-results after this container, but the editor keeps every inner
@@ -57,6 +60,28 @@
 	min-width: 0;
 	padding-block: var(--ab-pc-pt, 0) var(--ab-pc-pb, 0);
 	padding-inline: var(--ab-pc-pl, 0) var(--ab-pc-pr, 0);
+	align-items: var(--ab-pg-calign, initial);
+	text-align: var(--ab-pg-ctext, initial);
+
+	// Every default below is the card's pre-1.0.8 look, so a card saved before
+	// these controls existed renders unchanged.
+	min-height: var(--ab-pc-min-h, auto);
+	background: var(--ab-pc-bg, transparent);
+	border-style: var(--ab-pc-bs, solid);
+	border-color: var(--ab-pc-bc, transparent);
+	border-width:
+		var(--ab-pc-bw-t, 0) var(--ab-pc-bw-r, 0)
+		var(--ab-pc-bw-b, 0) var(--ab-pc-bw-l, 0);
+	border-radius:
+		var(--ab-pc-radius-tl, 0) var(--ab-pc-radius-tr, 0)
+		var(--ab-pc-radius-br, 0) var(--ab-pc-radius-bl, 0);
+	box-shadow: var(--ab-pc-shadow, none);
+
+	&:hover {
+		background: var(--ab-pc-bg-hover, var(--ab-pc-bg, transparent));
+		border-color: var(--ab-pc-bc-h, var(--ab-pc-bc, transparent));
+		box-shadow: var(--ab-pc-shadow-h, var(--ab-pc-shadow, none));
+	}
 
 	> * {
 		margin-block-start: 0;
@@ -75,8 +100,10 @@
 }
 
 /* The featured card is a real second template, not a state of the first, so it
- * carries the whole capability stack. Span is clamped server-side and in the
- * editor to the grid's column count so it can never create implicit tracks. */
+ * carries its own values for the whole Card stack above rather than only the
+ * colours a state axis could move. Its one rule here is the span, which is
+ * clamped server-side and in the editor to the grid's column count so it can
+ * never create implicit tracks. */
 .ab-pc--featured {
 	grid-column: span var(--ab-pg-feat-span, 1);
 }

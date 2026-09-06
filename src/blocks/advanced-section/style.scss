@@ -1,16 +1,20 @@
 /**
- * Advanced Section — shared styles (frontend + editor).
+ * Advanced Section, shared styles (frontend + editor).
  *
  * Single-wrapper design: the block wrapper is both the background/positioning
- * context AND the flex container for inner blocks. Overlay is a pseudo-element
+ * context AND the layout container for inner blocks. Overlay is a pseudo-element
  * so WP's constrained layout system sees direct children correctly.
+ *
+ * Width and max-width are inline-only (render.php / edit), never declared here:
+ * a static `max-width: var(…, none)` outranks the zero-specificity :where()
+ * caps core applies for align and constrained layout. Same rule as info-box.
  */
 
 /* Fallback alignfull / alignwide for themes that don't wire them up for
- * custom blocks. :where() keeps specificity at 0 so themes still win. */
+ * custom blocks. :where() keeps specificity at 0 so themes still win.
+ * Margin-only bleed: an explicit 100vw would stack with the negative margins a
+ * block theme already applies through `.has-global-padding > .alignfull`. */
 :where(.axiom-blocks-section.alignfull) {
-	width: 100vw;
-	max-width: 100vw;
 	margin-left: calc(50% - 50vw);
 	margin-right: calc(50% - 50vw);
 }
@@ -23,10 +27,17 @@
 
 .axiom-blocks-section {
 	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: var(--axiom-blocks-section-justify, center);
-	align-items: var(--axiom-blocks-section-align, center);
+
+	// Block flow, like core Group, so WordPress's layout support owns every
+	// width: it caps children at contentSize / wideSize / none and centres them
+	// with `margin-inline: auto`. A flex column would break that, because there
+	// `width: auto` shrink-wraps and an auto cross-axis margin makes the item
+	// ignore alignment, so the cap is computed and never applied.
+	//
+	// Vertical alignment does not need flex: `align-content` distributes the
+	// block-axis free space in a block container (Baseline 2024).
+	display: block;
+	align-content: var(--axiom-blocks-section-justify, center);
 	text-align: var(--ab-sec-ta, inherit);
 	overflow: hidden;
 	box-sizing: border-box;
@@ -46,8 +57,6 @@
 		var(--ab-sec-radius-br, var(--ab-sec-radius, 0))
 		var(--ab-sec-radius-bl, var(--ab-sec-radius, 0));
 	box-shadow: var(--ab-sec-shadow, none);
-	width: var(--ab-sec-w, auto);
-	max-width: var(--ab-sec-mw, none);
 	padding-top: var(--ab-padding-top, 0);
 	padding-right: var(--ab-padding-right, 0);
 	padding-bottom: var(--ab-padding-bottom, 0);
@@ -122,20 +131,36 @@
 /**
  * Horizontal alignment override.
  *
- * WP's constrained layout applies `margin-left: auto; margin-right: auto` to
- * direct children, which overrides flex `align-items` in cross-axis. To make
- * left / right actually work on constrained children we cancel those margins.
- * Selector specificity (0,2,6) beats WP's (0,1,1) so no !important needed.
+ * WP's constrained layout centres every child with
+ * `margin-left: auto !important; margin-right: auto !important`. Horizontal
+ * alignment is therefore a margin question, and left / right have to carry
+ * !important of their own: no selector can outrank an important declaration.
+ *
+ * Centre declares the same pair rather than leaning on WordPress, because only
+ * the constrained layout centres anything. A section set to flow gives its
+ * children no margins at all, so an unstated centre left them at the padding
+ * edge. Flex and grid are excluded: there `justify-content` places the row and
+ * an auto margin would eat the free space it needs.
  */
-.axiom-blocks-section.is-h-left > :not(.alignleft):not(.alignright):not(.alignfull):not(.alignwide),
-.axiom-blocks-section.is-h-right > :not(.alignleft):not(.alignright):not(.alignfull):not(.alignwide) {
-	margin-left: 0;
-	margin-right: 0;
+.axiom-blocks-section.is-h-center:not(.axiom-blocks-section--layout-flex):not(.axiom-blocks-section--layout-grid) > :not(.alignleft):not(.alignright):not(.alignfull) {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.axiom-blocks-section.is-h-left > :not(.alignleft):not(.alignright):not(.alignfull) {
+	margin-left: 0 !important;
+	margin-right: auto !important;
+}
+
+.axiom-blocks-section.is-h-right > :not(.alignleft):not(.alignright):not(.alignfull) {
+	margin-left: auto !important;
+	margin-right: 0 !important;
 }
 
 /* ── Layout engine (L6) — additive. The base rule above is the 'constrained'
  * mode (unchanged); these classes only appear when layoutType is flex/grid. */
 .axiom-blocks-section--layout-flex {
+	display: flex;
 	flex-direction: var(--ab-sec-fd, row);
 	flex-wrap: var(--ab-sec-fw, wrap);
 	justify-content: var(--ab-sec-jc, center);

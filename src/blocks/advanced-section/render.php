@@ -1,6 +1,16 @@
 <?php
 /**
- * Advanced Section Block — server-side render.
+ * Advanced Section Block - server-side render.
+ *
+ * This file RETURNS its markup; it does not echo. Registry::register_advanced_section()
+ * passes a render_callback that returns `require` of this file, which is the core
+ * render_callback model (wp-includes/blocks/query.php et al). $content is the already
+ * escaped output of the inner blocks and is passed through untouched, because a wrapper
+ * does not own what its children render: filtering it deletes anything outside the post
+ * allowlist, including forms, embeds and canvas.
+ *
+ * Consequence: block.json must NOT declare a `render` file. That path requires this file
+ * inside an output buffer, which would discard the return value and emit nothing.
  *
  * Single-wrapper structure so WordPress's native layout system
  * (theme.json contentSize / wideSize + the Inner blocks use content width
@@ -21,7 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use AxiomBlocks\Blocks\Spacing;
 use AxiomBlocks\Blocks\Responsive;
-use AxiomBlocks\Blocks\AllowedHtml;
 use AxiomBlocks\Blocks\Background;
 use AxiomBlocks\Frontend\ResponsiveStyles;
 
@@ -125,23 +134,18 @@ if ( ! empty( $attributes['sectionShadow'] ) ) {
 	$axiom_blocks_bg_parts[] = '--ab-sec-shadow: ' . esc_attr( $attributes['sectionShadow'] );
 }
 
-// ── Size (L5) — desktop inline; Tablet/Mobile via ResponsiveProps ──────────
-foreach ( array( 'width' => '--ab-sec-w', 'maxWidth' => '--ab-sec-mw' ) as $axiom_blocks_size_key => $axiom_blocks_size_var ) {
-	if ( ! empty( $attributes[ $axiom_blocks_size_key ] ) ) {
-		$axiom_blocks_bg_parts[] = $axiom_blocks_size_var . ': ' . esc_attr( $attributes[ $axiom_blocks_size_key ] );
-	}
-}
-
 // ── Min-height + alignment ─────────────────────────────────────────────────
 $axiom_blocks_min_height        = $attributes['minHeight'] ?? '400px';
 $axiom_blocks_mobile_min_height = $attributes['mobileMinHeight'] ?? '';
 $axiom_blocks_v_align           = $attributes['verticalAlign'] ?? 'center';
 $axiom_blocks_h_align           = $attributes['horizontalAlign'] ?? 'center';
 
+// Consumed by `align-content` on a block container, so these are box-alignment
+// keywords rather than the flex spellings.
 $axiom_blocks_v_map = array(
-	'top'    => 'flex-start',
+	'top'    => 'start',
 	'center' => 'center',
-	'bottom' => 'flex-end',
+	'bottom' => 'end',
 );
 $axiom_blocks_h_map = array(
 	'left'   => 'flex-start',
@@ -206,7 +210,7 @@ if ( 'flex' === $axiom_blocks_layout_type ) {
 }
 
 // Custom breakpoint (L6): below the chosen width, collapse to a single stacked
-// column. Scoped to this instance's class — no change to the global pipeline.
+// column. Scoped to this instance's class, no change to the global pipeline.
 $axiom_blocks_stack_at = (int) ( $attributes['layoutStackAt'] ?? 0 );
 if ( $axiom_blocks_stack_at > 0 && in_array( $axiom_blocks_layout_type, array( 'flex', 'grid' ), true ) ) {
 	$axiom_blocks_bp_class          = 'ab-secbp-' . substr( md5( $axiom_blocks_layout_type . '|' . $axiom_blocks_stack_at ), 0, 8 );
@@ -256,7 +260,11 @@ $axiom_blocks_parallax_speed = max( 0, min( 100, (int) ( $attributes['bgParallax
 $axiom_blocks_parallax_data  = $axiom_blocks_is_parallax
 	? number_format( $axiom_blocks_parallax_speed / 100, 2, '.', '' )
 	: '';
-?>
-<div <?php echo '' !== $axiom_blocks_id_attr ? 'id="' . esc_attr( $axiom_blocks_id_attr ) . '" ' : ''; ?> class="<?php echo esc_attr( $axiom_blocks_class_attr ); ?>" <?php echo '' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : ''; ?> <?php echo '' !== $axiom_blocks_parallax_data ? ' data-parallax-speed="' . esc_attr( $axiom_blocks_parallax_data ) . '"' : ''; ?>>
-	<?php echo wp_kses( $content, AllowedHtml::post_with_svg() ); ?>
-</div>
+return sprintf(
+	"<div %1\$s class=\"%2\$s\" %3\$s %4\$s>\n\t%5\$s</div>",
+	'' !== $axiom_blocks_id_attr ? 'id="' . esc_attr( $axiom_blocks_id_attr ) . '" ' : '',
+	esc_attr( $axiom_blocks_class_attr ),
+	'' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : '',
+	'' !== $axiom_blocks_parallax_data ? ' data-parallax-speed="' . esc_attr( $axiom_blocks_parallax_data ) . '"' : '',
+	$content
+);

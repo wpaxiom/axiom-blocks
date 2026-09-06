@@ -5,15 +5,17 @@ Tags: gutenberg, blocks, editor, page-builder, woocommerce
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A collection of powerful Gutenberg blocks: post grid, tabs, accordion, content slider, table of contents, counter, testimonials, pricing table and more.
+A collection of Gutenberg blocks: post grid, post filter, tabs, accordion, content slider, table of contents, counter, testimonials, pricing table.
 
 == Description ==
 
 Axiom Blocks adds the blocks the WordPress editor leaves out. Use core blocks for paragraphs, headings and images, and Axiom for the rest.
+
+**[Try the live demo](https://wordpress.org/plugins/axiom-blocks/?preview=1)** - a full landing page built with these blocks, in a temporary WordPress you can open the editor on and change. Nothing to install.
 
 = Layout Blocks =
 
@@ -158,6 +160,25 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Changelog ==
 
+= 1.0.8 =
+* New block: Post Filter - a filter bar that narrows a Post Grid by search, taxonomy and sort, with Search Field, Taxonomy Filter, Sort Filter and Reset Filter blocks you arrange inside it. It is a real form, so it works with JavaScript disabled, and a filtered view has its own address you can bookmark or share.
+* Post Filter never sends a query to the server. It sends the grid it is pointed at plus the filter you chose, and the server re-runs that grid's own saved query with your filter applied, so a filter can only narrow what the author already published.
+* Post Filter bar layout - lay the fields out in a row or a column, set the gap between them and how they align, all per device. Each field can be full width, half width, automatic, or a width you set.
+* Post Filter field labels - show or hide each label, place it above or beside its control, and style every label in the bar from one place.
+* Post Grid cards can now be styled. The Post Card block gained a Card section with background (including gradients and images), border, radius, shadow, minimum height, content gap and a hover state. Existing cards are unchanged until you set something.
+* Post Grid: filter by author. The setting was missing even though the block already supported it.
+* Post Grid: content alignment and card vertical alignment in the Layout panel.
+* Multi-select settings (Include terms, Exclude terms, Filter by author) now use the plugin's own control, matching the rest of the sidebar, with removable chips and a searchable list.
+* Advanced Section now lets WordPress decide its width. The block used to write its own max-width, which outranked both the block width toolbar and the theme's content width, so a section ignored the content width setting and a section nested inside another ignored the width you gave it. Width now comes from the toolbar and from the parent's layout, the way it does on a core Group. The Container panel's Width and Max width controls are gone with it: a section that had one set now follows the toolbar instead. If a nested section looks narrower than before, turn off "Inner blocks use content width" on the section holding it.
+* Fixed Advanced Section's Center horizontal alignment doing nothing unless the section had "Inner blocks use content width" turned on. It was relying on the centring that setting brings, so with it off the content sat against the left edge instead. Center now centres in every layout mode.
+* Fixed Advanced Section putting an empty align class on every section that had no width chosen in the toolbar.
+* Fixed the Advanced Section editor canvas drifting from the front of the site. The editor stylesheet carried its own copy of the block's layout rules, so it quietly overrode the real ones and only the canvas kept rendering the old behavior.
+* Post Filter now sanitizes the search and sort values it reads from the address bar, and its result-count strings carry notes for translators.
+* Fixed the Post Filter search field overflowing its bar at full width, and its button sitting under the input instead of beside it.
+* Fixed per-device typography being discarded on the Post Filter fields.
+* Fixed blocks losing part of their markup when placed inside an Advanced Section or a Button Group. A Post Filter bar inside a section rendered with no search box and no drop-downs, so filtering did nothing at all. Embedded videos and maps, the core Search block, and form blocks from other plugins were removed the same way. Both blocks now pass their inner blocks through untouched, the way the core Group block does. Your saved content is unchanged, and anything that was being removed simply appears again.
+* Fixed form fields being removed from blocks placed inside a Pricing Table, Counter Group or Testimonials block.
+
 = 1.0.7 =
 * New block: Post Grid - show your posts in a grid or list, with the card built from Post Image, Post Terms, Post Title, Post Meta, Post Excerpt, and Post Read More blocks that you arrange and style individually. Query by post type, taxonomy, or author, order by date, title, comment count or random, skip or exclude posts, and choose how sticky posts are handled.
 * Post Grid pagination - numbered page links or a Load more button, both working with JavaScript disabled. Load more is a real link to the next page and falls back to it if the request fails.
@@ -217,6 +238,9 @@ Developers can redirect the feedback to their own server - or disable it entirel
 * Full Site Editing (FSE) support.
 
 == Upgrade Notice ==
+
+= 1.0.8 =
+Adds the Post Filter block, a filter bar for Post Grid that works with JavaScript disabled. Advanced Section width now comes from the block width toolbar and your theme's content width, not the block's own setting, so a section with a width set may move. Post Grid cards can now be styled.
 
 = 1.0.7 =
 Adds the Post Grid block: your posts in a grid or list, built from separate Image, Terms, Title, Meta, Excerpt and Read More blocks you style individually, plus numbered or load-more pagination and an optional featured card. Nothing else changes and no existing content is affected.

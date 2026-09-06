@@ -133,6 +133,20 @@ const BLOCKS = [
 			[ 'post-no-results/render.php', 'post-no-results/render.php' ],
 		],
 	},
+	{
+		id: 'post-filter',
+		files: [ 'block.json', 'render.php', 'assets/post-filter.js' ],
+		extras: [
+			[ 'post-filter-search/block.json', 'post-filter-search/block.json' ],
+			[ 'post-filter-search/render.php', 'post-filter-search/render.php' ],
+			[ 'post-filter-taxonomy/block.json', 'post-filter-taxonomy/block.json' ],
+			[ 'post-filter-taxonomy/render.php', 'post-filter-taxonomy/render.php' ],
+			[ 'post-filter-sort/block.json', 'post-filter-sort/block.json' ],
+			[ 'post-filter-sort/render.php', 'post-filter-sort/render.php' ],
+			[ 'post-filter-reset/block.json', 'post-filter-reset/block.json' ],
+			[ 'post-filter-reset/render.php', 'post-filter-reset/render.php' ],
+		],
+	},
 ];
 
 /** Non-block files copied to build/. */

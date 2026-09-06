@@ -11,6 +11,7 @@ namespace AxiomBlocks\API;
 use AxiomBlocks\Admin\Settings;
 use AxiomBlocks\Blocks\Blocks;
 use AxiomBlocks\Blocks\CustomIcons;
+use AxiomBlocks\Blocks\PostFilterResolver;
 use AxiomBlocks\Blocks\PostGridTemplates;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -190,6 +191,13 @@ class Routes {
 						'type'              => 'integer',
 						'sanitize_callback' => 'absint',
 					),
+					// Optional whitelisted filter tokens (JSON), the no-reload
+					// upgrade path for a Post Filter bar.
+					'filter' => array(
+						'required'          => false,
+						'type'              => 'string',
+						'sanitize_callback' => 'wp_strip_all_tags',
+					),
 				),
 			)
 		);
@@ -217,6 +225,41 @@ class Routes {
 				__( 'That grid is no longer available. Reload the page and try again.', 'axiom-blocks' ),
 				array( 'status' => 404 )
 			);
+		}
+
+		// A Post Filter bar may name a set of whitelisted tokens. Resolve them
+		// against this grid's saved base args and register the variant, so the
+		// rendered cards and a future request for the variant key agree.
+		// The key the caller should use from here on. A filtered request answers
+		// under its variant key, and a bar that swapped results in place has to
+		// re-point the grid's pagination at it, or the next page would come from
+		// the unfiltered query.
+		$effective_key = $key;
+
+		$filter_json = $request->get_param( 'filter' );
+		if ( is_string( $filter_json ) && '' !== trim( $filter_json ) ) {
+			$raw_tokens = json_decode( $filter_json, true );
+			if ( is_array( $raw_tokens ) ) {
+				$tokens  = PostFilterResolver::validate_tokens( $raw_tokens, $payload['args'] );
+				$variant = PostFilterResolver::resolve( $key, $tokens );
+				if ( null !== $variant ) {
+					if ( isset( $variant['variant_key'] ) ) {
+						$effective_key = $variant['variant_key'];
+						$stored = $payload;
+						if ( isset( $variant['card'] ) ) {
+							$stored['card'] = $variant['card'];
+						}
+						if ( isset( $variant['feat'] ) ) {
+							$stored['feat'] = $variant['feat'];
+						}
+						$stored['args'] = $variant['args'];
+						PostGridTemplates::remember( $variant['variant_key'], $stored );
+						$payload = $stored;
+					} else {
+						$payload['args'] = $variant['args'];
+					}
+				}
+			}
 		}
 
 		$args = $payload['args'];
@@ -253,9 +296,11 @@ class Routes {
 		return rest_ensure_response(
 			array(
 				'html'    => $html,
+				'key'     => $effective_key,
 				'page'    => $page,
 				'total'   => max( 1, (int) $query->max_num_pages ),
 				'hasMore' => $page < (int) $query->max_num_pages,
+				'found'   => (int) $query->found_posts,
 			)
 		);
 	}

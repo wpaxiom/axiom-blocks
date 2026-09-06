@@ -51,6 +51,11 @@ import { Slide } from './blocks/content-slider/slide';
 import { TableOfContents } from './blocks/table-of-contents';
 import { TrustBadges } from './blocks/trust-badges';
 import { FreeShippingProgress } from './blocks/free-shipping-progress';
+import { PostFilter } from './blocks/post-filter';
+import { PostFilterSearch } from './blocks/post-filter/post-filter-search';
+import { PostFilterTaxonomy } from './blocks/post-filter/post-filter-taxonomy';
+import { PostFilterSort } from './blocks/post-filter/post-filter-sort';
+import { PostFilterReset } from './blocks/post-filter/post-filter-reset';
 
 // Import styles
 import './style.scss';
@@ -195,6 +200,11 @@ const blocks = [
 	TableOfContents,
 	TrustBadges,
 	FreeShippingProgress,
+	PostFilter,
+	PostFilterSearch,
+	PostFilterTaxonomy,
+	PostFilterSort,
+	PostFilterReset,
 ];
 
 /**

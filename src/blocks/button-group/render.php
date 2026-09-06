@@ -1,6 +1,16 @@
 <?php
 /**
- * Button Group — frontend render (wrapper only; buttons come from inner blocks).
+ * Button Group - frontend render (wrapper only; buttons come from inner blocks).
+ *
+ * This file RETURNS its markup; it does not echo. Registry::register_button_group()
+ * passes a render_callback that returns `require` of this file, which is the core
+ * render_callback model (wp-includes/blocks/query.php et al). $content is the already
+ * escaped output of the inner blocks and is passed through untouched, because a wrapper
+ * does not own what its children render: filtering it deletes anything outside the post
+ * allowlist, including forms, embeds and canvas.
+ *
+ * Consequence: block.json must NOT declare a `render` file. That path requires this file
+ * inside an output buffer, which would discard the return value and emit nothing.
  *
  * @package AxiomBlocks
  * @var array    $attributes
@@ -11,8 +21,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-use AxiomBlocks\Blocks\AllowedHtml;
 
 $axiom_blocks_a = $attributes ?? array();
 
@@ -53,7 +61,10 @@ $axiom_blocks_merged_style_parts = array_filter(
 $axiom_blocks_style_attr         = safecss_filter_attr( implode( ';', $axiom_blocks_merged_style_parts ) );
 
 $axiom_blocks_id_attr = $axiom_blocks_block_supports['id'] ?? '';
-?>
-<div <?php echo '' !== $axiom_blocks_id_attr ? 'id="' . esc_attr( $axiom_blocks_id_attr ) . '" ' : ''; ?>class="<?php echo esc_attr( $axiom_blocks_class_attr ); ?>"<?php echo '' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : ''; ?>>
-	<?php echo wp_kses( $content, AllowedHtml::post_with_svg() ); ?>
-</div>
+return sprintf(
+	"<div %1\$sclass=\"%2\$s\"%3\$s>\n\t%4\$s</div>",
+	'' !== $axiom_blocks_id_attr ? 'id="' . esc_attr( $axiom_blocks_id_attr ) . '" ' : '',
+	esc_attr( $axiom_blocks_class_attr ),
+	'' !== $axiom_blocks_style_attr ? ' style="' . esc_attr( $axiom_blocks_style_attr ) . '"' : '',
+	$content
+);

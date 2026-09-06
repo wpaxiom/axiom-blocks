@@ -14,7 +14,6 @@ import { ABResponsive } from '../../components/ABResponsive';
 import { useDeviceType, resolveResponsive } from '../../components/responsive';
 import { ABInspectorGroups } from '../../components/ABInspectorGroups';
 import { getBackgroundVars } from '../../components/BackgroundControl';
-import { responsiveVarValue } from '../../components/responsiveProps';
 import { BlockIcon } from '../../blockIcons';
 import {
 	DisabledBlockMessage,
@@ -54,10 +53,6 @@ const DESIGN = {
 				max: 64,
 			},
 			shadow: { bind: 'sectionShadow' },
-			size: {
-				panel: true,
-				label: __( 'Size', 'axiom-blocks' ),
-			},
 		},
 	],
 };
@@ -356,8 +351,6 @@ function AdvancedSectionEdit( { attributes, setAttributes, clientId } ) {
 			...( contentAlign ? { '--ab-sec-ta': contentAlign } : {} ),
 			...buildLayoutStyle( attributes, device ),
 			...useSpacingStyle( attributes ),
-			'--ab-sec-w': responsiveVarValue( attributes, 'width', device ),
-			'--ab-sec-mw': responsiveVarValue( attributes, 'maxWidth', device ),
 		},
 	} );
 

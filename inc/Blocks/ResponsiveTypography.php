@@ -140,6 +140,23 @@ class ResponsiveTypography {
 		'axiom-blocks/post-pagination'  => array(
 			'' => '.page-numbers',
 		),
+		'axiom-blocks/post-filter'      => array(
+			'label' => '.ab-pff__label',
+			'count' => '.ab-pf__count',
+		),
+		'axiom-blocks/post-filter-search' => array(
+			''    => '.ab-pff__control',
+			'btn' => '.ab-pff__btn',
+		),
+		'axiom-blocks/post-filter-taxonomy' => array(
+			'' => '.ab-pff__control',
+		),
+		'axiom-blocks/post-filter-sort' => array(
+			'' => '.ab-pff__control',
+		),
+		'axiom-blocks/post-filter-reset' => array(
+			'' => '.ab-pff__btn',
+		),
 	);
 
 	/**

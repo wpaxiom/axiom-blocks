@@ -1,0 +1,88 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/post-filter",
+	"version": "1.0.8",
+	"title": "Post Filter",
+	"category": "axiom-blocks",
+	"description": "A filter bar that narrows a Post Grid by search, taxonomy, and sort. Sends only validated tokens and always gets results server-side.",
+	"keywords": ["filter", "search", "posts", "grid", "sort", "taxonomy"],
+	"textdomain": "axiom-blocks",
+	"icon": "filter",
+	"attributes": {
+		"targetAnchor":    { "type": "string", "default": "" },
+		"taxonomy":        { "type": "string", "default": "" },
+		"showCount":       { "type": "boolean", "default": false },
+		"label":           { "type": "string", "default": "" },
+		"resetToBase":     { "type": "boolean", "default": true },
+
+		"direction":   { "type": "string", "default": "" },
+		"fieldGap":    { "type": "string", "default": "" },
+		"fieldRowGap": { "type": "string", "default": "" },
+		"alignItems":  { "type": "string", "default": "" },
+
+		"labelColor":          { "type": "string", "default": "" },
+		"labelFontFamily":     { "type": "string", "default": "" },
+		"labelFontWeight":     { "type": "string", "default": "" },
+		"labelFontSize":       { "type": "string", "default": "" },
+		"labelLineHeight":     { "type": "string", "default": "" },
+		"labelLetterSpacing":  { "type": "string", "default": "" },
+		"labelTextTransform":  { "type": "string", "default": "" },
+		"labelTextDecoration": { "type": "string", "default": "" },
+		"labelTextAlign":      { "type": "string", "default": "" },
+
+		"countColor":          { "type": "string", "default": "" },
+		"countFontFamily":     { "type": "string", "default": "" },
+		"countFontWeight":     { "type": "string", "default": "" },
+		"countFontSize":       { "type": "string", "default": "" },
+		"countLineHeight":     { "type": "string", "default": "" },
+		"countLetterSpacing":  { "type": "string", "default": "" },
+		"countTextTransform":  { "type": "string", "default": "" },
+		"countTextDecoration": { "type": "string", "default": "" },
+		"countTextAlign":      { "type": "string", "default": "" },
+
+		"barBg":          { "type": "string", "default": "" },
+		"barShadow":      { "type": "string", "default": "" },
+		"barBorderStyle": { "type": "string", "default": "" },
+		"barBorderColor": { "type": "string", "default": "" },
+
+		"barBorderTopWidth":    { "type": "string", "default": "" },
+		"barBorderRightWidth":  { "type": "string", "default": "" },
+		"barBorderBottomWidth": { "type": "string", "default": "" },
+		"barBorderLeftWidth":   { "type": "string", "default": "" },
+
+		"barRadiusTopLeft":     { "type": "string", "default": "" },
+		"barRadiusTopRight":    { "type": "string", "default": "" },
+		"barRadiusBottomRight": { "type": "string", "default": "" },
+		"barRadiusBottomLeft":  { "type": "string", "default": "" },
+
+		"barPaddingTop":    { "type": "string", "default": "" },
+		"barPaddingRight":  { "type": "string", "default": "" },
+		"barPaddingBottom": { "type": "string", "default": "" },
+		"barPaddingLeft":   { "type": "string", "default": "" },
+
+		"paddingTop":    { "type": "string", "default": "" },
+		"paddingRight":  { "type": "string", "default": "" },
+		"paddingBottom": { "type": "string", "default": "" },
+		"paddingLeft":   { "type": "string", "default": "" },
+		"marginTop":     { "type": "string", "default": "" },
+		"marginRight":   { "type": "string", "default": "" },
+		"marginBottom":  { "type": "string", "default": "" },
+		"marginLeft":    { "type": "string", "default": "" }
+	},
+	"providesContext": {
+		"axiom-blocks/postFilterTaxonomy": "taxonomy",
+		"axiom-blocks/postFilterTarget":   "targetAnchor"
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": ["wide", "full"]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./editor.scss",
+	"style":        "file:./style.scss",
+	"viewScript":   "file:./assets/post-filter.js",
+	"render":       "file:./render.php"
+}
