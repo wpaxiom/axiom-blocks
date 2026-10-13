@@ -147,6 +147,14 @@ const BLOCKS = [
 			[ 'post-filter-reset/render.php', 'post-filter-reset/render.php' ],
 		],
 	},
+	{
+		id: 'css-grid',
+		files: [ 'block.json', 'render.php' ],
+		extras: [
+			[ 'grid-item/block.json', 'grid-item/block.json' ],
+			[ 'grid-item/render.php', 'grid-item/render.php' ],
+		],
+	},
 ];
 
 /** Non-block files copied to build/. */

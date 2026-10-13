@@ -74,6 +74,8 @@ class Registry {
 		self::register_post_filter_taxonomy();
 		self::register_post_filter_sort();
 		self::register_post_filter_reset();
+		self::register_css_grid();
+		self::register_grid_item();
 
 		// Handle frontend rendering of disabled blocks.
 		add_filter( 'render_block', array( self::class, 'render_disabled_block_frontend' ), 10, 2 );
@@ -545,6 +547,40 @@ class Registry {
 	}
 
 	/**
+	 * Register CSS Grid Block.
+	 *
+	 * @return void
+	 */
+	private static function register_css_grid(): void {
+		register_block_type(
+			AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/css-grid',
+			array(
+				// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter -- required file reads callback scope.
+				'render_callback' => static function ( $attributes, $content, $block ) {
+					return require AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/css-grid/render.php';
+				},
+			)
+		);
+	}
+
+	/**
+	 * Register Grid Item child Block.
+	 *
+	 * @return void
+	 */
+	private static function register_grid_item(): void {
+		register_block_type(
+			AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/css-grid/grid-item',
+			array(
+				// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter -- required file reads callback scope.
+				'render_callback' => static function ( $attributes, $content, $block ) {
+					return require AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/css-grid/grid-item/render.php';
+				},
+			)
+		);
+	}
+
+	/**
 	 * Render nothing for disabled blocks on frontend.
 	 *
 	 * @param string $block_content Block content.
@@ -562,7 +598,10 @@ class Registry {
 		}
 
 		$block_id = str_replace( 'axiom-blocks/', '', $block['blockName'] );
-		$enabled  = Blocks::get_enabled();
+		if ( 'grid-item' === $block_id ) {
+			$block_id = 'css-grid';
+		}
+		$enabled = Blocks::get_enabled();
 
 		// Child/internal blocks are not independently toggleable in the dashboard.
 		// If a block is not in the enabled map, leave it alone so parent blocks

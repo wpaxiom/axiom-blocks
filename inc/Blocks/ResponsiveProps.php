@@ -62,7 +62,7 @@ class ResponsiveProps {
 	 * @var array<string, array<int, array<string, mixed>>>
 	 */
 	private const TARGETS = array(
-		'axiom-blocks/advanced-section' => array(
+		'axiom-blocks/advanced-section'       => array(
 			array(
 				'prop'     => 'grid-template-columns',
 				'key'      => 'gridColumns',
@@ -78,7 +78,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/counter-group'   => array(
+		'axiom-blocks/counter-group'          => array(
 			array(
 				'prop'     => 'grid-template-columns',
 				'key'      => 'columns',
@@ -108,7 +108,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/pricing-table'   => array(
+		'axiom-blocks/pricing-table'          => array(
 			array(
 				'prop'     => 'grid-template-columns',
 				'key'      => 'columns',
@@ -152,7 +152,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/shape-divider'   => array(
+		'axiom-blocks/shape-divider'          => array(
 			array(
 				'prop'     => 'height',
 				'key'      => 'height',
@@ -161,7 +161,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/testimonials'    => array(
+		'axiom-blocks/testimonials'           => array(
 			array(
 				'prop'     => 'grid-template-columns',
 				'key'      => 'columns',
@@ -198,7 +198,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/trust-badges'    => array(
+		'axiom-blocks/trust-badges'           => array(
 			array(
 				'prop'     => 'grid-template-columns',
 				'key'      => 'columns',
@@ -264,7 +264,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/accordion'       => array(
+		'axiom-blocks/accordion'              => array(
 			array(
 				'prop'     => '--ab-acc-gap',
 				'key'      => 'itemGap',
@@ -294,7 +294,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/icon-list'       => array(
+		'axiom-blocks/icon-list'              => array(
 			array(
 				'prop'     => '--ab-il-gap',
 				'key'      => 'gap',
@@ -317,7 +317,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/info-box'        => array(
+		'axiom-blocks/info-box'               => array(
 			array(
 				'prop'     => '--ab-ibox-gap',
 				'key'      => 'gap',
@@ -365,7 +365,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/button-group'    => array(
+		'axiom-blocks/button-group'           => array(
 			array(
 				'prop'     => '--ab-btng-gap',
 				'key'      => 'gap',
@@ -387,7 +387,7 @@ class ResponsiveProps {
 				),
 			),
 		),
-		'axiom-blocks/tabs'            => array(
+		'axiom-blocks/tabs'                   => array(
 			array(
 				'prop'     => '--axiom-blocks-tabs-content-gap',
 				'key'      => 'contentGap',
@@ -474,7 +474,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/countdown-timer' => array(
+		'axiom-blocks/countdown-timer'        => array(
 			array(
 				'prop'     => 'gap',
 				'key'      => 'gap',
@@ -506,7 +506,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/star-rating'     => array(
+		'axiom-blocks/star-rating'            => array(
 			array(
 				'prop'     => 'justify-content',
 				'key'      => 'alignment',
@@ -530,7 +530,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/icon'            => array(
+		'axiom-blocks/icon'                   => array(
 			array(
 				'prop'     => 'justify-content',
 				'key'      => 'iconAlign',
@@ -547,7 +547,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/copy-to-clipboard' => array(
+		'axiom-blocks/copy-to-clipboard'      => array(
 			array(
 				'prop'     => 'text-align',
 				'key'      => 'alignment',
@@ -556,7 +556,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/notice'            => array(
+		'axiom-blocks/notice'                 => array(
 			array(
 				'prop'     => '--ab-notice-icon-size',
 				'key'      => 'iconSize',
@@ -575,7 +575,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/advanced-button'   => array(
+		'axiom-blocks/advanced-button'        => array(
 			array(
 				'prop'     => '--ab-advbtn-icon',
 				'key'      => 'iconSize',
@@ -584,7 +584,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/advanced-heading' => array(
+		'axiom-blocks/advanced-heading'       => array(
 			array(
 				'prop'     => 'margin-left',
 				'key'      => 'accentAlign',
@@ -638,7 +638,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/before-after-slider' => array(
+		'axiom-blocks/before-after-slider'    => array(
 			array(
 				'prop'     => '--ab-bas-maxw',
 				'key'      => 'maxWidth',
@@ -647,7 +647,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/content-slider' => array(
+		'axiom-blocks/content-slider'         => array(
 			array(
 				// Real property (not a var): the desktop value is inline-only, so
 				// an unset max-width inherits the layout width; these !important
@@ -678,7 +678,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/table-of-contents' => array(
+		'axiom-blocks/table-of-contents'      => array(
 			array(
 				// Real property (not a var): the desktop value is inline-only, so
 				// an unset max-width inherits the layout width; these !important
@@ -690,7 +690,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/post-grid'        => array(
+		'axiom-blocks/post-grid'              => array(
 			array(
 				'prop'     => '--ab-pg-c',
 				'key'      => 'columns',
@@ -728,7 +728,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/post-image'       => array(
+		'axiom-blocks/post-image'             => array(
 			array(
 				'prop'     => '--ab-pc-img-h',
 				'key'      => 'height',
@@ -737,7 +737,192 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/post-meta'        => array(
+		'axiom-blocks/css-grid'               => array(
+			array(
+				'prop'     => '--ab-cg-cols',
+				'key'      => 'columnTemplate',
+				'selector' => '',
+				'format'   => 'grid-track-list',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-cg-rows',
+				'key'      => 'rowTemplate',
+				'selector' => '',
+				'format'   => 'grid-track-list',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-cg-auto-cols',
+				'key'      => 'autoColumns',
+				'selector' => '',
+				'format'   => 'grid-track-token',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-cg-auto-rows',
+				'key'      => 'autoRows',
+				'selector' => '',
+				'format'   => 'grid-track-token',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-cg-flow',
+				'key'      => 'autoFlow',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+				'map'      => array(
+					'row'    => 'row',
+					'column' => 'column',
+				),
+			),
+			array(
+				'prop'     => '--ab-cg-ji',
+				'key'      => 'justifyItems',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+				'map'      => array(
+					'stretch' => 'stretch',
+					'start'   => 'start',
+					'center'  => 'center',
+					'end'     => 'end',
+				),
+			),
+			array(
+				'prop'     => '--ab-cg-ai',
+				'key'      => 'alignItems',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+				'map'      => array(
+					'stretch' => 'stretch',
+					'start'   => 'start',
+					'center'  => 'center',
+					'end'     => 'end',
+				),
+			),
+			array(
+				'prop'     => '--ab-cg-jc',
+				'key'      => 'justifyContent',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+				'map'      => array(
+					'normal'        => 'normal',
+					'start'         => 'start',
+					'center'        => 'center',
+					'end'           => 'end',
+					'space-between' => 'space-between',
+					'space-around'  => 'space-around',
+					'space-evenly'  => 'space-evenly',
+				),
+			),
+			array(
+				'prop'     => '--ab-cg-ac',
+				'key'      => 'alignContent',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+				'map'      => array(
+					'normal'        => 'normal',
+					'start'         => 'start',
+					'center'        => 'center',
+					'end'           => 'end',
+					'space-between' => 'space-between',
+					'space-around'  => 'space-around',
+					'space-evenly'  => 'space-evenly',
+				),
+			),
+			array(
+				'prop'     => '--ab-cg-cg',
+				'key'      => 'columnGap',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+			array(
+				'prop'     => '--ab-cg-rg',
+				'key'      => 'rowGap',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+		),
+		'axiom-blocks/grid-item'              => array(
+			array(
+				'prop'     => 'grid-column-start',
+				'key'      => 'columnStart',
+				'selector' => '',
+				'format'   => 'grid-line-start',
+				'type'     => 'number',
+			),
+			array(
+				'prop'     => 'grid-column-end',
+				'key'      => 'columnSpan',
+				'selector' => '',
+				'format'   => 'grid-span',
+				'type'     => 'number',
+			),
+			array(
+				'prop'     => 'grid-row-start',
+				'key'      => 'rowStart',
+				'selector' => '',
+				'format'   => 'grid-line-start',
+				'type'     => 'number',
+			),
+			array(
+				'prop'     => 'grid-row-end',
+				'key'      => 'rowSpan',
+				'selector' => '',
+				'format'   => 'grid-span',
+				'type'     => 'number',
+			),
+			array(
+				'prop'     => 'order',
+				'key'      => 'itemOrder',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'number',
+			),
+			array(
+				'prop'     => 'justify-self',
+				'key'      => 'justifySelf',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+				'map'      => array(
+					'auto'    => 'auto',
+					'stretch' => 'stretch',
+					'start'   => 'start',
+					'center'  => 'center',
+					'end'     => 'end',
+				),
+			),
+			array(
+				'prop'     => 'align-self',
+				'key'      => 'alignSelf',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+				'map'      => array(
+					'auto'    => 'auto',
+					'stretch' => 'stretch',
+					'start'   => 'start',
+					'center'  => 'center',
+					'end'     => 'end',
+				),
+			),
+			array(
+				'prop'     => '--ab-gi-minh',
+				'key'      => 'minHeight',
+				'selector' => '',
+				'format'   => '',
+				'type'     => 'string',
+			),
+		),
+		'axiom-blocks/post-meta'              => array(
 			array(
 				'prop'     => '--ab-pc-meta-icon-size',
 				'key'      => 'iconSize',
@@ -746,7 +931,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/post-card'        => array(
+		'axiom-blocks/post-card'              => array(
 			array(
 				'prop'     => '--ab-pc-min-h',
 				'key'      => 'cardMinHeight',
@@ -762,7 +947,7 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/post-filter'      => array(
+		'axiom-blocks/post-filter'            => array(
 			array(
 				'prop'     => '--ab-pf-pt',
 				'key'      => 'barPaddingTop',
@@ -813,10 +998,10 @@ class ResponsiveProps {
 				'type'     => 'string',
 			),
 		),
-		'axiom-blocks/post-filter-search' => self::FIELD_WIDTH_PROPS,
-		'axiom-blocks/post-filter-taxonomy' => self::FIELD_WIDTH_PROPS,
-		'axiom-blocks/post-filter-sort' => self::FIELD_WIDTH_PROPS,
-		'axiom-blocks/post-filter-reset' => self::FIELD_WIDTH_PROPS,
+		'axiom-blocks/post-filter-search'     => self::FIELD_WIDTH_PROPS,
+		'axiom-blocks/post-filter-taxonomy'   => self::FIELD_WIDTH_PROPS,
+		'axiom-blocks/post-filter-sort'       => self::FIELD_WIDTH_PROPS,
+		'axiom-blocks/post-filter-reset'      => self::FIELD_WIDTH_PROPS,
 	);
 
 	/**

@@ -1,0 +1,15 @@
+.editor-styles-wrapper .ab-css-grid {
+	min-height: 90px;
+	outline: 1px dashed rgba(124, 58, 237, 0.25);
+	outline-offset: 3px;
+}
+
+.editor-styles-wrapper .ab-css-grid > .block-list-appender {
+	align-self: stretch;
+	min-height: 48px;
+}
+
+// The canvas follows the editor's device state, not the iframe width.
+.editor-styles-wrapper .ab-css-grid.is-stacked > .ab-grid-item {
+	grid-column: 1 / -1 !important;
+}

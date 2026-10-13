@@ -87,7 +87,8 @@ class Assets {
 			|| has_block( 'axiom-blocks/trust-badges' )
 			|| has_block( 'axiom-blocks/free-shipping-progress' )
 			|| has_block( 'axiom-blocks/post-grid' )
-			|| has_block( 'axiom-blocks/post-filter' );
+			|| has_block( 'axiom-blocks/post-filter' )
+			|| has_block( 'axiom-blocks/css-grid' );
 	}
 
 	/**

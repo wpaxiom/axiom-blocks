@@ -1,0 +1,53 @@
+.ab-css-grid {
+	display: grid;
+	grid-template-columns: var(--ab-cg-cols, repeat(3, minmax(0, 1fr)));
+	grid-template-rows: var(--ab-cg-rows, none);
+	grid-auto-columns: var(--ab-cg-auto-cols, auto);
+	grid-auto-rows: var(--ab-cg-auto-rows, auto);
+	grid-auto-flow: var(--ab-cg-flow, row);
+	justify-items: var(--ab-cg-ji, stretch);
+	align-items: var(--ab-cg-ai, stretch);
+	justify-content: var(--ab-cg-jc, normal);
+	align-content: var(--ab-cg-ac, normal);
+	column-gap: var(--ab-cg-cg, 0);
+	row-gap: var(--ab-cg-rg, 0);
+	background: var(--ab-cg-bg, transparent);
+	border-style: var(--ab-cg-bs, solid);
+	border-color: var(--ab-cg-bc, currentColor);
+	border-width:
+		var(--ab-cg-bw-t, 0) var(--ab-cg-bw-r, 0) var(--ab-cg-bw-b, 0)
+		var(--ab-cg-bw-l, 0);
+	border-radius:
+		var(--ab-cg-r-tl, 0) var(--ab-cg-r-tr, 0) var(--ab-cg-r-br, 0)
+		var(--ab-cg-r-bl, 0);
+	box-shadow: var(--ab-cg-shadow, none);
+
+	&.is-dense {
+		grid-auto-flow: var(--ab-cg-flow, row) dense;
+	}
+}
+
+// One-column devices stack items full width. `1 / -1` ends on the last explicit
+// line, so a span set for a wider device cannot create implicit columns. It is
+// !important because per-device item overrides are, and a column start/span has
+// no other meaning in a single column. Breakpoints match Responsive.php.
+@media (min-width: 781px) {
+
+	.ab-css-grid.is-stacked-desktop > .ab-grid-item {
+		grid-column: 1 / -1 !important;
+	}
+}
+
+@media (min-width: 361px) and (max-width: 780px) {
+
+	.ab-css-grid.is-stacked-tablet > .ab-grid-item {
+		grid-column: 1 / -1 !important;
+	}
+}
+
+@media (max-width: 360px) {
+
+	.ab-css-grid.is-stacked-mobile > .ab-grid-item {
+		grid-column: 1 / -1 !important;
+	}
+}

@@ -1,11 +1,11 @@
-=== Axiom Blocks - Page Builder & FSE Kit ===
+=== Axiom Blocks - Page Builder Toolkit ===
 Contributors: wpaxiom, shuvo586
 Donate link: https://wpaxiom.com/donate
-Tags: gutenberg, blocks, editor, page-builder, woocommerce
+Tags: gutenberg blocks, gutenberg, blocks, page builder, block editor
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ Axiom Blocks adds the blocks the WordPress editor leaves out. Use core blocks fo
 = Layout Blocks =
 
 * **Advanced Section** - Full-width container with background images, gradients, video backgrounds, overlays with blend modes, shape dividers, and entrance animations.
+* **CSS Grid** - A grid with unequal column tracks (for example 2fr 1fr 240px), row tracks, dense packing and full alignment control, all set per device. Each Grid Item can start at a chosen column or row, span several, and change order on tablet and mobile.
 * **Device Visibility** - Wrapper block to show or hide content based on device type (mobile, tablet, desktop).
 * **Shape Divider** - Add shape dividers to the top or bottom of sections with 5 shapes: wave, curve, triangle, tilt, and slant.
 * **Reading Progress Bar** - Sticky scroll progress indicator for long-form content.
@@ -160,6 +161,13 @@ Developers can redirect the feedback to their own server - or disable it entirel
 
 == Changelog ==
 
+= 1.0.9 =
+* New block: CSS Grid - a layout grid for the designs the core Grid cannot build. Columns can be equal, auto-fit to a minimum width, or custom tracks such as 2fr 1fr 240px, and rows, auto sizes, flow direction, dense packing, gaps and alignment are all set per device. Track values are checked against a small safe set of units, so a typo falls back to equal columns instead of breaking the layout.
+* New block: Grid Item - goes inside CSS Grid and holds any blocks. Set the column and row it starts on, how many it spans, its order and its own alignment, separately for desktop, tablet and mobile.
+* New grids start at 3 columns on desktop, 2 on tablet and 1 on mobile. On any device with a single column, items stack full width, so a span set for a wider screen never adds an extra column on a phone.
+* Both blocks have background, border, radius, shadow and spacing controls, and Grid Item adds a minimum height. Turning CSS Grid off in the Block Manager turns off Grid Item too.
+* Plugin renamed to "Axiom Blocks - Page Builder Toolkit", with updated tags.
+
 = 1.0.8 =
 * New block: Post Filter - a filter bar that narrows a Post Grid by search, taxonomy and sort, with Search Field, Taxonomy Filter, Sort Filter and Reset Filter blocks you arrange inside it. It is a real form, so it works with JavaScript disabled, and a filtered view has its own address you can bookmark or share.
 * Post Filter never sends a query to the server. It sends the grid it is pointed at plus the filter you chose, and the server re-runs that grid's own saved query with your filter applied, so a filter can only narrow what the author already published.
@@ -238,6 +246,9 @@ Developers can redirect the feedback to their own server - or disable it entirel
 * Full Site Editing (FSE) support.
 
 == Upgrade Notice ==
+
+= 1.0.9 =
+Adds the CSS Grid and Grid Item blocks for responsive grids with unequal columns and per-device item placement. Existing blocks and content are unchanged.
 
 = 1.0.8 =
 Adds the Post Filter block, a filter bar for Post Grid that works with JavaScript disabled. Advanced Section width now comes from the block width toolbar and your theme's content width, not the block's own setting, so a section with a width set may move. Post Grid cards can now be styled.

@@ -30,6 +30,8 @@
 @import "blocks/free-shipping-progress/style";
 @import "blocks/post-grid/style";
 @import "blocks/post-filter/style";
+@import "blocks/css-grid/style";
+@import "blocks/css-grid/grid-item/style";
 
 // Universal hide-on-device (ABDeviceVisibility). The classes are added at render
 // by inc/Blocks/DeviceVisibility.php; all-false ⇒ no class ⇒ no effect.
@@ -57,7 +59,8 @@
 // Universal hover lift (ABInteractions). The class + vars are added at render by
 // inc/Blocks/Interactions.php; no lift ⇒ no class ⇒ no effect.
 .ab-has-hover {
-	transition: transform var(--ab-hover-tr, 0.25s) ease,
+	transition:
+		transform var(--ab-hover-tr, 0.25s) ease,
 		box-shadow var(--ab-hover-tr, 0.25s) ease;
 }
 
@@ -67,14 +70,17 @@
 
 // Universal scroll-in entrance (ABEntrance). The class is added at render by
 // inc/Blocks/Entrance.php; no entrance ⇒ no class ⇒ no effect. CSS-only via
-// scroll-driven timelines — browsers without support just show the element
+// scroll-driven timelines - browsers without support just show the element
 // (no JS, no hidden/broken state). Motion is disabled for reduced-motion users.
 @supports (animation-timeline: view()) {
+
 	@media (prefers-reduced-motion: no-preference) {
+
 		.ab-entrance {
 			animation-name: ab-entrance-fade;
 			animation-fill-mode: both;
 			animation-timing-function: linear;
+			// stylelint-disable-next-line property-no-unknown -- valid scroll-driven animation property, missing from stylelint's list.
 			animation-timeline: view();
 			animation-range: entry 0% cover 25%;
 		}
@@ -102,12 +108,14 @@
 }
 
 @keyframes ab-entrance-fade {
+
 	from {
 		opacity: 0;
 	}
 }
 
 @keyframes ab-entrance-fade-up {
+
 	from {
 		opacity: 0;
 		transform: translateY(40px);
@@ -115,6 +123,7 @@
 }
 
 @keyframes ab-entrance-fade-down {
+
 	from {
 		opacity: 0;
 		transform: translateY(-40px);
@@ -122,6 +131,7 @@
 }
 
 @keyframes ab-entrance-fade-left {
+
 	from {
 		opacity: 0;
 		transform: translateX(40px);
@@ -129,6 +139,7 @@
 }
 
 @keyframes ab-entrance-fade-right {
+
 	from {
 		opacity: 0;
 		transform: translateX(-40px);
@@ -136,6 +147,7 @@
 }
 
 @keyframes ab-entrance-zoom-in {
+
 	from {
 		opacity: 0;
 		transform: scale(0.9);

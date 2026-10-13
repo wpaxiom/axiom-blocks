@@ -1,0 +1,19 @@
+.ab-grid-item {
+	min-width: 0;
+	grid-column: var(--ab-gi-col, auto);
+	grid-row: var(--ab-gi-row, auto);
+	order: var(--ab-gi-order, 0);
+	justify-self: var(--ab-gi-js, auto);
+	align-self: var(--ab-gi-as, auto);
+	min-height: var(--ab-gi-minh, auto);
+	background: var(--ab-gi-bg, transparent);
+	border-style: var(--ab-gi-bs, solid);
+	border-color: var(--ab-gi-bc, currentColor);
+	border-width:
+		var(--ab-gi-bw-t, 0) var(--ab-gi-bw-r, 0) var(--ab-gi-bw-b, 0)
+		var(--ab-gi-bw-l, 0);
+	border-radius:
+		var(--ab-gi-r-tl, 0) var(--ab-gi-r-tr, 0) var(--ab-gi-r-br, 0)
+		var(--ab-gi-r-bl, 0);
+	box-shadow: var(--ab-gi-shadow, none);
+}

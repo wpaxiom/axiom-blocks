@@ -623,6 +623,28 @@ export const BLOCK_ICONS = {
 			<rect width="7" height="7" x="3" y="14" rx="1" />
 		</>
 	),
+	'css-grid': (
+		<>
+			<rect x="3" y="3" width="7" height="7" rx="1" />
+			<rect x="12" y="3" width="9" height="7" rx="1" />
+			<rect x="3" y="12" width="11" height="9" rx="1" />
+			<rect x="16" y="12" width="5" height="9" rx="1" />
+		</>
+	),
+	'grid-item': (
+		<>
+			<path d="M3 3h18v18H3z" />
+			<path d="M9 3v18M15 3v18M3 9h18M3 15h18" />
+			<rect
+				x="9"
+				y="9"
+				width="12"
+				height="6"
+				rx="1"
+				fill="currentColor"
+			/>
+		</>
+	),
 	'post-filter': (
 		<>
 			<path d="M3 5h18l-7 8.4V19l-4 2v-7.6L3 5Z" />

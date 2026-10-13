@@ -28,6 +28,8 @@
 @import "blocks/free-shipping-progress/editor";
 @import "blocks/post-grid/editor";
 @import "blocks/post-filter/editor";
+@import "blocks/css-grid/editor";
+@import "blocks/css-grid/grid-item/editor";
 
 // Sidebar panel styling
 .components-panel__body {
@@ -41,7 +43,7 @@
 	}
 }
 
-// ── Shared caret (Caret) — one down-chevron for every select-like trigger ─────
+// ── Shared caret (Caret) - one down-chevron for every select-like trigger ─────
 // ABSelectControl, ABSubAccordion and IconControl all render <Caret/>, so the
 // glyph, size and color stay identical across the inspector.
 .ab-caret {
@@ -51,7 +53,7 @@
 	color: #9ca3af;
 }
 
-// ── Sub-accordion (ABSubAccordion) — repeater-style collapsible row ───────────
+// ── Sub-accordion (ABSubAccordion) - repeater-style collapsible row ───────────
 // Used for grouping sub-sections inside a PanelBody (e.g. typography per
 // element). Palette mirrors the tab-block repeater so sidebar UI feels
 // consistent across blocks.
@@ -183,9 +185,9 @@
 }
 
 /* In the Typography panel the inline bar sits at the top with the compact
-   DeviceSwitcher inside its actions row — no standalone margin needed. */
+   DeviceSwitcher inside its actions row - no standalone margin needed. */
 
-/* ABResponsive — compact per-control device toggle, floated onto the control's
+/* ABResponsive - compact per-control device toggle, floated onto the control's
    label row (top-right) so it reads as a small affordance, not a full-width bar. */
 .ab-responsive-control {
 	position: relative;
@@ -229,15 +231,13 @@
 		min-height: 22px;
 		display: flex;
 		align-items: center;
-	}
 
-	/* Reserve room so a long label never runs under the floated toggle. */
-	.ab-ctrl__label {
+		/* Reserve room so a long label never runs under the floated toggle. */
 		padding-right: 84px;
 	}
 }
 
-/* Compact device toggle — sized to sit on a control's label row (≈ label height). */
+/* Compact device toggle - sized to sit on a control's label row (≈ label height). */
 .ab-device-switcher--compact {
 	margin-bottom: 0;
 	padding: 0;
@@ -477,7 +477,7 @@
 	margin: 4px 0 14px;
 }
 
-// ── ABControls — Range, Select, Color ────────────────────────────────────────
+// ── ABControls - Range, Select, Color ────────────────────────────────────────
 // Shared field height token: all visible field boxes render at this height.
 $ab-field-h: 32px;
 $ab-field-border: 1px solid #dcdde1;
@@ -563,7 +563,7 @@ $ab-field-focus-color: #7c3aed;
 	}
 
 	// Clickable unit picker (opt-in via ABRangeControl `units`): identical to the
-	// static unit, just clickable — a native-select overlay swaps the unit in place.
+	// static unit, just clickable - a native-select overlay swaps the unit in place.
 	// Extra right padding clears the number from longer units (vh / rem).
 	&__px-wrap.has-unit-menu .ab-ctrl__px-input {
 		padding-right: 28px !important;
@@ -675,7 +675,7 @@ $ab-field-focus-color: #7c3aed;
 	}
 
 	// ── Select ────────────────────────────────────────────────────────────────
-	// Native <select> is opacity:0 and covers the wrapper — all browser
+	// Native <select> is opacity:0 and covers the wrapper - all browser
 	// interaction (click, keyboard) works. The visual display is a sibling
 	// div with pointer-events:none, so no appearance/arrow fight needed.
 
@@ -1100,7 +1100,7 @@ $ab-field-focus-color: #7c3aed;
 	}
 }
 
-// ── Color popover (ABColorControl → AxiomColorPicker) — BlockSuite design ────
+// ── Color popover (ABColorControl → AxiomColorPicker) - BlockSuite design ────
 .axcp {
 	$accent: #7c3aed;
 	$accent-hover: #6d28d9;
@@ -1174,8 +1174,7 @@ $ab-field-focus-color: #7c3aed;
 		touch-action: none;
 
 		&--hue {
-			background:
- linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+			background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
 		}
 
 		&--alpha {
@@ -1501,7 +1500,7 @@ $ab-field-focus-color: #7c3aed;
 		line-height: 1.3;
 	}
 
-	/* Selector compiles to `.ab-toggle .ab-toggle__help` (0,2,0) — needed
+	/* Selector compiles to `.ab-toggle .ab-toggle__help` (0,2,0) - needed
        because Gutenberg's inspector sets `p:not(...) { margin-top: 0 }` at
        0,2,0 too, and a single class would lose the cascade. */
 	& &__help {
@@ -1563,7 +1562,7 @@ $ab-field-focus-color: #7c3aed;
 // Variants:
 //   .ab-btn--primary   solid purple CTA
 //   .ab-btn--secondary outlined purple (paired with --danger for media controls)
-//   .ab-btn--danger    ghost red — destructive, soft-red hover
+//   .ab-btn--danger    ghost red - destructive, soft-red hover
 .ab-btn {
 	display: inline-flex;
 	align-items: center;
@@ -1651,7 +1650,7 @@ $ab-field-focus-color: #7c3aed;
 // ── TypographyPanel ──────────────────────────────────────────────────────────
 // Figma-inspired layout: full-width family, paired Weight/Size, paired
 // Line-height/Letter-spacing with labels above, label-above segmented blocks.
-// Comfortable component sizing — compact in *layout*, not in component height.
+// Comfortable component sizing - compact in *layout*, not in component height.
 $ab-tp-purple:       #7c3aed;
 $ab-tp-purple-soft:  #f5f1fe;
 $ab-tp-purple-deep:  #5b21b6;
@@ -1993,7 +1992,7 @@ $ab-tp-h:            32px;
 	}
 }
 
-// Segmented control — full-width row of equal buttons
+// Segmented control - full-width row of equal buttons
 .ab-tp-seg {
 	display: grid;
 	grid-auto-flow: column;
@@ -2360,7 +2359,7 @@ $ab-tp-h:            32px;
 }
 
 /* Shared inspector icon picker field (trigger button + popover grid). One
-   affordance for every block — replaces the per-block *-icon-field copies. */
+   affordance for every block - replaces the per-block *-icon-field copies. */
 .ab-icon-control {
 	margin-bottom: 16px;
 
@@ -2453,8 +2452,8 @@ $ab-tp-h:            32px;
 // Shadow/Date) opens into. WP's Popover supplies the outer frame; this only lays
 // out the head (title + optional device switcher + Reset) and the body slot.
 
-// WP's Popover renders at z-index 1000000 — above the media modal (160000) and
-// every other WP overlay — so an open popover would cover the media library.
+// WP's Popover renders at z-index 1000000 - above the media modal (160000) and
+// every other WP overlay - so an open popover would cover the media library.
 // Drop it below the modal/fullscreen overlays but above the editor chrome
 // (sidebar/header sit ~100000). !important beats WP's inline z-index.
 .components-popover.ab-edit-popover-frame {
@@ -2715,7 +2714,7 @@ $ab-tp-h:            32px;
 	}
 }
 
-// ── ABDeviceVisibility (universal — handoff summary strip + hide toggles) ─────
+// ── ABDeviceVisibility (universal - handoff summary strip + hide toggles) ─────
 .ab-vis-summary {
 	display: flex;
 	gap: 10px;
@@ -2787,7 +2786,7 @@ $ab-tp-h:            32px;
 	}
 }
 
-/* ── Block-inspector Settings / Styles tabs — match the handoff design ────────
+/* ── Block-inspector Settings / Styles tabs - match the handoff design ────────
  * The native inspector tabs use the admin accent (blue); the handoff (`.mk-tab`)
  * wants full-width tabs with a purple #7c3aed active underline + darker, bolder
  * active label. Scoped to the inspector tab strip only. Gutenberg has renamed

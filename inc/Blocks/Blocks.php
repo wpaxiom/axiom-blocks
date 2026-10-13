@@ -42,6 +42,14 @@ class Blocks {
 			'icon'        => 'cover-image',
 		),
 		array(
+			'id'          => 'css-grid',
+			'name'        => 'CSS Grid',
+			'category'    => 'layout',
+			'tier'        => 'free',
+			'description' => 'Responsive unequal grids with explicit item placement',
+			'icon'        => 'grid-view',
+		),
+		array(
 			'id'          => 'shape-divider',
 			'name'        => 'Shape Divider',
 			'category'    => 'layout',

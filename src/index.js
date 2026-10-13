@@ -56,6 +56,8 @@ import { PostFilterSearch } from './blocks/post-filter/post-filter-search';
 import { PostFilterTaxonomy } from './blocks/post-filter/post-filter-taxonomy';
 import { PostFilterSort } from './blocks/post-filter/post-filter-sort';
 import { PostFilterReset } from './blocks/post-filter/post-filter-reset';
+import { CssGrid } from './blocks/css-grid';
+import { GridItem } from './blocks/css-grid/grid-item';
 
 // Import styles
 import './style.scss';
@@ -205,6 +207,8 @@ const blocks = [
 	PostFilterTaxonomy,
 	PostFilterSort,
 	PostFilterReset,
+	CssGrid,
+	GridItem,
 ];
 
 /**
@@ -295,4 +299,6 @@ export {
 	AdvancedButton,
 	TrustBadges,
 	FreeShippingProgress,
+	CssGrid,
+	GridItem,
 };

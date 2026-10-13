@@ -344,8 +344,8 @@ class Responsive {
 	}
 
 	/**
-	 * Format a validated value for output. 'grid-columns' wraps a column count as a
-	 * repeat() track list; anything else is passed through unchanged.
+	 * Format a validated value for output. Grid formats enforce the CSS Grid
+	 * block's deliberately small safe grammar.
 	 *
 	 * @param string $format Format name.
 	 * @param string $value  Validated value.
@@ -354,6 +354,32 @@ class Responsive {
 	private static function format_value( string $format, string $value ): string {
 		if ( 'grid-columns' === $format ) {
 			return 'repeat(' . $value . ', minmax(0, 1fr))';
+		}
+		if ( 'grid-track-list' === $format ) {
+			$value = preg_replace( '/\s+/', ' ', trim( $value ) );
+			if ( preg_match( '/^repeat\(\d{1,2},\s*minmax\(0,\s*1fr\)\)$/i', $value )
+				|| preg_match( '/^repeat\((?:auto-fit|auto-fill),\s*minmax\((?:\d+(?:\.\d+)?|\.\d+)(?:px|rem|em|%|vw|vh),\s*1fr\)\)$/i', $value ) ) {
+				return $value;
+			}
+			$tokens = explode( ' ', $value );
+			if ( count( $tokens ) > 12 ) {
+				return '';
+			}
+			foreach ( $tokens as $token ) {
+				if ( ! preg_match( '/^(?:0|(?:\d+(?:\.\d+)?|\.\d+)(?:fr|px|rem|em|%|vw|vh)|auto|min-content|max-content)$/i', $token ) ) {
+					return '';
+				}
+			}
+			return $value;
+		}
+		if ( 'grid-track-token' === $format ) {
+			return preg_match( '/^(?:0|(?:\d+(?:\.\d+)?|\.\d+)(?:fr|px|rem|em|%|vw|vh)|auto|min-content|max-content)$/i', $value ) ? $value : '';
+		}
+		if ( 'grid-line-start' === $format ) {
+			return (int) $value > 0 ? (string) (int) $value : 'auto';
+		}
+		if ( 'grid-span' === $format ) {
+			return 'span ' . max( 1, min( 24, (int) $value ) );
 		}
 		if ( 'px' === $format ) {
 			return $value . 'px';
@@ -375,7 +401,8 @@ class Responsive {
 		if ( null !== $map ) {
 			return $map[ $value ] ?? null;
 		}
-		return self::format_value( $format, $value );
+		$output = self::format_value( $format, $value );
+		return '' === $output ? null : $output;
 	}
 
 	/**
