@@ -1,0 +1,2 @@
+# Public-repo-only paths that scripts/sync-to-public.js must never delete.
+.github
