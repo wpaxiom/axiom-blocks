@@ -1,0 +1,119 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/contact-form-consent",
+	"version": "1.1.0",
+	"title": "Consent Field",
+	"category": "axiom-blocks",
+	"description": "A required checkbox or switch, for terms or privacy consent.",
+	"keywords": [
+		"consent",
+		"gdpr",
+		"terms",
+		"privacy",
+		"agree"
+	],
+	"textdomain": "axiom-blocks",
+	"parent": [
+		"axiom-blocks/contact-form",
+		"axiom-blocks/contact-form-group"
+	],
+	"attributes": {
+		"fieldKey": {
+			"type": "string",
+			"default": ""
+		},
+		"label": {
+			"type": "string",
+			"default": "I agree to the privacy policy."
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
+		},
+		"placeholder": {
+			"type": "string",
+			"default": ""
+		},
+		"help": {
+			"type": "string",
+			"default": ""
+		},
+		"required": {
+			"type": "boolean",
+			"default": true
+		},
+		"defaultValue": {
+			"type": "string",
+			"default": ""
+		},
+		"autocomplete": {
+			"type": "string",
+			"default": ""
+		},
+		"span": {
+			"type": "number",
+			"default": 0
+		},
+		"order": {
+			"type": "number",
+			"default": 0
+		},
+		"icon": {
+			"type": "string",
+			"default": ""
+		},
+		"iconPosition": {
+			"type": "string",
+			"default": "start"
+		},
+		"consentDisplay": {
+			"type": "string",
+			"default": "checkbox"
+		},
+		"ovLabelColor": {
+			"type": "string",
+			"default": ""
+		},
+		"ovInputColor": {
+			"type": "string",
+			"default": ""
+		},
+		"ovInputBg": {
+			"type": "string",
+			"default": ""
+		},
+		"ovInputBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"ovInputBorderColorFocus": {
+			"type": "string",
+			"default": ""
+		},
+		"ovInputRadius": {
+			"type": "string",
+			"default": ""
+		},
+		"ovInputHeight": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"usesContext": [
+		"axiom-blocks/cfFormId",
+		"axiom-blocks/cfRequiredMarker",
+		"axiom-blocks/cfRequiredText",
+		"axiom-blocks/cfOptionalText",
+		"axiom-blocks/cfHelpPosition",
+		"axiom-blocks/cfFloating",
+		"axiom-blocks/cfErrorDisplay",
+		"axiom-blocks/cfLabelPosition"
+	],
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

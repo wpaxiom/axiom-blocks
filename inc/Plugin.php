@@ -17,6 +17,8 @@ namespace AxiomBlocks;
 
 use AxiomBlocks\Admin\Dashboard;
 use AxiomBlocks\Admin\Feedback;
+use AxiomBlocks\Admin\Onboarding;
+use AxiomBlocks\Admin\PluginLinks;
 use AxiomBlocks\API\Routes;
 use AxiomBlocks\Blocks\Blocks;
 use AxiomBlocks\Blocks\DeviceVisibility;
@@ -28,6 +30,9 @@ use AxiomBlocks\Blocks\Registry;
 use AxiomBlocks\Blocks\ResponsiveProps;
 use AxiomBlocks\Blocks\ResponsiveSpacing;
 use AxiomBlocks\Blocks\ResponsiveTypography;
+use AxiomBlocks\Email\MailNotice;
+use AxiomBlocks\Forms\ContactFormHandler;
+use AxiomBlocks\Forms\Entries;
 use AxiomBlocks\Frontend\Assets;
 use AxiomBlocks\Frontend\KsesColors;
 use AxiomBlocks\Frontend\ResponsiveStyles;
@@ -56,7 +61,7 @@ final class Plugin {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.0.9';
+	const VERSION = '1.1.0';
 
 	/**
 	 * Get instance
@@ -125,10 +130,20 @@ final class Plugin {
 		// Universal per-child flex/grid order (L6 reorder).
 		ChildOrder::init();
 
+		// Contact Form: the no-JS submit entry point, saved entries (post type,
+		// privacy hooks, daily cron).
+		ContactFormHandler::init();
+		Entries::init();
+
+		// Get started checklist: drops its cached "no block used yet" on save.
+		Onboarding::init();
+
 		// Admin UI.
 		if ( is_admin() ) {
 			Dashboard::init();
 			Feedback::init();
+			MailNotice::init();
+			PluginLinks::init();
 		}
 
 		// REST API (always loaded for both admin and frontend).

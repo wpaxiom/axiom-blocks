@@ -682,6 +682,89 @@ export const BLOCK_ICONS = {
 			<path d="M3 3v4h4" />
 		</>
 	),
+	'contact-form': (
+		<>
+			<rect width="18" height="18" x="3" y="3" rx="2" />
+			<path d="M7 8h10" />
+			<path d="M7 12h10" />
+			<path d="M7 16h5" />
+		</>
+	),
+	'contact-form-text': (
+		<>
+			<path d="M4 7V5h16v2" />
+			<path d="M12 5v14" />
+			<path d="M9 19h6" />
+		</>
+	),
+	'contact-form-email': (
+		<>
+			<rect width="20" height="16" x="2" y="4" rx="2" />
+			<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+		</>
+	),
+	'contact-form-phone': (
+		<>
+			<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+		</>
+	),
+	'contact-form-textarea': (
+		<>
+			<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+		</>
+	),
+	'contact-form-select': (
+		<>
+			<rect width="18" height="10" x="3" y="7" rx="2" />
+			<path d="m14 11 2 2 2-2" />
+		</>
+	),
+	'contact-form-choices': (
+		<>
+			<circle cx="6" cy="7" r="2" />
+			<path d="M11 7h9" />
+			<rect width="4" height="4" x="4" y="15" rx="1" />
+			<path d="M11 17h9" />
+		</>
+	),
+	'contact-form-consent': (
+		<>
+			<rect width="18" height="18" x="3" y="3" rx="2" />
+			<path d="m9 12 2 2 4-4" />
+		</>
+	),
+	'contact-form-date': (
+		<>
+			<rect width="18" height="18" x="3" y="4" rx="2" />
+			<path d="M16 2v4" />
+			<path d="M8 2v4" />
+			<path d="M3 10h18" />
+		</>
+	),
+	'contact-form-hidden': (
+		<>
+			<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+			<path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+			<path d="M6.61 6.61A13.53 13.53 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+			<path d="m2 2 20 20" />
+		</>
+	),
+	'contact-form-group': (
+		<>
+			<path d="M3 7V5a2 2 0 0 1 2-2h2" />
+			<path d="M17 3h2a2 2 0 0 1 2 2v2" />
+			<path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+			<path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+			<path d="M8 10h8" />
+			<path d="M8 14h8" />
+		</>
+	),
+	'contact-form-submit': (
+		<>
+			<path d="m22 2-7 20-4-9-9-4Z" />
+			<path d="M22 2 11 13" />
+		</>
+	),
 	'post-card': (
 		<>
 			<rect width="18" height="18" x="3" y="3" rx="2" />
@@ -751,6 +834,15 @@ export const BLOCK_ICONS = {
 			<path d="M3 6h.01" />
 			<path d="M3 12h.01" />
 			<path d="M3 18h.01" />
+		</>
+	),
+	'social-share': (
+		<>
+			<circle cx="18" cy="5" r="3" />
+			<circle cx="6" cy="12" r="3" />
+			<circle cx="18" cy="19" r="3" />
+			<path d="m8.59 13.51 6.83 3.98" />
+			<path d="m15.41 6.51-6.82 3.98" />
 		</>
 	),
 };

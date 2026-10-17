@@ -1,0 +1,301 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/contact-form-submit",
+	"version": "1.1.0",
+	"title": "Submit Button",
+	"category": "axiom-blocks",
+	"description": "The button that sends the form.",
+	"keywords": [
+		"submit",
+		"button",
+		"send"
+	],
+	"textdomain": "axiom-blocks",
+	"parent": [
+		"axiom-blocks/contact-form",
+		"axiom-blocks/contact-form-group"
+	],
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Send message"
+		},
+		"sendingLabel": {
+			"type": "string",
+			"default": "Sending…"
+		},
+		"showSpinner": {
+			"type": "boolean",
+			"default": true
+		},
+		"icon": {
+			"type": "string",
+			"default": ""
+		},
+		"iconPosition": {
+			"type": "string",
+			"default": "after"
+		},
+		"buttonWidth": {
+			"type": "string",
+			"default": "auto"
+		},
+		"span": {
+			"type": "number",
+			"default": 0
+		},
+		"order": {
+			"type": "number",
+			"default": 0
+		},
+		"btnBgType": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBgGradType": {
+			"type": "string",
+			"default": "linear"
+		},
+		"btnBgGradAngle": {
+			"type": "number",
+			"default": 90
+		},
+		"btnBgGradStops": {
+			"type": "array",
+			"default": []
+		},
+		"btnBgImage": {
+			"type": "object",
+			"default": null
+		},
+		"btnBgImageSize": {
+			"type": "string",
+			"default": "cover"
+		},
+		"btnBgImagePosition": {
+			"type": "string",
+			"default": "center center"
+		},
+		"btnBgImageRepeat": {
+			"type": "string",
+			"default": "no-repeat"
+		},
+		"btnHoverBgType": {
+			"type": "string",
+			"default": ""
+		},
+		"btnHoverBgGradType": {
+			"type": "string",
+			"default": "linear"
+		},
+		"btnHoverBgGradAngle": {
+			"type": "number",
+			"default": 90
+		},
+		"btnHoverBgGradStops": {
+			"type": "array",
+			"default": []
+		},
+		"btnHoverBgImage": {
+			"type": "object",
+			"default": null
+		},
+		"btnHoverBgImageSize": {
+			"type": "string",
+			"default": "cover"
+		},
+		"btnHoverBgImagePosition": {
+			"type": "string",
+			"default": "center center"
+		},
+		"btnHoverBgImageRepeat": {
+			"type": "string",
+			"default": "no-repeat"
+		},
+		"btnBg": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBgHover": {
+			"type": "string",
+			"default": ""
+		},
+		"btnColor": {
+			"type": "string",
+			"default": ""
+		},
+		"btnColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"fontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"fontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"fontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"lineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"letterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"textTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"textDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"textAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"btnRadiusTopLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"btnRadiusTopRight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnRadiusBottomRight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnRadiusBottomLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"btnShadow": {
+			"type": "string",
+			"default": ""
+		},
+		"btnShadowHover": {
+			"type": "string",
+			"default": ""
+		},
+		"btnPaddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"btnPaddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnPaddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"btnPaddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"btnHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnIconSize": {
+			"type": "string",
+			"default": ""
+		},
+		"btnIconGap": {
+			"type": "string",
+			"default": ""
+		},
+		"btnAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonWidthCustom": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"marginTop": {
+			"type": "string",
+			"default": ""
+		},
+		"marginRight": {
+			"type": "string",
+			"default": ""
+		},
+		"marginBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"marginLeft": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"usesContext": [
+		"axiom-blocks/cfFormId",
+		"axiom-blocks/cfRequiredMarker",
+		"axiom-blocks/cfRequiredText",
+		"axiom-blocks/cfOptionalText",
+		"axiom-blocks/cfHelpPosition",
+		"axiom-blocks/cfFloating",
+		"axiom-blocks/cfErrorDisplay",
+		"axiom-blocks/cfLabelPosition"
+	],
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

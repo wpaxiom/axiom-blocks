@@ -157,6 +157,22 @@ class ResponsiveTypography {
 		'axiom-blocks/post-filter-reset' => array(
 			'' => '.ab-pff__btn',
 		),
+		'axiom-blocks/contact-form'           => array(
+			'label'  => '.ab-cf-label',
+			'input'  => '.ab-cf-control',
+			'choice' => ':is(.ab-cf-choice, .ab-cf-consent)',
+			'chb'    => '.ab-cf-choices.is-buttons .ab-cf-choice__text',
+			'help'   => ':is(.ab-cf-help, .ab-cf-error)',
+			'legend' => '.ab-cf-legend',
+			'msg'    => '.ab-cf-status',
+		),
+		'axiom-blocks/contact-form-submit'    => array(
+			'' => '.ab-cf-button',
+		),
+		'axiom-blocks/social-share'           => array(
+			'lead' => '.ab-ss__lead',
+			'btn'  => '.ab-ss__btn',
+		),
 	);
 
 	/**

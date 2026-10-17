@@ -13,6 +13,10 @@ use AxiomBlocks\Blocks\Blocks;
 use AxiomBlocks\Blocks\CustomIcons;
 use AxiomBlocks\Blocks\PostFilterResolver;
 use AxiomBlocks\Blocks\PostGridTemplates;
+use AxiomBlocks\Email\EmailSettings;
+use AxiomBlocks\Email\Mailer;
+use AxiomBlocks\Forms\ContactFormHandler;
+use AxiomBlocks\Forms\Entries;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -181,12 +185,12 @@ class Routes {
 				'callback'            => array( self::class, 'post_grid_page' ),
 				'permission_callback' => '__return_true',
 				'args'                => array(
-					'key'  => array(
+					'key'    => array(
 						'required'          => true,
 						'type'              => 'string',
 						'sanitize_callback' => 'sanitize_key',
 					),
-					'page' => array(
+					'page'   => array(
 						'required'          => true,
 						'type'              => 'integer',
 						'sanitize_callback' => 'absint',
@@ -199,6 +203,140 @@ class Routes {
 						'sanitize_callback' => 'wp_strip_all_tags',
 					),
 				),
+			)
+		);
+
+		// Contact Form submissions from the view script. Public and nonce-free by
+		// design (cached pages outlive nonces); see ContactFormHandler.
+		register_rest_route(
+			self::NAMESPACE,
+			'/contact-form',
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( ContactFormHandler::class, 'rest' ),
+				'permission_callback' => '__return_true',
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/email-settings',
+			array(
+				array(
+					'methods'             => 'GET',
+					'callback'            => array( self::class, 'get_email_settings' ),
+					'permission_callback' => array( self::class, 'permission_check' ),
+				),
+				array(
+					'methods'             => 'POST',
+					'callback'            => array( self::class, 'save_email_settings' ),
+					'permission_callback' => array( self::class, 'permission_check' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NAMESPACE,
+			'/email/test',
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( self::class, 'send_test_email' ),
+				'permission_callback' => array( self::class, 'permission_check' ),
+				'args'                => array(
+					'to' => array(
+						'required'          => false,
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Email settings for the dashboard. The API key itself never leaves the
+	 * server; only whether one is set and its last four characters.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public static function get_email_settings(): \WP_REST_Response {
+		return rest_ensure_response( self::email_settings_payload( EmailSettings::get() ) );
+	}
+
+	/**
+	 * Save email settings. A `resend_api_key` param replaces the stored key; an
+	 * empty string clears it; leaving it out keeps it.
+	 *
+	 * @param \WP_REST_Request $request Request.
+	 * @return \WP_REST_Response
+	 */
+	public static function save_email_settings( \WP_REST_Request $request ): \WP_REST_Response {
+		$params = $request->get_json_params();
+		if ( ! is_array( $params ) ) {
+			$params = array();
+		}
+		return rest_ensure_response( self::email_settings_payload( EmailSettings::update( $params ) ) );
+	}
+
+	/**
+	 * Settings plus the derived values the screen shows.
+	 *
+	 * @param array $settings Saved settings.
+	 * @return array
+	 */
+	public static function email_settings_payload( array $settings ): array {
+		$host = preg_replace( '/^www\./i', '', (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+		return array(
+			'settings'        => $settings,
+			'key'             => EmailSettings::key_status(),
+			'from_effective'  => EmailSettings::from_email(),
+			'domain_mismatch' => EmailSettings::from_domain_mismatch(),
+			'site_host'       => strtolower( (string) $host ),
+			'last_error'      => EmailSettings::last_error(),
+			'last_sent'       => EmailSettings::last_sent(),
+			'now'             => time(),
+			'test_passed'     => EmailSettings::test_passed(),
+			'entries'         => array(
+				'total' => Entries::total(),
+				'new'   => Entries::new_count(),
+				'url'   => Entries::list_url(),
+			),
+			'admin_email'     => (string) get_option( 'admin_email' ),
+		);
+	}
+
+	/**
+	 * Send a test email through the configured route.
+	 *
+	 * @param \WP_REST_Request $request Request.
+	 * @return \WP_REST_Response
+	 */
+	public static function send_test_email( \WP_REST_Request $request ): \WP_REST_Response {
+		$to = ContactFormHandler::address_list( (string) $request->get_param( 'to' ), true );
+		$to = array_slice( $to, 0, 1 );
+
+		$site   = wp_specialchars_decode( (string) get_bloginfo( 'name' ), ENT_QUOTES );
+		$text   = __( 'This is a test email from Axiom Blocks. If you can read it, your contact forms can deliver email.', 'axiom-blocks' );
+		$result = Mailer::send(
+			array(
+				'to'      => $to,
+				/* translators: %s: site title. */
+				'subject' => sprintf( __( 'Test email from %s', 'axiom-blocks' ), $site ),
+				'html'    => '<p style="font-family:sans-serif">' . esc_html( $text ) . '</p>',
+				'text'    => $text,
+			)
+		);
+
+		if ( $result['ok'] ) {
+			EmailSettings::mark_test_passed();
+		}
+
+		return rest_ensure_response(
+			array(
+				'ok'       => $result['ok'],
+				'route'    => $result['route'],
+				'to'       => $to[0] ?? '',
+				'attempts' => $result['attempts'],
 			)
 		);
 	}
@@ -245,7 +383,7 @@ class Routes {
 				if ( null !== $variant ) {
 					if ( isset( $variant['variant_key'] ) ) {
 						$effective_key = $variant['variant_key'];
-						$stored = $payload;
+						$stored        = $payload;
 						if ( isset( $variant['card'] ) ) {
 							$stored['card'] = $variant['card'];
 						}

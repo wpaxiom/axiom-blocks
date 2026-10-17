@@ -3,7 +3,7 @@
  * Deactivation feedback.
  *
  * Shows an optional, skippable modal when the admin deactivates the plugin and
- * — only if they actively submit it — forwards the chosen reason to our
+ * (only if they actively submit it) forwards the chosen reason to our
  * feedback endpoint. Nothing is sent on skip/cancel, and no data leaves the
  * site unless the user clicks "Submit & Deactivate" (wp.org Guideline 7: no
  * phoning home without explicit, opt-in consent).
@@ -125,7 +125,7 @@ class Feedback {
 					'submit'   => __( 'Submit & Deactivate', 'axiom-blocks' ),
 					'skip'     => __( 'Skip & Deactivate', 'axiom-blocks' ),
 					'cancel'   => __( 'Cancel', 'axiom-blocks' ),
-					'privacy'  => __( 'Only the option you choose and anything you type is sent — never your content, email, or site address.', 'axiom-blocks' ),
+					'privacy'  => __( 'Only the option you choose and anything you type is sent, never your content, email, or site address.', 'axiom-blocks' ),
 				),
 			)
 		);

@@ -1,0 +1,58 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/contact-form-hidden",
+	"version": "1.1.0",
+	"title": "Hidden Field",
+	"category": "axiom-blocks",
+	"description": "A value sent with the form but not shown: fixed text, page URL, page title or a URL parameter.",
+	"keywords": [
+		"hidden",
+		"utm",
+		"source",
+		"tracking"
+	],
+	"textdomain": "axiom-blocks",
+	"parent": [
+		"axiom-blocks/contact-form",
+		"axiom-blocks/contact-form-group"
+	],
+	"attributes": {
+		"fieldKey": {
+			"type": "string",
+			"default": ""
+		},
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"defaultValue": {
+			"type": "string",
+			"default": ""
+		},
+		"hiddenSource": {
+			"type": "string",
+			"default": "static"
+		},
+		"hiddenParam": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"usesContext": [
+		"axiom-blocks/cfFormId",
+		"axiom-blocks/cfRequiredMarker",
+		"axiom-blocks/cfRequiredText",
+		"axiom-blocks/cfOptionalText",
+		"axiom-blocks/cfHelpPosition",
+		"axiom-blocks/cfFloating",
+		"axiom-blocks/cfErrorDisplay",
+		"axiom-blocks/cfLabelPosition"
+	],
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
+}

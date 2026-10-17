@@ -1,0 +1,91 @@
+{
+	"block": {
+		"vars": {
+			"--ab-ss-bar-bw-t": "barBorderTopWidth",
+			"--ab-ss-bar-bw-r": "barBorderRightWidth",
+			"--ab-ss-bar-bw-b": "barBorderBottomWidth",
+			"--ab-ss-bar-bw-l": "barBorderLeftWidth",
+			"--ab-ss-bar-bc": "barBorderColor",
+			"--ab-ss-bar-r-tl": "barRadiusTopLeft",
+			"--ab-ss-bar-r-tr": "barRadiusTopRight",
+			"--ab-ss-bar-r-br": "barRadiusBottomRight",
+			"--ab-ss-bar-r-bl": "barRadiusBottomLeft",
+			"--ab-ss-bar-sh": "barShadow",
+			"--ab-ss-gap": "gap",
+			"--ab-ss-dir": "direction",
+			"--ab-ss-justify": "justify",
+			"--ab-ss-float-top": "floatOffset",
+			"--ab-ss-lead-c": "leadColor",
+			"--ab-ss-lead-gap": "leadGap",
+			"--ab-ss-btn-c": "btnColor",
+			"--ab-ss-btn-c-h": "btnColorHover",
+			"--ab-ss-btn-bg": "btnBg",
+			"--ab-ss-btn-bg-h": "btnBgHover",
+			"--ab-ss-btn-bc": "btnBorderColor",
+			"--ab-ss-btn-bc-h": "btnBorderColorHover",
+			"--ab-ss-btn-bw-t": "btnBorderTopWidth",
+			"--ab-ss-btn-bw-r": "btnBorderRightWidth",
+			"--ab-ss-btn-bw-b": "btnBorderBottomWidth",
+			"--ab-ss-btn-bw-l": "btnBorderLeftWidth",
+			"--ab-ss-btn-r-tl": "btnRadiusTopLeft",
+			"--ab-ss-btn-r-tr": "btnRadiusTopRight",
+			"--ab-ss-btn-r-br": "btnRadiusBottomRight",
+			"--ab-ss-btn-r-bl": "btnRadiusBottomLeft",
+			"--ab-ss-btn-sh": "btnShadow",
+			"--ab-ss-btn-sh-h": "btnShadowHover",
+			"--ab-ss-btn-pt": "btnPaddingTop",
+			"--ab-ss-btn-pr": "btnPaddingRight",
+			"--ab-ss-btn-pb": "btnPaddingBottom",
+			"--ab-ss-btn-pl": "btnPaddingLeft",
+			"--ab-ss-btn-size": "btnSize",
+			"--ab-ss-btn-gap": "btnGap",
+			"--ab-ss-copied": "copiedBg",
+			"--ab-ss-ic": "iconColor",
+			"--ab-ss-ic-h": "iconColorHover",
+			"--ab-ss-ic-size": "iconSize"
+		},
+		"borders": [
+			[
+				"--ab-ss-bar-bs",
+				"barBorderStyle",
+				[
+					"barBorderTopWidth",
+					"barBorderRightWidth",
+					"barBorderBottomWidth",
+					"barBorderLeftWidth"
+				]
+			],
+			[
+				"--ab-ss-btn-bs",
+				"btnBorderStyle",
+				[
+					"btnBorderTopWidth",
+					"btnBorderRightWidth",
+					"btnBorderBottomWidth",
+					"btnBorderLeftWidth"
+				]
+			]
+		],
+		"typography": {
+			"lead": "--ab-ss-lead",
+			"btn": "--ab-ss-btn"
+		},
+		"backgrounds": [
+			[
+				"bar",
+				"barBg",
+				"--ab-ss-bar-bg"
+			]
+		]
+	},
+	"typographySuffixes": {
+		"FontFamily": "font-family",
+		"FontWeight": "font-weight",
+		"FontSize": "font-size",
+		"LineHeight": "line-height",
+		"LetterSpacing": "letter-spacing",
+		"TextTransform": "text-transform",
+		"TextDecoration": "text-decoration",
+		"TextAlign": "text-align"
+	}
+}

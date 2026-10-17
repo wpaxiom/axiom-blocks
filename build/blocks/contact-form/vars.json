@@ -1,0 +1,303 @@
+{
+	"form": {
+		"vars": {
+			"--ab-cf-form-bw-t": "formBorderTopWidth",
+			"--ab-cf-form-bw-r": "formBorderRightWidth",
+			"--ab-cf-form-bw-b": "formBorderBottomWidth",
+			"--ab-cf-form-bw-l": "formBorderLeftWidth",
+			"--ab-cf-form-bc": "formBorderColor",
+			"--ab-cf-form-r-tl": "formRadiusTopLeft",
+			"--ab-cf-form-r-tr": "formRadiusTopRight",
+			"--ab-cf-form-r-br": "formRadiusBottomRight",
+			"--ab-cf-form-r-bl": "formRadiusBottomLeft",
+			"--ab-cf-form-sh": "formShadow",
+			"--ab-cf-form-pt": "formPaddingTop",
+			"--ab-cf-form-pr": "formPaddingRight",
+			"--ab-cf-form-pb": "formPaddingBottom",
+			"--ab-cf-form-pl": "formPaddingLeft",
+			"--ab-cf-form-mw": "formMaxWidth",
+			"--ab-cf-gap-r": "rowGap",
+			"--ab-cf-gap-c": "columnGap",
+			"--ab-cf-label-c": "labelColor",
+			"--ab-cf-req-c": "requiredColor",
+			"--ab-cf-label-gap": "labelGap",
+			"--ab-cf-in-ta": "inputAlign",
+			"--ab-cf-in-c": "inputColor",
+			"--ab-cf-in-c-h": "inputColorHover",
+			"--ab-cf-in-c-f": "inputColorFocus",
+			"--ab-cf-in-c-e": "inputColorError",
+			"--ab-cf-in-ph": "inputPlaceholder",
+			"--ab-cf-in-bg": "inputBg",
+			"--ab-cf-in-bg-h": "inputBgHover",
+			"--ab-cf-in-bg-f": "inputBgFocus",
+			"--ab-cf-in-bg-e": "inputBgError",
+			"--ab-cf-in-bw-t": "inputBorderTopWidth",
+			"--ab-cf-in-bw-r": "inputBorderRightWidth",
+			"--ab-cf-in-bw-b": "inputBorderBottomWidth",
+			"--ab-cf-in-bw-l": "inputBorderLeftWidth",
+			"--ab-cf-in-bc": "inputBorderColor",
+			"--ab-cf-in-bc-h": "inputBorderColorHover",
+			"--ab-cf-in-bc-f": "inputBorderColorFocus",
+			"--ab-cf-in-bc-e": "inputBorderColorError",
+			"--ab-cf-in-r-tl": "inputRadiusTopLeft",
+			"--ab-cf-in-r-tr": "inputRadiusTopRight",
+			"--ab-cf-in-r-br": "inputRadiusBottomRight",
+			"--ab-cf-in-r-bl": "inputRadiusBottomLeft",
+			"--ab-cf-in-sh": "inputShadow",
+			"--ab-cf-in-sh-h": "inputShadowHover",
+			"--ab-cf-in-sh-f": "inputShadowFocus",
+			"--ab-cf-in-sh-e": "inputShadowError",
+			"--ab-cf-in-pt": "inputPaddingTop",
+			"--ab-cf-in-pr": "inputPaddingRight",
+			"--ab-cf-in-pb": "inputPaddingBottom",
+			"--ab-cf-in-pl": "inputPaddingLeft",
+			"--ab-cf-in-h": "inputHeight",
+			"--ab-cf-ta-h": "textareaHeight",
+			"--ab-cf-icon-c": "iconColor",
+			"--ab-cf-icon-c-f": "iconColorFocus",
+			"--ab-cf-chev-c": "chevronColor",
+			"--ab-cf-icon-s": "iconSize",
+			"--ab-cf-icon-g": "iconGap",
+			"--ab-cf-chev-s": "chevronSize",
+			"--ab-cf-ch-bg": "choiceBg",
+			"--ab-cf-ch-bg-h": "choiceBgHover",
+			"--ab-cf-ch-bg-f": "choiceBgFocus",
+			"--ab-cf-ch-bg-k": "choiceBgChecked",
+			"--ab-cf-ch-mark": "checkColor",
+			"--ab-cf-ch-lc": "choiceLabelColor",
+			"--ab-cf-ch-bw-t": "choiceBorderTopWidth",
+			"--ab-cf-ch-bw-r": "choiceBorderRightWidth",
+			"--ab-cf-ch-bw-b": "choiceBorderBottomWidth",
+			"--ab-cf-ch-bw-l": "choiceBorderLeftWidth",
+			"--ab-cf-ch-bc": "choiceBorderColor",
+			"--ab-cf-ch-bc-h": "choiceBorderColorHover",
+			"--ab-cf-ch-bc-f": "choiceBorderColorFocus",
+			"--ab-cf-ch-bc-k": "choiceBorderColorChecked",
+			"--ab-cf-ch-r": "choiceRadius",
+			"--ab-cf-ch-s": "choiceSize",
+			"--ab-cf-ch-g": "choiceGap",
+			"--ab-cf-cb-c": "chbColor",
+			"--ab-cf-cb-c-h": "chbColorHover",
+			"--ab-cf-cb-c-k": "chbColorChecked",
+			"--ab-cf-cb-bg": "chbBg",
+			"--ab-cf-cb-bg-h": "chbBgHover",
+			"--ab-cf-cb-bg-k": "chbBgChecked",
+			"--ab-cf-cb-bw-t": "chbBorderTopWidth",
+			"--ab-cf-cb-bw-r": "chbBorderRightWidth",
+			"--ab-cf-cb-bw-b": "chbBorderBottomWidth",
+			"--ab-cf-cb-bw-l": "chbBorderLeftWidth",
+			"--ab-cf-cb-bc": "chbBorderColor",
+			"--ab-cf-cb-bc-h": "chbBorderColorHover",
+			"--ab-cf-cb-bc-k": "chbBorderColorChecked",
+			"--ab-cf-cb-r-tl": "chbRadiusTopLeft",
+			"--ab-cf-cb-r-tr": "chbRadiusTopRight",
+			"--ab-cf-cb-r-br": "chbRadiusBottomRight",
+			"--ab-cf-cb-r-bl": "chbRadiusBottomLeft",
+			"--ab-cf-cb-sh": "chbShadow",
+			"--ab-cf-cb-sh-h": "chbShadowHover",
+			"--ab-cf-cb-sh-k": "chbShadowChecked",
+			"--ab-cf-cb-pt": "chbPaddingTop",
+			"--ab-cf-cb-pr": "chbPaddingRight",
+			"--ab-cf-cb-pb": "chbPaddingBottom",
+			"--ab-cf-cb-pl": "chbPaddingLeft",
+			"--ab-cf-cb-g": "chbGap",
+			"--ab-cf-sw-t": "switchTrack",
+			"--ab-cf-sw-on": "switchTrackOn",
+			"--ab-cf-sw-th": "switchThumb",
+			"--ab-cf-sw-s": "switchSize",
+			"--ab-cf-help-c": "helpColor",
+			"--ab-cf-err-c": "errorColor",
+			"--ab-cf-lg-c": "legendColor",
+			"--ab-cf-grp-bg": "groupBg",
+			"--ab-cf-grp-bw-t": "groupBorderTopWidth",
+			"--ab-cf-grp-bw-r": "groupBorderRightWidth",
+			"--ab-cf-grp-bw-b": "groupBorderBottomWidth",
+			"--ab-cf-grp-bw-l": "groupBorderLeftWidth",
+			"--ab-cf-grp-bc": "groupBorderColor",
+			"--ab-cf-grp-r-tl": "groupRadiusTopLeft",
+			"--ab-cf-grp-r-tr": "groupRadiusTopRight",
+			"--ab-cf-grp-r-br": "groupRadiusBottomRight",
+			"--ab-cf-grp-r-bl": "groupRadiusBottomLeft",
+			"--ab-cf-grp-pt": "groupPaddingTop",
+			"--ab-cf-grp-pr": "groupPaddingRight",
+			"--ab-cf-grp-pb": "groupPaddingBottom",
+			"--ab-cf-grp-pl": "groupPaddingLeft",
+			"--ab-cf-msg-c": "msgColor",
+			"--ab-cf-msg-c-e": "msgColorError",
+			"--ab-cf-msg-bg": "msgBg",
+			"--ab-cf-msg-bg-e": "msgBgError",
+			"--ab-cf-msg-bw-t": "msgBorderTopWidth",
+			"--ab-cf-msg-bw-r": "msgBorderRightWidth",
+			"--ab-cf-msg-bw-b": "msgBorderBottomWidth",
+			"--ab-cf-msg-bw-l": "msgBorderLeftWidth",
+			"--ab-cf-msg-bc": "msgBorderColor",
+			"--ab-cf-msg-bc-e": "msgBorderColorError",
+			"--ab-cf-msg-r-tl": "msgRadiusTopLeft",
+			"--ab-cf-msg-r-tr": "msgRadiusTopRight",
+			"--ab-cf-msg-r-br": "msgRadiusBottomRight",
+			"--ab-cf-msg-r-bl": "msgRadiusBottomLeft",
+			"--ab-cf-msg-pt": "msgPaddingTop",
+			"--ab-cf-msg-pr": "msgPaddingRight",
+			"--ab-cf-msg-pb": "msgPaddingBottom",
+			"--ab-cf-msg-pl": "msgPaddingLeft"
+		},
+		"borders": [
+			[
+				"--ab-cf-form-bs",
+				"formBorderStyle",
+				[
+					"formBorderTopWidth",
+					"formBorderRightWidth",
+					"formBorderBottomWidth",
+					"formBorderLeftWidth"
+				]
+			],
+			[
+				"--ab-cf-in-bs",
+				"inputBorderStyle",
+				[
+					"inputBorderTopWidth",
+					"inputBorderRightWidth",
+					"inputBorderBottomWidth",
+					"inputBorderLeftWidth"
+				]
+			],
+			[
+				"--ab-cf-ch-bs",
+				"choiceBorderStyle",
+				[
+					"choiceBorderTopWidth",
+					"choiceBorderRightWidth",
+					"choiceBorderBottomWidth",
+					"choiceBorderLeftWidth"
+				]
+			],
+			[
+				"--ab-cf-cb-bs",
+				"chbBorderStyle",
+				[
+					"chbBorderTopWidth",
+					"chbBorderRightWidth",
+					"chbBorderBottomWidth",
+					"chbBorderLeftWidth"
+				]
+			],
+			[
+				"--ab-cf-grp-bs",
+				"groupBorderStyle",
+				[
+					"groupBorderTopWidth",
+					"groupBorderRightWidth",
+					"groupBorderBottomWidth",
+					"groupBorderLeftWidth"
+				]
+			],
+			[
+				"--ab-cf-msg-bs",
+				"msgBorderStyle",
+				[
+					"msgBorderTopWidth",
+					"msgBorderRightWidth",
+					"msgBorderBottomWidth",
+					"msgBorderLeftWidth"
+				]
+			]
+		],
+		"typography": {
+			"label": "--ab-cf-label",
+			"input": "--ab-cf-in",
+			"choice": "--ab-cf-ch",
+			"chb": "--ab-cf-cb",
+			"help": "--ab-cf-help",
+			"legend": "--ab-cf-lg",
+			"msg": "--ab-cf-msg"
+		},
+		"backgrounds": [
+			[
+				"form",
+				"formBg",
+				"--ab-cf-form-bg"
+			]
+		]
+	},
+	"submit": {
+		"vars": {
+			"--ab-cfb-c": "btnColor",
+			"--ab-cfb-c-h": "btnColorHover",
+			"--ab-cfb-bw-t": "btnBorderTopWidth",
+			"--ab-cfb-bw-r": "btnBorderRightWidth",
+			"--ab-cfb-bw-b": "btnBorderBottomWidth",
+			"--ab-cfb-bw-l": "btnBorderLeftWidth",
+			"--ab-cfb-bc": "btnBorderColor",
+			"--ab-cfb-bc-h": "btnBorderColorHover",
+			"--ab-cfb-r-tl": "btnRadiusTopLeft",
+			"--ab-cfb-r-tr": "btnRadiusTopRight",
+			"--ab-cfb-r-br": "btnRadiusBottomRight",
+			"--ab-cfb-r-bl": "btnRadiusBottomLeft",
+			"--ab-cfb-sh": "btnShadow",
+			"--ab-cfb-sh-h": "btnShadowHover",
+			"--ab-cfb-pt": "btnPaddingTop",
+			"--ab-cfb-pr": "btnPaddingRight",
+			"--ab-cfb-pb": "btnPaddingBottom",
+			"--ab-cfb-pl": "btnPaddingLeft",
+			"--ab-cfb-h": "btnHeight",
+			"--ab-cfb-icon-s": "btnIconSize",
+			"--ab-cfb-icon-g": "btnIconGap",
+			"--ab-cfb-wc": "buttonWidthCustom"
+		},
+		"borders": [
+			[
+				"--ab-cfb-bs",
+				"btnBorderStyle",
+				[
+					"btnBorderTopWidth",
+					"btnBorderRightWidth",
+					"btnBorderBottomWidth",
+					"btnBorderLeftWidth"
+				]
+			]
+		],
+		"typography": {
+			"": "--ab-cfb"
+		},
+		"backgrounds": [
+			[
+				"btn",
+				"btnBg",
+				"--ab-cfb-bg"
+			],
+			[
+				"btnHover",
+				"btnBgHover",
+				"--ab-cfb-bg-h"
+			]
+		]
+	},
+	"field": {
+		"vars": {
+			"--ab-cf-label-c": "ovLabelColor",
+			"--ab-cf-in-c": "ovInputColor",
+			"--ab-cf-in-bg": "ovInputBg",
+			"--ab-cf-in-bc": "ovInputBorderColor",
+			"--ab-cf-in-bc-f": "ovInputBorderColorFocus",
+			"--ab-cf-in-r-tl": "ovInputRadius",
+			"--ab-cf-in-r-tr": "ovInputRadius",
+			"--ab-cf-in-r-br": "ovInputRadius",
+			"--ab-cf-in-r-bl": "ovInputRadius",
+			"--ab-cf-in-h": "ovInputHeight"
+		},
+		"borders": [],
+		"typography": {},
+		"backgrounds": []
+	},
+	"typographySuffixes": {
+		"FontFamily": "font-family",
+		"FontWeight": "font-weight",
+		"FontSize": "font-size",
+		"LineHeight": "line-height",
+		"LetterSpacing": "letter-spacing",
+		"TextTransform": "text-transform",
+		"TextDecoration": "text-decoration",
+		"TextAlign": "text-align"
+	}
+}

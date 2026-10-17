@@ -3,7 +3,7 @@
  * Plugin Name:       Axiom Blocks - Page Builder Toolkit
  * Plugin URI:        https://www.wpaxiom.com/plugins/axiom-blocks
  * Description:       Advanced Gutenberg blocks for the WordPress block editor and Full Site Editing. Built for extensibility with WooCommerce and third-party integrations.
- * Version:           1.0.9
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            WPAxiom
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'AXIOM_BLOCKS_VERSION', '1.0.9' );
+define( 'AXIOM_BLOCKS_VERSION', '1.1.0' );
 define( 'AXIOM_BLOCKS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AXIOM_BLOCKS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'AXIOM_BLOCKS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -50,10 +50,11 @@ if ( file_exists( $axiom_blocks_autoloader ) ) {
 /**
  * Activation hook
  *
+ * @param bool $network_wide Whether the plugin was network activated.
  * @return void
  */
-function axiom_blocks_activate(): void {
-	// Activation logic here.
+function axiom_blocks_activate( $network_wide = false ): void {
+	\AxiomBlocks\Admin\PluginLinks::on_activate( (bool) $network_wide );
 	flush_rewrite_rules();
 }
 register_activation_hook( __FILE__, __NAMESPACE__ . '\\axiom_blocks_activate' );
@@ -65,6 +66,7 @@ register_activation_hook( __FILE__, __NAMESPACE__ . '\\axiom_blocks_activate' );
  */
 function axiom_blocks_deactivate(): void {
 	// Deactivation logic here.
+	\AxiomBlocks\Forms\Entries::unschedule();
 	flush_rewrite_rules();
 }
 register_deactivation_hook( __FILE__, __NAMESPACE__ . '\\axiom_blocks_deactivate' );

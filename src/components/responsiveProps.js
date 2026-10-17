@@ -99,6 +99,12 @@ export const ALIGN_FLEX_MAP = {
 	right: 'flex-end',
 };
 
+/** Per-device span + order shared by every Contact Form field, group and button. */
+const CONTACT_FORM_PLACEMENT = [
+	{ key: 'span', type: 'number' },
+	{ key: 'order', type: 'number' },
+];
+
 export const RESPONSIVE_PROPS = {
 	'axiom-blocks/advanced-section': [
 		{ key: 'gridColumns', type: 'number' },
@@ -260,6 +266,50 @@ export const RESPONSIVE_PROPS = {
 	'axiom-blocks/post-filter-reset': [
 		{ key: 'widthCustom', type: 'string' },
 	],
+	'axiom-blocks/contact-form': [
+		{ key: 'columns', type: 'number' },
+		{ key: 'tracks', type: 'string' },
+		{ key: 'rowAlign', type: 'string' },
+		{ key: 'labelPosition', type: 'string' },
+		{ key: 'labelWidth', type: 'string' },
+		{ key: 'rowGap', type: 'string' },
+		{ key: 'columnGap', type: 'string' },
+		{ key: 'formPaddingTop', type: 'string' },
+		{ key: 'formPaddingRight', type: 'string' },
+		{ key: 'formPaddingBottom', type: 'string' },
+		{ key: 'formPaddingLeft', type: 'string' },
+		{ key: 'formMaxWidth', type: 'string' },
+	],
+	'axiom-blocks/contact-form-group': [
+		...CONTACT_FORM_PLACEMENT,
+		{ key: 'columns', type: 'number' },
+		{ key: 'tracks', type: 'string' },
+	],
+	'axiom-blocks/contact-form-submit': [
+		...CONTACT_FORM_PLACEMENT,
+		{ key: 'buttonWidth', type: 'string' },
+		{ key: 'buttonWidthCustom', type: 'string' },
+		{ key: 'btnAlign', type: 'string' },
+		{ key: 'btnPaddingTop', type: 'string' },
+		{ key: 'btnPaddingRight', type: 'string' },
+		{ key: 'btnPaddingBottom', type: 'string' },
+		{ key: 'btnPaddingLeft', type: 'string' },
+	],
+	'axiom-blocks/social-share': [
+		{ key: 'direction', type: 'string' },
+		{ key: 'justify', type: 'string' },
+		{ key: 'gap', type: 'string' },
+		{ key: 'btnSize', type: 'string' },
+		{ key: 'iconSize', type: 'string' },
+	],
+	'axiom-blocks/contact-form-text': CONTACT_FORM_PLACEMENT,
+	'axiom-blocks/contact-form-email': CONTACT_FORM_PLACEMENT,
+	'axiom-blocks/contact-form-phone': CONTACT_FORM_PLACEMENT,
+	'axiom-blocks/contact-form-textarea': CONTACT_FORM_PLACEMENT,
+	'axiom-blocks/contact-form-select': CONTACT_FORM_PLACEMENT,
+	'axiom-blocks/contact-form-choices': CONTACT_FORM_PLACEMENT,
+	'axiom-blocks/contact-form-consent': CONTACT_FORM_PLACEMENT,
+	'axiom-blocks/contact-form-date': CONTACT_FORM_PLACEMENT,
 };
 
 /**

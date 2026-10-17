@@ -1,0 +1,110 @@
+/**
+ * Contact Form: editor-only affordances.
+ */
+
+// One column on the previewed device: stack everything, as the front end does
+// per breakpoint.
+.editor-styles-wrapper .ab-cf.is-stacked > .ab-cf__fields > *,
+.editor-styles-wrapper .ab-cf-group.is-stacked > .ab-cf__fields > * {
+	grid-column: 1 / -1 !important;
+}
+
+// The block appender is a grid item too; keep it on its own row.
+.editor-styles-wrapper .ab-cf__fields > .block-list-appender {
+	grid-column: 1 / -1;
+}
+
+// Preview controls are inert on the canvas.
+.editor-styles-wrapper .ab-cf .ab-cf-control,
+.editor-styles-wrapper .ab-cf .ab-cf-choice__input {
+	pointer-events: none;
+}
+
+// Labels are RichText: keep their caret visible.
+.editor-styles-wrapper .ab-cf .ab-cf-label [contenteditable] {
+	cursor: text;
+}
+
+// Error preview: only when "Preview in the editor" is set to Errors.
+.ab-cf-error--preview {
+	display: none;
+}
+
+.editor-styles-wrapper .ab-cf.is-preview-error {
+
+	.ab-cf-field:not(.ab-cf-field--consent) .ab-cf-error--preview,
+	.ab-cf-field--consent .ab-cf-error--preview {
+		display: block;
+	}
+
+	&[data-ab-cf-display="summary"] .ab-cf-error--preview {
+		display: none;
+	}
+
+	.ab-cf-control {
+		color: var(--ab-cf-in-c-e, var(--ab-cf-in-c, inherit));
+		background: var(--ab-cf-in-bg-e, var(--ab-cf-in-bg, #fff));
+		border-color: var(--ab-cf-in-bc-e, #dc2626);
+		box-shadow: var(--ab-cf-in-sh-e, var(--ab-cf-in-sh, none));
+	}
+}
+
+// Hidden fields show as a small chip so authors can find them.
+.ab-cf-hidden-chip {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 10px;
+	border: 1px dashed #c3c4c7;
+	border-radius: 4px;
+	color: #50575e;
+	font-size: 12px;
+
+	svg {
+		width: 16px;
+		height: 16px;
+	}
+}
+
+// Inspector: the options list.
+.ab-cf-options__row {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-bottom: 6px;
+
+	input {
+		min-width: 0;
+		flex: 1 1 0;
+		height: 30px;
+		padding: 0 8px;
+		border: 1px solid #dcdcde;
+		border-radius: 4px;
+		font-size: 12px;
+	}
+
+	.ab-cf-options__value {
+		flex-basis: 0;
+		flex-grow: 0.7;
+	}
+}
+
+// Inspector: delivery line under the Email panel.
+.ab-cf-email-route {
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid #f0f0f1;
+
+	p {
+		margin: 0 0 8px;
+		font-size: 12px;
+	}
+
+	.ab-cf-email-route__result.is-ok {
+		color: #00a32a;
+	}
+
+	.ab-cf-email-route__result.is-error {
+		color: #d63638;
+	}
+}

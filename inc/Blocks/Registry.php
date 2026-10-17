@@ -76,6 +76,8 @@ class Registry {
 		self::register_post_filter_reset();
 		self::register_css_grid();
 		self::register_grid_item();
+		self::register_contact_form();
+		self::register_social_share();
 
 		// Handle frontend rendering of disabled blocks.
 		add_filter( 'render_block', array( self::class, 'render_disabled_block_frontend' ), 10, 2 );
@@ -578,6 +580,29 @@ class Registry {
 				},
 			)
 		);
+	}
+
+	/**
+	 * Register the Contact Form family: the form plus its field, group and
+	 * submit child blocks. The form's dashboard toggle gates them all (children
+	 * are not in the enabled map, and render nothing without their form).
+	 *
+	 * @return void
+	 */
+	private static function register_contact_form(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/contact-form' );
+		foreach ( array( 'text', 'email', 'phone', 'textarea', 'select', 'choices', 'consent', 'date', 'hidden', 'group', 'submit' ) as $child ) {
+			register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/contact-form/contact-form-' . $child );
+		}
+	}
+
+	/**
+	 * Register the Social Share block.
+	 *
+	 * @return void
+	 */
+	private static function register_social_share(): void {
+		register_block_type( AXIOM_BLOCKS_PLUGIN_DIR . 'build/blocks/social-share' );
 	}
 
 	/**

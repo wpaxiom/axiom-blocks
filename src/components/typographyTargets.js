@@ -50,6 +50,17 @@ export const TYPOGRAPHY_TARGETS = {
 	'axiom-blocks/post-filter-taxonomy': [ '' ],
 	'axiom-blocks/post-filter-sort': [ '' ],
 	'axiom-blocks/post-filter-reset': [ '' ],
+	'axiom-blocks/contact-form': [
+		'label',
+		'input',
+		'choice',
+		'chb',
+		'help',
+		'legend',
+		'msg',
+	],
+	'axiom-blocks/contact-form-submit': [ '' ],
+	'axiom-blocks/social-share': [ 'lead', 'btn' ],
 };
 
 /** Typography base attribute suffixes — mirrors KEYS in TypographyPanel.js. */

@@ -1,11 +1,11 @@
 === Axiom Blocks - Page Builder Toolkit ===
-Contributors: wpaxiom, shuvo586
+Contributors: wpaxiom
 Donate link: https://wpaxiom.com/donate
 Tags: gutenberg blocks, gutenberg, blocks, page builder, block editor
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.9
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,12 @@ A collection of Gutenberg blocks: post grid, post filter, tabs, accordion, conte
 Axiom Blocks adds the blocks the WordPress editor leaves out. Use core blocks for paragraphs, headings and images, and Axiom for the rest.
 
 **[Try the live demo](https://wordpress.org/plugins/axiom-blocks/?preview=1)** - a full landing page built with these blocks, in a temporary WordPress you can open the editor on and change. Nothing to install.
+
+[youtube https://www.youtube.com/watch?v=V3Ilqfiymkc]
+
+[More Axiom Blocks video tutorials](https://www.youtube.com/playlist?list=PLNsJLdrHnJGs)
+
+**[Documentation](https://www.wpaxiom.com/docs/axiom-blocks?utm_source=wporg&utm_medium=readme)** is on wpaxiom.com.
 
 = Layout Blocks =
 
@@ -48,6 +54,11 @@ Axiom Blocks adds the blocks the WordPress editor leaves out. Use core blocks fo
 = Dynamic Blocks =
 
 * **Post Grid** - Show your posts in a grid or list, with the card built from Post Image, Post Terms, Post Title, Post Meta, Post Excerpt, and Post Read More blocks you arrange and style yourself. Query by post type, taxonomy, or author, skip or exclude posts, and choose numbered or load-more pagination. Adds a featured card, a fallback image for posts without one, read time, per-field meta labels, and your own no-results message.
+* **Post Filter** - Search, filter and sort a Post Grid without reloading the page.
+
+= Form Blocks =
+
+* **Contact Form** - A contact form you build from field blocks (text, email, phone, message, select, radio and checkbox choices, consent, date, hidden) with full control over layout and style: columns or custom column widths per device, labels above, beside, floating or hidden, icons inside fields, choices as buttons, and every part styled with hover, focus and error states. Every message is saved as an entry before the email goes out, so a failed email never loses one. Sends through your site's own mail (any SMTP plugin works) or through Resend. Works with JavaScript disabled, and has no nonce, so cached pages keep working.
 
 = WooCommerce Blocks =
 
@@ -83,13 +94,13 @@ Axiom Blocks adds the blocks the WordPress editor leaves out. Use core blocks fo
 
 = Getting Started =
 
-After activation, go to **Axiom Blocks → Blocks** in your WordPress admin to enable or disable individual blocks. Only enabled blocks will appear in the block inserter and load on your site.
+After activation, open **Axiom Blocks → Dashboard** in your WordPress admin. The Help tab has three first steps, video tutorials, the docs for every block, and links to support. The Block Manager tab turns individual blocks on or off; only enabled blocks appear in the block inserter and load on your site.
 
 == Frequently Asked Questions ==
 
 = Can I disable blocks I don't use? =
 
-Yes. Go to **Axiom Blocks → Blocks** in your WordPress admin to enable or disable individual blocks. Disabled blocks won't load any assets on your site.
+Yes. Go to **Axiom Blocks → Dashboard → Block Manager** in your WordPress admin to enable or disable individual blocks. Disabled blocks won't load any assets on your site.
 
 = Does this work with Full Site Editing (FSE) themes? =
 
@@ -103,9 +114,13 @@ No. Axiom Blocks only loads frontend assets for blocks that are actually used on
 
 No. Axiom Blocks is designed to work natively with the WordPress block editor (Gutenberg).
 
+= How do I make sure form emails arrive? =
+
+Many hosts do not deliver mail sent by WordPress. Either install an SMTP plugin (the Contact Form block uses it automatically) or choose Resend under **Axiom Blocks → Dashboard → Email** and add your API key. Then press **Send test** on the same tab. Every submission is saved under **Axiom Blocks → Form entries** before the email goes out, so a message is never lost when an email fails.
+
 = Do I need WooCommerce installed? =
 
-No. Axiom Blocks works on any WordPress site. The Trust Badges and Free Shipping Progress blocks are only shown in the block inserter when WooCommerce is active - you can also turn the integration off from **Axiom Blocks → Settings**.
+No. Axiom Blocks works on any WordPress site. The Trust Badges and Free Shipping Progress blocks are only shown in the block inserter when WooCommerce is active - you can also turn the integration off from **Axiom Blocks → Dashboard → Settings**.
 
 == Screenshots ==
 
@@ -118,6 +133,8 @@ No. Axiom Blocks works on any WordPress site. The Trust Badges and Free Shipping
 7. Testimonials - grid, carousel, or marquee, with ten styleable parts.
 8. Accordion - the Header part carries Normal, Hover and Active states.
 9. Counter - animated stats, with the icon chip styled like any other part.
+10. Help - first steps, video tutorials, docs for every block, support links and system info.
+11. Email - how form emails are sent, the last delivery result, and a test email.
 
 == Source Code ==
 
@@ -142,9 +159,13 @@ Development happens on GitHub: https://github.com/wpaxiom/axiom-blocks. Bug repo
 
 == Privacy ==
 
-During normal use, Axiom Blocks does not collect, store, or transmit any data, and makes no external connections.
+Axiom Blocks makes no external connections unless you turn one on, and stores no visitor data except what a Contact Form collects.
 
-The plugin includes one optional, opt-in connection to an external service:
+**Contact Form entries.** When a visitor submits a Contact Form block, the plugin saves what they entered, the page they sent it from and the time, as a private entry only administrators can see (Axiom Blocks > Form entries), and emails it to the addresses set on the form. No IP address is stored. Entries are included in WordPress's personal data export and erase tools (Tools > Export Personal Data and Erase Personal Data), and can be deleted automatically after a number of days you set under Axiom Blocks > Settings > Email, where saving entries can also be switched off. The plugin suggests matching text for your privacy policy under Settings > Privacy.
+
+The plugin includes two optional, opt-in connections to external services:
+
+**Resend (email delivery).** Off by default. Only if an administrator chooses Resend under Axiom Blocks > Dashboard > Email and adds a Resend API key does the plugin send Contact Form emails through the Resend API (api.resend.com) instead of the site's own mail. Each submission then sends Resend the recipient, Cc and Bcc addresses set on the form, the From name and address, the visitor's email address as Reply-To, the subject, and the message body, which contains everything the visitor entered and the page it was sent from. The "Send test email" button sends a short test message the same way. Resend is operated by Resend, Inc. Terms of service: https://resend.com/legal/terms-of-service - Privacy policy: https://resend.com/legal/privacy-policy
 
 **Deactivation feedback.** When you deactivate Axiom Blocks from the Plugins screen, a short form asks why. Only if you choose a reason and click "Submit & Deactivate" is anything sent. In that case the following is transmitted to our feedback service at insights.wpaxiom.com:
 
@@ -160,6 +181,12 @@ This service is operated by the plugin author. Privacy policy: https://wpaxiom.c
 Developers can redirect the feedback to their own server - or disable it entirely by returning an empty string - using the `axiom_blocks_feedback_endpoint` filter.
 
 == Changelog ==
+
+= 1.1.0 =
+* New Contact Form block with text, email, phone, message, select, choice, consent, date and hidden fields, plus field groups and a submit button. Forms support responsive layouts and field styling.
+* Form submissions are saved as private entries before email delivery. Admins can view entries under Axiom Blocks > Form entries, and WordPress personal data export and erase tools include them.
+* New Email tab for Contact Form delivery through WordPress mail or Resend, with a test email and delivery status.
+* New Help tab with first steps, video and documentation links, support links and system information. A one-time notice and plugin-row Get started link lead to it after activation.
 
 = 1.0.9 =
 * New block: CSS Grid - a layout grid for the designs the core Grid cannot build. Columns can be equal, auto-fit to a minimum width, or custom tracks such as 2fr 1fr 240px, and rows, auto sizes, flow direction, dense packing, gaps and alignment are all set per device. Track values are checked against a small safe set of units, so a typo falls back to equal columns instead of breaking the layout.
@@ -246,6 +273,9 @@ Developers can redirect the feedback to their own server - or disable it entirel
 * Full Site Editing (FSE) support.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds Contact Form, saved form entries, email delivery settings and a Help tab with first steps.
 
 = 1.0.9 =
 Adds the CSS Grid and Grid Item blocks for responsive grids with unequal columns and per-device item placement. Existing blocks and content are unchanged.

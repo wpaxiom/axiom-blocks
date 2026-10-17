@@ -1,0 +1,119 @@
+{
+	"facebook": {
+		"label": "Facebook",
+		"icon": "brand-facebook",
+		"color": "#0866ff",
+		"url": "https://www.facebook.com/sharer/sharer.php?u={url}"
+	},
+	"x": {
+		"label": "X",
+		"icon": "brand-x",
+		"color": "#000000",
+		"url": "https://x.com/intent/tweet?url={url}&text={text}&via={via}&hashtags={hashtags}"
+	},
+	"linkedin": {
+		"label": "LinkedIn",
+		"icon": "brand-linkedin",
+		"color": "#0a66c2",
+		"url": "https://www.linkedin.com/sharing/share-offsite/?url={url}"
+	},
+	"whatsapp": {
+		"label": "WhatsApp",
+		"icon": "brand-whatsapp",
+		"color": "#25d366",
+		"url": "https://wa.me/?text={text}%20{url}"
+	},
+	"telegram": {
+		"label": "Telegram",
+		"icon": "brand-telegram",
+		"color": "#26a5e4",
+		"url": "https://t.me/share/url?url={url}&text={text}"
+	},
+	"reddit": {
+		"label": "Reddit",
+		"icon": "brand-reddit",
+		"color": "#ff4500",
+		"url": "https://www.reddit.com/submit?url={url}&title={title}"
+	},
+	"pinterest": {
+		"label": "Pinterest",
+		"icon": "brand-pinterest",
+		"color": "#bd081c",
+		"url": "https://pinterest.com/pin/create/button/?url={url}&media={image}&description={title}"
+	},
+	"bluesky": {
+		"label": "Bluesky",
+		"icon": "brand-bluesky",
+		"color": "#1185fe",
+		"url": "https://bsky.app/intent/compose?text={text}%20{url}"
+	},
+	"threads": {
+		"label": "Threads",
+		"icon": "brand-threads",
+		"color": "#000000",
+		"url": "https://www.threads.com/intent/post?text={text}%20{url}"
+	},
+	"mastodon": {
+		"label": "Mastodon",
+		"icon": "brand-mastodon",
+		"color": "#6364ff",
+		"url": "https://mastodon.social/share?text={text}%20{url}",
+		"instance": true
+	},
+	"tumblr": {
+		"label": "Tumblr",
+		"icon": "brand-tumblr",
+		"color": "#36465d",
+		"url": "https://www.tumblr.com/widgets/share/tool?canonicalUrl={url}&title={title}"
+	},
+	"vk": {
+		"label": "VK",
+		"icon": "brand-vk",
+		"color": "#0077ff",
+		"url": "https://vk.com/share.php?url={url}&title={title}"
+	},
+	"xing": {
+		"label": "Xing",
+		"icon": "brand-xing",
+		"color": "#006567",
+		"url": "https://www.xing.com/spi/shares/new?url={url}"
+	},
+	"line": {
+		"label": "LINE",
+		"icon": "brand-line",
+		"color": "#00c300",
+		"url": "https://social-plugins.line.me/lineit/share?url={url}"
+	},
+	"email": {
+		"label": "Email",
+		"icon": "mail",
+		"color": "#4b5563",
+		"url": "mailto:?subject={title}&body={text}%20{url}",
+		"popup": false
+	},
+	"sms": {
+		"label": "SMS",
+		"icon": "message-circle",
+		"color": "#4b5563",
+		"url": "sms:?&body={text}%20{url}",
+		"popup": false
+	},
+	"copy": {
+		"label": "Copy link",
+		"icon": "link",
+		"color": "#4b5563",
+		"action": "copy"
+	},
+	"native": {
+		"label": "More",
+		"icon": "share",
+		"color": "#4b5563",
+		"action": "native"
+	},
+	"print": {
+		"label": "Print",
+		"icon": "printer",
+		"color": "#4b5563",
+		"action": "print"
+	}
+}

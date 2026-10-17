@@ -1,4 +1,4 @@
-/** Shared UI primitives — icons, toggle, badges, stat card, section bar, logo */
+/** Shared UI primitives: icons, toggle, badges, stat card, section bar, logo. */
 
 import { __ } from '@wordpress/i18n';
 export { BlockIcon } from '../../blockIcons';
@@ -170,7 +170,7 @@ export const PowerIcon = ( { size = 16, strokeWidth = 2, ...rest } ) => (
 	</svg>
 );
 
-/* ── Axiom Blocks Logo — "Blocky B" ────────────────────────────────────────── */
+/* ── Axiom Blocks logo ("Blocky B") ────────────────────────────────────────── */
 export const ABLogo = ( { size = 24, color = '#7C3AED' } ) => (
 	<svg width={ size } height={ size } viewBox="0 0 24 24" fill="none">
 		<rect x="3" y="3" width="5.5" height="18" rx="1.8" fill={ color } />
@@ -196,8 +196,9 @@ export const ABLogo = ( { size = 24, color = '#7C3AED' } ) => (
 );
 
 /* ── Toggle ──────────────────────────────────────────────────────────────── */
-export const Toggle = ( { on, onChange, disabled } ) => {
-	const bg = disabled ? '#C3C4C7' : on ? '#7C3AED' : '#C3C4C7';
+// The off track is #8c8f94, not lighter, so it keeps 3:1 against white.
+export const Toggle = ( { on, onChange, disabled, label } ) => {
+	const bg = disabled ? '#C3C4C7' : on ? '#7C3AED' : '#8c8f94';
 	const handleKey = ( e ) => {
 		if ( disabled ) return;
 		if ( e.key === ' ' || e.key === 'Enter' ) {
@@ -208,7 +209,9 @@ export const Toggle = ( { on, onChange, disabled } ) => {
 	return (
 		<div
 			role="switch"
-			aria-checked={ on }
+			className="ab-focus"
+			aria-checked={ !! on }
+			aria-label={ label }
 			aria-disabled={ disabled || undefined }
 			tabIndex={ disabled ? -1 : 0 }
 			onClick={ disabled ? undefined : onChange }
@@ -247,8 +250,8 @@ export const TierBadge = ( { tier } ) => {
 	const map = {
 		free: { bg: '#f0f6fc', color: '#7C3AED', label: 'FREE' },
 		pro: { bg: '#fffbeb', color: '#b45309', label: 'PRO' },
-		'wc-free': { bg: '#f5f3ff', color: '#7c3aed', label: 'WC FREE' },
-		'wc-pro': { bg: '#f9f7ff', color: '#7c3aed', label: 'WC PRO' },
+		'wc-free': { bg: '#f5f3ff', color: '#7c5bd6', label: 'WC FREE' },
+		'wc-pro': { bg: '#f9f7ff', color: '#7c5bd6', label: 'WC PRO' },
 	};
 	const s = map[ tier ] || {
 		bg: '#f9fafb',
@@ -308,11 +311,114 @@ export const SectionBar = ( {
 			{ count }
 		</span>
 		<div style={ { flex: 1 } } />
-		<button className="ab-btn-ghost" onClick={ onEnableAll }>
+		<button
+			type="button"
+			className="ab-btn-ghost ab-focus"
+			onClick={ onEnableAll }
+		>
 			<PowerIcon size={ 11 } /> { __( 'Enable all', 'axiom-blocks' ) }
 		</button>
-		<button className="ab-btn-ghost" onClick={ onDisableAll }>
+		<button
+			type="button"
+			className="ab-btn-ghost ab-focus"
+			onClick={ onDisableAll }
+		>
 			<CloseIcon size={ 11 } /> { __( 'Disable all', 'axiom-blocks' ) }
 		</button>
+	</div>
+);
+
+/* ── Line icons for the Get started and Email tabs ───────────────────────── */
+const lineIcon =
+	( paths ) =>
+	( { size = 16, strokeWidth = 2, ...rest } ) => (
+		<svg
+			width={ size }
+			height={ size }
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth={ strokeWidth }
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			aria-hidden="true"
+			focusable="false"
+			style={ { flexShrink: 0 } }
+			{ ...rest }
+		>
+			{ [].concat( paths ).map( ( d ) => (
+				<path key={ d } d={ d } />
+			) ) }
+		</svg>
+	);
+
+export const MailIcon = lineIcon(
+	'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+);
+export const BookIcon = lineIcon(
+	'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
+);
+export const VideoIcon = lineIcon(
+	'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
+);
+export const ChatIcon = lineIcon(
+	'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'
+);
+export const StarIcon = lineIcon(
+	'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z'
+);
+export const AlertIcon = lineIcon(
+	'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
+);
+export const XCircleIcon = lineIcon(
+	'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
+);
+export const InboxIcon = lineIcon(
+	'M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4'
+);
+export const ArrowIcon = lineIcon( 'M14 5l7 7m0 0l-7 7m7-7H3' );
+export const ExternalIcon = lineIcon(
+	'M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
+);
+export const TickIcon = lineIcon( 'M5 13l4 4L19 7' );
+export const GlobeIcon = lineIcon(
+	'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9'
+);
+// A question mark in a circle. Used on the Help tab.
+export const HelpIcon = lineIcon(
+	'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+);
+export const FormIcon = lineIcon(
+	'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'
+);
+export const LoopIcon = lineIcon(
+	'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'
+);
+export const PlayIcon = ( { size = 30 } ) => (
+	<svg
+		width={ size }
+		height={ size }
+		viewBox="0 0 24 24"
+		fill="currentColor"
+		aria-hidden="true"
+		focusable="false"
+	>
+		<path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+	</svg>
+);
+
+// Text only screen readers hear.
+export const SR = ( { children } ) => (
+	<span className="screen-reader-text">{ children }</span>
+);
+
+// Inline status box: tinted background, border and icon, never colour alone.
+export const Msg = ( { tone, icon, children, className = '' } ) => (
+	<div
+		className={ `ab-msg ab-msg--${ tone } ${ className }` }
+		role={ tone === 'err' ? 'alert' : 'status' }
+	>
+		<span className="ab-msg__icon">{ icon }</span>
+		<div className="ab-msg__body">{ children }</div>
 	</div>
 );

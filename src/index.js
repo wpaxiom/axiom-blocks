@@ -58,6 +58,19 @@ import { PostFilterSort } from './blocks/post-filter/post-filter-sort';
 import { PostFilterReset } from './blocks/post-filter/post-filter-reset';
 import { CssGrid } from './blocks/css-grid';
 import { GridItem } from './blocks/css-grid/grid-item';
+import { ContactForm } from './blocks/contact-form';
+import { ContactFormText } from './blocks/contact-form/contact-form-text';
+import { ContactFormEmail } from './blocks/contact-form/contact-form-email';
+import { ContactFormPhone } from './blocks/contact-form/contact-form-phone';
+import { ContactFormTextarea } from './blocks/contact-form/contact-form-textarea';
+import { ContactFormSelect } from './blocks/contact-form/contact-form-select';
+import { ContactFormChoices } from './blocks/contact-form/contact-form-choices';
+import { ContactFormConsent } from './blocks/contact-form/contact-form-consent';
+import { ContactFormDate } from './blocks/contact-form/contact-form-date';
+import { ContactFormHidden } from './blocks/contact-form/contact-form-hidden';
+import { ContactFormGroup } from './blocks/contact-form/contact-form-group';
+import { ContactFormSubmit } from './blocks/contact-form/contact-form-submit';
+import { SocialShare } from './blocks/social-share';
 
 // Import styles
 import './style.scss';
@@ -209,6 +222,19 @@ const blocks = [
 	PostFilterReset,
 	CssGrid,
 	GridItem,
+	ContactForm,
+	ContactFormText,
+	ContactFormEmail,
+	ContactFormPhone,
+	ContactFormTextarea,
+	ContactFormSelect,
+	ContactFormChoices,
+	ContactFormConsent,
+	ContactFormDate,
+	ContactFormHidden,
+	ContactFormGroup,
+	ContactFormSubmit,
+	SocialShare,
 ];
 
 /**
@@ -301,4 +327,16 @@ export {
 	FreeShippingProgress,
 	CssGrid,
 	GridItem,
+	ContactForm,
+	ContactFormText,
+	ContactFormEmail,
+	ContactFormPhone,
+	ContactFormTextarea,
+	ContactFormSelect,
+	ContactFormChoices,
+	ContactFormConsent,
+	ContactFormDate,
+	ContactFormHidden,
+	ContactFormGroup,
+	ContactFormSubmit,
 };

@@ -1,11 +1,11 @@
 /**
- * AxiomColorPicker — our-scheme color picker.
+ * AxiomColorPicker: our-scheme color picker.
  *
  * Ports the BlockSuite Design System "Color Picker" (colorpicker/picker.jsx +
  * picker.css) into a functional control: HSV canvas + hue/alpha sliders,
  * segmented Hex/RGB/HSL, theme palette, recent colors, eyedropper, clear.
  * HSV is the internal source of truth (so greyscale drags don't lose hue);
- * colord handles parsing the incoming value string and formatting output —
+ * colord handles parsing the incoming value string and formatting output,
  * always hex (8-digit when translucent; rgba() gets stripped by kses on the
  * frontend). Used inside ABColorControl.
  */
@@ -51,6 +51,26 @@ function hsvToRgb( h, s, v ) {
 		Math.round( ( g + m ) * 255 ),
 		Math.round( ( b + m ) * 255 ),
 	];
+}
+
+/* Unrounded HSV (s and v in 0..1) for a colord value. colord's toHsv() rounds
+ * to whole numbers, and rebuilding RGB from those moves a typed hex by a step
+ * (#aa00aa came back as #ab00ab). */
+function toExactHsv( c ) {
+	const { r, g, b } = c.toRgb();
+	const max = Math.max( r, g, b );
+	const d = max - Math.min( r, g, b );
+	let h = 0;
+	if ( d ) {
+		if ( max === r ) {
+			h = 60 * ( ( ( g - b ) / d ) % 6 );
+		} else if ( max === g ) {
+			h = 60 * ( ( b - r ) / d + 2 );
+		} else {
+			h = 60 * ( ( r - g ) / d + 4 );
+		}
+	}
+	return { h: h < 0 ? h + 360 : h, s: max ? d / max : 0, v: max / 255 };
 }
 
 /* ── recents (localStorage) ──────────────────────────────────────────────── */
@@ -206,8 +226,7 @@ export function AxiomColorPicker( { value, onChange, colors = [] } ) {
 	const [ hsv, setHsv ] = useState( () => {
 		const c = colord( value || '' );
 		if ( c.isValid() && value ) {
-			const h = c.toHsv();
-			return { h: h.h, s: h.s / 100, v: h.v / 100 };
+			return toExactHsv( c );
 		}
 		return FALLBACK_HSV;
 	} );
@@ -224,7 +243,7 @@ export function AxiomColorPicker( { value, onChange, colors = [] } ) {
 	const hueRgb = hsvToRgb( hsv.h, 1, 1 );
 	const derivedHex = colord( { r: rr, g: gg, b: bb } ).toHex();
 
-	/* Canonical output is always HEX (8-digit when translucent) — never
+	/* Canonical output is always HEX (8-digit when translucent), never
 	 * rgba(): safecss_filter_attr strips any inline-style value containing
 	 * parens it doesn't whitelist, so rgba() dies on the frontend. */
 	const emit = ( nextHsv, nextA ) => {
@@ -233,7 +252,7 @@ export function AxiomColorPicker( { value, onChange, colors = [] } ) {
 	};
 
 	/* Re-sync internal HSV when the value changes from outside (theme swatch,
-	 * reset, sibling control) — guarded so our own emits don't loop. */
+	 * reset, sibling control), guarded so our own emits don't loop. */
 	useEffect( () => {
 		const c = colord( value || '' );
 		if ( ! value || ! c.isValid() ) {
@@ -244,8 +263,7 @@ export function AxiomColorPicker( { value, onChange, colors = [] } ) {
 		if ( sameHex && sameAlpha ) {
 			return;
 		}
-		const h = c.toHsv();
-		setHsv( { h: h.h, s: h.s / 100, v: h.v / 100 } );
+		setHsv( toExactHsv( c ) );
 		setA( c.alpha() );
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [ value ] );
@@ -290,8 +308,7 @@ export function AxiomColorPicker( { value, onChange, colors = [] } ) {
 	const hexStr = derivedHex.replace( '#', '' ).toUpperCase();
 
 	const setFromColord = ( c, keepAlpha ) => {
-		const h = c.toHsv();
-		const next = { h: h.h, s: h.s / 100, v: h.v / 100 };
+		const next = toExactHsv( c );
 		setHsv( next );
 		emit( next, keepAlpha ? a : c.alpha() );
 	};

@@ -9,6 +9,8 @@
 namespace AxiomBlocks\Admin;
 
 use AxiomBlocks\Blocks\Blocks;
+use AxiomBlocks\Email\EmailSettings;
+use AxiomBlocks\Forms\Entries;
 use AxiomBlocks\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -123,7 +125,7 @@ class Dashboard {
 
 		wp_enqueue_style(
 			'axiom-blocks-dm-sans',
-			'https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap',
+			'https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap',
 			array(),
 			Plugin::VERSION
 		);
@@ -149,10 +151,24 @@ class Dashboard {
 		$data = apply_filters(
 			'axiom_blocks_dashboard_data',
 			array(
-				'version'   => Plugin::VERSION,
-				'restUrl'   => rest_url( 'axiom-blocks/v1' ),
-				'nonce'     => wp_create_nonce( 'wp_rest' ),
-				'proActive' => false,
+				'version'    => Plugin::VERSION,
+				'restUrl'    => rest_url( 'axiom-blocks/v1' ),
+				'nonce'      => wp_create_nonce( 'wp_rest' ),
+				'proActive'  => false,
+				'onboarding' => Onboarding::state(),
+				'mail'       => array(
+					'route'     => EmailSettings::get()['route'],
+					'hasKey'    => EmailSettings::key_status()['has_key'],
+					'lastError' => null !== EmailSettings::last_error(),
+				),
+				'entries'    => array(
+					'total' => Entries::total(),
+					'new'   => Entries::new_count(),
+					'url'   => Entries::list_url(),
+				),
+				'newPageUrl' => admin_url( 'post-new.php?post_type=page' ),
+				'videoThumb' => AXIOM_BLOCKS_PLUGIN_URL . 'assets/admin/video-getting-started.jpg',
+				'systemInfo' => SystemInfo::rows(),
 			)
 		);
 
@@ -191,6 +207,8 @@ class Dashboard {
 	 * @return void
 	 */
 	public static function render(): void {
+		// The welcome notice has done its job once the dashboard is open.
+		PluginLinks::clear();
 		echo '<div id="axiom-blocks-admin-root"></div>';
 	}
 }

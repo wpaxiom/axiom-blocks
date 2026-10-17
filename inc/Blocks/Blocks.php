@@ -92,6 +92,14 @@ class Blocks {
 			'icon'        => 'clipboard',
 		),
 		array(
+			'id'          => 'social-share',
+			'name'        => 'Social Share',
+			'category'    => 'content',
+			'tier'        => 'free',
+			'description' => 'Share buttons with copy link, the device share sheet and a floating bar',
+			'icon'        => 'share',
+		),
+		array(
 			'id'          => 'star-rating',
 			'name'        => 'Star Rating',
 			'category'    => 'content',
@@ -220,6 +228,16 @@ class Blocks {
 			'tier'        => 'free',
 			'description' => 'Search, filter and sort a Post Grid without reloading',
 			'icon'        => 'filter',
+		),
+
+		// ── Form ─────────────────────────────────────────────────────────────
+		array(
+			'id'          => 'contact-form',
+			'name'        => 'Contact Form',
+			'category'    => 'form',
+			'tier'        => 'free',
+			'description' => 'A form that saves every message and emails it through your site mail or Resend',
+			'icon'        => 'email',
 		),
 
 		// ── WooCommerce ──────────────────────────────────────────────────────

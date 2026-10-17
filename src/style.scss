@@ -32,6 +32,8 @@
 @import "blocks/post-filter/style";
 @import "blocks/css-grid/style";
 @import "blocks/css-grid/grid-item/style";
+@import "blocks/contact-form/style";
+@import "blocks/social-share/style";
 
 // Universal hide-on-device (ABDeviceVisibility). The classes are added at render
 // by inc/Blocks/DeviceVisibility.php; all-false ⇒ no class ⇒ no effect.

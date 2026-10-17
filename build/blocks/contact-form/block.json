@@ -1,0 +1,1024 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/contact-form",
+	"version": "1.1.0",
+	"title": "Contact Form",
+	"category": "axiom-blocks",
+	"description": "A contact form that saves every message and emails it through your site mail or Resend. Works without JavaScript.",
+	"keywords": [
+		"form",
+		"contact",
+		"email",
+		"message",
+		"enquiry",
+		"newsletter"
+	],
+	"textdomain": "axiom-blocks",
+	"attributes": {
+		"formId": {
+			"type": "string",
+			"default": ""
+		},
+		"formName": {
+			"type": "string",
+			"default": "Contact form"
+		},
+		"emailTo": {
+			"type": "string",
+			"default": ""
+		},
+		"emailSubject": {
+			"type": "string",
+			"default": ""
+		},
+		"replyToVisitor": {
+			"type": "boolean",
+			"default": true
+		},
+		"emailCc": {
+			"type": "string",
+			"default": ""
+		},
+		"emailBcc": {
+			"type": "string",
+			"default": ""
+		},
+		"confirmationType": {
+			"type": "string",
+			"default": "message"
+		},
+		"successMessage": {
+			"type": "string",
+			"default": ""
+		},
+		"errorMessage": {
+			"type": "string",
+			"default": ""
+		},
+		"redirectUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"hideOnSuccess": {
+			"type": "boolean",
+			"default": false
+		},
+		"messagePosition": {
+			"type": "string",
+			"default": "top"
+		},
+		"errorDisplay": {
+			"type": "string",
+			"default": "inline"
+		},
+		"saveEntries": {
+			"type": "boolean",
+			"default": true
+		},
+		"columns": {
+			"type": "number",
+			"default": 1
+		},
+		"tracks": {
+			"type": "string",
+			"default": ""
+		},
+		"rowAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"labelPosition": {
+			"type": "string",
+			"default": "above"
+		},
+		"labelWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"floatingLabels": {
+			"type": "boolean",
+			"default": false
+		},
+		"requiredMarker": {
+			"type": "string",
+			"default": "asterisk"
+		},
+		"requiredText": {
+			"type": "string",
+			"default": "(required)"
+		},
+		"optionalText": {
+			"type": "string",
+			"default": ""
+		},
+		"helpPosition": {
+			"type": "string",
+			"default": "below-input"
+		},
+		"formBgType": {
+			"type": "string",
+			"default": ""
+		},
+		"formBgGradType": {
+			"type": "string",
+			"default": "linear"
+		},
+		"formBgGradAngle": {
+			"type": "number",
+			"default": 90
+		},
+		"formBgGradStops": {
+			"type": "array",
+			"default": []
+		},
+		"formBgImage": {
+			"type": "object",
+			"default": null
+		},
+		"formBgImageSize": {
+			"type": "string",
+			"default": "cover"
+		},
+		"formBgImagePosition": {
+			"type": "string",
+			"default": "center center"
+		},
+		"formBgImageRepeat": {
+			"type": "string",
+			"default": "no-repeat"
+		},
+		"formBg": {
+			"type": "string",
+			"default": ""
+		},
+		"formBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"formBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"formBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"formBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"formBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"formBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"formRadiusTopLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"formRadiusTopRight": {
+			"type": "string",
+			"default": ""
+		},
+		"formRadiusBottomRight": {
+			"type": "string",
+			"default": ""
+		},
+		"formRadiusBottomLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"formShadow": {
+			"type": "string",
+			"default": ""
+		},
+		"formPaddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"formPaddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"formPaddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"formPaddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"formMaxWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"formAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"rowGap": {
+			"type": "string",
+			"default": ""
+		},
+		"columnGap": {
+			"type": "string",
+			"default": ""
+		},
+		"labelColor": {
+			"type": "string",
+			"default": ""
+		},
+		"requiredColor": {
+			"type": "string",
+			"default": ""
+		},
+		"labelFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"labelFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"labelFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"labelLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"labelLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"labelTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"labelTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"labelTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"labelGap": {
+			"type": "string",
+			"default": ""
+		},
+		"inputAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"inputColor": {
+			"type": "string",
+			"default": ""
+		},
+		"inputColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"inputColorFocus": {
+			"type": "string",
+			"default": ""
+		},
+		"inputColorError": {
+			"type": "string",
+			"default": ""
+		},
+		"inputPlaceholder": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBg": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBgHover": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBgFocus": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBgError": {
+			"type": "string",
+			"default": ""
+		},
+		"inputFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"inputFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"inputFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"inputLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"inputLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"inputTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"inputTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"inputTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderColorFocus": {
+			"type": "string",
+			"default": ""
+		},
+		"inputBorderColorError": {
+			"type": "string",
+			"default": ""
+		},
+		"inputRadiusTopLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"inputRadiusTopRight": {
+			"type": "string",
+			"default": ""
+		},
+		"inputRadiusBottomRight": {
+			"type": "string",
+			"default": ""
+		},
+		"inputRadiusBottomLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"inputShadow": {
+			"type": "string",
+			"default": ""
+		},
+		"inputShadowHover": {
+			"type": "string",
+			"default": ""
+		},
+		"inputShadowFocus": {
+			"type": "string",
+			"default": ""
+		},
+		"inputShadowError": {
+			"type": "string",
+			"default": ""
+		},
+		"inputPaddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"inputPaddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"inputPaddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"inputPaddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"inputHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"textareaHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"iconColor": {
+			"type": "string",
+			"default": ""
+		},
+		"iconColorFocus": {
+			"type": "string",
+			"default": ""
+		},
+		"chevronColor": {
+			"type": "string",
+			"default": ""
+		},
+		"iconSize": {
+			"type": "string",
+			"default": ""
+		},
+		"iconGap": {
+			"type": "string",
+			"default": ""
+		},
+		"chevronSize": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBg": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBgHover": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBgFocus": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBgChecked": {
+			"type": "string",
+			"default": ""
+		},
+		"checkColor": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceLabelColor": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderColorFocus": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceBorderColorChecked": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceRadius": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceSize": {
+			"type": "string",
+			"default": ""
+		},
+		"choiceGap": {
+			"type": "string",
+			"default": ""
+		},
+		"chbColor": {
+			"type": "string",
+			"default": ""
+		},
+		"chbColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"chbColorChecked": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBg": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBgHover": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBgChecked": {
+			"type": "string",
+			"default": ""
+		},
+		"chbFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"chbFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"chbFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"chbLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"chbLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"chbTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"chbTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"chbTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBorderColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"chbBorderColorChecked": {
+			"type": "string",
+			"default": ""
+		},
+		"chbRadiusTopLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"chbRadiusTopRight": {
+			"type": "string",
+			"default": ""
+		},
+		"chbRadiusBottomRight": {
+			"type": "string",
+			"default": ""
+		},
+		"chbRadiusBottomLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"chbShadow": {
+			"type": "string",
+			"default": ""
+		},
+		"chbShadowHover": {
+			"type": "string",
+			"default": ""
+		},
+		"chbShadowChecked": {
+			"type": "string",
+			"default": ""
+		},
+		"chbPaddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"chbPaddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"chbPaddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"chbPaddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"chbGap": {
+			"type": "string",
+			"default": ""
+		},
+		"switchTrack": {
+			"type": "string",
+			"default": ""
+		},
+		"switchTrackOn": {
+			"type": "string",
+			"default": ""
+		},
+		"switchThumb": {
+			"type": "string",
+			"default": ""
+		},
+		"switchSize": {
+			"type": "string",
+			"default": ""
+		},
+		"helpColor": {
+			"type": "string",
+			"default": ""
+		},
+		"errorColor": {
+			"type": "string",
+			"default": ""
+		},
+		"helpFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"helpFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"helpFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"helpLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"helpLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"helpTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"helpTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"helpTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"legendColor": {
+			"type": "string",
+			"default": ""
+		},
+		"legendFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"legendFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"legendFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"legendLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"legendLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"legendTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"legendTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"legendTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"groupBg": {
+			"type": "string",
+			"default": ""
+		},
+		"groupBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"groupBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"groupBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"groupBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"groupBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"groupBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"groupRadiusTopLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"groupRadiusTopRight": {
+			"type": "string",
+			"default": ""
+		},
+		"groupRadiusBottomRight": {
+			"type": "string",
+			"default": ""
+		},
+		"groupRadiusBottomLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"groupPaddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"groupPaddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"groupPaddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"groupPaddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"msgColor": {
+			"type": "string",
+			"default": ""
+		},
+		"msgColorError": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBg": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBgError": {
+			"type": "string",
+			"default": ""
+		},
+		"msgFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"msgFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"msgFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"msgLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"msgLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"msgTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"msgTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"msgTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"msgBorderColorError": {
+			"type": "string",
+			"default": ""
+		},
+		"msgRadiusTopLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"msgRadiusTopRight": {
+			"type": "string",
+			"default": ""
+		},
+		"msgRadiusBottomRight": {
+			"type": "string",
+			"default": ""
+		},
+		"msgRadiusBottomLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"msgPaddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"msgPaddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"msgPaddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"msgPaddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"marginTop": {
+			"type": "string",
+			"default": ""
+		},
+		"marginRight": {
+			"type": "string",
+			"default": ""
+		},
+		"marginBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"marginLeft": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"providesContext": {
+		"axiom-blocks/cfFormId": "formId",
+		"axiom-blocks/cfRequiredMarker": "requiredMarker",
+		"axiom-blocks/cfRequiredText": "requiredText",
+		"axiom-blocks/cfOptionalText": "optionalText",
+		"axiom-blocks/cfHelpPosition": "helpPosition",
+		"axiom-blocks/cfFloating": "floatingLabels",
+		"axiom-blocks/cfErrorDisplay": "errorDisplay",
+		"axiom-blocks/cfLabelPosition": "labelPosition"
+	},
+	"styles": [
+		{ "name": "default", "label": "Default", "isDefault": true },
+		{ "name": "dark", "label": "Dark" }
+	],
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": [
+			"wide",
+			"full"
+		]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.scss",
+	"style": "file:./style.scss",
+	"viewScript": "file:./assets/contact-form.js",
+	"render": "file:./render.php"
+}

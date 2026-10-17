@@ -1,0 +1,446 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "axiom-blocks/social-share",
+	"version": "1.1.0",
+	"title": "Social Share",
+	"category": "axiom-blocks",
+	"description": "Share buttons for the page or the post in context, with copy link and the device's share sheet. Works without JavaScript.",
+	"keywords": [
+		"share",
+		"social",
+		"facebook",
+		"x",
+		"linkedin",
+		"whatsapp",
+		"copy link"
+	],
+	"textdomain": "axiom-blocks",
+	"usesContext": [
+		"postId",
+		"postType"
+	],
+	"attributes": {
+		"items": {
+			"type": "array",
+			"default": [
+				{
+					"network": "facebook"
+				},
+				{
+					"network": "x"
+				},
+				{
+					"network": "linkedin"
+				},
+				{
+					"network": "whatsapp"
+				},
+				{
+					"network": "email"
+				},
+				{
+					"network": "copy"
+				}
+			]
+		},
+		"shareSource": {
+			"type": "string",
+			"default": "post"
+		},
+		"shareUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"shareTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"shareText": {
+			"type": "string",
+			"default": ""
+		},
+		"xVia": {
+			"type": "string",
+			"default": ""
+		},
+		"hashtags": {
+			"type": "string",
+			"default": ""
+		},
+		"openIn": {
+			"type": "string",
+			"default": "popup"
+		},
+		"display": {
+			"type": "string",
+			"default": "icon"
+		},
+		"leadText": {
+			"type": "string",
+			"default": "Share this"
+		},
+		"shape": {
+			"type": "string",
+			"default": "rounded"
+		},
+		"variant": {
+			"type": "string",
+			"default": "filled"
+		},
+		"hoverEffect": {
+			"type": "string",
+			"default": "none"
+		},
+		"direction": {
+			"type": "string",
+			"default": "row"
+		},
+		"justify": {
+			"type": "string",
+			"default": "flex-start"
+		},
+		"floating": {
+			"type": "string",
+			"default": ""
+		},
+		"floatOffset": {
+			"type": "string",
+			"default": "30%"
+		},
+		"floatMobile": {
+			"type": "string",
+			"default": "bar"
+		},
+		"copiedText": {
+			"type": "string",
+			"default": "Copied"
+		},
+		"showLead": {
+			"type": "boolean",
+			"default": false
+		},
+		"brandColors": {
+			"type": "boolean",
+			"default": true
+		},
+		"wrap": {
+			"type": "boolean",
+			"default": true
+		},
+		"equalWidth": {
+			"type": "boolean",
+			"default": false
+		},
+		"barBgType": {
+			"type": "string",
+			"default": ""
+		},
+		"barBgGradType": {
+			"type": "string",
+			"default": "linear"
+		},
+		"barBgGradAngle": {
+			"type": "number",
+			"default": 90
+		},
+		"barBgGradStops": {
+			"type": "array",
+			"default": []
+		},
+		"barBgImage": {
+			"type": "object",
+			"default": null
+		},
+		"barBgImageSize": {
+			"type": "string",
+			"default": "cover"
+		},
+		"barBgImagePosition": {
+			"type": "string",
+			"default": "center center"
+		},
+		"barBgImageRepeat": {
+			"type": "string",
+			"default": "no-repeat"
+		},
+		"barBg": {
+			"type": "string",
+			"default": ""
+		},
+		"barBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"barBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"barBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"barBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"barBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"barBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"barRadiusTopLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"barRadiusTopRight": {
+			"type": "string",
+			"default": ""
+		},
+		"barRadiusBottomRight": {
+			"type": "string",
+			"default": ""
+		},
+		"barRadiusBottomLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"barShadow": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderTopWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderRightWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderBottomWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderLeftWidth": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderStyle": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"btnRadiusTopLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"btnRadiusTopRight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnRadiusBottomRight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnRadiusBottomLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"btnShadow": {
+			"type": "string",
+			"default": ""
+		},
+		"btnPaddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"btnPaddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnPaddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"btnPaddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"gap": {
+			"type": "string",
+			"default": ""
+		},
+		"leadColor": {
+			"type": "string",
+			"default": ""
+		},
+		"leadGap": {
+			"type": "string",
+			"default": ""
+		},
+		"leadFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"leadFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"leadFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"leadLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"leadLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"leadTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"leadTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"leadTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"btnColor": {
+			"type": "string",
+			"default": ""
+		},
+		"btnColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBg": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBgHover": {
+			"type": "string",
+			"default": ""
+		},
+		"btnBorderColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"btnShadowHover": {
+			"type": "string",
+			"default": ""
+		},
+		"btnSize": {
+			"type": "string",
+			"default": ""
+		},
+		"btnGap": {
+			"type": "string",
+			"default": ""
+		},
+		"copiedBg": {
+			"type": "string",
+			"default": ""
+		},
+		"iconColor": {
+			"type": "string",
+			"default": ""
+		},
+		"iconColorHover": {
+			"type": "string",
+			"default": ""
+		},
+		"iconSize": {
+			"type": "string",
+			"default": ""
+		},
+		"btnFontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"btnFontWeight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnFontSize": {
+			"type": "string",
+			"default": ""
+		},
+		"btnLineHeight": {
+			"type": "string",
+			"default": ""
+		},
+		"btnLetterSpacing": {
+			"type": "string",
+			"default": ""
+		},
+		"btnTextTransform": {
+			"type": "string",
+			"default": ""
+		},
+		"btnTextDecoration": {
+			"type": "string",
+			"default": ""
+		},
+		"btnTextAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"marginTop": {
+			"type": "string",
+			"default": ""
+		},
+		"marginRight": {
+			"type": "string",
+			"default": ""
+		},
+		"marginBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"marginLeft": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"anchor": true,
+		"align": [
+			"wide",
+			"full"
+		]
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.scss",
+	"style": "file:./style.scss",
+	"viewScript": "file:./assets/social-share.js",
+	"render": "file:./render.php"
+}

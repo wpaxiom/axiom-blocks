@@ -136,7 +136,7 @@ export function SettingsTab( {
 				</>
 			);
 		}
-		return __( 'Save Settings', 'axiom-blocks' );
+		return __( 'Save settings', 'axiom-blocks' );
 	};
 
 	const isActive = license?.status === 'active';
@@ -156,7 +156,7 @@ export function SettingsTab( {
 				setLicenseError(
 					res?.message ||
 						__(
-							'Invalid license key — please check the key and try again.',
+							'Invalid license key. Please check the key and try again.',
 							'axiom-blocks'
 						)
 				);
@@ -220,14 +220,14 @@ export function SettingsTab( {
 
 	return (
 		<div className="ab-settings">
-			{ /* License card — only when the Pro plugin is installed */ }
+			{ /* License card, only when the Pro plugin is installed */ }
 			{ proActive && (
 				<div className="ab-settings-card">
 					<div className="ab-settings-card__heading">
 						<span style={ { color: accentColor } }>
 							<KeyIcon size={ 15 } />
 						</span>
-						<span>{ __( 'Pro License', 'axiom-blocks' ) }</span>
+						<span>{ __( 'Pro license', 'axiom-blocks' ) }</span>
 					</div>
 
 					{ licenseLoading ? (
@@ -320,7 +320,7 @@ export function SettingsTab( {
 										? sprintf(
 												/* translators: %s: human-readable expiry date */
 												__(
-													'License active — valid until %s.',
+													'License active, valid until %s.',
 													'axiom-blocks'
 												),
 												expiryLabel ||
@@ -330,7 +330,7 @@ export function SettingsTab( {
 													)
 										  )
 										: __(
-												'No license activated — Pro blocks are currently locked.',
+												'No license activated. Pro blocks are locked.',
 												'axiom-blocks'
 										  ) }
 								</span>
@@ -341,15 +341,19 @@ export function SettingsTab( {
 			) }
 
 			{ /* General settings */ }
-			<div className="ab-settings-card">
+			<div className="ab-settings-card ab-settings-card--rows">
 				<Row
-					label={ __( 'WooCommerce Integration', 'axiom-blocks' ) }
+					label={ __( 'WooCommerce integration', 'axiom-blocks' ) }
 					desc={ __(
-						'Enable WooCommerce-specific blocks when WC is active.',
+						'Turn on WooCommerce blocks when WooCommerce is active.',
 						'axiom-blocks'
 					) }
 				>
 					<Toggle
+						label={ __(
+							'WooCommerce integration',
+							'axiom-blocks'
+						) }
 						on={ draftSettings.woocommerce_integration }
 						onChange={ () =>
 							updateDraft( ( d ) => ( {
@@ -361,13 +365,17 @@ export function SettingsTab( {
 					/>
 				</Row>
 				<Row
-					label={ __( 'Load Assets Conditionally', 'axiom-blocks' ) }
+					label={ __( 'Load assets conditionally', 'axiom-blocks' ) }
 					desc={ __(
-						'Only enqueue the Axiom Blocks stylesheet on pages that contain a Axiom Blocks block.',
+						'Only load the Axiom Blocks stylesheet on pages that use an Axiom block.',
 						'axiom-blocks'
 					) }
 				>
 					<Toggle
+						label={ __(
+							'Load assets conditionally',
+							'axiom-blocks'
+						) }
 						on={ draftSettings.conditional_assets }
 						onChange={ () =>
 							updateDraft( ( d ) => ( {
@@ -390,7 +398,7 @@ export function SettingsTab( {
 						onClick={ resetSettings }
 						disabled={ settingsBusy || draftAtDefaults }
 					>
-						{ __( 'Reset Defaults', 'axiom-blocks' ) }
+						{ __( 'Reset defaults', 'axiom-blocks' ) }
 					</button>
 				</div>
 			</div>

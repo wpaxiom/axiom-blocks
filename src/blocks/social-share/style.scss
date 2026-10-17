@@ -1,0 +1,295 @@
+// Social Share (editor + front end).
+// Every value is a custom property from vars.json with the shipped default as
+// its fallback. A button's colors resolve in three steps: the value set under
+// Styles, then the network's brand color (`--ab-ss-brand`, inline per button,
+// used when Brand colors is on), then a neutral. The style presets only set the
+// private `--ab-ss-fg / -bgc / -bdc / -bw` tokens that sit under those values.
+
+.ab-ss {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: var(--ab-ss-justify, flex-start);
+	gap: var(--ab-ss-lead-gap, 12px);
+	box-sizing: border-box;
+	background: var(--ab-ss-bar-bg, transparent);
+	border-style: var(--ab-ss-bar-bs, none);
+	border-color: var(--ab-ss-bar-bc, currentcolor);
+	border-width: var(--ab-ss-bar-bw-t, 0) var(--ab-ss-bar-bw-r, 0) var(--ab-ss-bar-bw-b, 0) var(--ab-ss-bar-bw-l, 0);
+	border-radius: var(--ab-ss-bar-r-tl, 0) var(--ab-ss-bar-r-tr, 0) var(--ab-ss-bar-r-br, 0) var(--ab-ss-bar-r-bl, 0);
+	box-shadow: var(--ab-ss-bar-sh, none);
+}
+
+.ab-ss__lead {
+	color: var(--ab-ss-lead-c, inherit);
+	font-family: var(--ab-ss-lead-font-family, inherit);
+	font-weight: var(--ab-ss-lead-font-weight, 600);
+	font-size: var(--ab-ss-lead-font-size, inherit);
+	line-height: var(--ab-ss-lead-line-height, 1.4);
+	letter-spacing: var(--ab-ss-lead-letter-spacing, normal);
+	text-transform: var(--ab-ss-lead-text-transform, none);
+	text-decoration: var(--ab-ss-lead-text-decoration, none);
+	text-align: var(--ab-ss-lead-text-align, start);
+}
+
+.ab-ss .ab-ss__list {
+	display: flex;
+	flex-direction: var(--ab-ss-dir, row);
+	flex-wrap: wrap;
+	justify-content: var(--ab-ss-justify, flex-start);
+	gap: var(--ab-ss-gap, 8px);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ab-ss--nowrap .ab-ss__list {
+	flex-wrap: nowrap;
+}
+
+.ab-ss .ab-ss__item {
+	display: flex;
+	margin: 0;
+	padding: 0;
+
+	&[hidden] {
+		display: none;
+	}
+
+	&::before,
+	&::marker {
+		content: none;
+	}
+}
+
+.ab-ss--equal {
+
+	.ab-ss__list {
+		flex-grow: 1;
+	}
+
+	.ab-ss__item {
+		flex: 1 1 0;
+	}
+
+	.ab-ss__btn {
+		width: 100%;
+	}
+}
+
+// ── Button ─────────────────────────────────────────────────────────────────
+.ab-ss .ab-ss__btn {
+	// Neutral, replaced by the brand color when Brand colors is on.
+	--ab-ss-b: #1f2937;
+	--ab-ss-fg: #fff;
+	--ab-ss-fg-h: #fff;
+	--ab-ss-bgc: var(--ab-ss-b);
+	--ab-ss-bgc-h: color-mix(in srgb, var(--ab-ss-b) 82%, #000);
+	--ab-ss-bdc: var(--ab-ss-b);
+	--ab-ss-bw: 0;
+	--ab-ss-r: 8px;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--ab-ss-btn-gap, 8px);
+	box-sizing: border-box;
+	min-width: var(--ab-ss-btn-size, 40px);
+	min-height: var(--ab-ss-btn-size, 40px);
+	margin: 0;
+	padding: var(--ab-ss-btn-pt, 8px) var(--ab-ss-btn-pr, 16px) var(--ab-ss-btn-pb, 8px) var(--ab-ss-btn-pl, 16px);
+	color: var(--ab-ss-btn-c, var(--ab-ss-fg));
+	background: var(--ab-ss-btn-bg, var(--ab-ss-bgc));
+	border-style: var(--ab-ss-btn-bs, solid);
+	border-color: var(--ab-ss-btn-bc, var(--ab-ss-bdc));
+	border-width: var(--ab-ss-btn-bw-t, var(--ab-ss-bw)) var(--ab-ss-btn-bw-r, var(--ab-ss-bw)) var(--ab-ss-btn-bw-b, var(--ab-ss-bw)) var(--ab-ss-btn-bw-l, var(--ab-ss-bw));
+	border-radius: var(--ab-ss-btn-r-tl, var(--ab-ss-r)) var(--ab-ss-btn-r-tr, var(--ab-ss-r)) var(--ab-ss-btn-r-br, var(--ab-ss-r)) var(--ab-ss-btn-r-bl, var(--ab-ss-r));
+	box-shadow: var(--ab-ss-btn-sh, none);
+	font-family: var(--ab-ss-btn-font-family, inherit);
+	font-weight: var(--ab-ss-btn-font-weight, 600);
+	font-size: var(--ab-ss-btn-font-size, 14px);
+	line-height: var(--ab-ss-btn-line-height, 1.2);
+	letter-spacing: var(--ab-ss-btn-letter-spacing, normal);
+	text-transform: var(--ab-ss-btn-text-transform, none);
+	text-decoration: var(--ab-ss-btn-text-decoration, none);
+	text-align: var(--ab-ss-btn-text-align, center);
+	white-space: nowrap;
+	cursor: pointer;
+	transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+
+	&:hover,
+	&:focus-visible {
+		color: var(--ab-ss-btn-c-h, var(--ab-ss-btn-c, var(--ab-ss-fg-h)));
+		background: var(--ab-ss-btn-bg-h, var(--ab-ss-btn-bg, var(--ab-ss-bgc-h)));
+		border-color: var(--ab-ss-btn-bc-h, var(--ab-ss-btn-bc, var(--ab-ss-bdc)));
+		box-shadow: var(--ab-ss-btn-sh-h, var(--ab-ss-btn-sh, none));
+		text-decoration: var(--ab-ss-btn-text-decoration, none);
+
+		.ab-ss__icon {
+			color: var(--ab-ss-ic-h, var(--ab-ss-ic, currentcolor));
+		}
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--ab-ss-b);
+		outline-offset: 2px;
+	}
+
+	&.is-copied,
+	&.is-copied:hover {
+		color: #fff;
+		background: var(--ab-ss-copied, #16a34a);
+		border-color: var(--ab-ss-copied, #16a34a);
+	}
+}
+
+.ab-ss--brand .ab-ss__btn {
+	--ab-ss-b: var(--ab-ss-brand, #1f2937);
+}
+
+// Icon-only buttons are square, so a round shape is a circle.
+.ab-ss--icon .ab-ss__btn {
+	width: var(--ab-ss-btn-size, 40px);
+	height: var(--ab-ss-btn-size, 40px);
+	padding: var(--ab-ss-btn-pt, 0) var(--ab-ss-btn-pr, 0) var(--ab-ss-btn-pb, 0) var(--ab-ss-btn-pl, 0);
+}
+
+.ab-ss--icon.ab-ss--equal .ab-ss__btn {
+	width: 100%;
+}
+
+// ── Style presets ──────────────────────────────────────────────────────────
+.ab-ss--outline .ab-ss__btn {
+	--ab-ss-fg: var(--ab-ss-b);
+	--ab-ss-bgc: transparent;
+	--ab-ss-bgc-h: var(--ab-ss-b);
+	--ab-ss-bw: 2px;
+}
+
+.ab-ss--soft .ab-ss__btn {
+	--ab-ss-fg: var(--ab-ss-b);
+	--ab-ss-fg-h: var(--ab-ss-b);
+	--ab-ss-bgc: color-mix(in srgb, var(--ab-ss-b) 12%, transparent);
+	--ab-ss-bgc-h: color-mix(in srgb, var(--ab-ss-b) 22%, transparent);
+}
+
+.ab-ss--plain .ab-ss__btn {
+	--ab-ss-fg: var(--ab-ss-b);
+	--ab-ss-fg-h: color-mix(in srgb, var(--ab-ss-b) 75%, #000);
+	--ab-ss-bgc: transparent;
+	--ab-ss-bgc-h: transparent;
+}
+
+// ── Shapes ─────────────────────────────────────────────────────────────────
+.ab-ss--shape-square .ab-ss__btn {
+	--ab-ss-r: 0;
+}
+
+.ab-ss--shape-circle .ab-ss__btn {
+	--ab-ss-r: 999px;
+}
+
+// ── Icon and label ─────────────────────────────────────────────────────────
+.ab-ss__icon {
+	display: inline-flex;
+	flex-shrink: 0;
+	width: var(--ab-ss-ic-size, 18px);
+	height: var(--ab-ss-ic-size, 18px);
+	color: var(--ab-ss-ic, currentcolor);
+
+	svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+// ── Hover effects ──────────────────────────────────────────────────────────
+.ab-ss--fx-lift .ab-ss__btn:hover {
+	transform: translateY(-2px);
+}
+
+.ab-ss--fx-grow .ab-ss__btn:hover {
+	transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.ab-ss .ab-ss__btn {
+		transition: none;
+	}
+
+	.ab-ss--fx-lift .ab-ss__btn:hover,
+	.ab-ss--fx-grow .ab-ss__btn:hover {
+		transform: none;
+	}
+}
+
+// ── Floating ───────────────────────────────────────────────────────────────
+// Side bar from 781px up (Responsive.php's tablet edge); below that the bar
+// pins to the bottom of the screen, stays in place, or hides.
+@media (min-width: 781px) {
+
+	.ab-ss.is-floating {
+		position: fixed;
+		top: var(--ab-ss-float-top, 30%);
+		z-index: 90;
+		margin: 0 !important;
+
+		.ab-ss__lead {
+			display: none;
+		}
+
+		.ab-ss__list {
+			flex-direction: column;
+			flex-wrap: nowrap;
+		}
+	}
+
+	.ab-ss.is-floating-left {
+		left: 0;
+	}
+
+	.ab-ss.is-floating-right {
+		right: 0;
+	}
+}
+
+@media (max-width: 780px) {
+
+	.ab-ss.is-float-mobile-bar {
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 90;
+		margin: 0 !important;
+		padding-bottom: env(safe-area-inset-bottom, 0);
+		background: var(--ab-ss-bar-bg, #fff);
+		box-shadow: var(--ab-ss-bar-sh, 0 -2px 12px rgba(0, 0, 0, 0.12));
+
+		.ab-ss__lead {
+			display: none;
+		}
+
+		.ab-ss__list {
+			flex: 1 1 auto;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			gap: 0;
+		}
+
+		.ab-ss__item {
+			flex: 1 1 0;
+		}
+
+		.ab-ss__btn {
+			width: 100%;
+			border-radius: 0;
+		}
+	}
+
+	.ab-ss.is-float-mobile-hide {
+		display: none;
+	}
+}

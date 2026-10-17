@@ -2,35 +2,40 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Axiom Blocks - Page Builder Toolkit 1.0.9\n"
+"Project-Id-Version: Axiom Blocks - Page Builder Toolkit 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/axiom-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-13T04:51:36+00:00\n"
+"POT-Creation-Date: 2026-10-17T02:37:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: axiom-blocks\n"
 
 #. Plugin Name of the plugin
+#: axiom-blocks.php
 msgid "Axiom Blocks - Page Builder Toolkit"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: axiom-blocks.php
 msgid "https://www.wpaxiom.com/plugins/axiom-blocks"
 msgstr ""
 
 #. Description of the plugin
+#: axiom-blocks.php
 msgid "Advanced Gutenberg blocks for the WordPress block editor and Full Site Editing. Built for extensibility with WooCommerce and third-party integrations."
 msgstr ""
 
 #. Author of the plugin
+#: axiom-blocks.php
 msgid "WPAxiom"
 msgstr ""
 
 #. Author URI of the plugin
+#: axiom-blocks.php
 msgid "https://wpaxiom.com"
 msgstr ""
 
@@ -38,15 +43,17 @@ msgstr ""
 msgid "Axiom Blocks requires Composer dependencies. Please run \"composer install\" in the plugin directory."
 msgstr ""
 
-#: inc/Admin/Dashboard.php:46
-#: inc/Admin/Dashboard.php:47
-#: inc/Plugin.php:157
+#: inc/Admin/Dashboard.php:48
+#: inc/Admin/Dashboard.php:49
+#: inc/Admin/SystemInfo.php:46
+#: inc/Forms/Entries.php:858
+#: inc/Plugin.php:172
 #: src/admin/components/Header.js:17
 msgid "Axiom Blocks"
 msgstr ""
 
-#: inc/Admin/Dashboard.php:57
-#: inc/Admin/Dashboard.php:58
+#: inc/Admin/Dashboard.php:59
+#: inc/Admin/Dashboard.php:60
 msgid "Dashboard"
 msgstr ""
 
@@ -111,19 +118,165 @@ msgid "Cancel"
 msgstr ""
 
 #: inc/Admin/Feedback.php:128
-msgid "Only the option you choose and anything you type is sent — never your content, email, or site address."
+msgid "Only the option you choose and anything you type is sent, never your content, email, or site address."
 msgstr ""
 
-#: inc/API/Routes.php:225
+#: inc/Admin/PluginLinks.php:67
+#: inc/Admin/PluginLinks.php:146
+#: src/blocks/button-group/index.js:38
+#: src/blocks/pricing-table/index.js:555
+msgid "Get started"
+msgstr ""
+
+#: inc/Admin/PluginLinks.php:68
+#: src/admin/components/Dashboard.js:323
+#: src/components/iconLibrary.js:1179
+msgid "Settings"
+msgstr ""
+
+#: inc/Admin/PluginLinks.php:85
+#: src/admin/components/BlockCard.js:75
+#: src/admin/components/Dashboard.js:410
+msgid "Docs"
+msgstr ""
+
+#: inc/Admin/PluginLinks.php:86
+#: src/admin/components/HelpTab.js:287
+msgid "Video tutorials"
+msgstr ""
+
+#: inc/Admin/PluginLinks.php:87
+msgid "Support"
+msgstr ""
+
+#: inc/Admin/PluginLinks.php:94
+#: inc/Admin/PluginLinks.php:147
+#: src/admin/components/BlockCard.js:77
+#: src/admin/components/Dashboard.js:413
+#: src/admin/components/HelpTab.js:33
+msgid "(opens in a new tab)"
+msgstr ""
+
+#: inc/Admin/PluginLinks.php:144
+msgid "Axiom Blocks is ready. Start with the first three steps."
+msgstr ""
+
+#: inc/Admin/PluginLinks.php:147
+msgid "Read the docs"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:42
+#: inc/Forms/Entries.php:228
+msgid "Yes"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:43
+#: inc/Forms/Entries.php:228
+msgid "No"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:47
+msgid "Axiom Blocks Pro"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:47
+msgid "Not installed"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:48
+#: src/components/iconLibrary.js:1983
+msgid "WordPress"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:49
+msgid "PHP"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:50
+#: src/components/AxiomColorPicker.js:501
+msgid "Theme"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:51
+msgid "Block theme"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:52
+#: src/admin/components/Dashboard.js:297
+#: src/admin/components/Dashboard.js:586
+#: src/admin/components/HelpTab.js:40
+msgid "WooCommerce"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:52
+msgid "Not active"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:53
+msgid "Multisite"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:54
+msgid "Language"
+msgstr ""
+
+#. translators: 1: enabled blocks, 2: all blocks.
+#: inc/Admin/SystemInfo.php:56
+msgid "Blocks enabled"
+msgstr ""
+
+#. translators: 1: enabled blocks, 2: all blocks.
+#: inc/Admin/SystemInfo.php:56
+#, php-format
+msgid "%1$d of %2$d"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:57
+msgid "Conditional assets"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:58
+msgid "Form email route"
+msgstr ""
+
+#. translators: %s: delivery route name.
+#: inc/Admin/SystemInfo.php:58
+#: inc/Forms/Entries.php:671
+#: src/admin/components/EmailTab.js:56
+#: src/admin/components/EmailTab.js:454
+#: src/blocks/contact-form/EmailPanel.js:37
+msgid "WordPress mail"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:59
+msgid "Resend key set"
+msgstr ""
+
+#: inc/Admin/SystemInfo.php:60
+msgid "Last form email failed"
+msgstr ""
+
+#: inc/API/Routes.php:319
+msgid "This is a test email from Axiom Blocks. If you can read it, your contact forms can deliver email."
+msgstr ""
+
+#. translators: %s: site title.
+#: inc/API/Routes.php:324
+#, php-format
+msgid "Test email from %s"
+msgstr ""
+
+#: inc/API/Routes.php:363
 msgid "That grid is no longer available. Reload the page and try again."
 msgstr ""
 
-#: inc/API/Routes.php:350
+#: inc/API/Routes.php:488
 msgid "That doesn’t look like a valid <svg>. Paste the full SVG markup."
 msgstr ""
 
 #. translators: %d: number of blocks using the icon.
-#: inc/API/Routes.php:373
+#: inc/API/Routes.php:511
+#, php-format
 msgid "Can’t delete — %d block is using this icon. Remove it from that block first."
 msgid_plural "Can’t delete — %d blocks are using this icon. Remove it from those blocks first."
 msgstr[0] ""
@@ -131,11 +284,339 @@ msgstr[1] ""
 
 #. translators: %d: next custom-icon number.
 #: inc/Blocks/CustomIcons.php:86
+#, php-format
 msgid "Custom %d"
+msgstr ""
+
+#: inc/Email/Mailer.php:123
+#: inc/Email/ResendTransport.php:41
+msgid "No valid recipient address."
+msgstr ""
+
+#: inc/Email/Mailer.php:162
+msgid "wp_mail() returned false. The site may have no working mail setup."
+msgstr ""
+
+#: inc/Email/MailNotice.php:55
+msgid "Axiom Blocks: a form email was not sent."
+msgstr ""
+
+#: inc/Email/MailNotice.php:56
+msgid "The submission was saved under Form entries. If this site has no mail setup, install an SMTP plugin or send through Resend."
+msgstr ""
+
+#. translators: %s: date and time of the failure.
+#: inc/Email/MailNotice.php:58
+#, php-format
+msgid "Last failure %s"
+msgstr ""
+
+#: inc/Email/MailNotice.php:59
+#: src/admin/components/BlockCard.js:53
+msgid "Email settings"
+msgstr ""
+
+#: inc/Email/MailNotice.php:60
+#: inc/Forms/Entries.php:101
+#: inc/Forms/Entries.php:103
+#: inc/Forms/Entries.php:104
+#: inc/Forms/Entries.php:812
+msgid "Form entries"
+msgstr ""
+
+#: inc/Email/MailNotice.php:61
+#: src/admin/components/Dashboard.js:503
+msgid "Dismiss"
+msgstr ""
+
+#: inc/Email/MailNotice.php:71
+msgid "You are not allowed to do that."
+msgstr ""
+
+#: inc/Email/ResendTransport.php:38
+msgid "No Resend API key is set."
+msgstr ""
+
+#. translators: 1: HTTP status code, 2: error text from Resend.
+#: inc/Email/ResendTransport.php:71
+#, php-format
+msgid "Resend returned HTTP %1$d. %2$s"
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:100
+msgid "This form has changed since the page loaded. Refresh the page and try again."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:106
+#: src/blocks/contact-form/render.php:151
+#: src/blocks/contact-form/render.php:188
+#: src/blocks/contact-form/index.js:513
+msgid "Something went wrong and your message was not sent. Please try again."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:116
+msgid "Too many messages from this connection. Please wait a few minutes and try again."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:128
+#: src/blocks/contact-form/render.php:186
+#: src/blocks/contact-form/index.js:826
+msgid "Please check the highlighted fields."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:260
+#: src/blocks/contact-form/render.php:183
+#: src/blocks/contact-form/FieldEdit.js:729
+msgid "Please tick this box to continue."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:275
+#: inc/Forms/ContactFormHandler.php:342
+msgid "Pick from the options given."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:283
+#: src/blocks/contact-form/render.php:182
+msgid "Please choose at least one option."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:295
+#: src/blocks/contact-form/render.php:177
+#: src/blocks/contact-form/FieldEdit.js:730
+msgid "This field is required."
+msgstr ""
+
+#. translators: %d: maximum number of characters.
+#: inc/Forms/ContactFormHandler.php:303
+#, php-format
+msgid "Keep this under %d characters."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:331
+#: src/blocks/contact-form/render.php:178
+msgid "Enter a valid email address."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:336
+#: src/blocks/contact-form/render.php:181
+msgid "Enter a valid phone number."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:347
+msgid "Enter a valid date."
+msgstr ""
+
+#. translators: %s: earliest allowed date.
+#: inc/Forms/ContactFormHandler.php:351
+#, php-format
+msgid "Choose a date on or after %s."
+msgstr ""
+
+#. translators: %s: latest allowed date.
+#: inc/Forms/ContactFormHandler.php:355
+#, php-format
+msgid "Choose a date on or before %s."
+msgstr ""
+
+#. translators: %d: minimum number of characters.
+#: inc/Forms/ContactFormHandler.php:363
+#, php-format
+msgid "Enter at least %d characters."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:368
+#: src/blocks/contact-form/render.php:179
+msgid "Enter a valid web address."
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:372
+#: src/blocks/contact-form/render.php:180
+msgid "Enter a number."
+msgstr ""
+
+#. translators: %s: smallest allowed number.
+#: inc/Forms/ContactFormHandler.php:376
+#, php-format
+msgid "Enter %s or more."
+msgstr ""
+
+#. translators: %s: largest allowed number.
+#: inc/Forms/ContactFormHandler.php:380
+#, php-format
+msgid "Enter %s or less."
+msgstr ""
+
+#. translators: %s: page URL.
+#: inc/Forms/ContactFormHandler.php:442
+#, php-format
+msgid "Sent from %s"
+msgstr ""
+
+#: inc/Forms/ContactFormHandler.php:590
+#: src/blocks/contact-form/render.php:146
+#: src/blocks/contact-form/render.php:187
+#: src/blocks/contact-form/index.js:489
+#: src/blocks/contact-form/index.js:825
+msgid "Thanks, your message has been sent."
+msgstr ""
+
+#: inc/Forms/ContactFormSchema.php:214
+msgid "Consent"
+msgstr ""
+
+#: inc/Forms/Entries.php:102
+#: inc/Forms/Entries.php:105
+#: inc/Forms/Entries.php:374
+msgid "Form entry"
+msgstr ""
+
+#: inc/Forms/Entries.php:106
+msgid "View entry"
+msgstr ""
+
+#: inc/Forms/Entries.php:107
+msgid "Search entries"
+msgstr ""
+
+#: inc/Forms/Entries.php:108
+msgid "No entries yet. Messages sent through a Contact Form block appear here."
+msgstr ""
+
+#: inc/Forms/Entries.php:109
+msgid "No entries in the trash."
+msgstr ""
+
+#: inc/Forms/Entries.php:244
+msgid "Entry"
+msgstr ""
+
+#: inc/Forms/Entries.php:245
+#: inc/Forms/Entries.php:661
+#: inc/Forms/Entries.php:795
+#: src/blocks/contact-form/index.js:245
+#: src/blocks/contact-form/index.js:434
+msgid "Form"
+msgstr ""
+
+#: inc/Forms/Entries.php:246
+#: inc/Forms/Entries.php:667
+#: src/admin/components/Dashboard.js:317
+#: src/admin/components/EmailTab.js:265
+#: src/blocks/contact-form/EmailPanel.js:78
+#: src/blocks/contact-form/FieldEdit.js:39
+#: src/blocks/contact-form/index.js:73
+#: src/blocks/contact-form/index.js:90
+#: src/blocks/contact-form/index.js:117
+msgid "Email"
+msgstr ""
+
+#. translators: 1: date, 2: time.
+#: inc/Forms/Entries.php:247
+#: inc/Forms/Entries.php:663
+#: inc/Forms/Entries.php:799
+msgid "Received"
+msgstr ""
+
+#: inc/Forms/Entries.php:292
+msgid "New"
+msgstr ""
+
+#: inc/Forms/Entries.php:319
+msgid "Sent"
+msgstr ""
+
+#: inc/Forms/Entries.php:321
+msgid "Not sent"
+msgstr ""
+
+#: inc/Forms/Entries.php:323
+msgid "Sending"
+msgstr ""
+
+#: inc/Forms/Entries.php:325
+msgid "Not emailed"
+msgstr ""
+
+#: inc/Forms/Entries.php:387
+msgid "Just now"
+msgstr ""
+
+#. translators: %s: time span, for example "2 hours".
+#: inc/Forms/Entries.php:391
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#: inc/Forms/Entries.php:412
+msgid "View"
+msgstr ""
+
+#. translators: %s: number of new form entries.
+#: inc/Forms/Entries.php:572
+#, php-format
+msgid "%s new entry"
+msgid_plural "%s new entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/Forms/Entries.php:608
+msgid "Submission"
+msgstr ""
+
+#: inc/Forms/Entries.php:609
+msgid "Details"
+msgstr ""
+
+#. translators: %s: visitor name or email.
+#: inc/Forms/Entries.php:612
+#, php-format
+msgid "Entry from %s"
+msgstr ""
+
+#: inc/Forms/Entries.php:626
+msgid "Back to Form entries"
+msgstr ""
+
+#: inc/Forms/Entries.php:638
+msgid "This entry has no fields."
+msgstr ""
+
+#. translators: 1: date, 2: time.
+#: inc/Forms/Entries.php:663
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: inc/Forms/Entries.php:665
+msgid "Page"
+msgstr ""
+
+#. translators: %s: delivery route name.
+#: inc/Forms/Entries.php:671
+#, php-format
+msgid "through %s"
+msgstr ""
+
+#: inc/Forms/Entries.php:680
+msgid "Move to trash"
+msgstr ""
+
+#: inc/Forms/Entries.php:737
+#: inc/Forms/Entries.php:751
+msgid "Axiom Blocks form entries"
+msgstr ""
+
+#: inc/Forms/Entries.php:856
+msgid "When you send a message through a contact form on this site, we keep what you entered in the form, the page you sent it from and the time it was sent, so we can reply. We do not store your IP address."
+msgstr ""
+
+#: inc/Forms/Entries.php:857
+msgid "The message is also sent to us by email. If this site sends email through Resend, your message passes through Resend to reach us."
 msgstr ""
 
 #. translators: %d is the number of sections in the table of contents.
 #: inc/Frontend/TableOfContents.php:234
+#, php-format
 msgid "%d section"
 msgid_plural "%d sections"
 msgstr[0] ""
@@ -153,8 +634,30 @@ msgstr ""
 msgid "Before / after image comparison"
 msgstr ""
 
+#: src/blocks/contact-form/contact-form-submit/render.php:20
+#: src/blocks/contact-form/contact-form-submit/index.js:273
+msgid "Send message"
+msgstr ""
+
+#: src/blocks/contact-form/render.php:49
+#: src/blocks/contact-form/index.js:171
+msgid "Contact form"
+msgstr ""
+
+#: src/blocks/contact-form/render.php:184
+msgid "This is too short."
+msgstr ""
+
+#: src/blocks/contact-form/render.php:185
+msgid "This value is out of range."
+msgstr ""
+
+#: src/blocks/contact-form/render.php:206
+msgid "Leave this field empty"
+msgstr ""
+
 #: src/blocks/copy-to-clipboard/render.php:19
-#: src/components/iconLibrary.js:1148
+#: src/components/iconLibrary.js:1287
 msgid "Copy"
 msgstr ""
 
@@ -204,7 +707,7 @@ msgid "Reset"
 msgstr ""
 
 #: src/blocks/post-filter/post-filter-search/render.php:34
-#: src/components/iconLibrary.js:1022
+#: src/components/iconLibrary.js:1161
 msgid "Search"
 msgstr ""
 
@@ -249,27 +752,32 @@ msgid "Most comments"
 msgstr ""
 
 #: src/blocks/post-filter/post-filter-taxonomy/render.php:56
+#: src/admin/components/Dashboard.js:283
 #: src/blocks/post-filter/post-filter-taxonomy/index.js:162
 msgid "All"
 msgstr ""
 
 #. translators: %s is the number of matching posts.
 #: src/blocks/post-filter/render.php:194
+#, php-format
 msgid "%s post"
 msgstr ""
 
 #. translators: %s is the number of matching posts.
 #: src/blocks/post-filter/render.php:196
+#, php-format
 msgid "%s posts"
 msgstr ""
 
 #. translators: %s is the number of matching posts.
 #: src/blocks/post-filter/render.php:198
+#, php-format
 msgid "Filter applied. Showing %s results."
 msgstr ""
 
 #. translators: %s: number of comments.
 #: src/blocks/post-grid/post-meta/render.php:160
+#, php-format
 msgid "%s comment"
 msgid_plural "%s comments"
 msgstr[0] ""
@@ -277,6 +785,7 @@ msgstr[1] ""
 
 #. translators: %s: number of minutes.
 #: src/blocks/post-grid/post-meta/render.php:181
+#, php-format
 msgid "%s min read"
 msgid_plural "%s min read"
 msgstr[0] ""
@@ -310,6 +819,7 @@ msgstr ""
 
 #. translators: 1: link label, for example "Read more". 2: post title.
 #: src/blocks/post-grid/post-read-more/render.php:141
+#, php-format
 msgid "%1$s: %2$s"
 msgstr ""
 
@@ -317,8 +827,29 @@ msgstr ""
 msgid "Reading progress"
 msgstr ""
 
+#: src/blocks/social-share/render.php:61
+msgid "Copied"
+msgstr ""
+
+#. translators: %s: social network name, e.g. "Facebook".
+#. translators: %s: network name.
+#: src/blocks/social-share/render.php:93
+#: src/blocks/social-share/index.js:514
+#, php-format,js-format
+msgid "Share on %s"
+msgstr ""
+
+#: src/blocks/social-share/render.php:95
+msgid "Share by email"
+msgstr ""
+
+#: src/blocks/social-share/render.php:97
+msgid "Share by text message"
+msgstr ""
+
 #. translators: 1: rating value, 2: max stars
 #: src/blocks/star-rating/render.php:86
+#, php-format
 msgid "Rating: %1$s out of %2$s"
 msgstr ""
 
@@ -347,6 +878,7 @@ msgstr ""
 
 #. translators: %s: rating value out of 5
 #: src/blocks/testimonials/testimonial/render.php:50
+#, php-format
 msgid "Rated %s out of 5"
 msgstr ""
 
@@ -358,45 +890,48 @@ msgstr ""
 #. translators: %s: review source platform name (e.g. Google)
 #: src/blocks/testimonials/testimonial/render.php:178
 #: src/blocks/testimonials/testimonial/index.js:461
+#, php-format,js-format
 msgid "via %s"
 msgstr ""
 
-#: src/admin/components/BlockCard.js:22
+#: src/admin/components/BlockCard.js:34
 msgid "GO PRO"
 msgstr ""
 
 #: src/admin/components/BlockCard.js:44
-msgid "Docs"
+msgid "Entries"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:64
+#: src/admin/components/Dashboard.js:104
 msgid "Failed to load blocks."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:114
+#: src/admin/components/Dashboard.js:174
 msgid "Block enabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:115
+#: src/admin/components/Dashboard.js:175
 msgid "Block disabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:124
+#: src/admin/components/Dashboard.js:184
 msgid "Failed to update block."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:150
+#: src/admin/components/Dashboard.js:210
 msgid "All blocks enabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:151
+#: src/admin/components/Dashboard.js:211
 msgid "All blocks disabled."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:179
+#: src/admin/components/Dashboard.js:241
+#: src/admin/components/HelpTab.js:36
 #: src/blocks/advanced-section/index.js:368
 #: src/blocks/advanced-section/index.js:372
 #: src/blocks/button-group/index.js:98
+#: src/blocks/contact-form/index.js:564
 #: src/blocks/content-slider/index.js:384
 #: src/blocks/countdown-timer/index.js:415
 #: src/blocks/countdown-timer/index.js:419
@@ -407,6 +942,7 @@ msgstr ""
 #: src/blocks/post-grid/index.js:487
 #: src/blocks/post-grid/index.js:491
 #: src/blocks/pricing-table/index.js:710
+#: src/blocks/social-share/index.js:388
 #: src/blocks/star-rating/index.js:254
 #: src/blocks/testimonials/index.js:595
 #: src/blocks/testimonials/index.js:599
@@ -415,103 +951,555 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:180
+#: src/admin/components/Dashboard.js:246
+#: src/admin/components/HelpTab.js:37
 #: src/blocks/copy-to-clipboard/index.js:232
 #: src/blocks/testimonials/index.js:742
 #: src/components/TargetSection.js:614
 msgid "Content"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:181
+#: src/admin/components/Dashboard.js:251
+#: src/admin/components/HelpTab.js:38
 msgid "Dynamic"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:206
-msgid "All Blocks"
+#: src/admin/components/Dashboard.js:256
+#: src/admin/components/HelpTab.js:39
+msgid "Forms"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:220
-#: src/admin/components/Dashboard.js:361
-msgid "WooCommerce"
-msgstr ""
-
-#: src/admin/components/Dashboard.js:235
+#: src/admin/components/Dashboard.js:312
 msgid "Block Manager"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:240
-#: src/components/iconLibrary.js:1040
-msgid "Settings"
+#: src/admin/components/Dashboard.js:328
+#: src/components/iconLibrary.js:1191
+msgid "Help"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:263
-msgid "Free and Pro Gutenberg blocks for WordPress"
+#. translators: %s: plugin version.
+#: src/admin/components/Dashboard.js:390
+#, js-format
+msgid "Version %s"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:277
-msgid "Read Docs"
+#: src/admin/components/Dashboard.js:397
+msgid "Blocks the editor leaves out, ready when you need them."
 msgstr ""
 
-#: src/admin/components/Dashboard.js:322
-msgid "Total Blocks"
+#: src/admin/components/Dashboard.js:453
+msgid ", needs attention"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:324
-#: src/admin/components/Dashboard.js:350
+#: src/admin/components/Dashboard.js:534
+msgid "Total blocks"
+msgstr ""
+
+#: src/admin/components/Dashboard.js:539
+#: src/admin/components/Dashboard.js:572
 msgid "active"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:333
-#: src/admin/components/Stats.js:12
-msgid "Free Blocks"
+#: src/admin/components/Dashboard.js:548
+msgid "Free blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:335
+#: src/admin/components/Dashboard.js:553
 msgid "Always available"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:341
-#: src/admin/components/Stats.js:17
-msgid "Pro Blocks"
+#: src/admin/components/Dashboard.js:562
+msgid "Pro blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:351
+#: src/admin/components/Dashboard.js:576
 msgid "Requires Pro plugin"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:367
+#: src/admin/components/Dashboard.js:595
 #: src/blocks/pricing-table/index.js:561
 msgid "Pro"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:368
+#: src/admin/components/Dashboard.js:599
 msgid "Integration disabled"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:388
-msgid "Search blocks…"
+#: src/admin/components/Dashboard.js:619
+#: src/admin/components/Dashboard.js:623
+msgid "Search blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:461
-msgid "WooCommerce Blocks"
+#: src/admin/components/Dashboard.js:700
+msgid "WooCommerce blocks"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:475
-#: src/admin/components/ui.js:312
+#: src/admin/components/Dashboard.js:717
+#: src/admin/components/ui.js:319
 msgid "Enable all"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:482
-#: src/admin/components/ui.js:315
+#: src/admin/components/Dashboard.js:730
+#: src/admin/components/ui.js:326
 msgid "Disable all"
 msgstr ""
 
-#: src/admin/components/Dashboard.js:508
+#: src/admin/components/Dashboard.js:760
 msgid "No blocks found."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:60
+msgid "just now"
+msgstr ""
+
+#. translators: %d: number of days.
+#: src/admin/components/EmailTab.js:66
+#, js-format
+msgid "%d day ago"
+msgid_plural "%d days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of hours.
+#: src/admin/components/EmailTab.js:71
+#, js-format
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of minutes.
+#: src/admin/components/EmailTab.js:76
+#, js-format
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/admin/components/EmailTab.js:93
+msgid "No entries yet"
+msgstr ""
+
+#. translators: 1: "N entries" phrase, 2: number of new entries.
+#: src/admin/components/EmailTab.js:96
+#, js-format
+msgid "%1$s, %2$d new"
+msgstr ""
+
+#. translators: %d: number of entries.
+#: src/admin/components/EmailTab.js:99
+#, js-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/admin/components/EmailTab.js:113
+#: src/admin/components/EmailTab.js:158
+msgid "View entries"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:131
+msgid "The last form email was not sent."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:137
+msgid "The message was saved under Form entries. Send a test email to check the fix."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:151
+#: src/admin/components/EmailTab.js:305
+#: src/admin/components/EmailTab.js:653
+msgid "Send a test email"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:177
+msgid "Resend is selected but no API key is saved, so emails fall back to WordPress mail."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:181
+msgid "Resend is selected but no API key is saved, so form emails cannot be sent."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:193
+msgid "Add your API key"
+msgstr ""
+
+#. translators: 1: route name, 2: relative time such as "12 minutes ago".
+#: src/admin/components/EmailTab.js:212
+#, js-format
+msgid "Emails are going out through %1$s. Last email sent %2$s."
+msgstr ""
+
+#. translators: %s: route name.
+#: src/admin/components/EmailTab.js:221
+#, js-format
+msgid "Emails go out through %s. No form email has been sent yet."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:257
+msgid "Could not load the email settings."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:267
+msgid "Contact Form emails go out through this setting. Every message is saved as an entry first, so nothing is lost if an email fails."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:308
+#: src/admin/components/EmailTab.js:656
+msgid "Uses the saved settings. Save your changes first."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:347
+msgid "Failed to save the email settings."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:391
+msgid "Create one in your Resend account under API Keys, with sending access."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:397
+msgid "Set in wp-config.php (AXIOM_BLOCKS_RESEND_API_KEY), so it cannot be changed here."
+msgstr ""
+
+#. translators: %s: last four characters of the key.
+#: src/admin/components/EmailTab.js:405
+#, js-format
+msgid "Key ending in %s is saved. Paste a new one to replace it."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:414
+msgid "Save email settings"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:416
+#: src/admin/components/SettingsTab.js:127
+msgid "Saving…"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:418
+#: src/admin/components/SettingsTab.js:135
+msgid "Saved"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:433
+msgid "Send form emails with"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:437
+msgid "Sent straight to Resend. Only Axiom form emails use this; other site mail is untouched."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:441
+msgid "Uses your site's own mail. If you have an SMTP plugin, it is used automatically. Without one, many hosts do not deliver mail."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:463
+msgid "Resend API key"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:500
+#: src/blocks/before-after-slider/index.js:213
+#: src/blocks/post-grid/post-image/index.js:130
+#: src/blocks/tabs/index.js:752
+#: src/blocks/testimonials/testimonial/index.js:245
+#: src/components/ABControls.js:334
+#: src/components/BackgroundControl.js:474
+msgid "Remove"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:506
+#: src/admin/components/EmailTab.js:517
+msgid "Fall back to WordPress mail"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:510
+msgid "If Resend refuses or cannot be reached, try your site's mail instead."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:530
+msgid "From address"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:534
+msgid "Its domain must be verified in your Resend account."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:538
+msgid "Use an address on your own domain. Visitors' addresses go in Reply-To, never From."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:550
+msgid "This address is not on your site's domain, so receiving servers may reject the mail or mark it as spam."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:571
+msgid "From name"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:578
+msgid "Site title"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:586
+#: src/admin/components/EmailTab.js:594
+msgid "Save form entries"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:587
+msgid "Keeps every submission under Form entries before the email is sent."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:601
+msgid "Delete entries after"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:603
+msgid "Days. 0 keeps them until you delete them."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:625
+msgid "days"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:666
+#: src/blocks/contact-form/EmailPanel.js:82
+msgid "Send to"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:689
+#: src/blocks/contact-form/EmailPanel.js:155
+msgid "Sending…"
+msgstr ""
+
+#: src/admin/components/EmailTab.js:690
+msgid "Send test"
+msgstr ""
+
+#. translators: 1: address, 2: route name.
+#: src/admin/components/EmailTab.js:697
+#, js-format
+msgid "Sent to %1$s through %2$s. Check the inbox and the spam folder."
+msgstr ""
+
+#: src/admin/components/EmailTab.js:708
+msgid "Not sent."
 msgstr ""
 
 #: src/admin/components/Header.js:20
 msgid "Version"
+msgstr ""
+
+#. translators: %d: step number.
+#: src/admin/components/HelpTab.js:82
+#, js-format
+msgid "Step %d of 3"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:88
+#: src/admin/components/HelpTab.js:263
+msgid "Done"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:104
+msgid "Used an Axiom block on a page"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:106
+msgid "Sent a test email"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:109
+msgid "Received your first form entry"
+msgstr ""
+
+#. translators: 1: items done, 2: items in total.
+#: src/admin/components/HelpTab.js:118
+#, js-format
+msgid "%1$d of %2$d done"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:128
+msgid "First steps done. You know your way around."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:139
+msgid "Show the steps"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:149
+#: src/admin/components/HelpTab.js:172
+msgid "First steps"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:150
+msgid "Three steps to your first page. Your progress is saved as you go."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:162
+msgid "Hide the steps"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:177
+msgid "Add your first block"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:178
+msgid "Open a new page, type / and pick a block with the purple icon."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:184
+msgid "Create a page"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:189
+msgid "Learn how every block works"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:193
+msgid "Settings, Styles, devices and hover states work the same way in every block. Learn them once."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:202
+msgid "Watch the short video"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:208
+msgid "Pick what you are building"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:209
+msgid "A short guide names the blocks to use for each kind of site."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:215
+#: src/admin/components/HelpTab.js:360
+msgid "Online store"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:216
+#: src/admin/components/HelpTab.js:361
+msgid "Blog"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:217
+#: src/admin/components/HelpTab.js:362
+msgid "Business site"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:264
+msgid "Not done"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:277
+msgid "How every block works: Settings, Styles, devices and hover"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:281
+msgid "Build your first section: a hero with buttons"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:288
+msgid "Short videos, each on a docs page with the written steps beside it."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:297
+msgid "See all videos"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:315
+msgid "Episode 1"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:318
+msgid "Install Axiom Blocks and publish your first block"
+msgstr ""
+
+#. translators: %d: episode number.
+#: src/admin/components/HelpTab.js:339
+#, js-format
+msgid "Episode %d"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:343
+msgid "Coming soon"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:359
+msgid "Getting started"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:363
+msgid "Email delivery"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:369
+msgid "Documentation"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:370
+msgid "A guide for each kind of site, and a page for every block."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:379
+msgid "Open the docs"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:427
+msgid "Support forum"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:428
+msgid "Ask a question on the WordPress.org forum. Paste the system info below with it."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:436
+msgid "Report a bug"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:437
+msgid "Something broken? Open an issue on GitHub with the steps to see it."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:445
+msgid "Request a feature"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:446
+msgid "Tell us which block or control you need next."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:454
+msgid "Leave a review"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:455
+msgid "A review on WordPress.org helps other people find the plugin."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:465
+msgid "Get support"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:509
+msgid "System info copied."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:513
+msgid "Could not copy. Select the text and copy it by hand."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:524
+msgid "System info"
+msgstr ""
+
+#: src/admin/components/HelpTab.js:525
+msgid "Add this to a support request. It lists versions and settings only, and nothing is sent anywhere."
+msgstr ""
+
+#: src/admin/components/HelpTab.js:535
+msgid "Copy system info"
 msgstr ""
 
 #: src/admin/components/Loader.js:120
@@ -530,20 +1518,12 @@ msgstr ""
 msgid "Failed to reset settings."
 msgstr ""
 
-#: src/admin/components/SettingsTab.js:127
-msgid "Saving…"
-msgstr ""
-
-#: src/admin/components/SettingsTab.js:135
-msgid "Saved"
-msgstr ""
-
 #: src/admin/components/SettingsTab.js:139
-msgid "Save Settings"
+msgid "Save settings"
 msgstr ""
 
 #: src/admin/components/SettingsTab.js:158
-msgid "Invalid license key — please check the key and try again."
+msgid "Invalid license key. Please check the key and try again."
 msgstr ""
 
 #: src/admin/components/SettingsTab.js:167
@@ -555,7 +1535,7 @@ msgid "Failed to deactivate license."
 msgstr ""
 
 #: src/admin/components/SettingsTab.js:230
-msgid "Pro License"
+msgid "Pro license"
 msgstr ""
 
 #: src/admin/components/SettingsTab.js:237
@@ -584,7 +1564,8 @@ msgstr ""
 
 #. translators: %s: human-readable expiry date
 #: src/admin/components/SettingsTab.js:322
-msgid "License active — valid until %s."
+#, js-format
+msgid "License active, valid until %s."
 msgstr ""
 
 #: src/admin/components/SettingsTab.js:327
@@ -592,27 +1573,37 @@ msgid "further notice"
 msgstr ""
 
 #: src/admin/components/SettingsTab.js:332
-msgid "No license activated — Pro blocks are currently locked."
+msgid "No license activated. Pro blocks are locked."
 msgstr ""
 
 #: src/admin/components/SettingsTab.js:346
-msgid "WooCommerce Integration"
+#: src/admin/components/SettingsTab.js:353
+msgid "WooCommerce integration"
 msgstr ""
 
 #: src/admin/components/SettingsTab.js:347
-msgid "Enable WooCommerce-specific blocks when WC is active."
+msgid "Turn on WooCommerce blocks when WooCommerce is active."
 msgstr ""
 
-#: src/admin/components/SettingsTab.js:364
-msgid "Load Assets Conditionally"
+#: src/admin/components/SettingsTab.js:368
+#: src/admin/components/SettingsTab.js:375
+msgid "Load assets conditionally"
 msgstr ""
 
-#: src/admin/components/SettingsTab.js:365
-msgid "Only enqueue the Axiom Blocks stylesheet on pages that contain a Axiom Blocks block."
+#: src/admin/components/SettingsTab.js:369
+msgid "Only load the Axiom Blocks stylesheet on pages that use an Axiom block."
 msgstr ""
 
-#: src/admin/components/SettingsTab.js:393
-msgid "Reset Defaults"
+#: src/admin/components/SettingsTab.js:401
+msgid "Reset defaults"
+msgstr ""
+
+#: src/admin/components/Stats.js:12
+msgid "Free Blocks"
+msgstr ""
+
+#: src/admin/components/Stats.js:17
+msgid "Pro Blocks"
 msgstr ""
 
 #: src/admin/components/Stats.js:22
@@ -670,6 +1661,14 @@ msgstr ""
 #: src/blocks/advanced-heading/index.js:110
 #: src/blocks/advanced-heading/index.js:122
 #: src/blocks/before-after-slider/index.js:80
+#: src/blocks/contact-form/contact-form-submit/index.js:47
+#: src/blocks/contact-form/FieldEdit.js:63
+#: src/blocks/contact-form/FieldEdit.js:342
+#: src/blocks/contact-form/index.js:281
+#: src/blocks/contact-form/index.js:300
+#: src/blocks/contact-form/index.js:367
+#: src/blocks/contact-form/index.js:418
+#: src/blocks/contact-form/index.js:711
 #: src/blocks/free-shipping-progress/index.js:108
 #: src/blocks/icon-list/index.js:101
 #: src/blocks/notice/index.js:124
@@ -694,6 +1693,9 @@ msgstr ""
 #: src/blocks/pricing-table/index.js:269
 #: src/blocks/pricing-table/index.js:276
 #: src/blocks/pricing-table/index.js:330
+#: src/blocks/social-share/index.js:68
+#: src/blocks/social-share/index.js:79
+#: src/blocks/social-share/index.js:323
 #: src/blocks/star-rating/index.js:80
 #: src/blocks/table-of-contents/index.js:211
 #: src/blocks/table-of-contents/index.js:223
@@ -715,6 +1717,7 @@ msgstr ""
 #: src/blocks/accordion/index.js:153
 #: src/blocks/advanced-heading/index.js:99
 #: src/blocks/before-after-slider/index.js:72
+#: src/blocks/contact-form/index.js:262
 #: src/blocks/content-slider/index.js:99
 #: src/blocks/free-shipping-progress/index.js:68
 #: src/blocks/notice/index.js:95
@@ -728,6 +1731,8 @@ msgstr ""
 #: src/blocks/accordion/index.js:550
 #: src/blocks/advanced-button/index.js:199
 #: src/blocks/advanced-button/index.js:435
+#: src/blocks/contact-form/index.js:323
+#: src/blocks/contact-form/index.js:326
 #: src/blocks/copy-to-clipboard/index.js:280
 #: src/blocks/counter-group/counter/index.js:91
 #: src/blocks/counter-group/index.js:117
@@ -740,6 +1745,9 @@ msgstr ""
 #: src/blocks/notice/index.js:106
 #: src/blocks/notice/index.js:211
 #: src/blocks/post-grid/post-meta/index.js:57
+#: src/blocks/social-share/index.js:110
+#: src/blocks/social-share/index.js:304
+#: src/blocks/social-share/NetworksControl.js:110
 #: src/blocks/trust-badges/index.js:178
 #: src/components/IconControl.js:24
 msgid "Icon"
@@ -762,6 +1770,7 @@ msgstr ""
 #: src/blocks/notice/index.js:108
 #: src/blocks/post-grid/post-excerpt/index.js:24
 #: src/blocks/pricing-table/index.js:194
+#: src/blocks/social-share/index.js:113
 #: src/blocks/testimonials/index.js:240
 #: src/blocks/testimonials/index.js:250
 #: src/blocks/testimonials/index.js:260
@@ -776,6 +1785,8 @@ msgid "Color"
 msgstr ""
 
 #: src/blocks/accordion/index.js:166
+#: src/blocks/contact-form/contact-form-submit/index.js:78
+#: src/blocks/contact-form/index.js:334
 #: src/blocks/post-grid/post-meta/index.js:66
 #: src/blocks/pricing-table/index.js:300
 msgid "Icon size"
@@ -849,6 +1860,8 @@ msgid "Show icon"
 msgstr ""
 
 #: src/blocks/accordion/index.js:514
+#: src/blocks/contact-form/contact-form-submit/index.js:170
+#: src/blocks/contact-form/FieldEdit.js:459
 #: src/blocks/icon-list/index.js:345
 #: src/blocks/post-grid/post-read-more/index.js:132
 msgid "Icon position"
@@ -925,12 +1938,14 @@ msgstr ""
 
 #: src/blocks/advanced-button/index.js:122
 #: src/blocks/advanced-button/index.js:346
+#: src/blocks/contact-form/contact-form-submit/index.js:39
 #: src/blocks/copy-to-clipboard/index.js:71
 #: src/blocks/post-filter/post-filter-reset/index.js:27
 #: src/blocks/post-filter/post-filter-search/index.js:72
 #: src/blocks/post-grid/post-read-more/index.js:44
 #: src/blocks/post-grid/post-read-more/index.js:119
 #: src/blocks/pricing-table/index.js:327
+#: src/blocks/social-share/index.js:76
 msgid "Button"
 msgstr ""
 
@@ -946,12 +1961,14 @@ msgid "Min width"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:205
+#: src/blocks/contact-form/index.js:389
 #: src/blocks/counter-group/index.js:167
 #: src/blocks/icon-list/index.js:133
 #: src/blocks/icon/index.js:70
 #: src/blocks/info-box/index.js:123
 #: src/blocks/notice/index.js:113
 #: src/blocks/post-grid/post-image/index.js:193
+#: src/blocks/social-share/index.js:116
 #: src/blocks/star-rating/index.js:64
 #: src/blocks/testimonials/index.js:213
 #: src/components/BackgroundControl.js:484
@@ -990,7 +2007,7 @@ msgstr ""
 #: src/blocks/icon-list/index.js:150
 #: src/blocks/icon/index.js:266
 #: src/blocks/testimonials/testimonial/index.js:326
-#: src/components/iconLibrary.js:1364
+#: src/components/iconLibrary.js:1503
 msgid "Link"
 msgstr ""
 
@@ -1004,6 +2021,7 @@ msgstr ""
 
 #: src/blocks/advanced-button/index.js:387
 #: src/blocks/icon/index.js:270
+#: src/blocks/social-share/index.js:242
 msgid "URL"
 msgstr ""
 
@@ -1029,7 +2047,7 @@ msgid "Sponsored"
 msgstr ""
 
 #: src/blocks/advanced-button/index.js:420
-#: src/components/iconLibrary.js:1100
+#: src/components/iconLibrary.js:1239
 msgid "Download"
 msgstr ""
 
@@ -1102,6 +2120,7 @@ msgstr ""
 #: src/blocks/post-grid/index.js:106
 #: src/blocks/post-grid/post-read-more/index.js:34
 #: src/blocks/pricing-table/index.js:112
+#: src/blocks/social-share/NetworksControl.js:114
 #: src/components/ABControls.js:510
 #: src/components/ABPosition.js:18
 #: src/components/AlignControl.js:69
@@ -1174,6 +2193,7 @@ msgstr ""
 
 #: src/blocks/advanced-heading/index.js:126
 #: src/blocks/before-after-slider/index.js:87
+#: src/blocks/contact-form/FieldEdit.js:68
 #: src/blocks/content-slider/index.js:117
 #: src/blocks/tabs/index.js:430
 #: src/blocks/testimonials/index.js:225
@@ -1185,6 +2205,7 @@ msgid "Background"
 msgstr ""
 
 #: src/blocks/advanced-heading/index.js:133
+#: src/blocks/contact-form/FieldEdit.js:80
 msgid "Radius"
 msgstr ""
 
@@ -1196,6 +2217,7 @@ msgstr ""
 
 #: src/blocks/advanced-heading/index.js:146
 #: src/blocks/button-group/index.js:125
+#: src/blocks/contact-form/contact-form-submit/index.js:43
 #: src/blocks/copy-to-clipboard/index.js:318
 #: src/blocks/countdown-timer/index.js:445
 #: src/blocks/css-grid/grid-item/index.js:159
@@ -1215,6 +2237,7 @@ msgid "Alignment"
 msgstr ""
 
 #: src/blocks/advanced-heading/index.js:158
+#: src/blocks/contact-form/contact-form-submit/index.js:203
 #: src/blocks/post-filter/FieldPanel.js:87
 #: src/components/BorderControl.js:161
 #: src/components/BorderControl.js:176
@@ -1323,6 +2346,7 @@ msgstr ""
 #: src/blocks/post-grid/post-pagination/index.js:22
 #: src/blocks/post-grid/post-read-more/index.js:36
 #: src/blocks/pricing-table/index.js:791
+#: src/blocks/social-share/index.js:126
 #: src/blocks/star-rating/index.js:276
 #: src/blocks/tabs/index.js:1132
 #: src/blocks/trust-badges/index.js:621
@@ -1334,6 +2358,7 @@ msgid "Center"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:420
+#: src/blocks/contact-form/index.js:633
 #: src/blocks/content-slider/slide/index.js:23
 #: src/blocks/post-grid/index.js:109
 #: src/components/ABPosition.js:28
@@ -1355,6 +2380,7 @@ msgstr ""
 #: src/blocks/info-box/index.js:268
 #: src/blocks/post-filter/index.js:207
 #: src/blocks/post-grid/index.js:298
+#: src/blocks/social-share/index.js:395
 msgid "Direction"
 msgstr ""
 
@@ -1363,6 +2389,7 @@ msgid "Wrap"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:474
+#: src/blocks/social-share/index.js:403
 #: src/components/TypographyPanel.js:660
 msgid "Justify"
 msgstr ""
@@ -1372,6 +2399,8 @@ msgid "Align"
 msgstr ""
 
 #: src/blocks/advanced-section/index.js:516
+#: src/blocks/contact-form/FieldEdit.js:282
+#: src/blocks/contact-form/index.js:574
 #: src/blocks/counter-group/index.js:497
 #: src/blocks/css-grid/index.js:209
 #: src/blocks/post-grid/index.js:503
@@ -1408,6 +2437,7 @@ msgstr ""
 
 #: src/blocks/before-after-slider/index.js:77
 #: src/blocks/before-after-slider/index.js:293
+#: src/blocks/contact-form/index.js:647
 #: src/blocks/countdown-timer/index.js:105
 #: src/blocks/countdown-timer/index.js:367
 #: src/blocks/star-rating/index.js:77
@@ -1435,15 +2465,6 @@ msgstr ""
 #: src/blocks/testimonials/testimonial/index.js:228
 #: src/components/BackgroundControl.js:461
 msgid "Select image"
-msgstr ""
-
-#: src/blocks/before-after-slider/index.js:213
-#: src/blocks/post-grid/post-image/index.js:130
-#: src/blocks/tabs/index.js:752
-#: src/blocks/testimonials/testimonial/index.js:245
-#: src/components/ABControls.js:334
-#: src/components/BackgroundControl.js:474
-msgid "Remove"
 msgstr ""
 
 #: src/blocks/before-after-slider/index.js:269
@@ -1522,11 +2543,6 @@ msgstr ""
 msgid "Drag to compare two images."
 msgstr ""
 
-#: src/blocks/button-group/index.js:38
-#: src/blocks/pricing-table/index.js:555
-msgid "Get started"
-msgstr ""
-
 #: src/blocks/button-group/index.js:45
 #: src/blocks/info-box/index.js:48
 #: src/blocks/info-box/index.js:75
@@ -1534,6 +2550,9 @@ msgid "Learn more"
 msgstr ""
 
 #: src/blocks/button-group/index.js:145
+#: src/blocks/contact-form/index.js:360
+#: src/blocks/contact-form/index.js:376
+#: src/blocks/social-share/index.js:128
 msgid "Space between"
 msgstr ""
 
@@ -1549,6 +2568,1114 @@ msgstr ""
 
 #: src/blocks/button-group/index.js:198
 msgid "Arrange Advanced Buttons in a row or stack with alignment and gap controls."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/index.js:5
+msgid "Choices Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/index.js:6
+msgid "Radio buttons or checkboxes, plain or as buttons."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/index.js:13
+msgid "Radio Buttons"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/index.js:14
+msgid "Pick one option."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/index.js:15
+msgid "radio"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/index.js:22
+msgid "Checkboxes"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/index.js:23
+msgid "Pick several options."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/index.js:24
+msgid "checkbox"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/index.js:5
+msgid "Consent Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/index.js:6
+msgid "A required checkbox or switch, for terms or privacy consent."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-date/index.js:5
+msgid "Date Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-date/index.js:6
+msgid "A date picker."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-email/index.js:5
+msgid "Email Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-email/index.js:6
+msgid "An email address. The first one is used as Reply-To."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:48
+#: src/blocks/contact-form/FieldEdit.js:37
+msgid "First name"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:56
+#: src/blocks/contact-form/FieldEdit.js:38
+msgid "Last name"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:92
+#: src/blocks/contact-form/contact-form-group/index.js:200
+msgid "Field Group"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:96
+#: src/blocks/contact-form/index.js:405
+msgid "Legend"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:103
+msgid "Show legend"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:104
+msgid "A hidden legend is still read out by screen readers. Style it under the form's Group part."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:120
+msgid "Columns inside the group"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:143
+#: src/blocks/contact-form/index.js:595
+msgid "Custom columns"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:149
+msgid "Not a valid column list, so equal columns are used."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:153
+msgid "Optional, for example 2fr 1fr."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:166
+#: src/blocks/contact-form/contact-form-submit/index.js:254
+#: src/blocks/contact-form/FieldEdit.js:440
+#: src/blocks/css-grid/grid-item/index.js:119
+msgid "Placement"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:187
+msgid "Group title"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/index.js:201
+msgid "A fieldset with a legend that groups fields and lays them out in its own columns."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-hidden/index.js:5
+msgid "Hidden Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-hidden/index.js:6
+msgid "A value sent with the form but not shown: fixed text, page URL, page title or a URL parameter."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-phone/index.js:5
+msgid "Phone Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-phone/index.js:6
+msgid "A telephone number."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-select/index.js:5
+msgid "Select Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-select/index.js:6
+msgid "A drop-down of options."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:72
+msgid "Minimum height"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:84
+#: src/blocks/icon-list/index.js:141
+#: src/blocks/post-grid/post-read-more/index.js:68
+#: src/blocks/pricing-table/index.js:308
+#: src/blocks/tabs/index.js:474
+msgid "Icon gap"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:131
+#: src/blocks/contact-form/contact-form-submit/index.js:286
+msgid "Submit Button"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:135
+#: src/blocks/contact-form/FieldEdit.js:58
+#: src/blocks/contact-form/FieldEdit.js:364
+#: src/blocks/contact-form/FieldEdit.js:784
+#: src/blocks/contact-form/index.js:279
+#: src/blocks/contact-form/index.js:349
+#: src/blocks/contact-form/OptionsControl.js:45
+#: src/blocks/counter-group/index.js:188
+#: src/blocks/counter-group/index.js:643
+#: src/blocks/post-filter/index.js:75
+#: src/blocks/post-filter/post-filter-search/index.js:125
+#: src/blocks/post-filter/post-filter-sort/index.js:91
+#: src/blocks/post-filter/post-filter-taxonomy/index.js:97
+#: src/blocks/post-grid/post-meta/index.js:195
+#: src/blocks/post-grid/post-meta/index.js:243
+#: src/blocks/post-grid/post-meta/index.js:260
+#: src/blocks/post-grid/post-meta/index.js:277
+#: src/blocks/post-grid/post-meta/index.js:295
+#: src/blocks/post-grid/post-read-more/index.js:121
+#: src/blocks/social-share/index.js:310
+#: src/blocks/social-share/NetworksControl.js:102
+#: src/blocks/trust-badges/index.js:199
+msgid "Label"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:142
+msgid "Label while sending"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:152
+msgid "Spinner while sending"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:178
+msgid "Before the label"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:185
+msgid "After the label"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:208
+msgid "Fit the label"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:215
+#: src/blocks/post-grid/post-read-more/index.js:145
+#: src/components/AlignControl.js:83
+msgid "Full width"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:222
+#: src/blocks/post-filter/FieldPanel.js:20
+#: src/components/IconPicker.js:219
+#: src/components/ShadowControl.js:103
+msgid "Custom"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:237
+msgid "Custom width"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/index.js:287
+msgid "The button that sends the form."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:5
+msgid "Text Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:6
+msgid "A single-line field: name, website, number or any short text."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:13
+msgid "Name Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:14
+msgid "The visitor's name."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:15
+msgid "name"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:17
+#: src/blocks/contact-form/index.js:64
+#: src/blocks/contact-form/index.js:108
+#: src/blocks/testimonials/index.js:278
+#: src/blocks/testimonials/testimonial/index.js:421
+msgid "Name"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:25
+msgid "Website Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:26
+msgid "A web address."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:28
+msgid "url"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:29
+msgid "link"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:32
+#: src/blocks/contact-form/FieldEdit.js:47
+msgid "Website"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:40
+msgid "Number Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:41
+msgid "A number, with optional limits."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:46
+msgid "number"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:47
+msgid "quantity"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/index.js:50
+#: src/blocks/counter-group/index.js:176
+msgid "Number"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-textarea/index.js:5
+msgid "Message Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-textarea/index.js:6
+msgid "A multi-line field for longer messages."
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:36
+msgid "Resend"
+msgstr ""
+
+#. translators: %s: email address.
+#: src/blocks/contact-form/EmailPanel.js:58
+#, js-format
+msgid "Test email sent to %s."
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:62
+#: src/blocks/contact-form/EmailPanel.js:71
+msgid "The test email was not sent."
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:83
+msgid "One or more addresses, separated by commas. Empty sends to the site admin email."
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:92
+msgid "Subject"
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:93
+msgid "Use {form}, {site} or {field:key} to insert the form name, the site title or a field value."
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:97
+msgid "New message from {form}"
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:102
+msgid "Reply goes to the visitor's email"
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:106
+msgid "Uses the first Email field as Reply-To, so you can answer straight from your inbox."
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:114
+msgid "Cc"
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:119
+msgid "Bcc"
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:127
+msgid "Delivery is set site-wide by an administrator under Axiom Blocks > Settings."
+msgstr ""
+
+#. translators: %s: delivery route name.
+#: src/blocks/contact-form/EmailPanel.js:137
+#, js-format
+msgid "Delivery: %s"
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:145
+msgid "Change"
+msgstr ""
+
+#: src/blocks/contact-form/EmailPanel.js:156
+msgid "Send test email"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:34
+msgid "Browser default"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:35
+#: src/blocks/social-share/index.js:421
+msgid "Off"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:36
+msgid "Full name"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:40
+#: src/blocks/contact-form/index.js:126
+#: src/components/iconLibrary.js:1455
+msgid "Phone"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:41
+#: src/blocks/testimonials/index.js:300
+#: src/blocks/testimonials/testimonial/index.js:442
+msgid "Company"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:42
+msgid "Job title"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:43
+msgid "Street address"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:44
+msgid "City"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:45
+msgid "Postal code"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:46
+msgid "Country"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:54
+msgid "Style override"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:73
+#: src/components/BorderControl.js:84
+#: src/components/BorderControl.js:141
+#: src/components/TargetSection.js:372
+msgid "Border"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:86
+#: src/blocks/contact-form/index.js:314
+#: src/blocks/free-shipping-progress/index.js:96
+#: src/blocks/post-grid/post-image/index.js:75
+#: src/blocks/reading-progress-bar/index.js:67
+#: src/blocks/shape-divider/index.js:57
+msgid "Height"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:127
+msgid "Accepts"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:130
+msgid "Any text"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:131
+msgid "A web address"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:132
+msgid "A number"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:139
+msgid "Smallest number"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:145
+msgid "Largest number"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:154
+msgid "Minimum characters"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:172
+msgid "Maximum characters"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:173
+msgid "Empty uses the built-in limit."
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:191
+msgid "Visible lines"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:200
+msgid "Let visitors resize it"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:213
+msgid "Allow several choices"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:220
+msgid "First line"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:221
+msgid "Shown before a choice is made. Empty hides it."
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:231
+msgid "Arrow icon"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:250
+msgid "Visitors can pick"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:253
+msgid "One (radio buttons)"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:256
+msgid "Several (checkboxes)"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:262
+#: src/blocks/contact-form/FieldEdit.js:294
+msgid "Look"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:265
+msgid "Boxes with labels"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:266
+msgid "Buttons"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:271
+msgid "Arrange"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:274
+msgid "One per line"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:275
+msgid "In a row"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:276
+msgid "In columns"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:297
+msgid "Checkbox"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:298
+#: src/blocks/contact-form/index.js:380
+msgid "Switch"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:306
+msgid "Earliest date"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:312
+msgid "Latest date"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:322
+#: src/blocks/contact-form/OptionsControl.js:59
+#: src/blocks/counter-group/counter/index.js:50
+msgid "Value"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:325
+msgid "Fixed text"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:326
+msgid "The page address"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:327
+msgid "The page title"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:328
+msgid "A URL parameter"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:334
+msgid "Parameter name"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:335
+msgid "For example utm_source."
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:371
+#: src/blocks/post-filter/FieldPanel.js:47
+msgid "Show label"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:372
+msgid "A hidden label is still read out by screen readers."
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:382
+#: src/blocks/contact-form/index.js:302
+#: src/blocks/copy-to-clipboard/index.js:261
+#: src/blocks/post-filter/post-filter-search/index.js:53
+#: src/blocks/post-filter/post-filter-search/index.js:130
+msgid "Placeholder"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:392
+#: src/blocks/contact-form/index.js:394
+msgid "Help text"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:397
+msgid "Required"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:408
+msgid "Default value"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:417
+msgid "Browser autofill"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:426
+msgid "Field key"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:427
+msgid "Names this field in emails, entries and {field:key} placeholders. Letters, numbers and underscores. Empty uses the label."
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:447
+msgid "Icon inside the field"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:467
+#: src/blocks/post-filter/index.js:98
+#: src/blocks/social-share/index.js:125
+msgid "Start"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:469
+#: src/blocks/post-filter/index.js:100
+#: src/blocks/social-share/index.js:127
+msgid "End"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:501
+msgid "Columns to span (0 = full row)"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:524
+#: src/blocks/css-grid/grid-item/index.js:137
+#: src/components/ABChildOrder.js:22
+msgid "Order"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:525
+msgid "Lower numbers come first. Use it to reorder fields on one device only."
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:708
+msgid "Hidden field"
+msgstr ""
+
+#: src/blocks/contact-form/FieldEdit.js:759
+msgid "I agree to the privacy policy."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:81
+#: src/blocks/notice/index.js:129
+#: src/blocks/social-share/index.js:255
+#: src/components/iconLibrary.js:1467
+msgid "Message"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:91
+msgid "you@example.com"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:100
+msgid "Subscribe"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:134
+msgid "Budget"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:137
+msgid "Under $5k"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:138
+msgid "$5k to $20k"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:139
+msgid "Over $20k"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:146
+msgid "Services"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:151
+msgid "Design"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:152
+msgid "Development"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:153
+msgid "Marketing"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:159
+msgid "Project details"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:164
+msgid "Send enquiry"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:172
+msgid "Name and email side by side, a message and a button."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:183
+msgid "Newsletter form"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:184
+msgid "An email field and a button on one row."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:189
+msgid "Newsletter"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:195
+msgid "Thanks for subscribing."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:202
+msgid "Enquiry form"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:203
+msgid "Contact details, budget, services as buttons, project details and consent."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:208
+msgid "Enquiry"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:248
+msgid "Form alignment"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:268
+#: src/blocks/post-grid/post-meta/index.js:185
+msgid "Fields"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:270
+#: src/blocks/css-grid/index.js:408
+#: src/blocks/post-filter/index.js:235
+#: src/blocks/post-grid/index.js:535
+#: src/blocks/pricing-table/index.js:292
+msgid "Row gap"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:273
+#: src/blocks/css-grid/index.js:407
+#: src/blocks/post-grid/index.js:519
+msgid "Column gap"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:283
+msgid "Required marker"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:289
+msgid "Space to input"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:293
+#: src/blocks/post-filter/post-filter-search/index.js:45
+msgid "Input"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:297
+msgid "Text alignment"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:317
+msgid "Message box height"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:328
+msgid "Select arrow"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:335
+msgid "Space to text"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:336
+msgid "Arrow size"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:340
+msgid "Choice"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:344
+msgid "Check mark"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:358
+msgid "Box size"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:359
+msgid "Box radius"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:364
+msgid "Choice buttons"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:382
+#: src/blocks/free-shipping-progress/index.js:76
+#: src/blocks/reading-progress-bar/index.js:58
+msgid "Track"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:384
+msgid "Track when on"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:387
+msgid "Thumb"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:392
+msgid "Help and errors"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:396
+msgid "Error text"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:403
+msgid "Group"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:414
+#: src/blocks/free-shipping-progress/index.js:105
+#: src/blocks/free-shipping-progress/index.js:301
+msgid "Messages"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:415
+#: src/blocks/notice/index.js:185
+msgid "Success"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:436
+msgid "Form name"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:437
+msgid "Shown in the email subject and the entries list."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:445
+msgid "Save entries"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:446
+msgid "Keeps every message under Axiom Blocks > Form entries, so nothing is lost if an email fails."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:466
+msgid "After submit"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:470
+msgid "When the form is sent"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:473
+msgid "Show a message"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:474
+msgid "Go to another page"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:480
+msgid "Page URL"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:488
+#: src/blocks/contact-form/index.js:552
+msgid "Success message"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:500
+msgid "Hide the form after sending"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:512
+msgid "Error message"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:522
+msgid "Message position"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:525
+msgid "Above the fields"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:526
+msgid "Below the fields"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:531
+msgid "Field errors"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:534
+msgid "Under each field"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:537
+msgid "As a list in the message"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:539
+msgid "Both"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:544
+msgid "Preview in the editor"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:545
+msgid "Only changes the editor view, so you can style the message and error states."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:551
+msgid "The form as it loads"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:553
+msgid "Errors"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:598
+msgid "Not a valid column list, so equal columns are used. Use values like 2fr 1fr, 1fr auto or 240px 1fr."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:602
+msgid "Optional, overrides Columns. For example 2fr 1fr, or 1fr auto for an email and button on one row."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:621
+msgid "Line up fields in a row by"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:625
+msgid "Bottom lines a button up with inputs that have labels."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:631
+msgid "Top (default)"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:632
+#: src/blocks/content-slider/slide/index.js:22
+#: src/blocks/post-grid/index.js:108
+msgid "Middle"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:634
+#: src/blocks/post-filter/index.js:101
+#: src/blocks/post-grid/index.js:110
+msgid "Stretch"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:657
+#: src/blocks/post-filter/FieldPanel.js:54
+msgid "Label position"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:662
+msgid "Above the field"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:666
+msgid "Beside the field"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:670
+#: src/blocks/post-filter/FieldPanel.js:27
+msgid "Hidden (screen readers only)"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:687
+msgid "Label width (beside)"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:695
+msgid "Floating labels"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:696
+msgid "The label sits inside the field and moves up when you type. Applies to text, email, phone and message fields with the label above."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:704
+msgid "Required fields are marked with"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:710
+msgid "An asterisk"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:712
+msgid "Nothing"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:718
+msgid "Required text"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:724
+msgid "Mark optional fields with"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:725
+msgid "For example (optional). Leave empty to mark nothing."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:733
+msgid "Help text position"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:736
+msgid "Below the field"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:737
+msgid "Below the label"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:840
+msgid "Email: Enter a valid email address."
+msgstr ""
+
+#: src/blocks/contact-form/index.js:894
+msgid "Contact Form"
+msgstr ""
+
+#: src/blocks/contact-form/index.js:895
+msgid "A contact form that saves every message and emails it through your site mail or Resend. Works without JavaScript."
+msgstr ""
+
+#: src/blocks/contact-form/OptionsControl.js:33
+msgid "Options"
+msgstr ""
+
+#. translators: %d: option number.
+#: src/blocks/contact-form/OptionsControl.js:42
+#, js-format
+msgid "Option %d label"
+msgstr ""
+
+#. translators: %d: option number.
+#: src/blocks/contact-form/OptionsControl.js:56
+#, js-format
+msgid "Option %d value"
+msgstr ""
+
+#: src/blocks/contact-form/OptionsControl.js:68
+#: src/blocks/social-share/NetworksControl.js:77
+#: src/blocks/tabs/index.js:1044
+msgid "Move up"
+msgstr ""
+
+#: src/blocks/contact-form/OptionsControl.js:75
+#: src/blocks/social-share/NetworksControl.js:84
+#: src/blocks/tabs/index.js:1058
+msgid "Move down"
+msgstr ""
+
+#: src/blocks/contact-form/OptionsControl.js:82
+msgid "Remove option"
+msgstr ""
+
+#. translators: %d: option number.
+#: src/blocks/contact-form/OptionsControl.js:96
+#, js-format
+msgid "Option %d"
+msgstr ""
+
+#: src/blocks/contact-form/OptionsControl.js:104
+msgid "Add option"
+msgstr ""
+
+#: src/blocks/contact-form/OptionsControl.js:107
+msgid "Value is what the email records. Leave it empty to record the label."
 msgstr ""
 
 #: src/blocks/content-slider/index.js:35
@@ -1684,7 +3811,7 @@ msgid "Click an image inside a slide to open it full-size."
 msgstr ""
 
 #: src/blocks/content-slider/index.js:620
-#: src/components/iconLibrary.js:1550
+#: src/components/iconLibrary.js:1689
 msgid "Navigation"
 msgstr ""
 
@@ -1753,11 +3880,6 @@ msgstr ""
 msgid "A content slider with slide, fade, and coverflow effects — any blocks per slide."
 msgstr ""
 
-#: src/blocks/content-slider/slide/index.js:22
-#: src/blocks/post-grid/index.js:108
-msgid "Middle"
-msgstr ""
-
 #: src/blocks/content-slider/slide/index.js:74
 msgid "Add slide content…"
 msgstr ""
@@ -1780,6 +3902,7 @@ msgid "Button Color"
 msgstr ""
 
 #: src/blocks/copy-to-clipboard/index.js:84
+#: src/blocks/social-share/index.js:81
 msgid "Copied background"
 msgstr ""
 
@@ -1803,12 +3926,6 @@ msgstr ""
 msgid "Enter text or code to copy…"
 msgstr ""
 
-#: src/blocks/copy-to-clipboard/index.js:261
-#: src/blocks/post-filter/post-filter-search/index.js:53
-#: src/blocks/post-filter/post-filter-search/index.js:130
-msgid "Placeholder"
-msgstr ""
-
 #: src/blocks/copy-to-clipboard/index.js:269
 msgid "Button Label"
 msgstr ""
@@ -1826,6 +3943,7 @@ msgid "Icon Position"
 msgstr ""
 
 #: src/blocks/copy-to-clipboard/index.js:308
+#: src/blocks/social-share/index.js:348
 #: src/components/BorderControl.js:153
 #: src/components/TargetSection.js:625
 msgid "Style"
@@ -1836,11 +3954,13 @@ msgid "Button Style"
 msgstr ""
 
 #: src/blocks/copy-to-clipboard/index.js:347
+#: src/blocks/social-share/index.js:352
 #: src/blocks/star-rating/index.js:51
 msgid "Filled"
 msgstr ""
 
 #: src/blocks/copy-to-clipboard/index.js:351
+#: src/blocks/social-share/index.js:356
 msgid "Outline"
 msgstr ""
 
@@ -1981,10 +4101,6 @@ msgstr ""
 msgid "(Timer expired)"
 msgstr ""
 
-#: src/blocks/counter-group/counter/index.js:50
-msgid "Value"
-msgstr ""
-
 #: src/blocks/counter-group/counter/index.js:54
 msgid "Start value"
 msgstr ""
@@ -2032,26 +4148,6 @@ msgstr ""
 
 #: src/blocks/counter-group/index.js:77
 msgid "Divider Color"
-msgstr ""
-
-#: src/blocks/counter-group/index.js:176
-msgid "Number"
-msgstr ""
-
-#: src/blocks/counter-group/index.js:188
-#: src/blocks/counter-group/index.js:643
-#: src/blocks/post-filter/index.js:75
-#: src/blocks/post-filter/post-filter-search/index.js:125
-#: src/blocks/post-filter/post-filter-sort/index.js:91
-#: src/blocks/post-filter/post-filter-taxonomy/index.js:97
-#: src/blocks/post-grid/post-meta/index.js:195
-#: src/blocks/post-grid/post-meta/index.js:243
-#: src/blocks/post-grid/post-meta/index.js:260
-#: src/blocks/post-grid/post-meta/index.js:277
-#: src/blocks/post-grid/post-meta/index.js:295
-#: src/blocks/post-grid/post-read-more/index.js:121
-#: src/blocks/trust-badges/index.js:199
-msgid "Label"
 msgstr ""
 
 #: src/blocks/counter-group/index.js:519
@@ -2151,10 +4247,6 @@ msgstr ""
 msgid "Animated count-up statistics with optional icons and labels."
 msgstr ""
 
-#: src/blocks/css-grid/grid-item/index.js:119
-msgid "Placement"
-msgstr ""
-
 #: src/blocks/css-grid/grid-item/index.js:125
 msgid "Column start"
 msgstr ""
@@ -2169,11 +4261,6 @@ msgstr ""
 
 #: src/blocks/css-grid/grid-item/index.js:136
 msgid "Row span"
-msgstr ""
-
-#: src/blocks/css-grid/grid-item/index.js:137
-#: src/components/ABChildOrder.js:22
-msgid "Order"
 msgstr ""
 
 #: src/blocks/css-grid/grid-item/index.js:163
@@ -2197,7 +4284,7 @@ msgstr ""
 #: src/blocks/post-grid/index.js:141
 #: src/blocks/testimonials/index.js:603
 #: src/blocks/trust-badges/index.js:657
-#: src/components/iconLibrary.js:1016
+#: src/components/iconLibrary.js:1155
 msgid "Grid"
 msgstr ""
 
@@ -2271,18 +4358,6 @@ msgstr ""
 
 #: src/blocks/css-grid/index.js:381
 msgid "Align content"
-msgstr ""
-
-#: src/blocks/css-grid/index.js:407
-#: src/blocks/post-grid/index.js:519
-msgid "Column gap"
-msgstr ""
-
-#: src/blocks/css-grid/index.js:408
-#: src/blocks/post-filter/index.js:235
-#: src/blocks/post-grid/index.js:535
-#: src/blocks/pricing-table/index.js:292
-msgid "Row gap"
 msgstr ""
 
 #: src/blocks/css-grid/index.js:450
@@ -2379,28 +4454,12 @@ msgstr ""
 #: src/blocks/free-shipping-progress/index.js:73
 #: src/blocks/post-filter/index.js:60
 #: src/blocks/reading-progress-bar/index.js:45
+#: src/blocks/social-share/index.js:44
 msgid "Bar"
-msgstr ""
-
-#: src/blocks/free-shipping-progress/index.js:76
-#: src/blocks/reading-progress-bar/index.js:58
-msgid "Track"
 msgstr ""
 
 #: src/blocks/free-shipping-progress/index.js:81
 msgid "Qualified fill"
-msgstr ""
-
-#: src/blocks/free-shipping-progress/index.js:96
-#: src/blocks/post-grid/post-image/index.js:75
-#: src/blocks/reading-progress-bar/index.js:67
-#: src/blocks/shape-divider/index.js:57
-msgid "Height"
-msgstr ""
-
-#: src/blocks/free-shipping-progress/index.js:105
-#: src/blocks/free-shipping-progress/index.js:301
-msgid "Messages"
 msgstr ""
 
 #: src/blocks/free-shipping-progress/index.js:240
@@ -2480,20 +4539,13 @@ msgstr ""
 msgid "Cart progress bar showing how much more a customer needs to spend to qualify for free shipping."
 msgstr ""
 
-#: src/blocks/icon-list/index.js:141
-#: src/blocks/post-grid/post-read-more/index.js:68
-#: src/blocks/pricing-table/index.js:308
-#: src/blocks/tabs/index.js:474
-msgid "Icon gap"
-msgstr ""
-
 #: src/blocks/icon-list/index.js:161
 msgid "Divider"
 msgstr ""
 
 #: src/blocks/icon-list/index.js:328
 #: src/blocks/post-grid/index.js:89
-#: src/components/iconLibrary.js:1010
+#: src/components/iconLibrary.js:1149
 msgid "List"
 msgstr ""
 
@@ -2551,6 +4603,7 @@ msgstr ""
 #: src/blocks/icon/index.js:79
 #: src/blocks/shape-divider/index.js:37
 #: src/blocks/shape-divider/index.js:155
+#: src/blocks/social-share/index.js:329
 #: src/blocks/testimonials/index.js:721
 msgid "Shape"
 msgstr ""
@@ -2618,13 +4671,9 @@ msgstr ""
 #: src/blocks/post-grid/index.js:81
 #: src/blocks/post-grid/post-title/index.js:30
 #: src/blocks/post-grid/post-title/index.js:89
+#: src/blocks/social-share/index.js:248
 #: src/blocks/table-of-contents/index.js:208
 msgid "Title"
-msgstr ""
-
-#: src/blocks/notice/index.js:129
-#: src/components/iconLibrary.js:1328
-msgid "Message"
 msgstr ""
 
 #: src/blocks/notice/index.js:175
@@ -2638,12 +4687,8 @@ msgid "Notice type"
 msgstr ""
 
 #: src/blocks/notice/index.js:181
-#: src/components/iconLibrary.js:1046
+#: src/components/iconLibrary.js:1185
 msgid "Info"
-msgstr ""
-
-#: src/blocks/notice/index.js:185
-msgid "Success"
 msgstr ""
 
 #: src/blocks/notice/index.js:189
@@ -2697,30 +4742,12 @@ msgstr ""
 msgid "Half"
 msgstr ""
 
-#: src/blocks/post-filter/FieldPanel.js:20
-#: src/components/IconPicker.js:219
-#: src/components/ShadowControl.js:103
-msgid "Custom"
-msgstr ""
-
 #: src/blocks/post-filter/FieldPanel.js:24
 msgid "Above"
 msgstr ""
 
 #: src/blocks/post-filter/FieldPanel.js:25
 msgid "Inline"
-msgstr ""
-
-#: src/blocks/post-filter/FieldPanel.js:27
-msgid "Hidden (screen readers only)"
-msgstr ""
-
-#: src/blocks/post-filter/FieldPanel.js:47
-msgid "Show label"
-msgstr ""
-
-#: src/blocks/post-filter/FieldPanel.js:54
-msgid "Label position"
 msgstr ""
 
 #: src/blocks/post-filter/FieldPanel.js:62
@@ -2736,24 +4763,13 @@ msgid "Result count"
 msgstr ""
 
 #: src/blocks/post-filter/index.js:92
+#: src/blocks/social-share/index.js:132
 msgid "Row"
 msgstr ""
 
 #: src/blocks/post-filter/index.js:93
+#: src/blocks/social-share/index.js:133
 msgid "Column"
-msgstr ""
-
-#: src/blocks/post-filter/index.js:98
-msgid "Start"
-msgstr ""
-
-#: src/blocks/post-filter/index.js:100
-msgid "End"
-msgstr ""
-
-#: src/blocks/post-filter/index.js:101
-#: src/blocks/post-grid/index.js:110
-msgid "Stretch"
 msgstr ""
 
 #: src/blocks/post-filter/index.js:123
@@ -2761,7 +4777,7 @@ msgid "Post Grid "
 msgstr ""
 
 #: src/blocks/post-filter/index.js:137
-#: src/components/iconLibrary.js:1028
+#: src/components/iconLibrary.js:1167
 msgid "Filter"
 msgstr ""
 
@@ -2790,6 +4806,7 @@ msgstr ""
 #: src/blocks/post-grid/index.js:253
 #: src/blocks/post-grid/index.js:277
 #: src/blocks/post-grid/post-pagination/index.js:15
+#: src/blocks/social-share/index.js:380
 #: src/blocks/table-of-contents/index.js:516
 #: src/blocks/testimonials/testimonial/index.js:287
 #: src/components/ABEditPopover.js:26
@@ -2855,10 +4872,6 @@ msgstr ""
 
 #: src/blocks/post-filter/post-filter-reset/index.js:109
 msgid "Clears a Post Filter bar back to its unfiltered grid."
-msgstr ""
-
-#: src/blocks/post-filter/post-filter-search/index.js:45
-msgid "Input"
 msgstr ""
 
 #: src/blocks/post-filter/post-filter-search/index.js:120
@@ -3108,6 +5121,7 @@ msgid "Thumbnail"
 msgstr ""
 
 #: src/blocks/post-grid/post-image/index.js:20
+#: src/components/iconLibrary.js:1971
 #: src/components/ShadowControl.js:35
 #: src/components/TypographyPanel.js:84
 msgid "Medium"
@@ -3137,7 +5151,7 @@ msgstr ""
 #: src/blocks/testimonials/testimonial/index.js:195
 #: src/components/BackgroundControl.js:35
 #: src/components/BackgroundControl.js:278
-#: src/components/iconLibrary.js:1412
+#: src/components/iconLibrary.js:1551
 msgid "Image"
 msgstr ""
 
@@ -3217,10 +5231,6 @@ msgstr ""
 
 #: src/blocks/post-grid/post-meta/index.js:180
 msgid "6 min read"
-msgstr ""
-
-#: src/blocks/post-grid/post-meta/index.js:185
-msgid "Fields"
 msgstr ""
 
 #: src/blocks/post-grid/post-meta/index.js:188
@@ -3359,11 +5369,6 @@ msgstr ""
 msgid "Numbered pages or a Load more button for a Post Grid."
 msgstr ""
 
-#: src/blocks/post-grid/post-read-more/index.js:145
-#: src/components/AlignControl.js:83
-msgid "Full width"
-msgstr ""
-
 #: src/blocks/post-grid/post-read-more/index.js:183
 msgid "Post Read More"
 msgstr ""
@@ -3417,7 +5422,7 @@ msgid "Post title"
 msgstr ""
 
 #: src/blocks/post-grid/post-title/index.js:91
-#: src/components/iconLibrary.js:1226
+#: src/components/iconLibrary.js:1365
 msgid "Tag"
 msgstr ""
 
@@ -3839,6 +5844,243 @@ msgstr ""
 msgid "Decorative SVG divider between sections."
 msgstr ""
 
+#: src/blocks/social-share/index.js:60
+msgid "Space between buttons"
+msgstr ""
+
+#: src/blocks/social-share/index.js:66
+#: src/blocks/social-share/index.js:317
+msgid "Lead text"
+msgstr ""
+
+#: src/blocks/social-share/index.js:72
+msgid "Space to buttons"
+msgstr ""
+
+#: src/blocks/social-share/index.js:99
+msgid "Button size"
+msgstr ""
+
+#: src/blocks/social-share/index.js:104
+msgid "Space between icon and label"
+msgstr ""
+
+#: src/blocks/social-share/index.js:209
+#: src/blocks/social-share/NetworksControl.js:52
+msgid "Networks"
+msgstr ""
+
+#: src/blocks/social-share/index.js:213
+#: src/components/iconLibrary.js:1509
+msgid "Share"
+msgstr ""
+
+#: src/blocks/social-share/index.js:217
+msgid "What to share"
+msgstr ""
+
+#: src/blocks/social-share/index.js:221
+msgid "This post or page"
+msgstr ""
+
+#: src/blocks/social-share/index.js:225
+msgid "A custom URL"
+msgstr ""
+
+#: src/blocks/social-share/index.js:232
+msgid "Inside a post grid or query loop, each row shares its own post."
+msgstr ""
+
+#: src/blocks/social-share/index.js:258
+msgid "Used by X, WhatsApp, Telegram, Bluesky, Threads, Mastodon, email and SMS. Leave empty to use the title."
+msgstr ""
+
+#: src/blocks/social-share/index.js:264
+msgid "X: via @handle"
+msgstr ""
+
+#: src/blocks/social-share/index.js:270
+msgid "X: hashtags"
+msgstr ""
+
+#: src/blocks/social-share/index.js:272
+msgid "news, design"
+msgstr ""
+
+#: src/blocks/social-share/index.js:276
+msgid "Open share links in"
+msgstr ""
+
+#: src/blocks/social-share/index.js:280
+msgid "A popup window"
+msgstr ""
+
+#: src/blocks/social-share/index.js:284
+msgid "A new tab"
+msgstr ""
+
+#: src/blocks/social-share/index.js:291
+msgid "Copied message"
+msgstr ""
+
+#: src/blocks/social-share/index.js:297
+msgid "Display"
+msgstr ""
+
+#: src/blocks/social-share/index.js:301
+msgid "Show"
+msgstr ""
+
+#: src/blocks/social-share/index.js:306
+msgid "Icon and label"
+msgstr ""
+
+#: src/blocks/social-share/index.js:333
+#: src/blocks/testimonials/index.js:733
+msgid "Square"
+msgstr ""
+
+#: src/blocks/social-share/index.js:337
+#: src/blocks/testimonials/index.js:729
+msgid "Rounded"
+msgstr ""
+
+#: src/blocks/social-share/index.js:341
+msgid "Round"
+msgstr ""
+
+#: src/blocks/social-share/index.js:359
+msgid "Soft"
+msgstr ""
+
+#: src/blocks/social-share/index.js:361
+#: src/blocks/table-of-contents/index.js:352
+msgid "Plain"
+msgstr ""
+
+#: src/blocks/social-share/index.js:368
+#: src/blocks/trust-badges/index.js:448
+msgid "Brand colors"
+msgstr ""
+
+#: src/blocks/social-share/index.js:371
+msgid "Each button wears its network color. Colors set under Styles override it."
+msgstr ""
+
+#: src/blocks/social-share/index.js:377
+msgid "Hover effect"
+msgstr ""
+
+#: src/blocks/social-share/index.js:381
+msgid "Lift"
+msgstr ""
+
+#: src/blocks/social-share/index.js:382
+msgid "Grow"
+msgstr ""
+
+#: src/blocks/social-share/index.js:408
+msgid "Wrap onto new lines"
+msgstr ""
+
+#: src/blocks/social-share/index.js:413
+msgid "Equal width buttons"
+msgstr ""
+
+#: src/blocks/social-share/index.js:418
+msgid "Floating"
+msgstr ""
+
+#: src/blocks/social-share/index.js:423
+msgid "Left edge"
+msgstr ""
+
+#: src/blocks/social-share/index.js:427
+msgid "Right edge"
+msgstr ""
+
+#: src/blocks/social-share/index.js:434
+msgid "Fixed to the edge of the screen on the published page. The editor shows it in place."
+msgstr ""
+
+#: src/blocks/social-share/index.js:444
+msgid "Offset from top"
+msgstr ""
+
+#: src/blocks/social-share/index.js:450
+msgid "On small screens"
+msgstr ""
+
+#: src/blocks/social-share/index.js:454
+msgid "Bottom bar"
+msgstr ""
+
+#: src/blocks/social-share/index.js:458
+msgid "In place, not floating"
+msgstr ""
+
+#: src/blocks/social-share/index.js:465
+msgid "Hidden"
+msgstr ""
+
+#: src/blocks/social-share/index.js:489
+msgid "Floating: left edge"
+msgstr ""
+
+#: src/blocks/social-share/index.js:490
+msgid "Floating: right edge"
+msgstr ""
+
+#: src/blocks/social-share/index.js:508
+msgid "Shown only in browsers with a share sheet."
+msgstr ""
+
+#: src/blocks/social-share/index.js:539
+msgid "Add a network in the block settings."
+msgstr ""
+
+#: src/blocks/social-share/index.js:547
+msgid "Shares this post."
+msgstr ""
+
+#: src/blocks/social-share/index.js:558
+msgid "Share icons"
+msgstr ""
+
+#: src/blocks/social-share/index.js:559
+msgid "A row of share icons in brand colors."
+msgstr ""
+
+#: src/blocks/social-share/index.js:569
+msgid "Share buttons with labels"
+msgstr ""
+
+#: src/blocks/social-share/index.js:570
+msgid "Pill buttons with the network name and a lead text."
+msgstr ""
+
+#: src/blocks/social-share/index.js:590
+msgid "Floating share bar"
+msgstr ""
+
+#: src/blocks/social-share/index.js:591
+msgid "A column of icons fixed to the left edge, and a bar at the bottom on phones."
+msgstr ""
+
+#. translators: %s: network name.
+#: src/blocks/social-share/NetworksControl.js:93
+#, js-format
+msgid "Remove %s"
+msgstr ""
+
+#: src/blocks/social-share/NetworksControl.js:129
+msgid "Add network"
+msgstr ""
+
+#: src/blocks/social-share/NetworksControl.js:132
+msgid "Choose…"
+msgstr ""
+
 #: src/blocks/star-rating/index.js:48
 #: src/blocks/testimonials/index.js:237
 #: src/blocks/testimonials/testimonial/index.js:144
@@ -3934,10 +6176,6 @@ msgstr ""
 
 #: src/blocks/table-of-contents/index.js:343
 msgid "Title tag"
-msgstr ""
-
-#: src/blocks/table-of-contents/index.js:352
-msgid "Plain"
 msgstr ""
 
 #: src/blocks/table-of-contents/index.js:360
@@ -4139,14 +6377,6 @@ msgstr ""
 msgid "Make this the default-open tab."
 msgstr ""
 
-#: src/blocks/tabs/index.js:1044
-msgid "Move up"
-msgstr ""
-
-#: src/blocks/tabs/index.js:1058
-msgid "Move down"
-msgstr ""
-
 #: src/blocks/tabs/index.js:1075
 msgid "Remove tab"
 msgstr ""
@@ -4213,19 +6443,9 @@ msgstr ""
 msgid "Quote"
 msgstr ""
 
-#: src/blocks/testimonials/index.js:278
-#: src/blocks/testimonials/testimonial/index.js:421
-msgid "Name"
-msgstr ""
-
 #: src/blocks/testimonials/index.js:289
 #: src/blocks/testimonials/testimonial/index.js:432
 msgid "Role"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:300
-#: src/blocks/testimonials/testimonial/index.js:442
-msgid "Company"
 msgstr ""
 
 #: src/blocks/testimonials/index.js:607
@@ -4252,14 +6472,6 @@ msgstr ""
 
 #: src/blocks/testimonials/index.js:725
 msgid "Circle"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:729
-msgid "Rounded"
-msgstr ""
-
-#: src/blocks/testimonials/index.js:733
-msgid "Square"
 msgstr ""
 
 #: src/blocks/testimonials/index.js:746
@@ -4422,10 +6634,6 @@ msgstr ""
 msgid "Color mode"
 msgstr ""
 
-#: src/blocks/trust-badges/index.js:448
-msgid "Brand colors"
-msgstr ""
-
 #: src/blocks/trust-badges/index.js:452
 msgid "Monochrome"
 msgstr ""
@@ -4528,7 +6736,7 @@ msgid "Today"
 msgstr ""
 
 #: src/components/ABDateControl.js:261
-#: src/components/AxiomColorPicker.js:565
+#: src/components/AxiomColorPicker.js:582
 msgid "Clear"
 msgstr ""
 
@@ -4551,6 +6759,7 @@ msgstr ""
 
 #. translators: %s: comma-separated device names.
 #: src/components/ABDeviceVisibility.js:84
+#, js-format
 msgid "Hidden: %s"
 msgstr ""
 
@@ -4625,15 +6834,11 @@ msgstr ""
 msgid "Clear this device’s value"
 msgstr ""
 
-#: src/components/AxiomColorPicker.js:484
-msgid "Theme"
-msgstr ""
-
-#: src/components/AxiomColorPicker.js:519
+#: src/components/AxiomColorPicker.js:536
 msgid "Recent"
 msgstr ""
 
-#: src/components/AxiomColorPicker.js:554
+#: src/components/AxiomColorPicker.js:571
 msgid "Pick from screen"
 msgstr ""
 
@@ -4742,7 +6947,7 @@ msgid "— Custom —"
 msgstr ""
 
 #: src/components/BackgroundControl.js:595
-#: src/components/iconLibrary.js:1190
+#: src/components/iconLibrary.js:1329
 msgid "Attachment"
 msgstr ""
 
@@ -4798,12 +7003,6 @@ msgstr ""
 msgid "Dotted"
 msgstr ""
 
-#: src/components/BorderControl.js:84
-#: src/components/BorderControl.js:141
-#: src/components/TargetSection.js:372
-msgid "Border"
-msgstr ""
-
 #: src/components/DeviceSwitcher.js:64
 msgid "Edit for device"
 msgstr ""
@@ -4824,492 +7023,576 @@ msgstr ""
 msgid " to use this block."
 msgstr ""
 
-#: src/components/iconLibrary.js:878
+#: src/components/iconLibrary.js:1017
 msgid "Arrow right"
 msgstr ""
 
-#: src/components/iconLibrary.js:884
+#: src/components/iconLibrary.js:1023
 msgid "Arrow left"
 msgstr ""
 
-#: src/components/iconLibrary.js:890
+#: src/components/iconLibrary.js:1029
 msgid "Arrow up"
 msgstr ""
 
-#: src/components/iconLibrary.js:896
+#: src/components/iconLibrary.js:1035
 msgid "Arrow down"
 msgstr ""
 
-#: src/components/iconLibrary.js:902
+#: src/components/iconLibrary.js:1041
 msgid "Arrow up-right"
 msgstr ""
 
-#: src/components/iconLibrary.js:908
+#: src/components/iconLibrary.js:1047
 msgid "Chevron right"
 msgstr ""
 
-#: src/components/iconLibrary.js:914
+#: src/components/iconLibrary.js:1053
 msgid "Chevron left"
 msgstr ""
 
-#: src/components/iconLibrary.js:920
+#: src/components/iconLibrary.js:1059
 msgid "Chevron up"
 msgstr ""
 
-#: src/components/iconLibrary.js:926
+#: src/components/iconLibrary.js:1065
 msgid "Chevron down"
 msgstr ""
 
-#: src/components/iconLibrary.js:932
+#: src/components/iconLibrary.js:1071
 msgid "Chevrons right"
 msgstr ""
 
-#: src/components/iconLibrary.js:938
+#: src/components/iconLibrary.js:1077
 msgid "External link"
 msgstr ""
 
-#: src/components/iconLibrary.js:944
+#: src/components/iconLibrary.js:1083
 msgid "Move"
 msgstr ""
 
-#: src/components/iconLibrary.js:950
+#: src/components/iconLibrary.js:1089
 msgid "Refresh"
 msgstr ""
 
-#: src/components/iconLibrary.js:956
+#: src/components/iconLibrary.js:1095
 msgid "More"
 msgstr ""
 
-#: src/components/iconLibrary.js:962
+#: src/components/iconLibrary.js:1101
 msgid "Check"
 msgstr ""
 
-#: src/components/iconLibrary.js:968
+#: src/components/iconLibrary.js:1107
 msgid "Check circle"
 msgstr ""
 
-#: src/components/iconLibrary.js:974
+#: src/components/iconLibrary.js:1113
 msgid "Close"
 msgstr ""
 
-#: src/components/iconLibrary.js:980
+#: src/components/iconLibrary.js:1119
 msgid "Close circle"
 msgstr ""
 
-#: src/components/iconLibrary.js:986
+#: src/components/iconLibrary.js:1125
 msgid "Plus"
 msgstr ""
 
-#: src/components/iconLibrary.js:992
+#: src/components/iconLibrary.js:1131
 msgid "Minus"
 msgstr ""
 
-#: src/components/iconLibrary.js:998
+#: src/components/iconLibrary.js:1137
 msgid "Plus circle"
 msgstr ""
 
-#: src/components/iconLibrary.js:1004
+#: src/components/iconLibrary.js:1143
 msgid "Menu"
 msgstr ""
 
-#: src/components/iconLibrary.js:1034
+#: src/components/iconLibrary.js:1173
 msgid "Sliders"
 msgstr ""
 
-#: src/components/iconLibrary.js:1052
-msgid "Help"
-msgstr ""
-
-#: src/components/iconLibrary.js:1058
+#: src/components/iconLibrary.js:1197
 msgid "Alert"
 msgstr ""
 
-#: src/components/iconLibrary.js:1064
+#: src/components/iconLibrary.js:1203
 msgid "Ban"
 msgstr ""
 
-#: src/components/iconLibrary.js:1070
+#: src/components/iconLibrary.js:1209
 msgid "Eye"
 msgstr ""
 
-#: src/components/iconLibrary.js:1076
+#: src/components/iconLibrary.js:1215
 msgid "Eye off"
 msgstr ""
 
-#: src/components/iconLibrary.js:1082
+#: src/components/iconLibrary.js:1221
 msgid "Lock"
 msgstr ""
 
-#: src/components/iconLibrary.js:1088
+#: src/components/iconLibrary.js:1227
 msgid "Shield"
 msgstr ""
 
-#: src/components/iconLibrary.js:1094
+#: src/components/iconLibrary.js:1233
 msgid "Bookmark"
 msgstr ""
 
-#: src/components/iconLibrary.js:1106
+#: src/components/iconLibrary.js:1245
 msgid "Upload"
 msgstr ""
 
-#: src/components/iconLibrary.js:1112
+#: src/components/iconLibrary.js:1251
 msgid "Power"
 msgstr ""
 
-#: src/components/iconLibrary.js:1118
+#: src/components/iconLibrary.js:1257
 msgid "Log in"
 msgstr ""
 
-#: src/components/iconLibrary.js:1124
+#: src/components/iconLibrary.js:1263
 msgid "Log out"
 msgstr ""
 
-#: src/components/iconLibrary.js:1130
+#: src/components/iconLibrary.js:1269
 msgid "Zap"
 msgstr ""
 
-#: src/components/iconLibrary.js:1136
+#: src/components/iconLibrary.js:1275
 msgid "Edit"
 msgstr ""
 
-#: src/components/iconLibrary.js:1142
+#: src/components/iconLibrary.js:1281
 msgid "Delete"
 msgstr ""
 
-#: src/components/iconLibrary.js:1154
+#: src/components/iconLibrary.js:1293
 msgid "Clipboard"
 msgstr ""
 
-#: src/components/iconLibrary.js:1160
+#: src/components/iconLibrary.js:1299
 msgid "Cut"
 msgstr ""
 
-#: src/components/iconLibrary.js:1166
+#: src/components/iconLibrary.js:1305
 msgid "File"
 msgstr ""
 
-#: src/components/iconLibrary.js:1172
+#: src/components/iconLibrary.js:1311
 msgid "Document"
 msgstr ""
 
-#: src/components/iconLibrary.js:1178
+#: src/components/iconLibrary.js:1317
 msgid "Folder"
 msgstr ""
 
-#: src/components/iconLibrary.js:1184
+#: src/components/iconLibrary.js:1323
 msgid "Folder open"
 msgstr ""
 
-#: src/components/iconLibrary.js:1196
+#: src/components/iconLibrary.js:1335
 msgid "Print"
 msgstr ""
 
-#: src/components/iconLibrary.js:1202
+#: src/components/iconLibrary.js:1341
 msgid "Archive"
 msgstr ""
 
-#: src/components/iconLibrary.js:1208
+#: src/components/iconLibrary.js:1347
 msgid "Cart"
 msgstr ""
 
-#: src/components/iconLibrary.js:1214
+#: src/components/iconLibrary.js:1353
 msgid "Shopping bag"
 msgstr ""
 
-#: src/components/iconLibrary.js:1220
+#: src/components/iconLibrary.js:1359
 msgid "Store"
 msgstr ""
 
-#: src/components/iconLibrary.js:1232
+#: src/components/iconLibrary.js:1371
 msgid "Gift"
 msgstr ""
 
-#: src/components/iconLibrary.js:1238
+#: src/components/iconLibrary.js:1377
 msgid "Credit card"
 msgstr ""
 
-#: src/components/iconLibrary.js:1244
+#: src/components/iconLibrary.js:1383
 msgid "Wallet"
 msgstr ""
 
-#: src/components/iconLibrary.js:1250
+#: src/components/iconLibrary.js:1389
 msgid "Banknote"
 msgstr ""
 
-#: src/components/iconLibrary.js:1256
+#: src/components/iconLibrary.js:1395
 msgid "Dollar"
 msgstr ""
 
-#: src/components/iconLibrary.js:1262
+#: src/components/iconLibrary.js:1401
 msgid "Percent"
 msgstr ""
 
-#: src/components/iconLibrary.js:1268
+#: src/components/iconLibrary.js:1407
 msgid "Receipt"
 msgstr ""
 
-#: src/components/iconLibrary.js:1274
+#: src/components/iconLibrary.js:1413
 msgid "Package"
 msgstr ""
 
-#: src/components/iconLibrary.js:1280
+#: src/components/iconLibrary.js:1419
 msgid "Truck"
 msgstr ""
 
-#: src/components/iconLibrary.js:1286
+#: src/components/iconLibrary.js:1425
 msgid "Ticket"
 msgstr ""
 
-#: src/components/iconLibrary.js:1292
+#: src/components/iconLibrary.js:1431
 msgid "Award"
 msgstr ""
 
-#: src/components/iconLibrary.js:1298
+#: src/components/iconLibrary.js:1437
 msgid "Trending up"
 msgstr ""
 
-#: src/components/iconLibrary.js:1304
+#: src/components/iconLibrary.js:1443
 msgid "Mail"
 msgstr ""
 
-#: src/components/iconLibrary.js:1310
+#: src/components/iconLibrary.js:1449
 msgid "At sign"
 msgstr ""
 
-#: src/components/iconLibrary.js:1316
-msgid "Phone"
-msgstr ""
-
-#: src/components/iconLibrary.js:1322
+#: src/components/iconLibrary.js:1461
 msgid "Send"
 msgstr ""
 
-#: src/components/iconLibrary.js:1334
+#: src/components/iconLibrary.js:1473
 msgid "Comment"
 msgstr ""
 
-#: src/components/iconLibrary.js:1340
+#: src/components/iconLibrary.js:1479
 msgid "Inbox"
 msgstr ""
 
-#: src/components/iconLibrary.js:1346
+#: src/components/iconLibrary.js:1485
 msgid "Bell"
 msgstr ""
 
-#: src/components/iconLibrary.js:1352
+#: src/components/iconLibrary.js:1491
 msgid "Megaphone"
 msgstr ""
 
-#: src/components/iconLibrary.js:1358
+#: src/components/iconLibrary.js:1497
 msgid "Globe"
 msgstr ""
 
-#: src/components/iconLibrary.js:1370
-msgid "Share"
-msgstr ""
-
-#: src/components/iconLibrary.js:1376
+#: src/components/iconLibrary.js:1515
 msgid "RSS"
 msgstr ""
 
-#: src/components/iconLibrary.js:1382
+#: src/components/iconLibrary.js:1521
 msgid "Wi-Fi"
 msgstr ""
 
-#: src/components/iconLibrary.js:1388
+#: src/components/iconLibrary.js:1527
 msgid "Play"
 msgstr ""
 
-#: src/components/iconLibrary.js:1394
+#: src/components/iconLibrary.js:1533
 msgid "Pause"
 msgstr ""
 
-#: src/components/iconLibrary.js:1400
+#: src/components/iconLibrary.js:1539
 msgid "Skip forward"
 msgstr ""
 
-#: src/components/iconLibrary.js:1406
+#: src/components/iconLibrary.js:1545
 msgid "Skip back"
 msgstr ""
 
-#: src/components/iconLibrary.js:1418
+#: src/components/iconLibrary.js:1557
 msgid "Video"
 msgstr ""
 
-#: src/components/iconLibrary.js:1424
+#: src/components/iconLibrary.js:1563
 msgid "Film"
 msgstr ""
 
-#: src/components/iconLibrary.js:1430
+#: src/components/iconLibrary.js:1569
 msgid "Music"
 msgstr ""
 
-#: src/components/iconLibrary.js:1436
+#: src/components/iconLibrary.js:1575
 msgid "Headphones"
 msgstr ""
 
-#: src/components/iconLibrary.js:1442
+#: src/components/iconLibrary.js:1581
 msgid "Microphone"
 msgstr ""
 
-#: src/components/iconLibrary.js:1448
+#: src/components/iconLibrary.js:1587
 msgid "Volume"
 msgstr ""
 
-#: src/components/iconLibrary.js:1454
+#: src/components/iconLibrary.js:1593
 msgid "Camera"
 msgstr ""
 
-#: src/components/iconLibrary.js:1460
+#: src/components/iconLibrary.js:1599
 msgid "User"
 msgstr ""
 
-#: src/components/iconLibrary.js:1466
+#: src/components/iconLibrary.js:1605
 msgid "Users"
 msgstr ""
 
-#: src/components/iconLibrary.js:1472
+#: src/components/iconLibrary.js:1611
 msgid "Add user"
 msgstr ""
 
-#: src/components/iconLibrary.js:1478
+#: src/components/iconLibrary.js:1617
 msgid "Smile"
 msgstr ""
 
-#: src/components/iconLibrary.js:1484
+#: src/components/iconLibrary.js:1623
 msgid "Heart"
 msgstr ""
 
-#: src/components/iconLibrary.js:1490
+#: src/components/iconLibrary.js:1629
 msgid "Star"
 msgstr ""
 
-#: src/components/iconLibrary.js:1496
+#: src/components/iconLibrary.js:1635
 msgid "Thumbs up"
 msgstr ""
 
-#: src/components/iconLibrary.js:1502
+#: src/components/iconLibrary.js:1641
 msgid "Thumbs down"
 msgstr ""
 
-#: src/components/iconLibrary.js:1508
+#: src/components/iconLibrary.js:1647
 msgid "Trophy"
 msgstr ""
 
-#: src/components/iconLibrary.js:1514
+#: src/components/iconLibrary.js:1653
 msgid "Flag"
 msgstr ""
 
-#: src/components/iconLibrary.js:1520
+#: src/components/iconLibrary.js:1659
 msgid "Home"
 msgstr ""
 
-#: src/components/iconLibrary.js:1526
+#: src/components/iconLibrary.js:1665
 msgid "Calendar"
 msgstr ""
 
-#: src/components/iconLibrary.js:1532
+#: src/components/iconLibrary.js:1671
 msgid "Clock"
 msgstr ""
 
-#: src/components/iconLibrary.js:1538
+#: src/components/iconLibrary.js:1677
 msgid "Map pin"
 msgstr ""
 
-#: src/components/iconLibrary.js:1544
+#: src/components/iconLibrary.js:1683
 msgid "Map"
 msgstr ""
 
-#: src/components/iconLibrary.js:1556
+#: src/components/iconLibrary.js:1695
 msgid "Compass"
 msgstr ""
 
-#: src/components/iconLibrary.js:1562
+#: src/components/iconLibrary.js:1701
 msgid "Target"
 msgstr ""
 
-#: src/components/iconLibrary.js:1568
+#: src/components/iconLibrary.js:1707
 msgid "Rocket"
 msgstr ""
 
-#: src/components/iconLibrary.js:1574
+#: src/components/iconLibrary.js:1713
 msgid "Sparkles"
 msgstr ""
 
-#: src/components/iconLibrary.js:1580
+#: src/components/iconLibrary.js:1719
 msgid "Hash"
 msgstr ""
 
-#: src/components/iconLibrary.js:1586
+#: src/components/iconLibrary.js:1725
 msgid "Key"
 msgstr ""
 
-#: src/components/iconLibrary.js:1592
+#: src/components/iconLibrary.js:1731
 msgid "Idea"
 msgstr ""
 
-#: src/components/iconLibrary.js:1598
+#: src/components/iconLibrary.js:1737
 msgid "Palette"
 msgstr ""
 
-#: src/components/iconLibrary.js:1604
+#: src/components/iconLibrary.js:1743
 msgid "Coffee"
 msgstr ""
 
-#: src/components/iconLibrary.js:1610
+#: src/components/iconLibrary.js:1749
 msgid "Monitor"
 msgstr ""
 
-#: src/components/iconLibrary.js:1616
+#: src/components/iconLibrary.js:1755
 msgid "Smartphone"
 msgstr ""
 
-#: src/components/iconLibrary.js:1622
+#: src/components/iconLibrary.js:1761
 msgid "Laptop"
 msgstr ""
 
-#: src/components/iconLibrary.js:1628
+#: src/components/iconLibrary.js:1767
 msgid "Server"
 msgstr ""
 
-#: src/components/iconLibrary.js:1634
+#: src/components/iconLibrary.js:1773
 msgid "Database"
 msgstr ""
 
-#: src/components/iconLibrary.js:1640
+#: src/components/iconLibrary.js:1779
 msgid "Battery"
 msgstr ""
 
-#: src/components/iconLibrary.js:1646
+#: src/components/iconLibrary.js:1785
 msgid "Sun"
 msgstr ""
 
-#: src/components/iconLibrary.js:1652
+#: src/components/iconLibrary.js:1791
 msgid "Moon"
 msgstr ""
 
-#: src/components/iconLibrary.js:1658
+#: src/components/iconLibrary.js:1797
 msgid "Sunrise"
 msgstr ""
 
-#: src/components/iconLibrary.js:1664
+#: src/components/iconLibrary.js:1803
 msgid "Cloud"
 msgstr ""
 
-#: src/components/iconLibrary.js:1670
+#: src/components/iconLibrary.js:1809
 msgid "Droplet"
 msgstr ""
 
-#: src/components/iconLibrary.js:1676
+#: src/components/iconLibrary.js:1815
 msgid "Flame"
 msgstr ""
 
-#: src/components/iconLibrary.js:1682
+#: src/components/iconLibrary.js:1821
 msgid "Leaf"
 msgstr ""
 
-#: src/components/iconLibrary.js:1688
+#: src/components/iconLibrary.js:1827
 msgid "Wind"
+msgstr ""
+
+#: src/components/iconLibrary.js:1833
+msgid "Facebook"
+msgstr ""
+
+#: src/components/iconLibrary.js:1839
+msgid "X (Twitter)"
+msgstr ""
+
+#: src/components/iconLibrary.js:1845
+msgid "LinkedIn"
+msgstr ""
+
+#: src/components/iconLibrary.js:1851
+msgid "WhatsApp"
+msgstr ""
+
+#: src/components/iconLibrary.js:1857
+msgid "Telegram"
+msgstr ""
+
+#: src/components/iconLibrary.js:1863
+msgid "Reddit"
+msgstr ""
+
+#: src/components/iconLibrary.js:1869
+msgid "Pinterest"
+msgstr ""
+
+#: src/components/iconLibrary.js:1875
+msgid "Bluesky"
+msgstr ""
+
+#: src/components/iconLibrary.js:1881
+msgid "Threads"
+msgstr ""
+
+#: src/components/iconLibrary.js:1887
+msgid "Mastodon"
+msgstr ""
+
+#: src/components/iconLibrary.js:1893
+msgid "Tumblr"
+msgstr ""
+
+#: src/components/iconLibrary.js:1899
+msgid "VK"
+msgstr ""
+
+#: src/components/iconLibrary.js:1905
+msgid "Xing"
+msgstr ""
+
+#: src/components/iconLibrary.js:1911
+msgid "LINE"
+msgstr ""
+
+#: src/components/iconLibrary.js:1917
+msgid "Instagram"
+msgstr ""
+
+#: src/components/iconLibrary.js:1923
+msgid "YouTube"
+msgstr ""
+
+#: src/components/iconLibrary.js:1929
+msgid "TikTok"
+msgstr ""
+
+#: src/components/iconLibrary.js:1935
+msgid "GitHub"
+msgstr ""
+
+#: src/components/iconLibrary.js:1941
+msgid "Discord"
+msgstr ""
+
+#: src/components/iconLibrary.js:1947
+msgid "Twitch"
+msgstr ""
+
+#: src/components/iconLibrary.js:1953
+msgid "Spotify"
+msgstr ""
+
+#: src/components/iconLibrary.js:1959
+msgid "Dribbble"
+msgstr ""
+
+#: src/components/iconLibrary.js:1965
+msgid "Behance"
+msgstr ""
+
+#: src/components/iconLibrary.js:1977
+msgid "Snapchat"
 msgstr ""
 
 #: src/components/IconPicker.js:119
@@ -5340,6 +7623,7 @@ msgstr ""
 
 #. translators: %s: icon name.
 #: src/components/IconPicker.js:294
+#, js-format
 msgid "Delete %s"
 msgstr ""
 
@@ -5558,6 +7842,7 @@ msgstr ""
 
 #: src/blocks/advanced-button/block.json
 #: src/blocks/button-group/block.json
+#: src/blocks/contact-form/contact-form-submit/block.json
 #: src/blocks/copy-to-clipboard/block.json
 msgctxt "block keyword"
 msgid "button"
@@ -5622,6 +7907,7 @@ msgid "Full-width container with rich backgrounds, overlays and content layout c
 msgstr ""
 
 #: src/blocks/advanced-section/block.json
+#: src/blocks/contact-form/contact-form-group/block.json
 msgctxt "block keyword"
 msgid "section"
 msgstr ""
@@ -5698,8 +7984,350 @@ msgid "buttons"
 msgstr ""
 
 #: src/blocks/button-group/block.json
+#: src/blocks/contact-form/contact-form-group/block.json
 msgctxt "block keyword"
 msgid "group"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+msgctxt "block title"
+msgid "Contact Form"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+msgctxt "block description"
+msgid "A contact form that saves every message and emails it through your site mail or Resend. Works without JavaScript."
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+msgctxt "block keyword"
+msgid "form"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+msgctxt "block keyword"
+msgid "contact"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+#: src/blocks/contact-form/contact-form-email/block.json
+msgctxt "block keyword"
+msgid "email"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+#: src/blocks/contact-form/contact-form-textarea/block.json
+#: src/blocks/notice/block.json
+msgctxt "block keyword"
+msgid "message"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+msgctxt "block keyword"
+msgid "enquiry"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+msgctxt "block keyword"
+msgid "newsletter"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+msgctxt "block style label"
+msgid "Default"
+msgstr ""
+
+#: src/blocks/contact-form/block.json
+msgctxt "block style label"
+msgid "Dark"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/block.json
+msgctxt "block title"
+msgid "Choices Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/block.json
+msgctxt "block description"
+msgid "Radio buttons or checkboxes, plain or as buttons."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/block.json
+msgctxt "block keyword"
+msgid "radio"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/block.json
+msgctxt "block keyword"
+msgid "checkbox"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/block.json
+msgctxt "block keyword"
+msgid "choices"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-choices/block.json
+#: src/blocks/contact-form/contact-form-select/block.json
+msgctxt "block keyword"
+msgid "options"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/block.json
+msgctxt "block title"
+msgid "Consent Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/block.json
+msgctxt "block description"
+msgid "A required checkbox or switch, for terms or privacy consent."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/block.json
+msgctxt "block keyword"
+msgid "consent"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/block.json
+msgctxt "block keyword"
+msgid "gdpr"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/block.json
+msgctxt "block keyword"
+msgid "terms"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/block.json
+msgctxt "block keyword"
+msgid "privacy"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-consent/block.json
+msgctxt "block keyword"
+msgid "agree"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-date/block.json
+msgctxt "block title"
+msgid "Date Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-date/block.json
+msgctxt "block description"
+msgid "A date picker."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-date/block.json
+msgctxt "block keyword"
+msgid "date"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-date/block.json
+msgctxt "block keyword"
+msgid "calendar"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-date/block.json
+msgctxt "block keyword"
+msgid "day"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-email/block.json
+msgctxt "block title"
+msgid "Email Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-email/block.json
+msgctxt "block description"
+msgid "An email address. The first one is used as Reply-To."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-email/block.json
+msgctxt "block keyword"
+msgid "mail"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-email/block.json
+msgctxt "block keyword"
+msgid "address"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/block.json
+msgctxt "block title"
+msgid "Field Group"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/block.json
+msgctxt "block description"
+msgid "A fieldset with a legend that groups fields and lays them out in its own columns."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/block.json
+msgctxt "block keyword"
+msgid "fieldset"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-group/block.json
+msgctxt "block keyword"
+msgid "legend"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-hidden/block.json
+msgctxt "block title"
+msgid "Hidden Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-hidden/block.json
+msgctxt "block description"
+msgid "A value sent with the form but not shown: fixed text, page URL, page title or a URL parameter."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-hidden/block.json
+msgctxt "block keyword"
+msgid "hidden"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-hidden/block.json
+msgctxt "block keyword"
+msgid "utm"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-hidden/block.json
+msgctxt "block keyword"
+msgid "source"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-hidden/block.json
+msgctxt "block keyword"
+msgid "tracking"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-phone/block.json
+msgctxt "block title"
+msgid "Phone Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-phone/block.json
+msgctxt "block description"
+msgid "A telephone number."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-phone/block.json
+msgctxt "block keyword"
+msgid "phone"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-phone/block.json
+msgctxt "block keyword"
+msgid "telephone"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-phone/block.json
+msgctxt "block keyword"
+msgid "tel"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-phone/block.json
+#: src/blocks/device-visibility/block.json
+msgctxt "block keyword"
+msgid "mobile"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-select/block.json
+msgctxt "block title"
+msgid "Select Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-select/block.json
+msgctxt "block description"
+msgid "A drop-down of options."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-select/block.json
+msgctxt "block keyword"
+msgid "select"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-select/block.json
+msgctxt "block keyword"
+msgid "dropdown"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/block.json
+msgctxt "block title"
+msgid "Submit Button"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/block.json
+msgctxt "block description"
+msgid "The button that sends the form."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/block.json
+msgctxt "block keyword"
+msgid "submit"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-submit/block.json
+msgctxt "block keyword"
+msgid "send"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/block.json
+msgctxt "block title"
+msgid "Text Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/block.json
+msgctxt "block description"
+msgid "A single-line field: name, website, number or any short text."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/block.json
+msgctxt "block keyword"
+msgid "name"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/block.json
+msgctxt "block keyword"
+msgid "text"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/block.json
+msgctxt "block keyword"
+msgid "input"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/block.json
+msgctxt "block keyword"
+msgid "url"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-text/block.json
+#: src/blocks/counter-group/block.json
+msgctxt "block keyword"
+msgid "number"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-textarea/block.json
+msgctxt "block title"
+msgid "Message Field"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-textarea/block.json
+msgctxt "block description"
+msgid "A multi-line field for longer messages."
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-textarea/block.json
+msgctxt "block keyword"
+msgid "textarea"
+msgstr ""
+
+#: src/blocks/contact-form/contact-form-textarea/block.json
+msgctxt "block keyword"
+msgid "comment"
 msgstr ""
 
 #: src/blocks/content-slider/block.json
@@ -5835,11 +8463,6 @@ msgstr ""
 
 #: src/blocks/counter-group/block.json
 msgctxt "block keyword"
-msgid "number"
-msgstr ""
-
-#: src/blocks/counter-group/block.json
-msgctxt "block keyword"
 msgid "statistics"
 msgstr ""
 
@@ -5909,11 +8532,6 @@ msgstr ""
 #: src/blocks/device-visibility/block.json
 msgctxt "block keyword"
 msgid "visibility"
-msgstr ""
-
-#: src/blocks/device-visibility/block.json
-msgctxt "block keyword"
-msgid "mobile"
 msgstr ""
 
 #: src/blocks/device-visibility/block.json
@@ -6067,11 +8685,6 @@ msgstr ""
 #: src/blocks/notice/block.json
 msgctxt "block keyword"
 msgid "alert"
-msgstr ""
-
-#: src/blocks/notice/block.json
-msgctxt "block keyword"
-msgid "message"
 msgstr ""
 
 #: src/blocks/notice/block.json
@@ -6420,6 +9033,51 @@ msgstr ""
 #: src/blocks/shape-divider/block.json
 msgctxt "block keyword"
 msgid "curve"
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block title"
+msgid "Social Share"
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block description"
+msgid "Share buttons for the page or the post in context, with copy link and the device's share sheet. Works without JavaScript."
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block keyword"
+msgid "share"
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block keyword"
+msgid "social"
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block keyword"
+msgid "facebook"
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block keyword"
+msgid "x"
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block keyword"
+msgid "linkedin"
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block keyword"
+msgid "whatsapp"
+msgstr ""
+
+#: src/blocks/social-share/block.json
+msgctxt "block keyword"
+msgid "copy link"
 msgstr ""
 
 #: src/blocks/star-rating/block.json
